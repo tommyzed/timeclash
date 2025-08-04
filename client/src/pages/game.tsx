@@ -22,6 +22,7 @@ export default function Game() {
     isCorrect: false,
     message: ""
   });
+  const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
 
   // Create a new game on component mount
   const createGameMutation = useMutation({
@@ -67,6 +68,7 @@ export default function Game() {
   const handlePlaceEvent = (eventId: string, position: number) => {
     console.log('handlePlaceEvent called:', { eventId, position });
     placeEventMutation.mutate({ eventId, position });
+    setSelectedCardId(null); // Clear selection after placing
   };
 
   const handleCloseFeedback = () => {
@@ -75,8 +77,19 @@ export default function Game() {
 
   const handleNewGame = () => {
     setGameId(null);
+    setSelectedCardId(null);
     setFeedbackData({ isVisible: false, isCorrect: false, message: "" });
     createGameMutation.mutate();
+  };
+
+  const handleSelectCard = (cardId: string) => {
+    console.log('Game: Card selected:', cardId);
+    setSelectedCardId(cardId);
+  };
+
+  const handleDeselectCard = () => {
+    console.log('Game: Card deselected');
+    setSelectedCardId(null);
   };
 
   if (isLoading || !gameState) {
@@ -118,11 +131,15 @@ export default function Game() {
               gameState={gameState} 
               onPlaceEvent={handlePlaceEvent}
               isPlacing={placeEventMutation.isPending}
+              selectedCardId={selectedCardId}
             />
             <CurrentCard 
               gameState={gameState} 
               onPlaceEvent={handlePlaceEvent}
               isPlacing={placeEventMutation.isPending}
+              selectedCardId={selectedCardId}
+              onSelectCard={handleSelectCard}
+              onDeselectCard={handleDeselectCard}
             />
           </div>
           

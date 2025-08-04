@@ -1,18 +1,17 @@
 import { type GameState } from "@shared/schema";
 import TimelineCard from "./TimelineCard";
-import { useDragAndDrop } from "@/hooks/useDragAndDrop";
 
 interface CurrentCardProps {
   gameState: GameState;
   onPlaceEvent: (eventId: string, position: number) => void;
   isPlacing: boolean;
+  selectedCardId: string | null;
+  onSelectCard: (cardId: string) => void;
+  onDeselectCard: () => void;
 }
 
-export default function CurrentCard({ gameState, onPlaceEvent, isPlacing }: CurrentCardProps) {
+export default function CurrentCard({ gameState, onPlaceEvent, isPlacing, selectedCardId, onSelectCard, onDeselectCard }: CurrentCardProps) {
   const { currentEvent, game } = gameState;
-  const { draggedItem, handleDragStart, handleDragEnd } = useDragAndDrop({
-    onDrop: onPlaceEvent
-  });
 
   if (!currentEvent) {
     if (game.isCompleted) {
@@ -42,8 +41,12 @@ export default function CurrentCard({ gameState, onPlaceEvent, isPlacing }: Curr
   }
 
   const handleCardClick = () => {
-    console.log('Card clicked, setting as dragged item:', currentEvent.id);
-    handleDragStart(currentEvent.id);
+    console.log('Card clicked, setting as selected item:', currentEvent.id);
+    if (selectedCardId === currentEvent.id) {
+      onDeselectCard();
+    } else {
+      onSelectCard(currentEvent.id);
+    }
   };
 
   return (
@@ -59,20 +62,20 @@ export default function CurrentCard({ gameState, onPlaceEvent, isPlacing }: Curr
         <div 
           onClick={handleCardClick}
           className={`cursor-pointer transition-transform hover:scale-105 ${
-            draggedItem === currentEvent.id ? 'ring-4 ring-purple-300' : ''
+            selectedCardId === currentEvent.id ? 'ring-4 ring-purple-300' : ''
           }`}
         >
           <TimelineCard
             event={currentEvent}
             isPlaced={false}
-            isDragging={draggedItem === currentEvent.id}
+            isDragging={selectedCardId === currentEvent.id}
           />
         </div>
       </div>
       
       <div className="text-center mt-4">
         <p className="text-sm text-gray-600">
-          {draggedItem === currentEvent.id 
+          {selectedCardId === currentEvent.id 
             ? "Card selected! Now click a drop zone in the timeline above" 
             : "Click this card to select it"}
         </p>

@@ -1,21 +1,16 @@
 import { ArrowRightFromLine } from "lucide-react";
 import { type GameState } from "@shared/schema";
 import TimelineCard from "./TimelineCard";
-import { useDragAndDrop } from "@/hooks/useDragAndDrop";
 
 interface TimelineProps {
   gameState: GameState;
   onPlaceEvent: (eventId: string, position: number) => void;
   isPlacing: boolean;
+  selectedCardId: string | null;
 }
 
-export default function Timeline({ gameState, onPlaceEvent, isPlacing }: TimelineProps) {
+export default function Timeline({ gameState, onPlaceEvent, isPlacing, selectedCardId }: TimelineProps) {
   const { placedEvents, currentEvent } = gameState;
-  const { draggedItem, dropZones, handleDragStart, handleDragEnd, handleDragOver, handleDragLeave, handleDrop } = useDragAndDrop({
-    onDrop: (eventId: string, position: number) => {
-      onPlaceEvent(eventId, position);
-    }
-  });
 
   return (
     <div className="bg-white rounded-xl shadow-sm p-6" data-testid="timeline-container">
@@ -33,26 +28,25 @@ export default function Timeline({ gameState, onPlaceEvent, isPlacing }: Timelin
           <div className="flex-shrink-0 w-16 flex items-center justify-center">
             <div
               className={`timeline-slot w-8 h-24 rounded-lg border-2 border-dashed transition-all duration-300 cursor-pointer ${
-                draggedItem 
+                selectedCardId 
                   ? 'border-purple-400 bg-purple-50 hover:border-purple-600 hover:bg-purple-100' 
                   : 'border-gray-300'
               }`}
               data-position={0}
               data-testid="drop-zone-0"
               onClick={(e) => {
-                console.log('Drop zone 0 clicked! draggedItem:', draggedItem);
+                console.log('Drop zone 0 clicked! selectedCardId:', selectedCardId);
                 e.stopPropagation();
-                if (draggedItem) {
-                  console.log('Placing event:', { draggedItem, position: 0 });
-                  onPlaceEvent(draggedItem, 0);
-                  handleDragEnd();
+                if (selectedCardId) {
+                  console.log('Placing event:', { selectedCardId, position: 0 });
+                  onPlaceEvent(selectedCardId, 0);
                 } else {
                   console.log('No card selected - click the card first');
                 }
               }}
             >
               <div className="text-center text-xs text-gray-400 rotate-90 whitespace-nowrap pointer-events-none">
-                {draggedItem ? 'Click' : 'Before'}
+                {selectedCardId ? 'Click' : 'Before'}
               </div>
             </div>
           </div>
@@ -69,26 +63,25 @@ export default function Timeline({ gameState, onPlaceEvent, isPlacing }: Timelin
               <div className="flex-shrink-0 w-16 flex items-center justify-center">
                 <div
                   className={`timeline-slot w-8 h-24 rounded-lg border-2 border-dashed transition-all duration-300 cursor-pointer ${
-                    draggedItem 
+                    selectedCardId 
                       ? 'border-purple-400 bg-purple-50 hover:border-purple-600 hover:bg-purple-100' 
                       : 'border-gray-300'
                   }`}
                   data-position={index + 1}
                   data-testid={`drop-zone-${index + 1}`}
                   onClick={(e) => {
-                    console.log(`Drop zone ${index + 1} clicked! draggedItem:`, draggedItem);
+                    console.log(`Drop zone ${index + 1} clicked! selectedCardId:`, selectedCardId);
                     e.stopPropagation();
-                    if (draggedItem) {
-                      console.log('Placing event:', { draggedItem, position: index + 1 });
-                      onPlaceEvent(draggedItem, index + 1);
-                      handleDragEnd();
+                    if (selectedCardId) {
+                      console.log('Placing event:', { selectedCardId, position: index + 1 });
+                      onPlaceEvent(selectedCardId, index + 1);
                     } else {
                       console.log('No card selected - click the card first');
                     }
                   }}
                 >
                   <div className="text-center text-xs text-gray-400 rotate-90 whitespace-nowrap pointer-events-none">
-                    {draggedItem ? 'Click' : 'After'}
+                    {selectedCardId ? 'Click' : 'After'}
                   </div>
                 </div>
               </div>
