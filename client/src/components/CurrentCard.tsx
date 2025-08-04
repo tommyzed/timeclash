@@ -42,6 +42,8 @@ export default function CurrentCard({ gameState, onPlaceEvent, isPlacing }: Curr
   }
 
   const handleCardDragStart = (e: React.DragEvent) => {
+    console.log('Drag start triggered for event:', currentEvent.id);
+    e.dataTransfer.setData("text/plain", currentEvent.id);
     handleDragStart(currentEvent.id);
   };
 

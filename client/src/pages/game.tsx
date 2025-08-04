@@ -65,6 +65,7 @@ export default function Game() {
   }, []);
 
   const handlePlaceEvent = (eventId: string, position: number) => {
+    console.log('handlePlaceEvent called:', { eventId, position });
     placeEventMutation.mutate({ eventId, position });
   };
 

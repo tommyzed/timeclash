@@ -9,6 +9,7 @@ export function useDragAndDrop({ onDrop }: UseDragAndDropProps) {
   const [dropZones, setDropZones] = useState<Record<number, boolean>>({});
 
   const handleDragStart = (eventId: string) => {
+    console.log('useDragAndDrop handleDragStart called with:', eventId);
     setDraggedItem(eventId);
   };
 
@@ -19,6 +20,7 @@ export function useDragAndDrop({ onDrop }: UseDragAndDropProps) {
 
   const handleDragOver = (e: React.DragEvent, position: number) => {
     e.preventDefault();
+    console.log('Drag over position:', position);
     setDropZones(prev => ({ ...prev, [position]: true }));
   };
 
@@ -35,9 +37,13 @@ export function useDragAndDrop({ onDrop }: UseDragAndDropProps) {
 
   const handleDrop = (e: React.DragEvent, position: number) => {
     e.preventDefault();
+    console.log('Drop event triggered:', { draggedItem, position });
     
     if (draggedItem) {
+      console.log('Calling onDrop with:', { eventId: draggedItem, position });
       onDrop(draggedItem, position);
+    } else {
+      console.log('No dragged item found');
     }
     
     handleDragEnd();
