@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { pgTable, text, varchar, integer, boolean, timestamp } from "drizzle-orm/pg-core";
+import { pgTable, text, varchar, integer, boolean, timestamp, json } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -13,17 +13,24 @@ export const historicalEvents = pgTable("historical_events", {
 
 export const games = pgTable("games", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  score: integer("score").notNull().default(0),
+  roomCode: varchar("room_code").unique(),
+  player1Id: varchar("player1_id"),
+  player2Id: varchar("player2_id"),
+  currentTurn: varchar("current_turn"), // player1 or player2
+  player1Score: integer("player1_score").notNull().default(0),
+  player2Score: integer("player2_score").notNull().default(0),
   targetScore: integer("target_score").notNull().default(10),
   currentEventId: varchar("current_event_id"),
   placedEventIds: text("placed_event_ids").array().notNull().default([]),
-  isCompleted: boolean("is_completed").notNull().default(false),
+  gameStatus: varchar("game_status").notNull().default("waiting"), // waiting, playing, completed
+  winnerPlayerId: varchar("winner_player_id"),
   createdAt: timestamp("created_at").notNull().default(sql`now()`),
 });
 
 export const gameMoves = pgTable("game_moves", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   gameId: varchar("game_id").notNull(),
+  playerId: varchar("player_id").notNull(),
   eventId: varchar("event_id").notNull(),
   placedPosition: integer("placed_position").notNull(),
   isCorrect: boolean("is_correct").notNull(),
@@ -62,4 +69,29 @@ export type GameState = {
   placedEvents: PlacedEvent[];
   currentEvent: HistoricalEvent | null;
   recentMoves: (GameMove & { event: HistoricalEvent })[];
+  currentPlayerId?: string;
+  isMyTurn?: boolean;
 };
+
+// WebSocket message types for real-time communication
+export type WebSocketMessage = 
+  | { type: 'game_updated'; data: GameState }
+  | { type: 'player_joined'; data: { playerId: string; roomCode: string } }
+  | { type: 'move_made'; data: { playerId: string; eventId: string; position: number; isCorrect: boolean } }
+  | { type: 'game_completed'; data: { winnerPlayerId: string; finalScores: { player1: number; player2: number } } }
+  | { type: 'error'; data: { message: string } };
+
+// Player management
+export const players = pgTable("players", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  nickname: varchar("nickname").notNull(),
+  createdAt: timestamp("created_at").notNull().default(sql`now()`),
+});
+
+export const insertPlayerSchema = createInsertSchema(players).omit({
+  id: true,
+  createdAt: true,
+});
+
+export type Player = typeof players.$inferSelect;
+export type InsertPlayer = z.infer<typeof insertPlayerSchema>;

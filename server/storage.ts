@@ -1,4 +1,4 @@
-import { type HistoricalEvent, type InsertHistoricalEvent, type Game, type InsertGame, type GameMove, type InsertGameMove } from "@shared/schema";
+import { type HistoricalEvent, type InsertHistoricalEvent, type Game, type InsertGame, type GameMove, type InsertGameMove, type Player, type InsertPlayer } from "@shared/schema";
 import { randomUUID } from "crypto";
 
 export interface IStorage {
@@ -9,8 +9,14 @@ export interface IStorage {
   
   // Games
   getGame(id: string): Promise<Game | undefined>;
-  createGame(): Promise<Game>;
+  getGameByRoomCode(roomCode: string): Promise<Game | undefined>;
+  createGame(roomCode?: string): Promise<Game>;
   updateGame(id: string, updates: Partial<Game>): Promise<Game | undefined>;
+  joinGame(gameId: string, playerId: string): Promise<Game | undefined>;
+  
+  // Players
+  createPlayer(player: InsertPlayer): Promise<Player>;
+  getPlayer(id: string): Promise<Player | undefined>;
   
   // Game Moves
   getGameMoves(gameId: string): Promise<GameMove[]>;
@@ -21,11 +27,13 @@ export class MemStorage implements IStorage {
   private historicalEvents: Map<string, HistoricalEvent>;
   private games: Map<string, Game>;
   private gameMoves: Map<string, GameMove>;
+  private players: Map<string, Player>;
 
   constructor() {
     this.historicalEvents = new Map();
     this.games = new Map();
     this.gameMoves = new Map();
+    this.players = new Map();
     
     // Initialize with curated historical events
     this.initializeHistoricalEvents();
@@ -167,20 +175,62 @@ export class MemStorage implements IStorage {
     return this.games.get(id);
   }
 
-  async createGame(): Promise<Game> {
+  async createGame(roomCode?: string): Promise<Game> {
     const id = randomUUID();
     const game: Game = {
       id,
-      score: 0,
+      roomCode: roomCode || null,
+      player1Id: null,
+      player2Id: null,
+      currentTurn: null,
+      player1Score: 0,
+      player2Score: 0,
       targetScore: 10,
       currentEventId: null,
       placedEventIds: ["1"], // Start with Declaration of Independence
-      isCompleted: false,
+      gameStatus: "waiting",
+      winnerPlayerId: null,
       createdAt: new Date()
     };
     
     this.games.set(id, game);
     return game;
+  }
+
+  async getGameByRoomCode(roomCode: string): Promise<Game | undefined> {
+    return Array.from(this.games.values()).find(game => game.roomCode === roomCode);
+  }
+
+  async joinGame(gameId: string, playerId: string): Promise<Game | undefined> {
+    const game = this.games.get(gameId);
+    if (!game) return undefined;
+
+    let updatedGame: Game;
+    if (!game.player1Id) {
+      updatedGame = { ...game, player1Id: playerId, currentTurn: "player1" };
+    } else if (!game.player2Id) {
+      updatedGame = { ...game, player2Id: playerId, gameStatus: "playing" };
+    } else {
+      return undefined; // Game is full
+    }
+
+    this.games.set(gameId, updatedGame);
+    return updatedGame;
+  }
+
+  async createPlayer(player: InsertPlayer): Promise<Player> {
+    const newPlayer: Player = {
+      id: randomUUID(),
+      nickname: player.nickname,
+      createdAt: new Date()
+    };
+    
+    this.players.set(newPlayer.id, newPlayer);
+    return newPlayer;
+  }
+
+  async getPlayer(id: string): Promise<Player | undefined> {
+    return this.players.get(id);
   }
 
   async updateGame(id: string, updates: Partial<Game>): Promise<Game | undefined> {

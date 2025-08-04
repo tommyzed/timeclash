@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
+import { useRoute } from "wouter";
 import { queryClient } from "@/lib/queryClient";
 import { apiRequest } from "@/lib/queryClient";
-import { type GameState } from "@shared/schema";
+import { type GameState, type WebSocketMessage } from "@shared/schema";
+import { useWebSocket } from "@/hooks/useWebSocket";
 import GameHeader from "@/components/GameHeader";
 import Timeline from "@/components/Timeline";
 import CurrentCard from "@/components/CurrentCard";
@@ -12,7 +14,13 @@ import GameControls from "@/components/GameControls";
 import FeedbackModal from "@/components/FeedbackModal";
 
 export default function Game() {
-  const [gameId, setGameId] = useState<string | null>(null);
+  const [match, params] = useRoute("/game/:gameId?");
+  const urlParams = new URLSearchParams(window.location.search);
+  const playerId = urlParams.get('playerId') || localStorage.getItem('playerId');
+  const nickname = localStorage.getItem('nickname');
+  
+  const [gameId, setGameId] = useState<string | null>(params?.gameId || null);
+  const [isMultiplayer, setIsMultiplayer] = useState<boolean>(!!params?.gameId && !!playerId);
   const [feedbackData, setFeedbackData] = useState<{
     isVisible: boolean;
     isCorrect: boolean;
@@ -41,10 +49,25 @@ export default function Game() {
     enabled: !!gameId,
   }) as { data: GameState | undefined; isLoading: boolean };
 
+  // WebSocket connection for multiplayer
+  const { isConnected, sendMessage } = useWebSocket({
+    gameId: isMultiplayer ? gameId || undefined : undefined,
+    playerId: isMultiplayer ? playerId || undefined : undefined,
+    onMessage: (message: WebSocketMessage) => {
+      console.log('Received WebSocket message:', message);
+      // Handle real-time updates here
+      if (message.type === 'move_made') {
+        // Refresh game state when opponent makes a move
+        queryClient.invalidateQueries({ queryKey: ["/api/games", gameId] });
+      }
+    }
+  });
+
   // Place event mutation
   const placeEventMutation = useMutation({
     mutationFn: async ({ eventId, position }: { eventId: string; position: number }) => {
-      const res = await apiRequest("POST", `/api/games/${gameId}/place/${eventId}`, { position });
+      const body = isMultiplayer ? { position, playerId } : { position };
+      const res = await apiRequest("POST", `/api/games/${gameId}/place/${eventId}`, body);
       return res.json();
     },
     onSuccess: (result) => {
@@ -54,13 +77,28 @@ export default function Game() {
         message: result.message
       });
       
+      // Send WebSocket message for multiplayer
+      if (isMultiplayer && isConnected) {
+        sendMessage({
+          type: 'make_move',
+          data: { 
+            gameId, 
+            playerId, 
+            eventId: selectedCardId, 
+            position: 0, // Will be updated with actual position
+            isCorrect: result.isCorrect
+          }
+        });
+      }
+      
       // Refetch game state
       queryClient.invalidateQueries({ queryKey: ["/api/games", gameId] });
     }
   });
 
   useEffect(() => {
-    if (!gameId) {
+    // Only create a single-player game if we don't have a gameId from URL
+    if (!gameId && !isMultiplayer) {
       createGameMutation.mutate();
     }
   }, []);

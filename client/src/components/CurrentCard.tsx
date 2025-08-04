@@ -14,7 +14,7 @@ export default function CurrentCard({ gameState, onPlaceEvent, isPlacing, select
   const { currentEvent, game } = gameState;
 
   if (!currentEvent) {
-    if (game.isCompleted) {
+    if (game.gameStatus === 'completed') {
       return (
         <div className="mt-6 bg-white rounded-xl shadow-sm p-6" data-testid="game-completed">
           <div className="text-center">
@@ -22,7 +22,7 @@ export default function CurrentCard({ gameState, onPlaceEvent, isPlacing, select
               <i className="fas fa-trophy text-2xl text-green-600"></i>
             </div>
             <h3 className="text-xl font-semibold text-gray-900 mb-2">Congratulations!</h3>
-            <p className="text-gray-600">You've successfully completed your timeline with {game.score} cards!</p>
+            <p className="text-gray-600">You've successfully completed your timeline!</p>
           </div>
         </div>
       );

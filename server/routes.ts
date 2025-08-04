@@ -1,7 +1,25 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
+import { WebSocketServer, WebSocket } from "ws";
 import { storage } from "./storage";
+import { insertGameMoveSchema, insertPlayerSchema, type WebSocketMessage } from "@shared/schema";
 import { z } from "zod";
+import { randomUUID } from "crypto";
+
+// WebSocket connection management
+const gameRooms = new Map<string, Set<WebSocket>>();
+const playerConnections = new Map<string, WebSocket>();
+
+function broadcastToGame(gameId: string, message: WebSocketMessage) {
+  const connections = gameRooms.get(gameId);
+  if (connections) {
+    connections.forEach(ws => {
+      if (ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify(message));
+      }
+    });
+  }
+}
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Get all historical events
@@ -14,10 +32,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Create a new game
+  // Create a new game (single player or with room code for multiplayer)
   app.post("/api/games", async (req, res) => {
     try {
-      const game = await storage.createGame();
+      const { roomCode } = req.body;
+      const generatedRoomCode = roomCode || Math.random().toString(36).substring(2, 8).toUpperCase();
+      const game = await storage.createGame(generatedRoomCode);
       
       // Get a random event for the first turn (excluding the starting card)
       const currentEvent = await storage.getRandomHistoricalEvent(game.placedEventIds);
@@ -30,6 +50,46 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(game);
     } catch (error) {
       res.status(500).json({ message: "Failed to create game" });
+    }
+  });
+
+  // Join a game by room code
+  app.post("/api/games/join", async (req, res) => {
+    try {
+      const { roomCode, nickname } = req.body;
+      
+      if (!roomCode || !nickname) {
+        return res.status(400).json({ message: "Room code and nickname are required" });
+      }
+
+      const game = await storage.getGameByRoomCode(roomCode);
+      if (!game) {
+        return res.status(404).json({ message: "Game not found" });
+      }
+
+      // Create player
+      const player = await storage.createPlayer({ nickname });
+      
+      // Join the game
+      const updatedGame = await storage.joinGame(game.id, player.id);
+      if (!updatedGame) {
+        return res.status(400).json({ message: "Game is full or unavailable" });
+      }
+
+      res.json({ game: updatedGame, playerId: player.id });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to join game" });
+    }
+  });
+
+  // Create a player
+  app.post("/api/players", async (req, res) => {
+    try {
+      const playerData = insertPlayerSchema.parse(req.body);
+      const player = await storage.createPlayer(playerData);
+      res.json(player);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to create player" });
     }
   });
 
@@ -130,9 +190,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
         isCorrect = event.year >= prevEvent.year && event.year <= nextEvent.year;
       }
 
-      // Create the move record
+      // Create the move record (we'll need playerId from the request)
+      const { playerId } = req.body;
+      if (!playerId) {
+        return res.status(400).json({ message: "Player ID required for multiplayer" });
+      }
+
       await storage.createGameMove({
         gameId,
+        playerId,
         eventId,
         placedPosition: position,
         isCorrect
@@ -182,5 +248,72 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   const httpServer = createServer(app);
+
+  // Set up WebSocket server for real-time multiplayer
+  const wss = new WebSocketServer({ server: httpServer, path: '/ws' });
+
+  wss.on('connection', (ws: WebSocket, req) => {
+    console.log('WebSocket connection established');
+
+    ws.on('message', async (data) => {
+      try {
+        const message = JSON.parse(data.toString());
+        
+        switch (message.type) {
+          case 'join_game':
+            const { gameId, playerId } = message.data;
+            
+            // Add connection to game room
+            if (!gameRooms.has(gameId)) {
+              gameRooms.set(gameId, new Set());
+            }
+            gameRooms.get(gameId)?.add(ws);
+            playerConnections.set(playerId, ws);
+
+            // Broadcast that player joined
+            broadcastToGame(gameId, {
+              type: 'player_joined',
+              data: { playerId, roomCode: gameId }
+            });
+            break;
+
+          case 'make_move':
+            const { gameId: moveGameId, playerId: movePlayerId, eventId, position } = message.data;
+            
+            // Broadcast the move to all connected players
+            broadcastToGame(moveGameId, {
+              type: 'move_made',
+              data: { playerId: movePlayerId, eventId, position, isCorrect: true }
+            });
+            break;
+        }
+      } catch (error) {
+        console.error('WebSocket message error:', error);
+        ws.send(JSON.stringify({
+          type: 'error',
+          data: { message: 'Invalid message format' }
+        }));
+      }
+    });
+
+    ws.on('close', () => {
+      // Remove connection from all game rooms
+      gameRooms.forEach((connections, gameId) => {
+        connections.delete(ws);
+        if (connections.size === 0) {
+          gameRooms.delete(gameId);
+        }
+      });
+
+      // Remove from player connections
+      for (const [playerId, connection] of playerConnections.entries()) {
+        if (connection === ws) {
+          playerConnections.delete(playerId);
+          break;
+        }
+      }
+    });
+  });
+
   return httpServer;
 }
