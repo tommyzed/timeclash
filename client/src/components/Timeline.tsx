@@ -39,15 +39,19 @@ export default function Timeline({ gameState, onPlaceEvent, isPlacing }: Timelin
               }`}
               data-position={0}
               data-testid="drop-zone-0"
-              onClick={() => {
+              onClick={(e) => {
+                console.log('Drop zone 0 clicked! draggedItem:', draggedItem);
+                e.stopPropagation();
                 if (draggedItem) {
-                  console.log('Drop zone clicked:', { draggedItem, position: 0 });
+                  console.log('Placing event:', { draggedItem, position: 0 });
                   onPlaceEvent(draggedItem, 0);
                   handleDragEnd();
+                } else {
+                  console.log('No card selected - click the card first');
                 }
               }}
             >
-              <div className="text-center text-xs text-gray-400 rotate-90 whitespace-nowrap">
+              <div className="text-center text-xs text-gray-400 rotate-90 whitespace-nowrap pointer-events-none">
                 {draggedItem ? 'Click' : 'Before'}
               </div>
             </div>
@@ -71,15 +75,19 @@ export default function Timeline({ gameState, onPlaceEvent, isPlacing }: Timelin
                   }`}
                   data-position={index + 1}
                   data-testid={`drop-zone-${index + 1}`}
-                  onClick={() => {
+                  onClick={(e) => {
+                    console.log(`Drop zone ${index + 1} clicked! draggedItem:`, draggedItem);
+                    e.stopPropagation();
                     if (draggedItem) {
-                      console.log('Drop zone clicked:', { draggedItem, position: index + 1 });
+                      console.log('Placing event:', { draggedItem, position: index + 1 });
                       onPlaceEvent(draggedItem, index + 1);
                       handleDragEnd();
+                    } else {
+                      console.log('No card selected - click the card first');
                     }
                   }}
                 >
-                  <div className="text-center text-xs text-gray-400 rotate-90 whitespace-nowrap">
+                  <div className="text-center text-xs text-gray-400 rotate-90 whitespace-nowrap pointer-events-none">
                     {draggedItem ? 'Click' : 'After'}
                   </div>
                 </div>
