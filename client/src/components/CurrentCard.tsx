@@ -56,7 +56,12 @@ export default function CurrentCard({ gameState, onPlaceEvent, isPlacing }: Curr
       </div>
       
       <div className="flex justify-center">
-        <div onClick={handleCardClick}>
+        <div 
+          onClick={handleCardClick}
+          className={`cursor-pointer transition-transform hover:scale-105 ${
+            draggedItem === currentEvent.id ? 'ring-4 ring-purple-300' : ''
+          }`}
+        >
           <TimelineCard
             event={currentEvent}
             isPlaced={false}
