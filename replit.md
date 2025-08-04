@@ -6,11 +6,12 @@ Chronology is a single-player educational game where players arrange historical 
 
 ## Recent Changes (January 2025)
 
-- **Fixed Critical Gameplay Bug**: Resolved state management issue that prevented drag-and-drop functionality
-- **Simplified Interaction Model**: Replaced complex drag-and-drop with intuitive click-to-select and click-to-place system
-- **Enhanced Visual Feedback**: Added purple ring indicator for selected cards and clear messaging
-- **Centralized State Management**: Moved card selection state to parent Game component for proper data flow
-- **Fully Functional Core Gameplay**: Players can now successfully place cards and progress through the game
+- **Implemented Complete 2-Player Multiplayer**: Transform from single-player to full real-time multiplayer with room codes
+- **Added Turn-Based Gameplay**: Proper turn switching after each move with server-side validation
+- **Enhanced Multiplayer UI**: Room code display, separate score tracking, and visual turn indicators
+- **Real-Time Communication**: WebSocket integration for live game updates between players
+- **Added Room Code Sharing**: One-click copy-to-clipboard functionality for easy game sharing with friends
+- **Fixed Turn Management**: Resolved issues with turn indicators and card interaction during opponent's turn
 
 ## User Preferences
 

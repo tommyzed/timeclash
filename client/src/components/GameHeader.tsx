@@ -1,5 +1,6 @@
-import { Clock, Settings } from "lucide-react";
+import { Clock, Settings, Copy, Check } from "lucide-react";
 import { type GameState } from "@shared/schema";
+import { useState } from "react";
 
 interface GameHeaderProps {
   gameState: GameState;
@@ -10,6 +11,19 @@ interface GameHeaderProps {
 
 export default function GameHeader({ gameState, isMultiplayer, currentPlayerId, nickname }: GameHeaderProps) {
   const { game } = gameState;
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyRoomCode = async () => {
+    if (game.roomCode) {
+      try {
+        await navigator.clipboard.writeText(game.roomCode);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      } catch (err) {
+        console.error('Failed to copy room code:', err);
+      }
+    }
+  };
   
   const getGameModeDisplay = () => {
     if (isMultiplayer && game.roomCode) {
@@ -18,9 +32,19 @@ export default function GameHeader({ gameState, isMultiplayer, currentPlayerId, 
           <span className="bg-green-600 text-white px-3 py-1 rounded-full text-sm font-medium">
             Multiplayer
           </span>
-          <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm font-medium">
-            Room: {game.roomCode}
-          </span>
+          <button
+            onClick={handleCopyRoomCode}
+            className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm font-medium flex items-center space-x-1 transition-colors"
+            data-testid="copy-room-code-button"
+            title="Click to copy room code"
+          >
+            <span>Room: {game.roomCode}</span>
+            {copied ? (
+              <Check className="h-3 w-3 text-green-600" />
+            ) : (
+              <Copy className="h-3 w-3" />
+            )}
+          </button>
         </div>
       );
     }
