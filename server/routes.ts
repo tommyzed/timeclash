@@ -190,15 +190,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
         isCorrect = event.year >= prevEvent.year && event.year <= nextEvent.year;
       }
 
-      // Create the move record (we'll need playerId from the request)
+      // Create the move record (playerId is optional for single player)
       const { playerId } = req.body;
-      if (!playerId) {
-        return res.status(400).json({ message: "Player ID required for multiplayer" });
+      
+      // For multiplayer games, ensure playerId is provided and it's their turn
+      if (game.roomCode) {
+        if (!playerId) {
+          return res.status(400).json({ message: "Player ID required for multiplayer" });
+        }
+        
+        // Check if it's the player's turn
+        const isPlayer1 = playerId === game.player1Id;
+        const isPlayer2 = playerId === game.player2Id;
+        
+        if (!isPlayer1 && !isPlayer2) {
+          return res.status(403).json({ message: "You are not a player in this game" });
+        }
+        
+        const expectedTurn = isPlayer1 ? "player1" : "player2";
+        if (game.currentTurn !== expectedTurn) {
+          return res.status(403).json({ message: "It's not your turn" });
+        }
       }
 
       await storage.createGameMove({
         gameId,
-        playerId,
+        playerId: playerId || "single-player",
         eventId,
         placedPosition: position,
         isCorrect
@@ -209,30 +226,61 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const newPlacedEventIds = [...game.placedEventIds];
         newPlacedEventIds.splice(position, 0, eventId);
         
-        const newScore = game.score + 1;
-        const isCompleted = newScore >= game.targetScore;
+        // For multiplayer: update the correct player's score
+        let updateData: any = {
+          placedEventIds: newPlacedEventIds
+        };
 
-        // Get next event if game is not completed
-        let nextEventId = null;
-        if (!isCompleted) {
-          const nextEvent = await storage.getRandomHistoricalEvent([...newPlacedEventIds, eventId]);
-          nextEventId = nextEvent?.id || null;
+        if (game.roomCode && playerId) {
+          // Multiplayer game - update specific player score
+          if (playerId === game.player1Id) {
+            updateData.player1Score = game.player1Score + 1;
+          } else if (playerId === game.player2Id) {
+            updateData.player2Score = game.player2Score + 1;
+          }
+          
+          // Switch turns after correct move
+          updateData.currentTurn = game.currentTurn === "player1" ? "player2" : "player1";
+          
+          // Check for winner
+          const newScore = playerId === game.player1Id ? game.player1Score + 1 : game.player2Score + 1;
+          if (newScore >= game.targetScore) {
+            updateData.gameStatus = "completed";
+            updateData.winnerPlayerId = playerId;
+          }
+        } else {
+          // Single player game
+          const newScore = game.player1Score + 1;
+          updateData.player1Score = newScore;
+          
+          if (newScore >= game.targetScore) {
+            updateData.gameStatus = "completed";
+          }
         }
 
-        await storage.updateGame(gameId, {
-          score: newScore,
-          placedEventIds: newPlacedEventIds,
-          currentEventId: nextEventId,
-          isCompleted
-        });
+        // Get next event if game is not completed
+        if (updateData.gameStatus !== "completed") {
+          const nextEvent = await storage.getRandomHistoricalEvent([...newPlacedEventIds, eventId]);
+          updateData.currentEventId = nextEvent?.id || null;
+        } else {
+          updateData.currentEventId = null;
+        }
+
+        await storage.updateGame(gameId, updateData);
       } else {
-        // Get a new event for the next turn (same event can be tried again or get a different one)
-        const nextEvent = await storage.getRandomHistoricalEvent([...game.placedEventIds]);
-        const nextEventId = nextEvent?.id || null;
+        // Wrong answer - switch turns in multiplayer
+        let updateData: any = {};
         
-        await storage.updateGame(gameId, {
-          currentEventId: nextEventId
-        });
+        if (game.roomCode && playerId) {
+          // Switch turns after incorrect move
+          updateData.currentTurn = game.currentTurn === "player1" ? "player2" : "player1";
+        }
+        
+        // Get a new event for the next turn
+        const nextEvent = await storage.getRandomHistoricalEvent([...game.placedEventIds]);
+        updateData.currentEventId = nextEvent?.id || null;
+        
+        await storage.updateGame(gameId, updateData);
       }
 
       res.json({ 
