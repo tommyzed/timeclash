@@ -49,6 +49,15 @@ export default function Game() {
     enabled: !!gameId,
   }) as { data: GameState | undefined; isLoading: boolean };
 
+  // Update multiplayer status when game state loads
+  useEffect(() => {
+    if (gameState?.game) {
+      const hasRoomCode = !!gameState.game.roomCode;
+      const hasPlayerId = !!playerId;
+      setIsMultiplayer(hasRoomCode && hasPlayerId);
+    }
+  }, [gameState, playerId]);
+
   // WebSocket connection for multiplayer
   const { isConnected, sendMessage } = useWebSocket({
     gameId: isMultiplayer ? gameId || undefined : undefined,
@@ -143,7 +152,12 @@ export default function Game() {
 
   return (
     <div className="min-h-screen bg-gray-50" data-testid="game-container">
-      <GameHeader gameState={gameState} />
+      <GameHeader 
+        gameState={gameState} 
+        isMultiplayer={isMultiplayer}
+        currentPlayerId={playerId || undefined}
+        nickname={nickname || undefined}
+      />
       
       <div className="bg-blue-50 border-l-4 border-blue-600 p-4 mx-4 mt-4 rounded-r-lg">
         <div className="flex items-start">
