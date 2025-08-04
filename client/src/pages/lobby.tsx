@@ -21,22 +21,19 @@ export default function Lobby() {
       }
       
       // Create player first
-      const player = await apiRequest('/api/players', {
-        method: 'POST',
-        body: { nickname: nickname.trim() }
-      });
+      const playerResponse = await apiRequest('POST', '/api/players', { nickname: nickname.trim() });
+      const player = await playerResponse.json();
 
       // Create game with room code
-      const game = await apiRequest('/api/games', {
-        method: 'POST',
-        body: {}
-      });
+      const gameResponse = await apiRequest('POST', '/api/games', {});
+      const game = await gameResponse.json();
 
       // Join the game as player 1
-      const joinResult = await apiRequest('/api/games/join', {
-        method: 'POST',
-        body: { roomCode: game.roomCode, nickname: nickname.trim() }
+      const joinResponse = await apiRequest('POST', '/api/games/join', { 
+        roomCode: game.roomCode, 
+        nickname: nickname.trim() 
       });
+      const joinResult = await joinResponse.json();
 
       return { ...joinResult, roomCode: game.roomCode };
     },
@@ -71,11 +68,12 @@ export default function Lobby() {
         throw new Error('Please enter a room code');
       }
 
-      const result = await apiRequest('/api/games/join', {
-        method: 'POST',
-        body: { roomCode: roomCode.trim().toUpperCase(), nickname: nickname.trim() }
+      const response = await apiRequest('POST', '/api/games/join', { 
+        roomCode: roomCode.trim().toUpperCase(), 
+        nickname: nickname.trim() 
       });
-
+      
+      const result = await response.json();
       return result;
     },
     onSuccess: (data) => {

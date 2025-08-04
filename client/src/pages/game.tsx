@@ -35,8 +35,8 @@ export default function Game() {
   // Create a new game on component mount
   const createGameMutation = useMutation({
     mutationFn: async () => {
-      const res = await apiRequest("POST", "/api/games");
-      return res.json();
+      const response = await apiRequest("POST", "/api/games", {});
+      return await response.json();
     },
     onSuccess: (game) => {
       setGameId(game.id);
@@ -67,8 +67,8 @@ export default function Game() {
   const placeEventMutation = useMutation({
     mutationFn: async ({ eventId, position }: { eventId: string; position: number }) => {
       const body = isMultiplayer ? { position, playerId } : { position };
-      const res = await apiRequest("POST", `/api/games/${gameId}/place/${eventId}`, body);
-      return res.json();
+      const response = await apiRequest("POST", `/api/games/${gameId}/place/${eventId}`, body);
+      return await response.json();
     },
     onSuccess: (result) => {
       setFeedbackData({
