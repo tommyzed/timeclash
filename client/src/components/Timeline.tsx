@@ -32,21 +32,23 @@ export default function Timeline({ gameState, onPlaceEvent, isPlacing }: Timelin
           {/* Drop zone before the first card */}
           <div className="flex-shrink-0 w-16 flex items-center justify-center">
             <div
-              className={`timeline-slot w-8 h-24 rounded-lg border-2 border-dashed transition-all duration-300 ${
-                dropZones[0] 
-                  ? 'border-blue-600 bg-blue-50 active' 
-                  : draggedItem 
-                    ? 'border-purple-400 bg-purple-50' 
-                    : 'border-gray-300'
+              className={`timeline-slot w-8 h-24 rounded-lg border-2 border-dashed transition-all duration-300 cursor-pointer ${
+                draggedItem 
+                  ? 'border-purple-400 bg-purple-50 hover:border-purple-600 hover:bg-purple-100' 
+                  : 'border-gray-300'
               }`}
               data-position={0}
               data-testid="drop-zone-0"
-              onDragOver={(e) => handleDragOver(e, 0)}
-              onDragLeave={handleDragLeave}
-              onDrop={(e) => handleDrop(e, 0)}
+              onClick={() => {
+                if (draggedItem) {
+                  console.log('Drop zone clicked:', { draggedItem, position: 0 });
+                  onPlaceEvent(draggedItem, 0);
+                  handleDragEnd();
+                }
+              }}
             >
               <div className="text-center text-xs text-gray-400 rotate-90 whitespace-nowrap">
-                Before
+                {draggedItem ? 'Click' : 'Before'}
               </div>
             </div>
           </div>
@@ -62,21 +64,23 @@ export default function Timeline({ gameState, onPlaceEvent, isPlacing }: Timelin
               {/* Drop zone after each card */}
               <div className="flex-shrink-0 w-16 flex items-center justify-center">
                 <div
-                  className={`timeline-slot w-8 h-24 rounded-lg border-2 border-dashed transition-all duration-300 ${
-                    dropZones[index + 1] 
-                      ? 'border-blue-600 bg-blue-50 active' 
-                      : draggedItem 
-                        ? 'border-purple-400 bg-purple-50' 
-                        : 'border-gray-300'
+                  className={`timeline-slot w-8 h-24 rounded-lg border-2 border-dashed transition-all duration-300 cursor-pointer ${
+                    draggedItem 
+                      ? 'border-purple-400 bg-purple-50 hover:border-purple-600 hover:bg-purple-100' 
+                      : 'border-gray-300'
                   }`}
                   data-position={index + 1}
                   data-testid={`drop-zone-${index + 1}`}
-                  onDragOver={(e) => handleDragOver(e, index + 1)}
-                  onDragLeave={handleDragLeave}
-                  onDrop={(e) => handleDrop(e, index + 1)}
+                  onClick={() => {
+                    if (draggedItem) {
+                      console.log('Drop zone clicked:', { draggedItem, position: index + 1 });
+                      onPlaceEvent(draggedItem, index + 1);
+                      handleDragEnd();
+                    }
+                  }}
                 >
                   <div className="text-center text-xs text-gray-400 rotate-90 whitespace-nowrap">
-                    After
+                    {draggedItem ? 'Click' : 'After'}
                   </div>
                 </div>
               </div>

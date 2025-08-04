@@ -102,8 +102,9 @@ export default function Game() {
           <div>
             <h3 className="text-sm font-medium text-blue-800">How to Play</h3>
             <p className="text-sm text-blue-700">
-              Drag the purple "Current Card" below and drop it into the dashed drop zones in your timeline above. 
-              Drop it <strong>"Before"</strong> the first card or <strong>"After"</strong> any existing card to place it chronologically. 
+              <strong>Step 1:</strong> Click the purple "Current Card" below to select it. 
+              <strong>Step 2:</strong> Click a drop zone in your timeline above to place it chronologically. 
+              Choose <strong>"Before"</strong> the first card or <strong>"After"</strong> any existing card. 
               Get 10 cards correctly placed to win!
             </p>
           </div>

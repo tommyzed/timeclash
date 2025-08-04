@@ -41,14 +41,9 @@ export default function CurrentCard({ gameState, onPlaceEvent, isPlacing }: Curr
     );
   }
 
-  const handleCardDragStart = (e: React.DragEvent) => {
-    console.log('Drag start triggered for event:', currentEvent.id);
-    e.dataTransfer.setData("text/plain", currentEvent.id);
+  const handleCardClick = () => {
+    console.log('Card clicked, setting as dragged item:', currentEvent.id);
     handleDragStart(currentEvent.id);
-  };
-
-  const handleCardDragEnd = (e: React.DragEvent) => {
-    handleDragEnd();
   };
 
   return (
@@ -61,18 +56,20 @@ export default function CurrentCard({ gameState, onPlaceEvent, isPlacing }: Curr
       </div>
       
       <div className="flex justify-center">
-        <TimelineCard
-          event={currentEvent}
-          isPlaced={false}
-          isDragging={draggedItem === currentEvent.id}
-          onDragStart={handleCardDragStart}
-          onDragEnd={handleCardDragEnd}
-        />
+        <div onClick={handleCardClick}>
+          <TimelineCard
+            event={currentEvent}
+            isPlaced={false}
+            isDragging={draggedItem === currentEvent.id}
+          />
+        </div>
       </div>
       
       <div className="text-center mt-4">
         <p className="text-sm text-gray-600">
-          Drag this card to the correct position in your timeline above
+          {draggedItem === currentEvent.id 
+            ? "Card selected! Now click a drop zone in the timeline above" 
+            : "Click this card to select it"}
         </p>
       </div>
     </div>
