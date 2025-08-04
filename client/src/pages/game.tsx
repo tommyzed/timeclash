@@ -95,10 +95,16 @@ export default function Game() {
       
       <div className="bg-blue-50 border-l-4 border-blue-600 p-4 mx-4 mt-4 rounded-r-lg">
         <div className="flex items-start">
-          <i className="fas fa-info-circle text-blue-600 mt-1 mr-3"></i>
+          <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center mr-3 mt-0.5">
+            <span className="text-white text-xs font-bold">?</span>
+          </div>
           <div>
             <h3 className="text-sm font-medium text-blue-800">How to Play</h3>
-            <p className="text-sm text-blue-700">Drag the current event card to where you think it belongs in the timeline. Get 10 cards correctly placed to win!</p>
+            <p className="text-sm text-blue-700">
+              Drag the purple "Current Card" below and drop it into the dashed drop zones in your timeline above. 
+              Drop it <strong>"Before"</strong> the first card or <strong>"After"</strong> any existing card to place it chronologically. 
+              Get 10 cards correctly placed to win!
+            </p>
           </div>
         </div>
       </div>

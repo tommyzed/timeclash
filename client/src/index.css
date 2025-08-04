@@ -76,11 +76,22 @@
   .timeline-slot {
     border: 2px dashed hsl(213, 27%, 84%);
     transition: all 0.3s ease;
+    min-height: 96px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .timeline-slot:hover {
+    border-color: hsl(213, 94%, 68%);
+    background-color: hsl(213, 100%, 97%);
   }
   
   .timeline-slot.active {
     border-color: hsl(213, 94%, 68%);
     background-color: hsl(213, 100%, 97%);
+    transform: scale(1.05);
+    border-width: 3px;
   }
   
   .timeline-slot.correct {

@@ -11,7 +11,7 @@ interface TimelineProps {
 
 export default function Timeline({ gameState, onPlaceEvent, isPlacing }: TimelineProps) {
   const { placedEvents, currentEvent } = gameState;
-  const { draggedItem, dropZones, handleDragStart, handleDragEnd, handleDragOver, handleDrop } = useDragAndDrop({
+  const { draggedItem, dropZones, handleDragStart, handleDragEnd, handleDragOver, handleDragLeave, handleDrop } = useDragAndDrop({
     onDrop: (eventId: string, position: number) => {
       onPlaceEvent(eventId, position);
     }
@@ -28,7 +28,29 @@ export default function Timeline({ gameState, onPlaceEvent, isPlacing }: Timelin
       </div>
       
       <div className="relative overflow-x-auto pb-4">
-        <div className="flex space-x-4 min-w-max">
+        <div className="flex items-center min-w-max">
+          {/* Drop zone before the first card */}
+          <div className="flex-shrink-0 w-16 flex items-center justify-center">
+            <div
+              className={`timeline-slot w-8 h-24 rounded-lg border-2 border-dashed transition-all duration-300 ${
+                dropZones[0] 
+                  ? 'border-blue-600 bg-blue-50 active' 
+                  : draggedItem 
+                    ? 'border-purple-400 bg-purple-50' 
+                    : 'border-gray-300'
+              }`}
+              data-position={0}
+              data-testid="drop-zone-0"
+              onDragOver={(e) => handleDragOver(e, 0)}
+              onDragLeave={handleDragLeave}
+              onDrop={(e) => handleDrop(e, 0)}
+            >
+              <div className="text-center text-xs text-gray-400 rotate-90 whitespace-nowrap">
+                Before
+              </div>
+            </div>
+          </div>
+          
           {placedEvents.map((placedEvent, index) => (
             <div key={`${placedEvent.event.id}-${index}`} className="flex items-center">
               <TimelineCard
@@ -38,26 +60,32 @@ export default function Timeline({ gameState, onPlaceEvent, isPlacing }: Timelin
               />
               
               {/* Drop zone after each card */}
-              <div className="flex-shrink-0 w-4 flex items-center justify-center">
+              <div className="flex-shrink-0 w-16 flex items-center justify-center">
                 <div
-                  className={`timeline-slot w-2 h-20 rounded-full border-2 border-dashed transition-all duration-300 ${
+                  className={`timeline-slot w-8 h-24 rounded-lg border-2 border-dashed transition-all duration-300 ${
                     dropZones[index + 1] 
-                      ? 'border-blue-600 bg-blue-50' 
-                      : 'border-gray-300'
+                      ? 'border-blue-600 bg-blue-50 active' 
+                      : draggedItem 
+                        ? 'border-purple-400 bg-purple-50' 
+                        : 'border-gray-300'
                   }`}
                   data-position={index + 1}
                   data-testid={`drop-zone-${index + 1}`}
                   onDragOver={(e) => handleDragOver(e, index + 1)}
-                  onDragLeave={() => handleDragEnd()}
+                  onDragLeave={handleDragLeave}
                   onDrop={(e) => handleDrop(e, index + 1)}
-                />
+                >
+                  <div className="text-center text-xs text-gray-400 rotate-90 whitespace-nowrap">
+                    After
+                  </div>
+                </div>
               </div>
             </div>
           ))}
           
           {/* Future slots indicator */}
-          <div className="flex-shrink-0 w-48">
-            <div className="border-2 border-dashed border-gray-300 h-20 rounded-lg flex items-center justify-center">
+          <div className="flex-shrink-0 w-48 ml-4">
+            <div className="border-2 border-dashed border-gray-300 h-24 rounded-lg flex items-center justify-center">
               <span className="text-gray-400 text-sm">Future cards</span>
             </div>
           </div>

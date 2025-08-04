@@ -22,8 +22,15 @@ export function useDragAndDrop({ onDrop }: UseDragAndDropProps) {
     setDropZones(prev => ({ ...prev, [position]: true }));
   };
 
-  const handleDragLeave = () => {
-    setDropZones({});
+  const handleDragLeave = (e: React.DragEvent) => {
+    // Only clear drop zones if we're leaving the entire drop area
+    const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
+    const x = e.clientX;
+    const y = e.clientY;
+    
+    if (x < rect.left || x > rect.right || y < rect.top || y > rect.bottom) {
+      setDropZones({});
+    }
   };
 
   const handleDrop = (e: React.DragEvent, position: number) => {
