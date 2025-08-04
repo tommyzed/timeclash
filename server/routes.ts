@@ -369,7 +369,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
 
       // Remove from player connections
-      for (const [playerId, connection] of playerConnections.entries()) {
+      for (const [playerId, connection] of Array.from(playerConnections.entries())) {
         if (connection === ws) {
           playerConnections.delete(playerId);
           break;

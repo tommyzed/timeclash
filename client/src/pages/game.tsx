@@ -74,7 +74,13 @@ export default function Game() {
             .catch(() => {
               setOpponentNickname("Opponent");
             });
+        } else {
+          // If no opponent yet, clear the nickname
+          setOpponentNickname("");
         }
+      } else {
+        // Clear opponent nickname for single player games
+        setOpponentNickname("");
       }
     }
   }, [gameState, playerId]);
@@ -94,11 +100,14 @@ export default function Game() {
           .then(player => {
             const playerName = player.nickname || "A friend";
             setJoinedPlayerName(playerName);
+            setOpponentNickname(playerName); // Also update the header
             setShowPlayerJoinedNotification(true);
             setTimeout(() => setShowPlayerJoinedNotification(false), 4000);
           })
           .catch(() => {
-            setJoinedPlayerName("A friend");
+            const fallbackName = "A friend";
+            setJoinedPlayerName(fallbackName);
+            setOpponentNickname(fallbackName); // Also update the header
             setShowPlayerJoinedNotification(true);
             setTimeout(() => setShowPlayerJoinedNotification(false), 4000);
           });
