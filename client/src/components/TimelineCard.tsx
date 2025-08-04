@@ -29,24 +29,32 @@ export default function TimelineCard({
     return "PLACE ME!";
   };
 
+  const handleDragStart = (e: React.DragEvent) => {
+    console.log('TimelineCard drag start for event:', event.id);
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', event.id);
+    if (onDragStart) {
+      onDragStart(e);
+    }
+  };
+
+  const handleDragEnd = (e: React.DragEvent) => {
+    console.log('TimelineCard drag end for event:', event.id);
+    if (onDragEnd) {
+      onDragEnd(e);
+    }
+  };
+
   return (
     <div 
       className={`flex-shrink-0 w-48 ${isDragging ? 'opacity-70 transform rotate-1' : ''} ${
         !isPlaced ? 'cursor-move card-hover' : ''
       }`}
       draggable={!isPlaced}
-      onDragStart={(e) => {
-        console.log('TimelineCard drag start for event:', event.id);
-        if (onDragStart) {
-          onDragStart(e);
-        }
-      }}
-      onDragEnd={(e) => {
-        console.log('TimelineCard drag end for event:', event.id);
-        if (onDragEnd) {
-          onDragEnd(e);
-        }
-      }}
+      onDragStart={handleDragStart}
+      onDragEnd={handleDragEnd}
+      onMouseDown={() => console.log('Mouse down on card:', event.id)}
+      style={{ userSelect: 'none' }}
       data-testid={`timeline-card-${event.id}`}
     >
       <div className={`bg-gradient-to-br ${getCardColor()} text-white p-4 rounded-lg shadow-md`}>
