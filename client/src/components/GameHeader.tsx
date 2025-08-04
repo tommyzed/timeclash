@@ -7,9 +7,10 @@ interface GameHeaderProps {
   isMultiplayer?: boolean;
   currentPlayerId?: string;
   nickname?: string;
+  opponentNickname?: string;
 }
 
-export default function GameHeader({ gameState, isMultiplayer, currentPlayerId, nickname }: GameHeaderProps) {
+export default function GameHeader({ gameState, isMultiplayer, currentPlayerId, nickname, opponentNickname }: GameHeaderProps) {
   const { game } = gameState;
   const [copied, setCopied] = useState(false);
 
@@ -104,7 +105,12 @@ export default function GameHeader({ gameState, isMultiplayer, currentPlayerId, 
             {getGameModeDisplay()}
             {nickname && (
               <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-medium">
-                {nickname}
+                You: {nickname}
+              </span>
+            )}
+            {isMultiplayer && opponentNickname && (
+              <span className="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-sm font-medium">
+                Opponent: {opponentNickname}
               </span>
             )}
           </div>

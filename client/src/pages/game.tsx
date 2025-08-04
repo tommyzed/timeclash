@@ -31,6 +31,9 @@ export default function Game() {
     message: ""
   });
   const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
+  const [showPlayerJoinedNotification, setShowPlayerJoinedNotification] = useState(false);
+  const [joinedPlayerName, setJoinedPlayerName] = useState<string>("");
+  const [opponentNickname, setOpponentNickname] = useState<string>("");
 
   // Create a new game on component mount
   const createGameMutation = useMutation({
@@ -55,6 +58,24 @@ export default function Game() {
       const hasRoomCode = !!gameState.game.roomCode;
       const hasPlayerId = !!playerId;
       setIsMultiplayer(hasRoomCode && hasPlayerId);
+      
+      // Fetch opponent nickname for multiplayer games
+      if (hasRoomCode && hasPlayerId) {
+        const opponentId = playerId === gameState.game.player1Id 
+          ? gameState.game.player2Id 
+          : gameState.game.player1Id;
+        
+        if (opponentId) {
+          fetch(`/api/players/${opponentId}`)
+            .then(response => response.json())
+            .then(player => {
+              setOpponentNickname(player.nickname || "Opponent");
+            })
+            .catch(() => {
+              setOpponentNickname("Opponent");
+            });
+        }
+      }
     }
   }, [gameState, playerId]);
 
@@ -64,6 +85,25 @@ export default function Game() {
     playerId: isMultiplayer ? playerId || undefined : undefined,
     onMessage: (message: WebSocketMessage) => {
       console.log('Received WebSocket message:', message);
+      
+      // Handle player joined notification
+      if (message.type === 'player_joined' && message.data.playerId !== playerId) {
+        // Fetch the player's nickname from the server
+        fetch(`/api/players/${message.data.playerId}`)
+          .then(response => response.json())
+          .then(player => {
+            const playerName = player.nickname || "A friend";
+            setJoinedPlayerName(playerName);
+            setShowPlayerJoinedNotification(true);
+            setTimeout(() => setShowPlayerJoinedNotification(false), 4000);
+          })
+          .catch(() => {
+            setJoinedPlayerName("A friend");
+            setShowPlayerJoinedNotification(true);
+            setTimeout(() => setShowPlayerJoinedNotification(false), 4000);
+          });
+      }
+      
       // Handle real-time updates here
       if (message.type === 'move_made') {
         // Refresh game state when opponent makes a move
@@ -174,6 +214,7 @@ export default function Game() {
         isMultiplayer={isMultiplayer}
         currentPlayerId={playerId || undefined}
         nickname={nickname || undefined}
+        opponentNickname={opponentNickname || undefined}
       />
       
       {/* Turn indicator for multiplayer */}
@@ -301,6 +342,21 @@ export default function Game() {
         message={feedbackData.message}
         onClose={handleCloseFeedback}
       />
+      
+      {/* Player Joined Notification */}
+      {showPlayerJoinedNotification && (
+        <div className="fixed top-4 right-4 bg-green-600 text-white p-4 rounded-lg shadow-lg z-50 animate-in slide-in-from-right-4 duration-300" data-testid="player-joined-notification">
+          <div className="flex items-center space-x-2">
+            <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+              <span className="text-white text-sm font-bold">👋</span>
+            </div>
+            <div>
+              <p className="font-semibold">Player Joined!</p>
+              <p className="text-sm text-green-100">{joinedPlayerName} has joined the game</p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
