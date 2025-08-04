@@ -2,7 +2,15 @@
 
 ## Overview
 
-Chronology is a single-player educational game where players arrange historical events in chronological order. The application is a full-stack web game built with React and Express, featuring a drag-and-drop timeline interface where players place historical event cards in the correct temporal sequence. The game tracks scoring based on correct placements and provides immediate feedback on player moves.
+Chronology is a single-player educational game where players arrange historical events in chronological order. The application is a full-stack web game built with React and Express, featuring a click-based timeline interface where players select and place historical event cards in the correct temporal sequence. The game tracks scoring based on correct placements and provides immediate feedback on player moves.
+
+## Recent Changes (January 2025)
+
+- **Fixed Critical Gameplay Bug**: Resolved state management issue that prevented drag-and-drop functionality
+- **Simplified Interaction Model**: Replaced complex drag-and-drop with intuitive click-to-select and click-to-place system
+- **Enhanced Visual Feedback**: Added purple ring indicator for selected cards and clear messaging
+- **Centralized State Management**: Moved card selection state to parent Game component for proper data flow
+- **Fully Functional Core Gameplay**: Players can now successfully place cards and progress through the game
 
 ## User Preferences
 
@@ -40,8 +48,9 @@ The core game mechanics are implemented with:
 
 - **Event Management**: Curated historical events with random selection excluding already placed cards
 - **Scoring System**: Points awarded for correct chronological placement
-- **Drag-and-Drop**: Custom React hooks handling drag events with visual feedback
-- **Game State**: Centralized state management tracking current event, timeline, and player progress
+- **Click-Based Interaction**: Simplified click-to-select and click-to-place system with visual feedback
+- **Game State**: Centralized state management in Game component tracking current event, timeline, and player progress
+- **Card Selection**: Purple ring visual indicator and state managed at parent component level
 
 ### UI/UX Design Patterns
 The interface follows modern game design principles:
