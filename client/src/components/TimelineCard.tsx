@@ -35,8 +35,18 @@ export default function TimelineCard({
         !isPlaced ? 'cursor-move card-hover' : ''
       }`}
       draggable={!isPlaced}
-      onDragStart={onDragStart}
-      onDragEnd={onDragEnd}
+      onDragStart={(e) => {
+        console.log('TimelineCard drag start for event:', event.id);
+        if (onDragStart) {
+          onDragStart(e);
+        }
+      }}
+      onDragEnd={(e) => {
+        console.log('TimelineCard drag end for event:', event.id);
+        if (onDragEnd) {
+          onDragEnd(e);
+        }
+      }}
       data-testid={`timeline-card-${event.id}`}
     >
       <div className={`bg-gradient-to-br ${getCardColor()} text-white p-4 rounded-lg shadow-md`}>
