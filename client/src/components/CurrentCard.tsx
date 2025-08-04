@@ -8,10 +8,19 @@ interface CurrentCardProps {
   selectedCardId: string | null;
   onSelectCard: (cardId: string) => void;
   onDeselectCard: () => void;
+  isMultiplayer?: boolean;
+  currentPlayerId?: string;
 }
 
-export default function CurrentCard({ gameState, onPlaceEvent, isPlacing, selectedCardId, onSelectCard, onDeselectCard }: CurrentCardProps) {
+export default function CurrentCard({ gameState, onPlaceEvent, isPlacing, selectedCardId, onSelectCard, onDeselectCard, isMultiplayer, currentPlayerId }: CurrentCardProps) {
   const { currentEvent, game } = gameState;
+  
+  // Determine if it's the current player's turn in multiplayer
+  const isMyTurn = !isMultiplayer || (() => {
+    const isPlayer1 = currentPlayerId === game.player1Id;
+    return (isPlayer1 && game.currentTurn === "player1") || 
+           (!isPlayer1 && game.currentTurn === "player2");
+  })();
 
   if (!currentEvent) {
     if (game.gameStatus === 'completed') {
@@ -53,15 +62,29 @@ export default function CurrentCard({ gameState, onPlaceEvent, isPlacing, select
     <div className="mt-6 bg-white rounded-xl shadow-sm p-6" data-testid="current-card-section">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold text-gray-900">Current Card</h3>
-        <div className="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-medium">
-          {isPlacing ? 'Placing...' : 'Your Turn'}
+        <div className={`px-3 py-1 rounded-full text-sm font-medium ${
+          isPlacing 
+            ? 'bg-blue-100 text-blue-800' 
+            : isMyTurn 
+              ? 'bg-green-100 text-green-800' 
+              : 'bg-orange-100 text-orange-800'
+        }`}>
+          {isPlacing 
+            ? 'Placing...' 
+            : isMyTurn 
+              ? 'Your Turn' 
+              : "Opponent's Turn"}
         </div>
       </div>
       
       <div className="flex justify-center">
         <div 
-          onClick={handleCardClick}
-          className={`cursor-pointer transition-transform hover:scale-105 ${
+          onClick={isMyTurn ? handleCardClick : undefined}
+          className={`transition-transform ${
+            isMyTurn 
+              ? 'cursor-pointer hover:scale-105' 
+              : 'cursor-not-allowed opacity-50'
+          } ${
             selectedCardId === currentEvent.id ? 'ring-4 ring-purple-300' : ''
           }`}
         >
@@ -75,9 +98,11 @@ export default function CurrentCard({ gameState, onPlaceEvent, isPlacing, select
       
       <div className="text-center mt-4">
         <p className="text-sm text-gray-600">
-          {selectedCardId === currentEvent.id 
-            ? "Card selected! Now click a drop zone in the timeline above" 
-            : "Click this card to select it"}
+          {!isMyTurn 
+            ? "Wait for the other player to make their move" 
+            : selectedCardId === currentEvent.id 
+              ? "Card selected! Now click a drop zone in the timeline above" 
+              : "Click this card to select it"}
         </p>
       </div>
     </div>

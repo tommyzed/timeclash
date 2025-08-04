@@ -282,6 +282,8 @@ export default function Game() {
               selectedCardId={selectedCardId}
               onSelectCard={handleSelectCard}
               onDeselectCard={handleDeselectCard}
+              isMultiplayer={isMultiplayer}
+              currentPlayerId={playerId || undefined}
             />
           </div>
           
