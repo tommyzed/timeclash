@@ -213,6 +213,17 @@ export default function Game() {
     setSelectedCardId(cardId);
   };
 
+  const handleTargetChange = async (newTarget: number) => {
+    if (gameId) {
+      try {
+        await apiRequest("PATCH", `/api/games/${gameId}/settings`, { targetScore: newTarget });
+        queryClient.invalidateQueries({ queryKey: ["/api/games", gameId] });
+      } catch (error) {
+        console.error('Failed to update target score:', error);
+      }
+    }
+  };
+
   // Check for game completion and show victory modal
   useEffect(() => {
     if (gameState?.game && justWon) {
@@ -273,6 +284,7 @@ export default function Game() {
         currentPlayerId={playerId || undefined}
         nickname={nickname || undefined}
         opponentNickname={opponentNickname || undefined}
+        onTargetChange={handleTargetChange}
       />
       
       {/* Turn indicator for multiplayer */}

@@ -327,6 +327,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Update game settings
+  app.patch("/api/games/:gameId/settings", async (req, res) => {
+    try {
+      const { gameId } = req.params;
+      const { targetScore } = req.body;
+
+      if (!targetScore || targetScore < 5 || targetScore > 15) {
+        return res.status(400).json({ message: "Target score must be between 5 and 15" });
+      }
+
+      const game = await storage.getGame(gameId);
+      if (!game) {
+        return res.status(404).json({ message: "Game not found" });
+      }
+
+      // Only allow settings changes in waiting/playing state, not completed games
+      if (game.gameStatus === 'completed') {
+        return res.status(400).json({ message: "Cannot change settings of completed game" });
+      }
+
+      await storage.updateGame(gameId, { targetScore });
+      res.json({ message: "Settings updated successfully" });
+    } catch (error) {
+      console.error("Update settings error:", error);
+      res.status(500).json({ message: "Failed to update settings" });
+    }
+  });
+
   const httpServer = createServer(app);
 
   // Set up WebSocket server for real-time multiplayer
