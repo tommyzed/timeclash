@@ -16,6 +16,7 @@ Chronology is a single-player educational game where players arrange historical 
 - **Crypto-Secure Randomization**: Implemented webcrypto-based randomization for truly random card selection
 - **Expanded Historical Dataset**: Added 400+ historical events spanning from 3.3M B.C. to 2022 C.E.
 - **Enhanced Card Variety**: Every game now starts with different events ensuring unique gameplay experiences
+- **Player-Specific Card Colors**: Blue cards for current player, orange for opponent, visual timeline ownership
 
 ## User Preferences
 
