@@ -27,10 +27,7 @@ export default function Lobby() {
       localStorage.removeItem('nickname');
       localStorage.setItem('gameId', data.game.id);
       
-      toast({
-        title: "Single Player Game Started!",
-        description: "Good luck building your timeline!",
-      });
+
       
       navigate(`/game/${data.game.id}`);
     },
