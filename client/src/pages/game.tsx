@@ -130,11 +130,20 @@ export default function Game() {
         // Show toast for opponent's move
         if (message.data.playerId !== playerId) {
           // Get opponent's nickname and event details to show in toast
+          console.log('Fetching data for toast:', { playerId: message.data.playerId, eventId: message.data.eventId });
+          
           Promise.all([
-            fetch(`/api/players/${message.data.playerId}`).then(r => r.json()),
-            fetch(`/api/events/${message.data.eventId}`).then(r => r.json())
+            fetch(`/api/players/${message.data.playerId}`).then(r => {
+              console.log('Player response status:', r.status);
+              return r.json();
+            }),
+            fetch(`/api/events/${message.data.eventId}`).then(r => {
+              console.log('Event response status:', r.status);
+              return r.json();
+            })
           ])
           .then(([player, event]) => {
+            console.log('Fetched data:', { player, event });
             const opponentName = player.nickname || "Opponent";
             const eventTitle = event.title || "Unknown Event";
             const eventYear = event.year || "Unknown Year";
@@ -151,7 +160,8 @@ export default function Game() {
               variant: message.data.isCorrect ? "default" : "destructive",
             });
           })
-          .catch(() => {
+          .catch((error) => {
+            console.error('Error fetching toast data:', error);
             // Fallback toast if API calls fail
             const status = message.data.isCorrect ? "is correct" : "is incorrect";
             toast({

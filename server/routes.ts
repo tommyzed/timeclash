@@ -330,6 +330,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
         await storage.updateGame(gameId, updateData);
       }
 
+      // Broadcast move to other players in multiplayer games
+      if (game.roomCode && playerId) {
+        broadcastToGame(gameId, {
+          type: 'move_made',
+          data: { playerId, eventId, position, isCorrect }
+        });
+      }
+
       res.json({ 
         isCorrect,
         message: isCorrect 
