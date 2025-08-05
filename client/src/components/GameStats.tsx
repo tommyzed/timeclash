@@ -2,16 +2,19 @@ import { type GameState } from "@shared/schema";
 
 interface GameStatsProps {
   gameState: GameState;
+  currentPlayerId?: string;
 }
 
-export default function GameStats({ gameState }: GameStatsProps) {
+export default function GameStats({ gameState, currentPlayerId }: GameStatsProps) {
   const { game, recentMoves } = gameState;
   
   const correctMoves = recentMoves.filter(move => move.isCorrect).length;
   const incorrectMoves = recentMoves.filter(move => !move.isCorrect).length;
   
-  // Get the current player's score - in single player, use player1Score
-  const currentScore = game.player1Score;
+  // Get the current player's score - for multiplayer, use their specific score
+  const currentScore = game.roomCode && currentPlayerId
+    ? (currentPlayerId === game.player1Id ? game.player1Score : game.player2Score)
+    : game.player1Score; // Single player fallback
   const progressPercentage = (currentScore / game.targetScore) * 100;
 
   return (

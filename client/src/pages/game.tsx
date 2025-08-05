@@ -416,7 +416,7 @@ export default function Game() {
           </div>
           
           <div className="lg:col-span-1">
-            <GameStats gameState={gameState} />
+            <GameStats gameState={gameState} currentPlayerId={playerId || undefined} />
             <RecentActivity gameState={gameState} />
             <GameControls onNewGame={handleNewGame} />
           </div>
