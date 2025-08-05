@@ -8,8 +8,13 @@ interface GameStatsProps {
 export default function GameStats({ gameState, currentPlayerId }: GameStatsProps) {
   const { game, recentMoves } = gameState;
   
-  const correctMoves = recentMoves.filter(move => move.isCorrect).length;
-  const incorrectMoves = recentMoves.filter(move => !move.isCorrect).length;
+  // Filter moves for the current player in multiplayer, or all moves in single player
+  const playerMoves = game.roomCode && currentPlayerId
+    ? recentMoves.filter(move => move.playerId === currentPlayerId)
+    : recentMoves; // Single player - all moves belong to the player
+  
+  const correctMoves = playerMoves.filter(move => move.isCorrect).length;
+  const incorrectMoves = playerMoves.filter(move => !move.isCorrect).length;
   
   // Get the current player's score - for multiplayer, use their specific score
   const currentScore = game.roomCode && currentPlayerId
