@@ -91,13 +91,6 @@ export default function Timeline({ gameState, onPlaceEvent, isPlacing, selectedC
               </div>
             </div>
           ))}
-          
-          {/* Future slots indicator */}
-          <div className="flex-shrink-0 w-48 ml-4">
-            <div className="border-2 border-dashed border-gray-300 h-24 rounded-lg flex items-center justify-center">
-              <span className="text-gray-400 text-sm">Future cards</span>
-            </div>
-          </div>
         </div>
       </div>
     </div>
