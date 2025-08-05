@@ -177,6 +177,11 @@ export class MemStorage implements IStorage {
 
   async createGame(roomCode?: string): Promise<Game> {
     const id = randomUUID();
+    
+    // Get a random starting event
+    const randomStartingEvent = await this.getRandomHistoricalEvent();
+    const startingEventId = randomStartingEvent?.id || "1"; // Fallback to ID "1" if no event found
+    
     const game: Game = {
       id,
       roomCode: roomCode || null,
@@ -187,7 +192,7 @@ export class MemStorage implements IStorage {
       player2Score: 0,
       targetScore: 10,
       currentEventId: null,
-      placedEventIds: ["1"], // Start with Declaration of Independence
+      placedEventIds: [startingEventId], // Start with random historical event
       gameStatus: "waiting",
       winnerPlayerId: null,
       createdAt: new Date()
