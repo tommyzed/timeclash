@@ -46,7 +46,7 @@ export default function TimelineCard({
         {/* Player name section with divider */}
         {isPlaced && placedByPlayerName ? (
           <>
-            <div className="text-xs font-semibold mb-2 text-yellow-200 bg-black bg-opacity-20 px-2 py-1 rounded-sm text-center">
+            <div className="text-xs font-semibold mb-2 px-2 py-1 rounded-sm text-[#ffffff] text-left bg-[#80fff433]">
               {placedByPlayerName.toUpperCase()}
             </div>
             <hr className="border-white border-opacity-30 mb-3" />
