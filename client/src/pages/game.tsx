@@ -5,6 +5,7 @@ import { queryClient } from "@/lib/queryClient";
 import { apiRequest } from "@/lib/queryClient";
 import { type GameState, type WebSocketMessage } from "@shared/schema";
 import { useWebSocket } from "@/hooks/useWebSocket";
+import { useToast } from "@/hooks/use-toast";
 import GameHeader from "@/components/GameHeader";
 import Timeline from "@/components/Timeline";
 import CurrentCard from "@/components/CurrentCard";
@@ -18,6 +19,7 @@ export default function Game() {
   const urlParams = new URLSearchParams(window.location.search);
   const playerId = urlParams.get('playerId') || localStorage.getItem('playerId');
   const nickname = localStorage.getItem('nickname');
+  const { toast } = useToast();
   
   const [gameId, setGameId] = useState<string | null>(params?.gameId || null);
   const [isMultiplayer, setIsMultiplayer] = useState<boolean>(!!params?.gameId && !!playerId);

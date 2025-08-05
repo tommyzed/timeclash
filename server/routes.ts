@@ -32,6 +32,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get a specific historical event by ID
+  app.get("/api/events/:eventId", async (req, res) => {
+    try {
+      const { eventId } = req.params;
+      const event = await storage.getHistoricalEvent(eventId);
+      if (!event) {
+        return res.status(404).json({ message: "Event not found" });
+      }
+      res.json(event);
+    } catch (error) {
+      console.error("Get event error:", error);
+      res.status(500).json({ message: "Failed to get event" });
+    }
+  });
+
   // Create a new game (single player or with room code for multiplayer)
   app.post("/api/games", async (req, res) => {
     try {
