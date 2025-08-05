@@ -8,6 +8,8 @@ interface TimelineCardProps {
   onDragStart?: (e: React.DragEvent) => void;
   onDragEnd?: (e: React.DragEvent) => void;
   placedByPlayerName?: string;
+  placedByPlayerId?: string;
+  currentPlayerId?: string;
 }
 
 export default function TimelineCard({ 
@@ -17,10 +19,22 @@ export default function TimelineCard({
   isDragging = false,
   onDragStart,
   onDragEnd,
-  placedByPlayerName
+  placedByPlayerName,
+  placedByPlayerId,
+  currentPlayerId
 }: TimelineCardProps) {
   const getCardColor = () => {
     if (isStarting) return "from-green-500 to-green-600";
+    if (isPlaced && placedByPlayerId) {
+      // Player 1 (first player) gets blue cards
+      // Player 2 (second player) gets orange cards  
+      // Current player gets blue, opponent gets orange
+      if (currentPlayerId && placedByPlayerId === currentPlayerId) {
+        return "from-blue-500 to-blue-600";
+      } else {
+        return "from-orange-500 to-orange-600";
+      }
+    }
     if (isPlaced) return "from-blue-500 to-blue-600";
     return "from-purple-500 to-purple-600";
   };

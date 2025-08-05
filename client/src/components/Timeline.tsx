@@ -7,9 +7,10 @@ interface TimelineProps {
   onPlaceEvent: (eventId: string, position: number) => void;
   isPlacing: boolean;
   selectedCardId: string | null;
+  currentPlayerId?: string;
 }
 
-export default function Timeline({ gameState, onPlaceEvent, isPlacing, selectedCardId }: TimelineProps) {
+export default function Timeline({ gameState, onPlaceEvent, isPlacing, selectedCardId, currentPlayerId }: TimelineProps) {
   const { placedEvents, currentEvent } = gameState;
 
   return (
@@ -58,6 +59,8 @@ export default function Timeline({ gameState, onPlaceEvent, isPlacing, selectedC
                 isPlaced={true}
                 isStarting={index === 0}
                 placedByPlayerName={placedEvent.placedByPlayerName}
+                placedByPlayerId={placedEvent.placedByPlayerId}
+                currentPlayerId={currentPlayerId}
               />
               
               {/* Drop zone after each card */}

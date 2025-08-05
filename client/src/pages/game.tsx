@@ -442,6 +442,7 @@ export default function Game() {
               onPlaceEvent={handlePlaceEvent}
               isPlacing={placeEventMutation.isPending}
               selectedCardId={selectedCardId}
+              currentPlayerId={playerId}
             />
             <CurrentCard 
               gameState={gameState} 
