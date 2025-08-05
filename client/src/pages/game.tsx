@@ -44,7 +44,11 @@ export default function Game() {
   // Create a new game on component mount
   const createGameMutation = useMutation({
     mutationFn: async () => {
-      const response = await apiRequest("POST", "/api/games", {});
+      // Explicitly specify singlePlayer flag based on current context
+      const isSinglePlayerGame = !playerId; // If no playerId, it's single player
+      const response = await apiRequest("POST", "/api/games", { 
+        singlePlayer: isSinglePlayerGame 
+      });
       return await response.json();
     },
     onSuccess: (game) => {
