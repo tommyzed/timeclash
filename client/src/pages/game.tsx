@@ -148,10 +148,15 @@ export default function Game() {
             const eventTitle = event.title || "Unknown Event";
             const eventYear = event.year || "Unknown Year";
             
+            // Format year for display (B.C. for negative years)
+            const displayYear = typeof eventYear === 'number' && eventYear < 0 
+              ? `${Math.abs(eventYear)} B.C.` 
+              : eventYear;
+            
             const status = message.data.isCorrect ? "is correct" : "is incorrect";
             const toastTitle = `${opponentName} ${status}!`;
             const toastDescription = message.data.isCorrect 
-              ? `${eventTitle} happened in year ${eventYear}.`
+              ? `${eventTitle} happened in year ${displayYear}.`
               : `${eventTitle} was placed incorrectly.`;
             
             toast({

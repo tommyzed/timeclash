@@ -358,11 +358,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
+      // Format year for display (B.C. for negative years)
+      const displayYear = event.year < 0 ? `${Math.abs(event.year)} B.C.` : event.year;
+      
       res.json({ 
         isCorrect,
         message: isCorrect 
-          ? `Correct! ${event.title} (${event.year}) placed successfully.`
-          : `Incorrect placement. ${event.title} was in ${event.year}.`
+          ? `Correct! ${event.title} (${displayYear}) placed successfully.`
+          : `Incorrect placement. ${event.title} was in ${displayYear}.`
       });
     } catch (error) {
       console.error("Place event error:", error);
