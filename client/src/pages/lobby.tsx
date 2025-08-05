@@ -72,6 +72,7 @@ export default function Lobby() {
       toast({
         title: "Multiplayer Game Created!",
         description: `Room code: ${data.roomCode}. Share this with your friend!`,
+        variant: "warning",
       });
       
       navigate(`/game/${data.game.id}?playerId=${data.playerId}`);
