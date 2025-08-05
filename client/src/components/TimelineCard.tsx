@@ -51,7 +51,7 @@ export default function TimelineCard({
             <hr className="border-white border-opacity-30 mb-3" />
           </>
         ) : !isPlaced ? (
-          <div className="text-xs font-semibold mb-2 text-[#000000] bg-[#a653f5] px-2 py-1 rounded-sm text-center">{getCardLabel()}</div>
+          <div className="text-xs font-semibold mb-2 text-[#a653f5] bg-transparent px-2 py-1 rounded-sm text-center">{getCardLabel()}</div>
         ) : null}
         
         <div className="text-sm font-medium mb-2">{event.title}</div>
