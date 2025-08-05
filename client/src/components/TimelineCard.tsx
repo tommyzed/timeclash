@@ -26,9 +26,11 @@ export default function TimelineCard({
   const getCardColor = () => {
     if (isStarting) return "from-green-500 to-green-600";
     if (isPlaced && placedByPlayerId) {
-      // Player 1 (first player) gets blue cards
-      // Player 2 (second player) gets orange cards  
-      // Current player gets blue, opponent gets orange
+      // In single-player mode (placedByPlayerId === "single-player"), use blue
+      if (placedByPlayerId === "single-player") {
+        return "from-blue-500 to-blue-600";
+      }
+      // In multiplayer mode: current player gets blue, opponent gets orange
       if (currentPlayerId && placedByPlayerId === currentPlayerId) {
         return "from-blue-500 to-blue-600";
       } else {

@@ -404,8 +404,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({
         isCorrect,
         message: isCorrect
-          ? `Correct! "${event.title}" was in ${displayYear}.`
-          : `Incorrect placement. "${event.title}" was in ${displayYear}.`,
+          ? `"${event.title}" was in ${displayYear}.`
+          : `"${event.title}" was in ${displayYear}.`,
       });
     } catch (error) {
       console.error("Place event error:", error);
