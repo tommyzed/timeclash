@@ -136,14 +136,14 @@ export default function Lobby() {
         </div>
 
         <Card>
-          <CardHeader>
+          <CardHeader className="flex flex-col space-y-1.5 p-6 text-[#0c8557]">
             <CardTitle>Game Lobby</CardTitle>
             <CardDescription>Choose your game mode</CardDescription>
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="single" className="w-full">
               <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger value="single">Single Player</TabsTrigger>
+                <TabsTrigger value="single" className="text-[#0c8557]">Single Player</TabsTrigger>
                 <TabsTrigger value="create">Create Room</TabsTrigger>
                 <TabsTrigger value="join">Join Room</TabsTrigger>
               </TabsList>
