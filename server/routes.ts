@@ -35,19 +35,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Create a new game (single player or with room code for multiplayer)
   app.post("/api/games", async (req, res) => {
     try {
-      const { roomCode } = req.body;
-      const generatedRoomCode = roomCode || Math.random().toString(36).substring(2, 8).toUpperCase();
-      const game = await storage.createGame(generatedRoomCode);
+      const { roomCode, singlePlayer } = req.body;
       
-      // Get a random event for the first turn (excluding the starting card)
-      const currentEvent = await storage.getRandomHistoricalEvent(game.placedEventIds);
-      
-      if (currentEvent) {
-        await storage.updateGame(game.id, { currentEventId: currentEvent.id });
-        game.currentEventId = currentEvent.id;
+      // For single player games, don't create room codes or player systems
+      if (singlePlayer) {
+        const game = await storage.createGame(); // No room code for single player
+        
+        // Get a random event for the first turn (excluding the starting card)
+        const currentEvent = await storage.getRandomHistoricalEvent(game.placedEventIds);
+        
+        if (currentEvent) {
+          await storage.updateGame(game.id, { currentEventId: currentEvent.id });
+          game.currentEventId = currentEvent.id;
+        }
+        
+        res.json(game);
+      } else {
+        // Multiplayer game creation
+        const generatedRoomCode = roomCode || Math.random().toString(36).substring(2, 8).toUpperCase();
+        const game = await storage.createGame(generatedRoomCode);
+        
+        // Get a random event for the first turn (excluding the starting card)
+        const currentEvent = await storage.getRandomHistoricalEvent(game.placedEventIds);
+        
+        if (currentEvent) {
+          await storage.updateGame(game.id, { currentEventId: currentEvent.id });
+          game.currentEventId = currentEvent.id;
+        }
+        
+        res.json(game);
       }
-      
-      res.json(game);
     } catch (error) {
       res.status(500).json({ message: "Failed to create game" });
     }

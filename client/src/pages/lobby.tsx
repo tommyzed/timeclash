@@ -14,7 +14,36 @@ export default function Lobby() {
   const [, navigate] = useLocation();
   const { toast } = useToast();
 
-  const createGameMutation = useMutation({
+  const createSinglePlayerMutation = useMutation({
+    mutationFn: async () => {
+      // Create single-player game without room code or player system
+      const gameResponse = await apiRequest('POST', '/api/games', { singlePlayer: true });
+      const game = await gameResponse.json();
+      return { game, singlePlayer: true };
+    },
+    onSuccess: (data) => {
+      // Clear any previous multiplayer data
+      localStorage.removeItem('playerId');
+      localStorage.removeItem('nickname');
+      localStorage.setItem('gameId', data.game.id);
+      
+      toast({
+        title: "Single Player Game Started!",
+        description: "Good luck building your timeline!",
+      });
+      
+      navigate(`/game/${data.game.id}`);
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Error",
+        description: error.message || 'Failed to create single player game',
+        variant: "destructive",
+      });
+    }
+  });
+
+  const createMultiplayerGameMutation = useMutation({
     mutationFn: async () => {
       if (!nickname.trim()) {
         throw new Error('Please enter a nickname');
@@ -44,7 +73,7 @@ export default function Lobby() {
       localStorage.setItem('gameId', data.game.id);
       
       toast({
-        title: "Game Created!",
+        title: "Multiplayer Game Created!",
         description: `Room code: ${data.roomCode}. Share this with your friend!`,
       });
       
@@ -108,79 +137,98 @@ export default function Lobby() {
 
         <Card>
           <CardHeader>
-            <CardTitle>Multiplayer Lobby</CardTitle>
-            <CardDescription>Create a new game or join an existing one</CardDescription>
+            <CardTitle>Game Lobby</CardTitle>
+            <CardDescription>Choose your game mode</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4 mb-6">
-              <div>
-                <label htmlFor="nickname" className="block text-sm font-medium text-gray-700 mb-2">
-                  Your Nickname
-                </label>
-                <Input
-                  id="nickname"
-                  placeholder="Enter your nickname"
-                  value={nickname}
-                  onChange={(e) => setNickname(e.target.value)}
-                  data-testid="input-nickname"
-                />
-              </div>
-            </div>
-
-            <Tabs defaultValue="create" className="w-full">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="create">Create Game</TabsTrigger>
-                <TabsTrigger value="join">Join Game</TabsTrigger>
+            <Tabs defaultValue="single" className="w-full">
+              <TabsList className="grid w-full grid-cols-3">
+                <TabsTrigger value="single">Single Player</TabsTrigger>
+                <TabsTrigger value="create">Create Room</TabsTrigger>
+                <TabsTrigger value="join">Join Room</TabsTrigger>
               </TabsList>
               
+              <TabsContent value="single" className="space-y-4">
+                <div className="text-center space-y-4">
+                  <p className="text-sm text-gray-600">
+                    Play solo and challenge yourself to build the perfect timeline!
+                  </p>
+                  <Button
+                    onClick={() => createSinglePlayerMutation.mutate()}
+                    disabled={createSinglePlayerMutation.isPending}
+                    className="w-full"
+                    data-testid="button-single-player"
+                  >
+                    {createSinglePlayerMutation.isPending ? 'Starting...' : 'Start Single Player Game'}
+                  </Button>
+                </div>
+              </TabsContent>
+              
               <TabsContent value="create" className="space-y-4">
-                <p className="text-sm text-gray-600">
-                  Create a new game and get a room code to share with a friend.
-                </p>
+                <div className="space-y-4">
+                  <div>
+                    <label htmlFor="create-nickname" className="block text-sm font-medium text-gray-700 mb-2">
+                      Your Nickname
+                    </label>
+                    <Input
+                      id="create-nickname"
+                      placeholder="Enter your nickname"
+                      value={nickname}
+                      onChange={(e) => setNickname(e.target.value)}
+                      data-testid="input-nickname-create"
+                    />
+                  </div>
+                  <p className="text-sm text-gray-600">
+                    Create a new game and get a room code to share with a friend.
+                  </p>
                 <Button 
-                  onClick={() => createGameMutation.mutate()}
-                  disabled={createGameMutation.isPending || !nickname.trim()}
+                  onClick={() => createMultiplayerGameMutation.mutate()}
+                  disabled={createMultiplayerGameMutation.isPending || !nickname.trim()}
                   className="w-full"
                   data-testid="button-create-game"
                 >
-                  {createGameMutation.isPending ? 'Creating...' : 'Create Game'}
-                </Button>
+                  {createMultiplayerGameMutation.isPending ? 'Creating...' : 'Create Multiplayer Game'}
+                  </Button>
+                </div>
               </TabsContent>
               
               <TabsContent value="join" className="space-y-4">
-                <div>
-                  <label htmlFor="roomCode" className="block text-sm font-medium text-gray-700 mb-2">
-                    Room Code
-                  </label>
-                  <Input
-                    id="roomCode"
-                    placeholder="Enter room code"
-                    value={roomCode}
-                    onChange={(e) => setRoomCode(e.target.value.toUpperCase())}
-                    data-testid="input-room-code"
-                  />
-                </div>
-                <Button 
-                  onClick={() => joinGameMutation.mutate()}
-                  disabled={joinGameMutation.isPending || !nickname.trim() || !roomCode.trim()}
-                  className="w-full"
-                  data-testid="button-join-game"
+                <div className="space-y-4">
+                  <div>
+                    <label htmlFor="join-nickname" className="block text-sm font-medium text-gray-700 mb-2">
+                      Your Nickname
+                    </label>
+                    <Input
+                      id="join-nickname"
+                      placeholder="Enter your nickname"
+                      value={nickname}
+                      onChange={(e) => setNickname(e.target.value)}
+                      data-testid="input-nickname-join"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="roomCode" className="block text-sm font-medium text-gray-700 mb-2">
+                      Room Code
+                    </label>
+                    <Input
+                      id="roomCode"
+                      placeholder="Enter room code"
+                      value={roomCode}
+                      onChange={(e) => setRoomCode(e.target.value.toUpperCase())}
+                      data-testid="input-room-code"
+                    />
+                  </div>
+                  <Button 
+                    onClick={() => joinGameMutation.mutate()}
+                    disabled={joinGameMutation.isPending || !nickname.trim() || !roomCode.trim()}
+                    className="w-full"
+                    data-testid="button-join-game"
                 >
                   {joinGameMutation.isPending ? 'Joining...' : 'Join Game'}
                 </Button>
+                </div>
               </TabsContent>
             </Tabs>
-
-            <div className="mt-6 pt-6 border-t border-gray-200">
-              <Button 
-                variant="outline" 
-                onClick={() => navigate('/game')}
-                className="w-full"
-                data-testid="button-single-player"
-              >
-                Play Single Player Instead
-              </Button>
-            </div>
           </CardContent>
         </Card>
       </div>
