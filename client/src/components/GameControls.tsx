@@ -1,5 +1,6 @@
-import { RotateCcw, HelpCircle, X } from "lucide-react";
+import { RotateCcw, HelpCircle, X, Home } from "lucide-react";
 import { useState } from "react";
+import { useLocation } from "wouter";
 
 interface GameControlsProps {
   onNewGame: () => void;
@@ -7,6 +8,7 @@ interface GameControlsProps {
 
 export default function GameControls({ onNewGame }: GameControlsProps) {
   const [showRulesModal, setShowRulesModal] = useState(false);
+  const [, setLocation] = useLocation();
 
   return (
     <>
@@ -70,6 +72,15 @@ export default function GameControls({ onNewGame }: GameControlsProps) {
         >
           <RotateCcw className="mr-2 h-4 w-4" />
           New Game
+        </button>
+        
+        <button 
+          className="w-full bg-blue-50 hover:bg-blue-100 text-blue-700 py-2 px-4 rounded-lg transition-colors flex items-center justify-center"
+          onClick={() => setLocation('/')}
+          data-testid="button-return-lobby"
+        >
+          <Home className="mr-2 h-4 w-4" />
+          Return to Lobby
         </button>
       </div>
       
