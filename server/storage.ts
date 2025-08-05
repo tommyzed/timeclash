@@ -148,6 +148,12 @@ export class MemStorage implements IStorage {
       }
     ];
 
+    // Shuffle the events array to ensure different starting cards on each server restart
+    for (let i = events.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [events[i], events[j]] = [events[j], events[i]];
+    }
+
     events.forEach(event => {
       this.historicalEvents.set(event.id, event);
     });
