@@ -157,7 +157,7 @@ export default function Game() {
             toast({
               title: toastTitle,
               description: toastDescription,
-              variant: message.data.isCorrect ? "default" : "destructive",
+              variant: message.data.isCorrect ? "success" : "destructive",
             });
           })
           .catch((error) => {
@@ -167,7 +167,7 @@ export default function Game() {
             toast({
               title: `Opponent ${status}!`,
               description: `Your opponent just made a move.`,
-              variant: message.data.isCorrect ? "default" : "destructive",
+              variant: message.data.isCorrect ? "success" : "destructive",
             });
           });
         }
