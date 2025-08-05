@@ -192,19 +192,7 @@ export default function Game() {
         message: result.message
       });
       
-      // Send WebSocket message for multiplayer
-      if (isMultiplayer && isConnected) {
-        sendMessage({
-          type: 'make_move',
-          data: { 
-            gameId, 
-            playerId, 
-            eventId: selectedCardId, 
-            position: 0, // Will be updated with actual position
-            isCorrect: result.isCorrect
-          }
-        });
-      }
+      // Note: WebSocket message is now sent by the server automatically
       
       // Refetch game state
       queryClient.invalidateQueries({ queryKey: ["/api/games", gameId] });
