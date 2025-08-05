@@ -43,108 +43,108 @@ export class MemStorage implements IStorage {
     const events: HistoricalEvent[] = [
       {
         id: "1",
-        title: "American Declaration of Independence",
-        description: "Signed in Philadelphia",
-        year: 1776,
-        category: "Politics"
-      },
-      {
-        id: "2",
-        title: "End of American Civil War",
-        description: "Lee surrenders at Appomattox",
-        year: 1865,
-        category: "War"
-      },
-      {
-        id: "3",
-        title: "World War I Begins",
-        description: "Assassination of Archduke Ferdinand",
-        year: 1914,
-        category: "War"
-      },
-      {
-        id: "4",
-        title: "First Moon Landing",
-        description: "Apollo 11 mission success",
-        year: 1969,
+        title: "The first stone tools are made in Kenya, marking the beginning of technology.",
+        description: "The first stone tools are made in Kenya, marking the beginning of technology.",
+        year: -3300000,
         category: "Science"
       },
       {
+        id: "2",
+        title: "Homo habilis achieves the first likely control of fire and cooking.",
+        description: "Homo habilis achieves the first likely control of fire and cooking.",
+        year: -2300000,
+        category: "Science"
+      },
+      {
+        id: "3",
+        title: "Early humans invent paint using ground ochre pigment in Zambia.",
+        description: "Early humans invent paint using ground ochre pigment in Zambia.",
+        year: -350000,
+        category: "Culture"
+      },
+      {
+        id: "4",
+        title: "Anatomically modern humans arrive in Europe.",
+        description: "Anatomically modern humans arrive in Europe.",
+        year: -45000,
+        category: "History"
+      },
+      {
         id: "5",
-        title: "The Berlin Wall Falls",
-        description: "East and West Germany begin reunification as the wall comes down",
-        year: 1989,
-        category: "Politics"
+        title: "The first known representational paintings are created in the Chauvet Caves...",
+        description: "The first known representational paintings are created in the Chauvet Caves in France.",
+        year: -31000,
+        category: "Culture"
       },
       {
         id: "6",
-        title: "World War II Ends",
-        description: "Japan surrenders after atomic bombs",
-        year: 1945,
-        category: "War"
+        title: "The first ceramics and evidence of weaving are created in Moravia.",
+        description: "The first ceramics and evidence of weaving are created in Moravia.",
+        year: -28000,
+        category: "Science"
       },
       {
         id: "7",
-        title: "Internet Created",
-        description: "ARPANET first message sent",
-        year: 1969,
-        category: "Technology"
+        title: "The dog is domesticated in Siberia, becoming humanity's first animal companion.",
+        description: "The dog is domesticated in Siberia, becoming humanity's first animal companion.",
+        year: -23000,
+        category: "History"
       },
       {
         id: "8",
-        title: "Napoleon Defeated at Waterloo",
-        description: "End of Napoleon's Hundred Days",
-        year: 1815,
-        category: "War"
+        title: "The Venus of Willendorf, one of the earliest known sculptures, is carved.",
+        description: "The Venus of Willendorf, one of the earliest known sculptures, is carved.",
+        year: -22000,
+        category: "Culture"
       },
       {
         id: "9",
-        title: "Titanic Sinks",
-        description: "Ship hits iceberg on maiden voyage",
-        year: 1912,
-        category: "Disaster"
+        title: "The first pottery is created in China, used for cooking and storage.",
+        description: "The first pottery is created in China, used for cooking and storage.",
+        year: -18000,
+        category: "Science"
       },
       {
         id: "10",
-        title: "Wright Brothers First Flight",
-        description: "First powered airplane flight",
-        year: 1903,
-        category: "Technology"
+        title: "Agriculture begins in the Fertile Crescent with wheat and barley cultivation.",
+        description: "Agriculture begins in the Fertile Crescent with the cultivation of wheat and barley.",
+        year: -10000,
+        category: "History"
       },
       {
         id: "11",
-        title: "Stock Market Crash",
-        description: "Black Tuesday begins Great Depression",
-        year: 1929,
-        category: "Economics"
+        title: "Göbekli Tepe, the world's oldest known temple complex, is built in Turkey.",
+        description: "Göbekli Tepe, the world's oldest known temple complex, is built in Turkey.",
+        year: -9500,
+        category: "Culture"
       },
       {
         id: "12",
-        title: "Columbus Reaches Americas",
-        description: "European discovery of the New World",
-        year: 1492,
-        category: "Exploration"
+        title: "Rice is first domesticated and cultivated along the Yangtze River in China.",
+        description: "Rice is first domesticated and cultivated along the Yangtze River in China.",
+        year: -8000,
+        category: "History"
       },
       {
         id: "13",
-        title: "Kennedy Assassination",
-        description: "President shot in Dallas, Texas",
-        year: 1963,
-        category: "Politics"
+        title: "The first known alcohol fermentation (mead) occurs in China.",
+        description: "The first known alcohol fermentation (mead) occurs in China.",
+        year: -7000,
+        category: "History"
       },
       {
         id: "14",
-        title: "Chernobyl Nuclear Disaster",
-        description: "Nuclear power plant explosion in Ukraine",
-        year: 1986,
-        category: "Disaster"
+        title: "The first evidence of copper smelting is found in modern-day Serbia.",
+        description: "The first evidence of copper smelting is found in modern-day Serbia.",
+        year: -6000,
+        category: "Science"
       },
       {
         id: "15",
-        title: "9/11 Terrorist Attacks",
-        description: "World Trade Center towers destroyed",
-        year: 2001,
-        category: "Terrorism"
+        title: "The Sumerian civilization evolves in Mesopotamia, developing the first cities.",
+        description: "The Sumerian civilization evolves in Mesopotamia, developing the first cities.",
+        year: -5000,
+        category: "History"
       }
     ];
 
