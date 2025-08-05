@@ -27,7 +27,6 @@ export default function TimelineCard({
 
   const getCardLabel = () => {
     if (isStarting) return "STARTING CARD";
-    if (isPlaced && placedByPlayerName) return placedByPlayerName.toUpperCase();
     if (isPlaced) return "CORRECTLY PLACED";
     return "PLACE ME!";
   };
@@ -44,7 +43,18 @@ export default function TimelineCard({
       data-testid={`timeline-card-${event.id}`}
     >
       <div className={`bg-gradient-to-br ${getCardColor()} text-white p-4 rounded-lg shadow-md`}>
-        <div className="text-xs font-semibold mb-2">{getCardLabel()}</div>
+        {/* Player name section with divider */}
+        {isPlaced && placedByPlayerName ? (
+          <>
+            <div className="text-xs font-semibold mb-2 text-yellow-200 bg-black bg-opacity-20 px-2 py-1 rounded-sm text-center">
+              {placedByPlayerName.toUpperCase()}
+            </div>
+            <hr className="border-white border-opacity-30 mb-3" />
+          </>
+        ) : (
+          <div className="text-xs font-semibold mb-2">{getCardLabel()}</div>
+        )}
+        
         <div className="text-sm font-medium mb-2">{event.title}</div>
         <div className="text-xs opacity-90 mb-4">{event.description}</div>
         <div className="text-right">
