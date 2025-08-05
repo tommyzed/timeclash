@@ -125,6 +125,41 @@ export default function Game() {
       
       // Handle real-time updates here
       if (message.type === 'move_made') {
+        // Show toast for opponent's move
+        if (message.data.playerId !== playerId) {
+          // Get opponent's nickname and event details to show in toast
+          Promise.all([
+            fetch(`/api/players/${message.data.playerId}`).then(r => r.json()),
+            fetch(`/api/events/${message.data.eventId}`).then(r => r.json())
+          ])
+          .then(([player, event]) => {
+            const opponentName = player.nickname || "Opponent";
+            const eventTitle = event.title || "Unknown Event";
+            const eventYear = event.year || "Unknown Year";
+            
+            const status = message.data.isCorrect ? "is correct" : "is incorrect";
+            const toastTitle = `${opponentName} ${status}!`;
+            const toastDescription = message.data.isCorrect 
+              ? `${eventTitle} happened in year ${eventYear}.`
+              : `${eventTitle} was placed incorrectly.`;
+            
+            toast({
+              title: toastTitle,
+              description: toastDescription,
+              variant: message.data.isCorrect ? "default" : "destructive",
+            });
+          })
+          .catch(() => {
+            // Fallback toast if API calls fail
+            const status = message.data.isCorrect ? "is correct" : "is incorrect";
+            toast({
+              title: `Opponent ${status}!`,
+              description: `Your opponent just made a move.`,
+              variant: message.data.isCorrect ? "default" : "destructive",
+            });
+          });
+        }
+        
         // Refresh game state when opponent makes a move
         queryClient.invalidateQueries({ queryKey: ["/api/games", gameId] });
       }
