@@ -1,47 +1,3 @@
-import { randomUUID, webcrypto } from "crypto";
-import { HistoricalEvent, Game, Player, GameMove, InsertGameMove } from "../shared/schema";
-
-export interface IStorage {
-  // Historical Events
-  getHistoricalEvent(id: string): Promise<HistoricalEvent | undefined>;
-  getAllHistoricalEvents(): Promise<HistoricalEvent[]>;
-  getRandomHistoricalEvent(excludeIds?: string[]): Promise<HistoricalEvent | undefined>;
-
-  // Games
-  getGame(id: string): Promise<Game | undefined>;
-  createGame(roomCode?: string): Promise<Game>;
-  updateGame(id: string, updates: Partial<Game>): Promise<Game | undefined>;
-  joinGame(gameId: string, playerId: string): Promise<Game | undefined>;
-  deleteGame(id: string): Promise<boolean>;
-  
-  // Players
-  getPlayer(id: string): Promise<Player | undefined>;
-  createPlayer(name: string): Promise<Player>;
-  updatePlayer(id: string, updates: Partial<Player>): Promise<Player | undefined>;
-  
-  // Game Moves
-  getGameMoves(gameId: string): Promise<GameMove[]>;
-  createGameMove(move: InsertGameMove): Promise<GameMove>;
-}
-
-export class MemStorage implements IStorage {
-  private historicalEvents: Map<string, HistoricalEvent>;
-  private games: Map<string, Game>;
-  private gameMoves: Map<string, GameMove>;
-  private players: Map<string, Player>;
-
-  constructor() {
-    this.historicalEvents = new Map();
-    this.games = new Map();
-    this.gameMoves = new Map();
-    this.players = new Map();
-    
-    // Initialize with all 500 historical events from CSV
-    this.initializeHistoricalEvents();
-  }
-
-  private initializeHistoricalEvents() {
-    // Complete dataset of all 500 historical events (3.3M BCE to 2022 CE)
     const events: HistoricalEvent[] = [
       {
         id: "1",
@@ -927,8 +883,8 @@ export class MemStorage implements IStorage {
       },
       {
         id: "433",
-        title: "The first known musical round, \"Sumer is icumen in,\" is written in England.",
-        description: "The first known musical round, \"Sumer is icumen in,\" is written in England.",
+        title: "The first known musical round, "Sumer is icumen in," is written in England.",
+        description: "The first known musical round, "Sumer is icumen in," is written in England.",
         year: 1250,
         category: "Culture"
       },
@@ -2446,8 +2402,8 @@ export class MemStorage implements IStorage {
       },
       {
         id: "297",
-        title: "Franklin D. Roosevelt is elected President of the United States, promising a \"New Deal\".",
-        description: "Franklin D. Roosevelt is elected President of the United States, promising a \"New Deal\".",
+        title: "Franklin D. Roosevelt is elected President of the United States, promising a "New Deal".",
+        description: "Franklin D. Roosevelt is elected President of the United States, promising a "New Deal".",
         year: 1932,
         category: "Politics"
       },
@@ -2817,8 +2773,8 @@ export class MemStorage implements IStorage {
       },
       {
         id: "337",
-        title: "Martin Luther King Jr. delivers his \"I Have a Dream\" speech during the March on Washington.",
-        description: "Martin Luther King Jr. delivers his \"I Have a Dream\" speech during the March on Washington.",
+        title: "Martin Luther King Jr. delivers his "I Have a Dream" speech during the March on Washington.",
+        description: "Martin Luther King Jr. delivers his "I Have a Dream" speech during the March on Washington.",
         year: 1963,
         category: "History"
       },
@@ -2999,8 +2955,8 @@ export class MemStorage implements IStorage {
       },
       {
         id: "355",
-        title: "The first \"test-tube baby,\" Louise Brown, is born via in vitro fertilization (IVF).",
-        description: "The first \"test-tube baby,\" Louise Brown, is born via in vitro fertilization (IVF).",
+        title: "The first "test-tube baby," Louise Brown, is born via in vitro fertilization (IVF).",
+        description: "The first "test-tube baby," Louise Brown, is born via in vitro fertilization (IVF).",
         year: 1978,
         category: "Science"
       },
@@ -3482,8 +3438,8 @@ export class MemStorage implements IStorage {
       },
       {
         id: "408",
-        title: "The United Kingdom votes to leave the European Union in the \"Brexit\" referendum.",
-        description: "The United Kingdom votes to leave the European Union in the \"Brexit\" referendum.",
+        title: "The United Kingdom votes to leave the European Union in the "Brexit" referendum.",
+        description: "The United Kingdom votes to leave the European Union in the "Brexit" referendum.",
         year: 2016,
         category: "Politics"
       },
@@ -3544,154 +3500,3 @@ export class MemStorage implements IStorage {
         category: "Science"
       }
     ];
-
-    // Shuffle the events array using crypto-secure randomization
-    for (let i = events.length - 1; i > 0; i--) {
-      const array = new Uint32Array(1);
-      webcrypto.getRandomValues(array);
-      const j = array[0] % (i + 1);
-      [events[i], events[j]] = [events[j], events[i]];
-    }
-
-    events.forEach(event => {
-      this.historicalEvents.set(event.id, event);
-    });
-  }
-
-  async getHistoricalEvent(id: string): Promise<HistoricalEvent | undefined> {
-    return this.historicalEvents.get(id);
-  }
-
-  async getAllHistoricalEvents(): Promise<HistoricalEvent[]> {
-    return Array.from(this.historicalEvents.values());
-  }
-
-  async getRandomHistoricalEvent(excludeIds?: string[]): Promise<HistoricalEvent | undefined> {
-    const availableEvents = Array.from(this.historicalEvents.values())
-      .filter(event => !excludeIds?.includes(event.id));
-    
-    if (availableEvents.length === 0) return undefined;
-    
-    // Use crypto-secure randomization for better entropy
-    const array = new Uint32Array(1);
-    webcrypto.getRandomValues(array);
-    const randomIndex = array[0] % availableEvents.length;
-    return availableEvents[randomIndex];
-  }
-
-  async getGame(id: string): Promise<Game | undefined> {
-    return this.games.get(id);
-  }
-
-  async createGame(roomCode?: string): Promise<Game> {
-    const id = randomUUID();
-    
-    // Get a truly random starting event using multiple attempts for better randomization
-    let randomStartingEvent;
-    for (let attempt = 0; attempt < 5; attempt++) {
-      randomStartingEvent = await this.getRandomHistoricalEvent();
-      if (randomStartingEvent) break;
-    }
-    const startingEventId = randomStartingEvent?.id || "1"; // Fallback to ID "1" if no event found
-    
-    const game: Game = {
-      id,
-      roomCode: roomCode || null,
-      player1Id: null,
-      player2Id: null,
-      currentTurn: null,
-      player1Score: 0,
-      player2Score: 0,
-      targetScore: 10,
-      currentEventId: null,
-      placedEventIds: [startingEventId], // Start with random historical event
-      gameStatus: "waiting",
-      winnerPlayerId: null,
-      createdAt: new Date()
-    };
-    
-    this.games.set(id, game);
-    return game;
-  }
-
-  async updateGame(id: string, updates: Partial<Game>): Promise<Game | undefined> {
-    const game = this.games.get(id);
-    if (!game) return undefined;
-    
-    const updatedGame = { ...game, ...updates };
-    this.games.set(id, updatedGame);
-    return updatedGame;
-  }
-
-  async joinGame(gameId: string, playerId: string): Promise<Game | undefined> {
-    const game = this.games.get(gameId);
-    if (!game) return undefined;
-    
-    let updates: Partial<Game> = {};
-    
-    if (!game.player1Id) {
-      updates = { 
-        player1Id: playerId,
-        currentTurn: playerId,
-        gameStatus: game.player2Id ? "active" : "waiting" 
-      };
-    } else if (!game.player2Id && game.player1Id !== playerId) {
-      updates = { 
-        player2Id: playerId,
-        gameStatus: "active"
-      };
-    }
-    
-    return this.updateGame(gameId, updates);
-  }
-
-  async deleteGame(id: string): Promise<boolean> {
-    return this.games.delete(id);
-  }
-
-  async getPlayer(id: string): Promise<Player | undefined> {
-    return this.players.get(id);
-  }
-
-  async createPlayer(name: string): Promise<Player> {
-    const id = randomUUID();
-    const player: Player = {
-      id,
-      name,
-      createdAt: new Date()
-    };
-    
-    this.players.set(id, player);
-    return player;
-  }
-
-  async updatePlayer(id: string, updates: Partial<Player>): Promise<Player | undefined> {
-    const player = this.players.get(id);
-    if (!player) return undefined;
-    
-    const updatedPlayer = { ...player, ...updates };
-    this.players.set(id, updatedPlayer);
-    return updatedPlayer;
-  }
-
-  async getGameMoves(gameId: string): Promise<GameMove[]> {
-    return Array.from(this.gameMoves.values())
-      .filter(move => move.gameId === gameId)
-      .sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
-  }
-
-  async createGameMove(move: InsertGameMove): Promise<GameMove> {
-    const id = randomUUID();
-    const gameMove: GameMove = {
-      id,
-      ...move,
-      createdAt: new Date()
-    };
-    
-    this.gameMoves.set(id, gameMove);
-    return gameMove;
-  }
-}
-
-// Export singleton instance
-export const storage = new MemStorage();
