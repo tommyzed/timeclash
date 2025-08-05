@@ -1,4 +1,4 @@
-[
+    const events: HistoricalEvent[] = [
       {
         id: "1",
         title: "The first stone tools are made in Kenya, marking the beginning of technology.",
@@ -883,8 +883,8 @@
       },
       {
         id: "433",
-        title: "The first known musical round, \\"Sumer is icumen in,\\" is written in England.",
-        description: "The first known musical round, \\"Sumer is icumen in,\\" is written in England.",
+        title: "The first known musical round, \"Sumer is icumen in,\" is written in England.",
+        description: "The first known musical round, \"Sumer is icumen in,\" is written in England.",
         year: 1250,
         category: "Culture"
       },
@@ -2402,8 +2402,8 @@
       },
       {
         id: "297",
-        title: "Franklin D. Roosevelt is elected President of the United States, promising a \\"New Deal\\".",
-        description: "Franklin D. Roosevelt is elected President of the United States, promising a \\"New Deal\\".",
+        title: "Franklin D. Roosevelt is elected President of the United States, promising a \"New Deal\".",
+        description: "Franklin D. Roosevelt is elected President of the United States, promising a \"New Deal\".",
         year: 1932,
         category: "Politics"
       },
@@ -2773,8 +2773,8 @@
       },
       {
         id: "337",
-        title: "Martin Luther King Jr. delivers his \\"I Have a Dream\\" speech during the March on Washington.",
-        description: "Martin Luther King Jr. delivers his \\"I Have a Dream\\" speech during the March on Washington.",
+        title: "Martin Luther King Jr. delivers his \"I Have a Dream\" speech during the March on Washington.",
+        description: "Martin Luther King Jr. delivers his \"I Have a Dream\" speech during the March on Washington.",
         year: 1963,
         category: "History"
       },
@@ -2955,8 +2955,8 @@
       },
       {
         id: "355",
-        title: "The first \\"test-tube baby,\\" Louise Brown, is born via in vitro fertilization (IVF).",
-        description: "The first \\"test-tube baby,\\" Louise Brown, is born via in vitro fertilization (IVF).",
+        title: "The first \"test-tube baby,\" Louise Brown, is born via in vitro fertilization (IVF).",
+        description: "The first \"test-tube baby,\" Louise Brown, is born via in vitro fertilization (IVF).",
         year: 1978,
         category: "Science"
       },
@@ -3438,8 +3438,8 @@
       },
       {
         id: "408",
-        title: "The United Kingdom votes to leave the European Union in the \\"Brexit\\" referendum.",
-        description: "The United Kingdom votes to leave the European Union in the \\"Brexit\\" referendum.",
+        title: "The United Kingdom votes to leave the European Union in the \"Brexit\" referendum.",
+        description: "The United Kingdom votes to leave the European Union in the \"Brexit\" referendum.",
         year: 2016,
         category: "Politics"
       },
@@ -3499,4 +3499,4 @@
         year: 2022,
         category: "Science"
       }
-    ]
+    ];
