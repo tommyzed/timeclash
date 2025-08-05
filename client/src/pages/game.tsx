@@ -38,6 +38,8 @@ export default function Game() {
     // Check localStorage to see if user has dismissed the card before
     return localStorage.getItem('dismissedHowToPlay') !== 'true';
   });
+  const [showVictoryModal, setShowVictoryModal] = useState(false);
+  const [justWon, setJustWon] = useState(false);
 
   // Create a new game on component mount
   const createGameMutation = useMutation({
@@ -155,6 +157,11 @@ export default function Game() {
       
       // Refetch game state
       queryClient.invalidateQueries({ queryKey: ["/api/games", gameId] });
+      
+      // Check for victory after correct placement
+      if (result.isCorrect) {
+        setJustWon(true);
+      }
     }
   });
 
@@ -196,6 +203,8 @@ export default function Game() {
     setGameId(null);
     setSelectedCardId(null);
     setFeedbackData({ isVisible: false, isCorrect: false, message: "" });
+    setShowVictoryModal(false);
+    setJustWon(false);
     createGameMutation.mutate();
   };
 
@@ -203,6 +212,42 @@ export default function Game() {
     console.log('Game: Card selected:', cardId);
     setSelectedCardId(cardId);
   };
+
+  // Check for game completion and show victory modal
+  useEffect(() => {
+    if (gameState?.game && justWon) {
+      const currentScore = gameState.game.player1Score;
+      if (currentScore >= gameState.game.targetScore && gameState.game.gameStatus === 'completed') {
+        setShowVictoryModal(true);
+        setJustWon(false);
+        
+        // Trigger confetti
+        setTimeout(() => {
+          const duration = 3000;
+          const end = Date.now() + duration;
+          
+          (function frame() {
+            // Create confetti
+            if (typeof window !== 'undefined' && (window as any).confetti) {
+              (window as any).confetti({
+                particleCount: Math.floor(Math.random() * 50) + 50,
+                angle: Math.random() * 360,
+                spread: Math.random() * 50 + 50,
+                origin: {
+                  x: Math.random(),
+                  y: Math.random() - 0.2
+                }
+              });
+            }
+            
+            if (Date.now() < end) {
+              requestAnimationFrame(frame);
+            }
+          }());
+        }, 500);
+      }
+    }
+  }, [gameState?.game?.gameStatus, gameState?.game?.player1Score, justWon]);
 
   const handleDeselectCard = () => {
     console.log('Game: Card deselected');
@@ -368,6 +413,44 @@ export default function Game() {
         message={feedbackData.message}
         onClose={handleCloseFeedback}
       />
+
+      {/* Victory Modal */}
+      {showVictoryModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-lg max-w-md w-full p-8 text-center">
+            <div className="mb-6">
+              <div className="w-20 h-20 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 2L3 7v11h14V7l-7-5zM8 15.5a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0z" clipRule="evenodd" />
+                  <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                </svg>
+              </div>
+              <h2 className="text-3xl font-bold text-gray-900 mb-2">🎉 Congratulations! 🎉</h2>
+              <p className="text-lg text-gray-600 mb-2">You've completed your historical timeline!</p>
+              <p className="text-sm text-gray-500">
+                You successfully placed {gameState?.game?.targetScore || 10} events in chronological order!
+              </p>
+            </div>
+            
+            <div className="space-y-3">
+              <button
+                onClick={handleNewGame}
+                className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+                data-testid="play-again-button"
+              >
+                🔄 Play Again
+              </button>
+              <button
+                onClick={() => setShowVictoryModal(false)}
+                className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-3 px-6 rounded-lg transition-colors"
+                data-testid="close-victory-modal"
+              >
+                Continue Viewing Timeline
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       
       {/* Player Joined Notification */}
       {showPlayerJoinedNotification && (
