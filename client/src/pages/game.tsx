@@ -34,6 +34,10 @@ export default function Game() {
   const [showPlayerJoinedNotification, setShowPlayerJoinedNotification] = useState(false);
   const [joinedPlayerName, setJoinedPlayerName] = useState<string>("");
   const [opponentNickname, setOpponentNickname] = useState<string>("");
+  const [showHowToPlay, setShowHowToPlay] = useState(() => {
+    // Check localStorage to see if user has dismissed the card before
+    return localStorage.getItem('dismissedHowToPlay') !== 'true';
+  });
 
   // Create a new game on component mount
   const createGameMutation = useMutation({
@@ -297,13 +301,26 @@ export default function Game() {
       )}
 
       {/* Instructions for single player */}
-      {!isMultiplayer && (
-        <div className="bg-blue-50 border-l-4 border-blue-600 p-4 mx-4 mt-4 rounded-r-lg">
+      {!isMultiplayer && showHowToPlay && (
+        <div className="bg-blue-50 border-l-4 border-blue-600 p-4 mx-4 mt-4 rounded-r-lg relative">
+          <button
+            onClick={() => {
+              setShowHowToPlay(false);
+              localStorage.setItem('dismissedHowToPlay', 'true');
+            }}
+            className="absolute top-2 right-2 text-blue-400 hover:text-blue-600 transition-colors"
+            data-testid="close-how-to-play"
+            aria-label="Close instructions"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
           <div className="flex items-start">
             <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center mr-3 mt-0.5">
               <span className="text-white text-xs font-bold">?</span>
             </div>
-            <div>
+            <div className="pr-8">
               <h3 className="text-sm font-medium text-blue-800">How to Play</h3>
               <p className="text-sm text-blue-700">
                 <strong>Step 1:</strong> Click the purple "Current Card" below to select it. 
