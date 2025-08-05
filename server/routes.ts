@@ -2,7 +2,11 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { WebSocketServer, WebSocket } from "ws";
 import { storage } from "./storage";
-import { insertGameMoveSchema, insertPlayerSchema, type WebSocketMessage } from "@shared/schema";
+import {
+  insertGameMoveSchema,
+  insertPlayerSchema,
+  type WebSocketMessage,
+} from "@shared/schema";
 import { z } from "zod";
 import { randomUUID } from "crypto";
 
@@ -13,7 +17,7 @@ const playerConnections = new Map<string, WebSocket>();
 function broadcastToGame(gameId: string, message: WebSocketMessage) {
   const connections = gameRooms.get(gameId);
   if (connections) {
-    connections.forEach(ws => {
+    connections.forEach((ws) => {
       if (ws.readyState === WebSocket.OPEN) {
         ws.send(JSON.stringify(message));
       }
@@ -51,33 +55,42 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/games", async (req, res) => {
     try {
       const { roomCode, singlePlayer } = req.body;
-      
+
       // For single player games, don't create room codes or player systems
       if (singlePlayer) {
         const game = await storage.createGame(); // No room code for single player
-        
+
         // Get a random event for the first turn (excluding the starting card)
-        const currentEvent = await storage.getRandomHistoricalEvent(game.placedEventIds);
-        
+        const currentEvent = await storage.getRandomHistoricalEvent(
+          game.placedEventIds,
+        );
+
         if (currentEvent) {
-          await storage.updateGame(game.id, { currentEventId: currentEvent.id });
+          await storage.updateGame(game.id, {
+            currentEventId: currentEvent.id,
+          });
           game.currentEventId = currentEvent.id;
         }
-        
+
         res.json(game);
       } else {
         // Multiplayer game creation
-        const generatedRoomCode = roomCode || Math.random().toString(36).substring(2, 8).toUpperCase();
+        const generatedRoomCode =
+          roomCode || Math.random().toString(36).substring(2, 8).toUpperCase();
         const game = await storage.createGame(generatedRoomCode);
-        
+
         // Get a random event for the first turn (excluding the starting card)
-        const currentEvent = await storage.getRandomHistoricalEvent(game.placedEventIds);
-        
+        const currentEvent = await storage.getRandomHistoricalEvent(
+          game.placedEventIds,
+        );
+
         if (currentEvent) {
-          await storage.updateGame(game.id, { currentEventId: currentEvent.id });
+          await storage.updateGame(game.id, {
+            currentEventId: currentEvent.id,
+          });
           game.currentEventId = currentEvent.id;
         }
-        
+
         res.json(game);
       }
     } catch (error) {
@@ -89,9 +102,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/games/join", async (req, res) => {
     try {
       const { roomCode, nickname } = req.body;
-      
+
       if (!roomCode || !nickname) {
-        return res.status(400).json({ message: "Room code and nickname are required" });
+        return res
+          .status(400)
+          .json({ message: "Room code and nickname are required" });
       }
 
       const game = await storage.getGameByRoomCode(roomCode);
@@ -101,7 +116,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Create player
       const player = await storage.createPlayer({ nickname });
-      
+
       // Join the game
       const updatedGame = await storage.joinGame(game.id, player.id);
       if (!updatedGame) {
@@ -145,7 +160,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { gameId } = req.params;
       const game = await storage.getGame(gameId);
-      
+
       if (!game) {
         return res.status(404).json({ message: "Game not found" });
       }
@@ -158,8 +173,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
         if (event) {
           // Find who placed this event by looking through moves
           const moves = await storage.getGameMoves(gameId);
-          const placementMove = moves.find(move => move.eventId === eventId && move.isCorrect);
-          
+          const placementMove = moves.find(
+            (move) => move.eventId === eventId && move.isCorrect,
+          );
+
           let placedByPlayerName = undefined;
           if (placementMove && placementMove.playerId !== "single-player") {
             try {
@@ -169,12 +186,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
               console.error("Error fetching player for placed event:", error);
             }
           }
-          
-          placedEvents.push({ 
-            event, 
-            position: i, 
+
+          placedEvents.push({
+            event,
+            position: i,
             placedByPlayerId: placementMove?.playerId,
-            placedByPlayerName
+            placedByPlayerName,
           });
         }
       }
@@ -183,14 +200,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       placedEvents.sort((a, b) => a.event.year - b.event.year);
 
       // Get current event
-      const currentEvent = game.currentEventId 
+      const currentEvent = game.currentEventId
         ? await storage.getHistoricalEvent(game.currentEventId)
         : null;
 
       // Get recent moves with event data
       const moves = await storage.getGameMoves(gameId);
       const recentMoves = [];
-      for (const move of moves.slice(0, 5)) { // Get last 5 moves
+      for (const move of moves.slice(0, 5)) {
+        // Get last 5 moves
         const event = await storage.getHistoricalEvent(move.eventId);
         if (event) {
           recentMoves.push({ ...move, event });
@@ -201,7 +219,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         game,
         placedEvents,
         currentEvent,
-        recentMoves
+        recentMoves,
       };
 
       res.json(gameState);
@@ -212,7 +230,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Place an event in the timeline
   const placeEventSchema = z.object({
-    position: z.number().min(0)
+    position: z.number().min(0),
   });
 
   app.post("/api/games/:gameId/place/:eventId", async (req, res) => {
@@ -242,37 +260,43 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Check if placement is correct
       let isCorrect = false;
-      
+
       if (position === 0) {
         // Placing at the beginning
         isCorrect = event.year <= timelineEvents[0].year;
       } else if (position >= timelineEvents.length) {
         // Placing at the end
-        isCorrect = event.year >= timelineEvents[timelineEvents.length - 1].year;
+        isCorrect =
+          event.year >= timelineEvents[timelineEvents.length - 1].year;
       } else {
         // Placing in the middle
         const prevEvent = timelineEvents[position - 1];
         const nextEvent = timelineEvents[position];
-        isCorrect = event.year >= prevEvent.year && event.year <= nextEvent.year;
+        isCorrect =
+          event.year >= prevEvent.year && event.year <= nextEvent.year;
       }
 
       // Create the move record (playerId is optional for single player)
       const { playerId } = req.body;
-      
+
       // For multiplayer games, ensure playerId is provided and it's their turn
       if (game.roomCode) {
         if (!playerId) {
-          return res.status(400).json({ message: "Player ID required for multiplayer" });
+          return res
+            .status(400)
+            .json({ message: "Player ID required for multiplayer" });
         }
-        
+
         // Check if it's the player's turn
         const isPlayer1 = playerId === game.player1Id;
         const isPlayer2 = playerId === game.player2Id;
-        
+
         if (!isPlayer1 && !isPlayer2) {
-          return res.status(403).json({ message: "You are not a player in this game" });
+          return res
+            .status(403)
+            .json({ message: "You are not a player in this game" });
         }
-        
+
         const expectedTurn = isPlayer1 ? "player1" : "player2";
         if (game.currentTurn !== expectedTurn) {
           return res.status(403).json({ message: "It's not your turn" });
@@ -284,17 +308,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
         playerId: playerId || "single-player",
         eventId,
         placedPosition: position,
-        isCorrect
+        isCorrect,
       });
 
       if (isCorrect) {
         // Add event to placed events and update score
         const newPlacedEventIds = [...game.placedEventIds];
         newPlacedEventIds.splice(position, 0, eventId);
-        
+
         // For multiplayer: update the correct player's score
         let updateData: any = {
-          placedEventIds: newPlacedEventIds
+          placedEventIds: newPlacedEventIds,
         };
 
         if (game.roomCode && playerId) {
@@ -304,12 +328,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
           } else if (playerId === game.player2Id) {
             updateData.player2Score = game.player2Score + 1;
           }
-          
+
           // Switch turns after correct move
-          updateData.currentTurn = game.currentTurn === "player1" ? "player2" : "player1";
-          
+          updateData.currentTurn =
+            game.currentTurn === "player1" ? "player2" : "player1";
+
           // Check for winner
-          const newScore = playerId === game.player1Id ? game.player1Score + 1 : game.player2Score + 1;
+          const newScore =
+            playerId === game.player1Id
+              ? game.player1Score + 1
+              : game.player2Score + 1;
           if (newScore >= game.targetScore) {
             updateData.gameStatus = "completed";
             updateData.winnerPlayerId = playerId;
@@ -318,7 +346,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           // Single player game
           const newScore = game.player1Score + 1;
           updateData.player1Score = newScore;
-          
+
           if (newScore >= game.targetScore) {
             updateData.gameStatus = "completed";
           }
@@ -326,7 +354,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
         // Get next event if game is not completed
         if (updateData.gameStatus !== "completed") {
-          const nextEvent = await storage.getRandomHistoricalEvent([...newPlacedEventIds, eventId]);
+          const nextEvent = await storage.getRandomHistoricalEvent([
+            ...newPlacedEventIds,
+            eventId,
+          ]);
           updateData.currentEventId = nextEvent?.id || null;
         } else {
           updateData.currentEventId = null;
@@ -336,36 +367,45 @@ export async function registerRoutes(app: Express): Promise<Server> {
       } else {
         // Wrong answer - switch turns in multiplayer
         let updateData: any = {};
-        
+
         if (game.roomCode && playerId) {
           // Switch turns after incorrect move
-          updateData.currentTurn = game.currentTurn === "player1" ? "player2" : "player1";
+          updateData.currentTurn =
+            game.currentTurn === "player1" ? "player2" : "player1";
         }
-        
+
         // Get a new event for the next turn
-        const nextEvent = await storage.getRandomHistoricalEvent([...game.placedEventIds]);
+        const nextEvent = await storage.getRandomHistoricalEvent([
+          ...game.placedEventIds,
+        ]);
         updateData.currentEventId = nextEvent?.id || null;
-        
+
         await storage.updateGame(gameId, updateData);
       }
 
       // Broadcast move to other players in multiplayer games
       if (game.roomCode && playerId) {
-        console.log('Broadcasting move_made message:', { playerId, eventId, position, isCorrect });
+        console.log("Broadcasting move_made message:", {
+          playerId,
+          eventId,
+          position,
+          isCorrect,
+        });
         broadcastToGame(gameId, {
-          type: 'move_made',
-          data: { playerId, eventId, position, isCorrect }
+          type: "move_made",
+          data: { playerId, eventId, position, isCorrect },
         });
       }
 
       // Format year for display (B.C. for negative years)
-      const displayYear = event.year < 0 ? `${Math.abs(event.year)} B.C.` : event.year;
-      
-      res.json({ 
+      const displayYear =
+        event.year < 0 ? `${Math.abs(event.year)} B.C.` : event.year;
+
+      res.json({
         isCorrect,
-        message: isCorrect 
-          ? `Correct! ${event.title} (${displayYear}) placed successfully.`
-          : `Incorrect placement. ${event.title} was in ${displayYear}.`
+        message: isCorrect
+          ? `Correct! "${event.title}" was in ${displayYear}.`
+          : `Incorrect placement. "${event.title}" was in ${displayYear}.`,
       });
     } catch (error) {
       console.error("Place event error:", error);
@@ -380,7 +420,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { targetScore } = req.body;
 
       if (!targetScore || targetScore < 5 || targetScore > 15) {
-        return res.status(400).json({ message: "Target score must be between 5 and 15" });
+        return res
+          .status(400)
+          .json({ message: "Target score must be between 5 and 15" });
       }
 
       const game = await storage.getGame(gameId);
@@ -389,8 +431,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       // Only allow settings changes in waiting/playing state, not completed games
-      if (game.gameStatus === 'completed') {
-        return res.status(400).json({ message: "Cannot change settings of completed game" });
+      if (game.gameStatus === "completed") {
+        return res
+          .status(400)
+          .json({ message: "Cannot change settings of completed game" });
       }
 
       await storage.updateGame(gameId, { targetScore });
@@ -404,19 +448,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
   const httpServer = createServer(app);
 
   // Set up WebSocket server for real-time multiplayer
-  const wss = new WebSocketServer({ server: httpServer, path: '/ws' });
+  const wss = new WebSocketServer({ server: httpServer, path: "/ws" });
 
-  wss.on('connection', (ws: WebSocket, req) => {
-    console.log('WebSocket connection established');
+  wss.on("connection", (ws: WebSocket, req) => {
+    console.log("WebSocket connection established");
 
-    ws.on('message', async (data) => {
+    ws.on("message", async (data) => {
       try {
         const message = JSON.parse(data.toString());
-        
+
         switch (message.type) {
-          case 'join_game':
+          case "join_game":
             const { gameId, playerId } = message.data;
-            
+
             // Add connection to game room
             if (!gameRooms.has(gameId)) {
               gameRooms.set(gameId, new Set());
@@ -426,31 +470,43 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
             // Broadcast that player joined
             broadcastToGame(gameId, {
-              type: 'player_joined',
-              data: { playerId, roomCode: gameId }
+              type: "player_joined",
+              data: { playerId, roomCode: gameId },
             });
             break;
 
-          case 'make_move':
-            const { gameId: moveGameId, playerId: movePlayerId, eventId, position } = message.data;
-            
+          case "make_move":
+            const {
+              gameId: moveGameId,
+              playerId: movePlayerId,
+              eventId,
+              position,
+            } = message.data;
+
             // Broadcast the move to all connected players
             broadcastToGame(moveGameId, {
-              type: 'move_made',
-              data: { playerId: movePlayerId, eventId, position, isCorrect: true }
+              type: "move_made",
+              data: {
+                playerId: movePlayerId,
+                eventId,
+                position,
+                isCorrect: true,
+              },
             });
             break;
         }
       } catch (error) {
-        console.error('WebSocket message error:', error);
-        ws.send(JSON.stringify({
-          type: 'error',
-          data: { message: 'Invalid message format' }
-        }));
+        console.error("WebSocket message error:", error);
+        ws.send(
+          JSON.stringify({
+            type: "error",
+            data: { message: "Invalid message format" },
+          }),
+        );
       }
     });
 
-    ws.on('close', () => {
+    ws.on("close", () => {
       // Remove connection from all game rooms
       gameRooms.forEach((connections, gameId) => {
         connections.delete(ws);
@@ -460,7 +516,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
 
       // Remove from player connections
-      for (const [playerId, connection] of Array.from(playerConnections.entries())) {
+      for (const [playerId, connection] of Array.from(
+        playerConnections.entries(),
+      )) {
         if (connection === ws) {
           playerConnections.delete(playerId);
           break;
