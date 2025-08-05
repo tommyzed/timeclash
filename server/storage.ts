@@ -1,5 +1,5 @@
 import { type HistoricalEvent, type InsertHistoricalEvent, type Game, type InsertGame, type GameMove, type InsertGameMove, type Player, type InsertPlayer } from "@shared/schema";
-import { randomUUID } from "crypto";
+import { randomUUID, webcrypto } from "crypto";
 
 export interface IStorage {
   // Historical Events
@@ -148,9 +148,11 @@ export class MemStorage implements IStorage {
       }
     ];
 
-    // Shuffle the events array to ensure different starting cards on each server restart
+    // Shuffle the events array using crypto-secure randomization
     for (let i = events.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
+      const array = new Uint32Array(1);
+      webcrypto.getRandomValues(array);
+      const j = array[0] % (i + 1);
       [events[i], events[j]] = [events[j], events[i]];
     }
 
@@ -173,7 +175,10 @@ export class MemStorage implements IStorage {
     
     if (availableEvents.length === 0) return undefined;
     
-    const randomIndex = Math.floor(Math.random() * availableEvents.length);
+    // Use crypto-secure randomization for better entropy
+    const array = new Uint32Array(1);
+    webcrypto.getRandomValues(array);
+    const randomIndex = array[0] % availableEvents.length;
     return availableEvents[randomIndex];
   }
 
@@ -184,8 +189,12 @@ export class MemStorage implements IStorage {
   async createGame(roomCode?: string): Promise<Game> {
     const id = randomUUID();
     
-    // Get a random starting event
-    const randomStartingEvent = await this.getRandomHistoricalEvent();
+    // Get a truly random starting event using multiple attempts for better randomization
+    let randomStartingEvent;
+    for (let attempt = 0; attempt < 5; attempt++) {
+      randomStartingEvent = await this.getRandomHistoricalEvent();
+      if (randomStartingEvent) break;
+    }
     const startingEventId = randomStartingEvent?.id || "1"; // Fallback to ID "1" if no event found
     
     const game: Game = {
