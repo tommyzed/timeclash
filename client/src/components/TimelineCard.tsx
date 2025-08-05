@@ -26,7 +26,6 @@ export default function TimelineCard({
   };
 
   const getCardLabel = () => {
-    if (isStarting) return "STARTING CARD";
     if (isPlaced) return "CORRECTLY PLACED";
     return "PLACE ME!";
   };
@@ -51,9 +50,9 @@ export default function TimelineCard({
             </div>
             <hr className="border-white border-opacity-30 mb-3" />
           </>
-        ) : (
+        ) : !isPlaced ? (
           <div className="text-xs font-semibold mb-2">{getCardLabel()}</div>
-        )}
+        ) : null}
         
         <div className="text-sm font-medium mb-2">{event.title}</div>
         <div className="text-xs opacity-90 mb-4">{event.description}</div>
