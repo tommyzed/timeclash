@@ -150,13 +150,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ message: "Game not found" });
       }
 
-      // Get placed events
+      // Get placed events with player information
       const placedEvents = [];
       for (let i = 0; i < game.placedEventIds.length; i++) {
         const eventId = game.placedEventIds[i];
         const event = await storage.getHistoricalEvent(eventId);
         if (event) {
-          placedEvents.push({ event, position: i });
+          // Find who placed this event by looking through moves
+          const moves = await storage.getGameMoves(gameId);
+          const placementMove = moves.find(move => move.eventId === eventId && move.isCorrect);
+          
+          let placedByPlayerName = undefined;
+          if (placementMove && placementMove.playerId !== "single-player") {
+            try {
+              const player = await storage.getPlayer(placementMove.playerId);
+              placedByPlayerName = player?.nickname;
+            } catch (error) {
+              console.error("Error fetching player for placed event:", error);
+            }
+          }
+          
+          placedEvents.push({ 
+            event, 
+            position: i, 
+            placedByPlayerId: placementMove?.playerId,
+            placedByPlayerName
+          });
         }
       }
 

@@ -57,6 +57,7 @@ export default function Timeline({ gameState, onPlaceEvent, isPlacing, selectedC
                 event={placedEvent.event}
                 isPlaced={true}
                 isStarting={index === 0}
+                placedByPlayerName={placedEvent.placedByPlayerName}
               />
               
               {/* Drop zone after each card */}

@@ -62,6 +62,8 @@ export type InsertGameMove = z.infer<typeof insertGameMoveSchema>;
 export type PlacedEvent = {
   event: HistoricalEvent;
   position: number;
+  placedByPlayerId?: string;
+  placedByPlayerName?: string;
 };
 
 export type GameState = {

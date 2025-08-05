@@ -7,6 +7,7 @@ interface TimelineCardProps {
   isDragging?: boolean;
   onDragStart?: (e: React.DragEvent) => void;
   onDragEnd?: (e: React.DragEvent) => void;
+  placedByPlayerName?: string;
 }
 
 export default function TimelineCard({ 
@@ -15,7 +16,8 @@ export default function TimelineCard({
   isStarting = false, 
   isDragging = false,
   onDragStart,
-  onDragEnd
+  onDragEnd,
+  placedByPlayerName
 }: TimelineCardProps) {
   const getCardColor = () => {
     if (isStarting) return "from-green-500 to-green-600";
@@ -25,6 +27,7 @@ export default function TimelineCard({
 
   const getCardLabel = () => {
     if (isStarting) return "STARTING CARD";
+    if (isPlaced && placedByPlayerName) return placedByPlayerName.toUpperCase();
     if (isPlaced) return "CORRECTLY PLACED";
     return "PLACE ME!";
   };
