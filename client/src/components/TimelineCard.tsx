@@ -54,8 +54,7 @@ export default function TimelineCard({
           <div className="text-xs font-semibold mb-2 bg-transparent px-2 py-1 rounded-sm text-center text-[#1a1c25]">{getCardLabel()}</div>
         ) : null}
         
-        <div className="text-sm font-medium mb-2">{event.title}</div>
-        <div className="text-xs opacity-90 mb-4">{event.description}</div>
+        <div className="text-sm font-medium mb-4">{event.title}</div>
         <div className="text-right">
           <span className="bg-white bg-opacity-20 px-2 py-1 rounded text-xs font-bold">
             {isPlaced ? (event.year < 0 ? `${Math.abs(event.year)} B.C.` : event.year) : '????'}
