@@ -31,10 +31,12 @@ export default function RecentActivity({ gameState }: RecentActivityProps) {
                 <p className={`text-xs ${
                   move.isCorrect ? 'text-green-700' : 'text-red-700'
                 }`}>
-                  {move.isCorrect 
-                    ? `Placed correctly (${move.event.year})`
-                    : `Incorrect placement (${move.event.year})`
-                  }
+                  {(() => {
+                    const displayYear = move.event.year < 0 ? `${Math.abs(move.event.year)} B.C.` : move.event.year;
+                    return move.isCorrect 
+                      ? `Placed correctly (${displayYear})`
+                      : `Incorrect placement (${displayYear})`;
+                  })()}
                 </p>
               </div>
             </div>
