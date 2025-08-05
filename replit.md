@@ -12,6 +12,10 @@ Chronology is a single-player educational game where players arrange historical 
 - **Real-Time Communication**: WebSocket integration for live game updates between players
 - **Added Room Code Sharing**: One-click copy-to-clipboard functionality for easy game sharing with friends
 - **Fixed Turn Management**: Resolved issues with turn indicators and card interaction during opponent's turn
+- **Complete B.C. Year Formatting**: All historical years now display proper B.C. notation across all components
+- **Crypto-Secure Randomization**: Implemented webcrypto-based randomization for truly random card selection
+- **Expanded Historical Dataset**: Added 400+ historical events spanning from 3.3M B.C. to 2022 C.E.
+- **Enhanced Card Variety**: Every game now starts with different events ensuring unique gameplay experiences
 
 ## User Preferences
 
