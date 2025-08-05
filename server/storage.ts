@@ -9,6 +9,7 @@ export interface IStorage {
 
   // Games
   getGame(id: string): Promise<Game | undefined>;
+  getGameByRoomCode(roomCode: string): Promise<Game | undefined>;
   createGame(roomCode?: string): Promise<Game>;
   updateGame(id: string, updates: Partial<Game>): Promise<Game | undefined>;
   joinGame(gameId: string, playerId: string): Promise<Game | undefined>;
@@ -16,7 +17,7 @@ export interface IStorage {
   
   // Players
   getPlayer(id: string): Promise<Player | undefined>;
-  createPlayer(name: string): Promise<Player>;
+  createPlayer(playerData: { nickname: string }): Promise<Player>;
   updatePlayer(id: string, updates: Partial<Player>): Promise<Player | undefined>;
   
   // Game Moves
@@ -3583,6 +3584,10 @@ export class MemStorage implements IStorage {
     return this.games.get(id);
   }
 
+  async getGameByRoomCode(roomCode: string): Promise<Game | undefined> {
+    return Array.from(this.games.values()).find(game => game.roomCode === roomCode);
+  }
+
   async createGame(roomCode?: string): Promise<Game> {
     const id = randomUUID();
     
@@ -3653,11 +3658,11 @@ export class MemStorage implements IStorage {
     return this.players.get(id);
   }
 
-  async createPlayer(name: string): Promise<Player> {
+  async createPlayer(playerData: { nickname: string }): Promise<Player> {
     const id = randomUUID();
     const player: Player = {
       id,
-      name,
+      nickname: playerData.nickname,
       createdAt: new Date()
     };
     
