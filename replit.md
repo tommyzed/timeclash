@@ -20,6 +20,7 @@ It's About T⏳️me!! is a single-player educational game where players arrange
 - **Fixed Card Reuse Bug**: Added attemptedEventIds tracking to prevent duplicate cards appearing in same game
 - **Enhanced Recent Moves**: Added player names with bold blue styling in Recent Moves section
 - **Fixed Repeated Toast Notifications**: Implemented player tracking to prevent duplicate join notifications
+- **Added Shareable Room Links**: Players can now share direct URLs like `/room/ABCDEF` for instant game joining
 
 ## User Preferences
 

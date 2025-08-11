@@ -15,16 +15,20 @@ import RecentActivity from "@/components/RecentActivity";
 import FeedbackModal from "@/components/FeedbackModal";
 
 export default function Game() {
-  const [match, params] = useRoute("/game/:gameId?");
+  const [gameMatch, gameParams] = useRoute("/game/:gameId?");
+  const [roomMatch, roomParams] = useRoute("/room/:roomCode");
+  
   const urlParams = new URLSearchParams(window.location.search);
   const playerId =
     urlParams.get("playerId") || localStorage.getItem("playerId");
   const nickname = localStorage.getItem("nickname");
   const { toast } = useToast();
 
-  const [gameId, setGameId] = useState<string | null>(params?.gameId || null);
+  const [gameId, setGameId] = useState<string | null>(
+    gameParams?.gameId || roomParams?.roomCode || null
+  );
   const [isMultiplayer, setIsMultiplayer] = useState<boolean>(
-    !!params?.gameId && !!playerId,
+    !!(gameParams?.gameId || roomParams?.roomCode) && !!playerId,
   );
   const [feedbackData, setFeedbackData] = useState<{
     isVisible: boolean;
@@ -64,6 +68,53 @@ export default function Game() {
       setGameId(game.id);
     },
   });
+
+  // Join a game by room code for shareable links
+  const joinGameMutation = useMutation({
+    mutationFn: async (roomCode: string) => {
+      if (!playerId || !nickname) {
+        throw new Error("Player ID and nickname required for multiplayer");
+      }
+      
+      const response = await apiRequest("POST", "/api/games/join", {
+        roomCode,
+        playerId,
+        nickname,
+      });
+      return await response.json();
+    },
+    onSuccess: (result) => {
+      setGameId(result.game.id);
+      setIsMultiplayer(true);
+      toast({
+        title: "Joined Game!",
+        description: `Welcome to the game room!`,
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Failed to Join Game",
+        description: error.message || "Could not join the game room",
+        variant: "destructive",
+      });
+    }
+  });
+
+  // Handle room code joining when component mounts
+  useEffect(() => {
+    if (roomParams?.roomCode && !gameId) {
+      if (!playerId || !nickname) {
+        // Redirect to lobby to create player account first
+        window.location.href = '/lobby';
+        return;
+      }
+      // Try to join the game by room code
+      joinGameMutation.mutate(roomParams.roomCode);
+    } else if (!gameId && !roomParams?.roomCode) {
+      // Create new single-player game if no room code and no game ID
+      createGameMutation.mutate();
+    }
+  }, [roomParams?.roomCode, gameId, playerId, nickname]);
 
   // Get game state
   const { data: gameState, isLoading } = useQuery({
