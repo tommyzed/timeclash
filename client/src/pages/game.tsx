@@ -15,20 +15,16 @@ import RecentActivity from "@/components/RecentActivity";
 import FeedbackModal from "@/components/FeedbackModal";
 
 export default function Game() {
-  const [gameMatch, gameParams] = useRoute("/game/:gameId?");
-  const [roomMatch, roomParams] = useRoute("/room/:roomCode");
-  
+  const [match, params] = useRoute("/game/:gameId?");
   const urlParams = new URLSearchParams(window.location.search);
   const playerId =
     urlParams.get("playerId") || localStorage.getItem("playerId");
   const nickname = localStorage.getItem("nickname");
   const { toast } = useToast();
 
-  const [gameId, setGameId] = useState<string | null>(
-    gameParams?.gameId || null
-  );
+  const [gameId, setGameId] = useState<string | null>(params?.gameId || null);
   const [isMultiplayer, setIsMultiplayer] = useState<boolean>(
-    !!roomParams?.roomCode && !!playerId,
+    !!params?.gameId && !!playerId,
   );
   const [feedbackData, setFeedbackData] = useState<{
     isVisible: boolean;
@@ -64,103 +60,10 @@ export default function Game() {
       });
       return await response.json();
     },
-    onSuccess: async (game) => {
+    onSuccess: (game) => {
       setGameId(game.id);
-      
-      // If this is a multiplayer game, Player1 needs to join their own game
-      if (!game.singlePlayer && playerId && nickname) {
-        try {
-          const joinResponse = await apiRequest("POST", "/api/games/join", {
-            roomCode: game.roomCode,
-            playerId: playerId,
-            nickname: nickname,
-          });
-          const joinResult = await joinResponse.json();
-          // Update game state with the joined version
-          queryClient.setQueryData(["/api/games", game.id], {
-            game: joinResult.game,
-            placedEvents: [],
-            currentEvent: null,
-            recentMoves: [],
-            playerStats: { player1IncorrectCount: 0, player2IncorrectCount: 0 }
-          });
-          setIsMultiplayer(true);
-        } catch (error) {
-          console.error("Failed to join own multiplayer game:", error);
-        }
-      }
     },
   });
-
-  // Join a game by room code for shareable links
-  const joinGameMutation = useMutation({
-    mutationFn: async (roomCode: string) => {
-      // Get current nickname from localStorage (might be newly set)
-      const currentNickname = localStorage.getItem("nickname");
-      const currentPlayerId = localStorage.getItem("playerId");
-      
-      if (!currentNickname) {
-        throw new Error("Nickname required for multiplayer");
-      }
-      
-      const response = await apiRequest("POST", "/api/games/join", {
-        roomCode,
-        playerId: currentPlayerId,
-        nickname: currentNickname,
-      });
-      return await response.json();
-    },
-    onSuccess: (result) => {
-      setGameId(result.game.id);
-      setIsMultiplayer(true);
-      
-      // Store the playerId if we didn't have one
-      if (result.playerId) {
-        localStorage.setItem("playerId", result.playerId);
-      }
-      
-      toast({
-        title: "Joined Game!",
-        description: `Welcome to the game room!`,
-      });
-      
-      // Invalidate and refetch game state to ensure fresh data
-      queryClient.invalidateQueries({ queryKey: ["/api/games", result.game.id] });
-    },
-    onError: (error: any) => {
-      toast({
-        title: "Room Not Found",
-        description: "This game room may have expired or doesn't exist. Please ask for a new room link.",
-        variant: "destructive",
-      });
-      // Redirect to lobby after a delay
-      setTimeout(() => {
-        window.location.href = '/lobby';
-      }, 3000);
-    }
-  });
-
-  // Handle room code joining when component mounts
-  useEffect(() => {
-    if (roomParams?.roomCode && !gameId) {
-      // Always prompt for nickname when joining via shareable link for a fresh experience
-      const enteredNickname = prompt("Welcome! Please enter your nickname to join the game:");
-      if (!enteredNickname || enteredNickname.trim() === "") {
-        // Redirect to lobby if no nickname provided
-        window.location.href = '/lobby';
-        return;
-      }
-      
-      // Store the nickname in localStorage for this session
-      localStorage.setItem("nickname", enteredNickname.trim());
-      
-      // Join the game with the entered nickname
-      joinGameMutation.mutate(roomParams.roomCode);
-    } else if (!gameId && !roomParams?.roomCode) {
-      // Create new single-player game if no room code and no game ID
-      createGameMutation.mutate();
-    }
-  }, [roomParams?.roomCode, gameId]);
 
   // Get game state
   const { data: gameState, isLoading } = useQuery({
@@ -172,16 +75,13 @@ export default function Game() {
   useEffect(() => {
     if (gameState?.game) {
       const hasRoomCode = !!gameState.game.roomCode;
-      // Get current playerId from localStorage (might be newly set)
-      const currentPlayerId = localStorage.getItem("playerId");
-      const hasPlayerId = !!(playerId || currentPlayerId);
+      const hasPlayerId = !!playerId;
       setIsMultiplayer(hasRoomCode && hasPlayerId);
 
       // Fetch opponent nickname for multiplayer games
       if (hasRoomCode && hasPlayerId) {
-        const activePlayerId = playerId || currentPlayerId;
         const opponentId =
-          activePlayerId === gameState.game.player1Id
+          playerId === gameState.game.player1Id
             ? gameState.game.player2Id
             : gameState.game.player1Id;
 

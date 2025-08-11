@@ -20,13 +20,6 @@ It's About T⏳️me!! is a single-player educational game where players arrange
 - **Fixed Card Reuse Bug**: Added attemptedEventIds tracking to prevent duplicate cards appearing in same game
 - **Enhanced Recent Moves**: Added player names with bold blue styling in Recent Moves section
 - **Fixed Repeated Toast Notifications**: Implemented player tracking to prevent duplicate join notifications
-- **Added Shareable Room Links**: Players can now share direct URLs like `/room/ABCDEF` for instant game joining
-- **Enhanced Error Handling**: Added clear error messages for expired/invalid room codes with auto-redirect to lobby
-- **Fixed API Endpoint Confusion**: Added helpful error messages when users access API endpoints directly instead of room URLs
-- **Critical Bug Fix**: Fixed room joining logic that was using room codes as game IDs, causing 404 errors and "loading game" issues
-- **Enhanced Player2 Joining**: Added nickname prompt for shareable link joins and fixed WebSocket notifications for proper player joining experience
-- **Fixed Multiplayer Slot Assignment**: Player1 now properly joins their own game preventing Player2 from taking the wrong slot
-- **Simplified Shareable Link Flow**: Always prompt for nickname on shareable link joins for consistent user experience
 
 ## User Preferences
 

@@ -101,46 +101,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Join a game by room code
   app.post("/api/games/join", async (req, res) => {
     try {
-      const { roomCode, playerId, nickname } = req.body;
+      const { roomCode, nickname } = req.body;
 
-      if (!roomCode) {
+      if (!roomCode || !nickname) {
         return res
           .status(400)
-          .json({ message: "Room code is required" });
+          .json({ message: "Room code and nickname are required" });
       }
 
       const game = await storage.getGameByRoomCode(roomCode);
       if (!game) {
-        return res.status(404).json({ message: "Game room not found. The room may have expired or the code is incorrect." });
+        return res.status(404).json({ message: "Game not found" });
       }
 
-      let finalPlayerId = playerId;
-      
-      // If no playerId provided, create a new player
-      if (!playerId && nickname) {
-        const player = await storage.createPlayer({ nickname });
-        finalPlayerId = player.id;
-      }
-
-      if (!finalPlayerId) {
-        return res.status(400).json({ message: "Player ID or nickname required" });
-      }
+      // Create player
+      const player = await storage.createPlayer({ nickname });
 
       // Join the game
-      const updatedGame = await storage.joinGame(game.id, finalPlayerId);
+      const updatedGame = await storage.joinGame(game.id, player.id);
       if (!updatedGame) {
         return res.status(400).json({ message: "Game is full or unavailable" });
       }
 
-      // Broadcast player joined message to other players in the game
-      broadcastToGame(updatedGame.id, {
-        type: "player_joined",
-        data: { playerId: finalPlayerId, roomCode: updatedGame.roomCode },
-      });
-
-      res.json({ game: updatedGame, playerId: finalPlayerId });
+      res.json({ game: updatedGame, playerId: player.id });
     } catch (error) {
-      console.error("Join game error:", error);
       res.status(500).json({ message: "Failed to join game" });
     }
   });
@@ -178,14 +162,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const game = await storage.getGame(gameId);
 
       if (!game) {
-        // Check if this looks like a room code instead of a game ID
-        if (gameId && gameId.length <= 8 && /^[A-Z0-9]+$/.test(gameId)) {
-          return res.status(404).json({ 
-            message: "Invalid URL format. For room codes, use: /room/" + gameId,
-            suggestion: "redirect_to_room",
-            roomCode: gameId
-          });
-        }
         return res.status(404).json({ message: "Game not found" });
       }
 
