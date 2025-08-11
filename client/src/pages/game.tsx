@@ -125,6 +125,39 @@ export default function Game() {
           });
       }
       
+      // Handle game completion
+      if (message.type === 'game_completed') {
+        setShowVictoryModal(true);
+        
+        // Trigger confetti for any game completion (winner or loser)
+        setTimeout(() => {
+          const duration = 3000;
+          const end = Date.now() + duration;
+          
+          (function frame() {
+            // Create confetti
+            if (typeof window !== 'undefined' && (window as any).confetti) {
+              (window as any).confetti({
+                particleCount: Math.floor(Math.random() * 50) + 50,
+                angle: Math.random() * 360,
+                spread: Math.random() * 50 + 50,
+                origin: {
+                  x: Math.random(),
+                  y: Math.random() - 0.2
+                }
+              });
+            }
+            
+            if (Date.now() < end) {
+              requestAnimationFrame(frame);
+            }
+          }());
+        }, 500);
+        
+        // Refresh game state to show final scores
+        queryClient.invalidateQueries({ queryKey: ["/api/games", gameId] });
+      }
+
       // Handle real-time updates here
       if (message.type === 'move_made') {
         // Show toast for opponent's move
@@ -270,13 +303,13 @@ export default function Game() {
 
   // Check for game completion and show victory modal
   useEffect(() => {
-    if (gameState?.game && justWon) {
-      const currentScore = gameState.game.player1Score;
-      if (currentScore >= gameState.game.targetScore && gameState.game.gameStatus === 'completed') {
+    if (gameState?.game && gameState.game.gameStatus === 'completed') {
+      // For single-player games, check if we just won
+      if (!isMultiplayer && justWon) {
         setShowVictoryModal(true);
         setJustWon(false);
         
-        // Trigger confetti
+        // Trigger confetti for single-player wins
         setTimeout(() => {
           const duration = 3000;
           const end = Date.now() + duration;
@@ -301,8 +334,9 @@ export default function Game() {
           }());
         }, 500);
       }
+      // For multiplayer games, the confetti is handled by WebSocket 'game_completed' message
     }
-  }, [gameState?.game?.gameStatus, gameState?.game?.player1Score, justWon]);
+  }, [gameState?.game?.gameStatus, justWon, isMultiplayer]);
 
   const handleDeselectCard = () => {
     console.log('Game: Card deselected');
@@ -482,11 +516,35 @@ export default function Game() {
                   <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
                 </svg>
               </div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">🎉 Congratulations! 🎉</h2>
-              <p className="text-lg text-gray-600 mb-2">You've completed your historical timeline!</p>
-              <p className="text-sm text-gray-500">
-                You successfully placed {gameState?.game?.targetScore || 10} events in chronological order!
-              </p>
+              {isMultiplayer && gameState?.game ? (
+                <>
+                  {gameState.game.winnerPlayerId === playerId ? (
+                    <>
+                      <h2 className="text-3xl font-bold text-gray-900 mb-2">🎉 You Won! 🎉</h2>
+                      <p className="text-lg text-gray-600 mb-2">Congratulations! You completed your timeline first!</p>
+                      <p className="text-sm text-gray-500">
+                        Final Score: You {gameState.game.player1Id === playerId ? gameState.game.player1Score : gameState.game.player2Score} - {gameState.game.player1Id === playerId ? gameState.game.player2Score : gameState.game.player1Score} {opponentNickname || "Opponent"}
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <h2 className="text-3xl font-bold text-gray-900 mb-2">🎊 Game Complete! 🎊</h2>
+                      <p className="text-lg text-gray-600 mb-2">{opponentNickname || "Your opponent"} won this round!</p>
+                      <p className="text-sm text-gray-500">
+                        Final Score: {opponentNickname || "Opponent"} {gameState.game.player1Id === playerId ? gameState.game.player2Score : gameState.game.player1Score} - {gameState.game.player1Id === playerId ? gameState.game.player1Score : gameState.game.player2Score} You
+                      </p>
+                    </>
+                  )}
+                </>
+              ) : (
+                <>
+                  <h2 className="text-3xl font-bold text-gray-900 mb-2">🎉 Congratulations! 🎉</h2>
+                  <p className="text-lg text-gray-600 mb-2">You've completed your historical timeline!</p>
+                  <p className="text-sm text-gray-500">
+                    You successfully placed {gameState?.game?.targetScore || 10} events in chronological order!
+                  </p>
+                </>
+              )}
             </div>
             
             <div className="space-y-3">

@@ -364,6 +364,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
 
         await storage.updateGame(gameId, updateData);
+        
+        // If game is completed in multiplayer, broadcast game completion
+        if (updateData.gameStatus === "completed" && game.roomCode) {
+          broadcastToGame(gameId, {
+            type: "game_completed",
+            data: {
+              winnerPlayerId: updateData.winnerPlayerId,
+              finalScores: {
+                player1: playerId === game.player1Id ? game.player1Score + 1 : game.player1Score,
+                player2: playerId === game.player2Id ? game.player2Score + 1 : game.player2Score,
+              },
+            },
+          });
+        }
       } else {
         // Wrong answer - switch turns in multiplayer
         let updateData: any = {};
