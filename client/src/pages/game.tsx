@@ -15,16 +15,19 @@ import RecentActivity from "@/components/RecentActivity";
 import FeedbackModal from "@/components/FeedbackModal";
 
 export default function Game() {
-  const [match, params] = useRoute("/game/:gameId?");
+  const [gameMatch, gameParams] = useRoute("/game/:gameId?");
+  const [roomMatch, roomParams] = useRoute("/room/:roomCode");
   const urlParams = new URLSearchParams(window.location.search);
   const playerId =
     urlParams.get("playerId") || localStorage.getItem("playerId");
   const nickname = localStorage.getItem("nickname");
   const { toast } = useToast();
 
-  const [gameId, setGameId] = useState<string | null>(params?.gameId || null);
+  const [gameId, setGameId] = useState<string | null>(
+    gameParams?.gameId || null
+  );
   const [isMultiplayer, setIsMultiplayer] = useState<boolean>(
-    !!params?.gameId && !!playerId,
+    !!(gameParams?.gameId || roomParams?.roomCode) && !!playerId,
   );
   const [feedbackData, setFeedbackData] = useState<{
     isVisible: boolean;
@@ -65,11 +68,72 @@ export default function Game() {
     },
   });
 
+  // Join a game by room code for shareable links
+  const joinGameMutation = useMutation({
+    mutationFn: async (data: { roomCode: string; nickname: string }) => {
+      const response = await apiRequest("POST", "/api/games/join", {
+        roomCode: data.roomCode.toUpperCase(),
+        nickname: data.nickname,
+      });
+      return await response.json();
+    },
+    onSuccess: (result) => {
+      // Store player info in localStorage
+      localStorage.setItem("playerId", result.playerId);
+      localStorage.setItem("nickname", result.nickname || "");
+      localStorage.setItem("gameId", result.game.id);
+
+      setGameId(result.game.id);
+      setIsMultiplayer(true);
+
+      toast({
+        title: "Joined Game!",
+        description: `Welcome to the game room!`,
+      });
+
+      // Invalidate and refetch game state
+      queryClient.invalidateQueries({ queryKey: ["/api/games", result.game.id] });
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Room Not Found",
+        description: "This game room may have expired or doesn't exist. Please ask for a new room link.",
+        variant: "destructive",
+      });
+      // Redirect to lobby after a delay
+      setTimeout(() => {
+        window.location.href = '/lobby';
+      }, 3000);
+    }
+  });
+
   // Get game state
   const { data: gameState, isLoading } = useQuery({
     queryKey: ["/api/games", gameId],
     enabled: !!gameId,
   }) as { data: GameState | undefined; isLoading: boolean };
+
+  // Handle room code joining when component mounts
+  useEffect(() => {
+    if (roomParams?.roomCode && !gameId) {
+      // Prompt for nickname if joining via shareable link
+      const enteredNickname = prompt("Welcome! Please enter your nickname to join the game:");
+      if (!enteredNickname || enteredNickname.trim() === "") {
+        // Redirect to lobby if no nickname provided
+        window.location.href = '/lobby';
+        return;
+      }
+      
+      // Join the game with the entered nickname
+      joinGameMutation.mutate({
+        roomCode: roomParams.roomCode,
+        nickname: enteredNickname.trim()
+      });
+    } else if (!gameId && !roomParams?.roomCode) {
+      // Create new single-player game if no room code and no game ID
+      createGameMutation.mutate();
+    }
+  }, [roomParams?.roomCode, gameId]);
 
   // Update multiplayer status when game state loads
   useEffect(() => {
