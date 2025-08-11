@@ -17,12 +17,15 @@ import FeedbackModal from "@/components/FeedbackModal";
 export default function Game() {
   const [match, params] = useRoute("/game/:gameId?");
   const urlParams = new URLSearchParams(window.location.search);
-  const playerId = urlParams.get('playerId') || localStorage.getItem('playerId');
-  const nickname = localStorage.getItem('nickname');
+  const playerId =
+    urlParams.get("playerId") || localStorage.getItem("playerId");
+  const nickname = localStorage.getItem("nickname");
   const { toast } = useToast();
-  
+
   const [gameId, setGameId] = useState<string | null>(params?.gameId || null);
-  const [isMultiplayer, setIsMultiplayer] = useState<boolean>(!!params?.gameId && !!playerId);
+  const [isMultiplayer, setIsMultiplayer] = useState<boolean>(
+    !!params?.gameId && !!playerId,
+  );
   const [feedbackData, setFeedbackData] = useState<{
     isVisible: boolean;
     isCorrect: boolean;
@@ -30,16 +33,19 @@ export default function Game() {
   }>({
     isVisible: false,
     isCorrect: false,
-    message: ""
+    message: "",
   });
   const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
-  const [showPlayerJoinedNotification, setShowPlayerJoinedNotification] = useState(false);
+  const [showPlayerJoinedNotification, setShowPlayerJoinedNotification] =
+    useState(false);
   const [joinedPlayerName, setJoinedPlayerName] = useState<string>("");
   const [opponentNickname, setOpponentNickname] = useState<string>("");
-  const [notifiedPlayerIds, setNotifiedPlayerIds] = useState<Set<string>>(new Set());
+  const [notifiedPlayerIds, setNotifiedPlayerIds] = useState<Set<string>>(
+    new Set(),
+  );
   const [showHowToPlay, setShowHowToPlay] = useState(() => {
     // Check localStorage to see if user has dismissed the card before
-    return localStorage.getItem('dismissedHowToPlay') !== 'true';
+    return localStorage.getItem("dismissedHowToPlay") !== "true";
   });
   const [showVictoryModal, setShowVictoryModal] = useState(false);
   const [justWon, setJustWon] = useState(false);
@@ -49,14 +55,14 @@ export default function Game() {
     mutationFn: async () => {
       // Explicitly specify singlePlayer flag based on current context
       const isSinglePlayerGame = !playerId; // If no playerId, it's single player
-      const response = await apiRequest("POST", "/api/games", { 
-        singlePlayer: isSinglePlayerGame 
+      const response = await apiRequest("POST", "/api/games", {
+        singlePlayer: isSinglePlayerGame,
       });
       return await response.json();
     },
     onSuccess: (game) => {
       setGameId(game.id);
-    }
+    },
   });
 
   // Get game state
@@ -71,17 +77,18 @@ export default function Game() {
       const hasRoomCode = !!gameState.game.roomCode;
       const hasPlayerId = !!playerId;
       setIsMultiplayer(hasRoomCode && hasPlayerId);
-      
+
       // Fetch opponent nickname for multiplayer games
       if (hasRoomCode && hasPlayerId) {
-        const opponentId = playerId === gameState.game.player1Id 
-          ? gameState.game.player2Id 
-          : gameState.game.player1Id;
-        
+        const opponentId =
+          playerId === gameState.game.player1Id
+            ? gameState.game.player2Id
+            : gameState.game.player1Id;
+
         if (opponentId) {
           fetch(`/api/players/${opponentId}`)
-            .then(response => response.json())
-            .then(player => {
+            .then((response) => response.json())
+            .then((player) => {
               setOpponentNickname(player.nickname || "Opponent");
             })
             .catch(() => {
@@ -103,19 +110,24 @@ export default function Game() {
     gameId: isMultiplayer ? gameId || undefined : undefined,
     playerId: isMultiplayer ? playerId || undefined : undefined,
     onMessage: (message: WebSocketMessage) => {
-      console.log('Received WebSocket message:', message);
-      
+      console.log("Received WebSocket message:", message);
+
       // Handle player joined notification
-      if (message.type === 'player_joined' && message.data.playerId !== playerId) {
+      if (
+        message.type === "player_joined" &&
+        message.data.playerId !== playerId
+      ) {
         // Only show notification if we haven't already notified about this player
         if (!notifiedPlayerIds.has(message.data.playerId)) {
           // Mark this player as notified
-          setNotifiedPlayerIds(prev => new Set(prev).add(message.data.playerId));
-          
+          setNotifiedPlayerIds((prev) =>
+            new Set(prev).add(message.data.playerId),
+          );
+
           // Fetch the player's nickname from the server
           fetch(`/api/players/${message.data.playerId}`)
-            .then(response => response.json())
-            .then(player => {
+            .then((response) => response.json())
+            .then((player) => {
               const playerName = player.nickname || "A friend";
               setJoinedPlayerName(playerName);
               setOpponentNickname(playerName); // Also update the header
@@ -132,8 +144,8 @@ export default function Game() {
         } else {
           // Player already notified, just update opponent nickname silently
           fetch(`/api/players/${message.data.playerId}`)
-            .then(response => response.json())
-            .then(player => {
+            .then((response) => response.json())
+            .then((player) => {
               const playerName = player.nickname || "A friend";
               setOpponentNickname(playerName);
             })
@@ -142,122 +154,140 @@ export default function Game() {
             });
         }
       }
-      
+
       // Handle game completion
-      if (message.type === 'game_completed') {
+      if (message.type === "game_completed") {
         setShowVictoryModal(true);
-        
+
         // Trigger confetti for any game completion (winner or loser)
         setTimeout(() => {
           const duration = 3000;
           const end = Date.now() + duration;
-          
+
           (function frame() {
             // Create confetti
-            if (typeof window !== 'undefined' && (window as any).confetti) {
+            if (typeof window !== "undefined" && (window as any).confetti) {
               (window as any).confetti({
                 particleCount: Math.floor(Math.random() * 50) + 50,
                 angle: Math.random() * 360,
                 spread: Math.random() * 50 + 50,
                 origin: {
                   x: Math.random(),
-                  y: Math.random() - 0.2
-                }
+                  y: Math.random() - 0.2,
+                },
               });
             }
-            
+
             if (Date.now() < end) {
               requestAnimationFrame(frame);
             }
-          }());
+          })();
         }, 500);
-        
+
         // Refresh game state to show final scores
         queryClient.invalidateQueries({ queryKey: ["/api/games", gameId] });
       }
 
       // Handle real-time updates here
-      if (message.type === 'move_made') {
+      if (message.type === "move_made") {
         // Show toast for opponent's move
         if (message.data.playerId !== playerId) {
           // Get opponent's nickname and event details to show in toast
-          console.log('Fetching data for toast:', { playerId: message.data.playerId, eventId: message.data.eventId });
-          
+          console.log("Fetching data for toast:", {
+            playerId: message.data.playerId,
+            eventId: message.data.eventId,
+          });
+
           Promise.all([
-            fetch(`/api/players/${message.data.playerId}`).then(r => {
-              console.log('Player response status:', r.status);
+            fetch(`/api/players/${message.data.playerId}`).then((r) => {
+              console.log("Player response status:", r.status);
               return r.json();
             }),
-            fetch(`/api/events/${message.data.eventId}`).then(r => {
-              console.log('Event response status:', r.status);
+            fetch(`/api/events/${message.data.eventId}`).then((r) => {
+              console.log("Event response status:", r.status);
               return r.json();
-            })
+            }),
           ])
-          .then(([player, event]) => {
-            console.log('Fetched data:', { player, event });
-            const opponentName = player.nickname || "Opponent";
-            const eventTitle = event.title || "Unknown Event";
-            const eventYear = event.year || "Unknown Year";
-            
-            // Format year for display (B.C. for negative years)
-            const displayYear = typeof eventYear === 'number' && eventYear < 0 
-              ? `${Math.abs(eventYear)} B.C.` 
-              : eventYear;
-            
-            const status = message.data.isCorrect ? "is correct" : "is incorrect";
-            const toastTitle = `${opponentName} ${status}!`;
-            const toastDescription = message.data.isCorrect 
-              ? `${eventTitle} happened in year ${displayYear}.`
-              : `${eventTitle} was placed incorrectly.`;
-            
-            toast({
-              title: toastTitle,
-              description: toastDescription,
-              variant: message.data.isCorrect ? "success" : "destructive",
+            .then(([player, event]) => {
+              console.log("Fetched data:", { player, event });
+              const opponentName = player.nickname || "Opponent";
+              const eventTitle = event.title || "Unknown Event";
+              const eventYear = event.year || "Unknown Year";
+
+              // Format year for display (B.C. for negative years)
+              const displayYear =
+                typeof eventYear === "number" && eventYear < 0
+                  ? `${Math.abs(eventYear)} B.C.`
+                  : eventYear;
+
+              const status = message.data.isCorrect
+                ? "is correct"
+                : "is incorrect";
+              const toastTitle = `${opponentName} ${status}!`;
+              const toastDescription = message.data.isCorrect
+                ? `${eventTitle} happened in year ${displayYear}.`
+                : `${eventTitle} was placed incorrectly.`;
+
+              toast({
+                title: toastTitle,
+                description: toastDescription,
+                variant: message.data.isCorrect ? "success" : "destructive",
+              });
+            })
+            .catch((error) => {
+              console.error("Error fetching toast data:", error);
+              // Fallback toast if API calls fail
+              const status = message.data.isCorrect
+                ? "is correct"
+                : "is incorrect";
+              toast({
+                title: `Opponent ${status}!`,
+                description: `Your opponent just made a move.`,
+                variant: message.data.isCorrect ? "success" : "destructive",
+              });
             });
-          })
-          .catch((error) => {
-            console.error('Error fetching toast data:', error);
-            // Fallback toast if API calls fail
-            const status = message.data.isCorrect ? "is correct" : "is incorrect";
-            toast({
-              title: `Opponent ${status}!`,
-              description: `Your opponent just made a move.`,
-              variant: message.data.isCorrect ? "success" : "destructive",
-            });
-          });
         }
-        
+
         // Refresh game state when opponent makes a move
         queryClient.invalidateQueries({ queryKey: ["/api/games", gameId] });
       }
-    }
+    },
   });
 
   // Place event mutation
   const placeEventMutation = useMutation({
-    mutationFn: async ({ eventId, position }: { eventId: string; position: number }) => {
+    mutationFn: async ({
+      eventId,
+      position,
+    }: {
+      eventId: string;
+      position: number;
+    }) => {
       const body = isMultiplayer ? { position, playerId } : { position };
-      const response = await apiRequest("POST", `/api/games/${gameId}/place/${eventId}`, body);
+      const response = await apiRequest(
+        "POST",
+        `/api/games/${gameId}/place/${eventId}`,
+        body,
+      );
       return await response.json();
     },
     onSuccess: (result) => {
       setFeedbackData({
         isVisible: true,
         isCorrect: result.isCorrect,
-        message: result.message
+        message: result.message,
       });
-      
+
       // Note: WebSocket message is now sent by the server automatically
-      
+
       // Refetch game state
       queryClient.invalidateQueries({ queryKey: ["/api/games", gameId] });
-      
+
       // Check for victory after correct placement
       if (result.isCorrect) {
         setJustWon(true);
       }
-    }
+    },
   });
 
   useEffect(() => {
@@ -268,30 +298,31 @@ export default function Game() {
   }, []);
 
   const handlePlaceEvent = (eventId: string, position: number) => {
-    console.log('handlePlaceEvent called:', { eventId, position });
-    
+    console.log("handlePlaceEvent called:", { eventId, position });
+
     // For multiplayer: check if it's the player's turn
     if (isMultiplayer && gameState?.game) {
       const isPlayer1 = playerId === gameState.game.player1Id;
       const isPlayer2 = playerId === gameState.game.player2Id;
       const expectedTurn = isPlayer1 ? "player1" : "player2";
-      
+
       if (gameState.game.currentTurn !== expectedTurn) {
         setFeedbackData({
           isVisible: true,
           isCorrect: false,
-          message: "It's not your turn! Wait for the other player to make their move."
+          message:
+            "It's not your turn! Wait for the other player to make their move.",
         });
         return;
       }
     }
-    
+
     placeEventMutation.mutate({ eventId, position });
     setSelectedCardId(null); // Clear selection after placing
   };
 
   const handleCloseFeedback = () => {
-    setFeedbackData(prev => ({ ...prev, isVisible: false }));
+    setFeedbackData((prev) => ({ ...prev, isVisible: false }));
   };
 
   const handleNewGame = () => {
@@ -304,52 +335,54 @@ export default function Game() {
   };
 
   const handleSelectCard = (cardId: string) => {
-    console.log('Game: Card selected:', cardId);
+    console.log("Game: Card selected:", cardId);
     setSelectedCardId(cardId);
   };
 
   const handleTargetChange = async (newTarget: number) => {
     if (gameId) {
       try {
-        await apiRequest("PATCH", `/api/games/${gameId}/settings`, { targetScore: newTarget });
+        await apiRequest("PATCH", `/api/games/${gameId}/settings`, {
+          targetScore: newTarget,
+        });
         queryClient.invalidateQueries({ queryKey: ["/api/games", gameId] });
       } catch (error) {
-        console.error('Failed to update target score:', error);
+        console.error("Failed to update target score:", error);
       }
     }
   };
 
   // Check for game completion and show victory modal
   useEffect(() => {
-    if (gameState?.game && gameState.game.gameStatus === 'completed') {
+    if (gameState?.game && gameState.game.gameStatus === "completed") {
       // For single-player games, check if we just won
       if (!isMultiplayer && justWon) {
         setShowVictoryModal(true);
         setJustWon(false);
-        
+
         // Trigger confetti for single-player wins
         setTimeout(() => {
           const duration = 3000;
           const end = Date.now() + duration;
-          
+
           (function frame() {
             // Create confetti
-            if (typeof window !== 'undefined' && (window as any).confetti) {
+            if (typeof window !== "undefined" && (window as any).confetti) {
               (window as any).confetti({
                 particleCount: Math.floor(Math.random() * 50) + 50,
                 angle: Math.random() * 360,
                 spread: Math.random() * 50 + 50,
                 origin: {
                   x: Math.random(),
-                  y: Math.random() - 0.2
-                }
+                  y: Math.random() - 0.2,
+                },
               });
             }
-            
+
             if (Date.now() < end) {
               requestAnimationFrame(frame);
             }
-          }());
+          })();
         }, 500);
       }
       // For multiplayer games, the confetti is handled by WebSocket 'game_completed' message
@@ -357,7 +390,7 @@ export default function Game() {
   }, [gameState?.game?.gameStatus, justWon, isMultiplayer]);
 
   const handleDeselectCard = () => {
-    console.log('Game: Card deselected');
+    console.log("Game: Card deselected");
     setSelectedCardId(null);
   };
 
@@ -374,8 +407,8 @@ export default function Game() {
 
   return (
     <div className="min-h-screen bg-gray-50" data-testid="game-container">
-      <GameHeader 
-        gameState={gameState} 
+      <GameHeader
+        gameState={gameState}
         isMultiplayer={isMultiplayer}
         currentPlayerId={playerId || undefined}
         nickname={nickname || undefined}
@@ -383,68 +416,73 @@ export default function Game() {
         onTargetChange={handleTargetChange}
         onNewGame={handleNewGame}
       />
-      
+
       {/* Turn indicator for multiplayer */}
       {isMultiplayer && gameState.game && (
-        <div className={`border-l-4 p-4 mx-4 mt-4 rounded-r-lg ${
-          (() => {
+        <div
+          className={`border-l-4 p-4 mx-4 mt-4 rounded-r-lg ${(() => {
             const isPlayer1 = playerId === gameState.game.player1Id;
-            const isMyTurn = (isPlayer1 && gameState.game.currentTurn === "player1") || 
-                           (!isPlayer1 && gameState.game.currentTurn === "player2");
-            return isMyTurn 
-              ? "bg-green-50 border-green-600" 
+            const isMyTurn =
+              (isPlayer1 && gameState.game.currentTurn === "player1") ||
+              (!isPlayer1 && gameState.game.currentTurn === "player2");
+            return isMyTurn
+              ? "bg-green-50 border-green-600"
               : "bg-orange-50 border-orange-600";
-          })()
-        }`}>
+          })()}`}
+        >
           <div className="flex items-start">
-            <div className={`w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5 ${
-              (() => {
+            <div
+              className={`w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5 ${(() => {
                 const isPlayer1 = playerId === gameState.game.player1Id;
-                const isMyTurn = (isPlayer1 && gameState.game.currentTurn === "player1") || 
-                               (!isPlayer1 && gameState.game.currentTurn === "player2");
-                return isMyTurn 
-                  ? "bg-green-600" 
-                  : "bg-orange-600";
-              })()
-            }`}>
+                const isMyTurn =
+                  (isPlayer1 && gameState.game.currentTurn === "player1") ||
+                  (!isPlayer1 && gameState.game.currentTurn === "player2");
+                return isMyTurn ? "bg-green-600" : "bg-orange-600";
+              })()}`}
+            >
               <span className="text-white text-xs font-bold">
                 {(() => {
                   const isPlayer1 = playerId === gameState.game.player1Id;
-                  const isMyTurn = (isPlayer1 && gameState.game.currentTurn === "player1") || 
-                                 (!isPlayer1 && gameState.game.currentTurn === "player2");
+                  const isMyTurn =
+                    (isPlayer1 && gameState.game.currentTurn === "player1") ||
+                    (!isPlayer1 && gameState.game.currentTurn === "player2");
                   return isMyTurn ? "▶" : "⏸";
                 })()}
               </span>
             </div>
             <div>
-              <h3 className={`text-sm font-medium ${
-                (() => {
+              <h3
+                className={`text-sm font-medium ${(() => {
                   const isPlayer1 = playerId === gameState.game.player1Id;
-                  const isMyTurn = (isPlayer1 && gameState.game.currentTurn === "player1") || 
-                                 (!isPlayer1 && gameState.game.currentTurn === "player2");
+                  const isMyTurn =
+                    (isPlayer1 && gameState.game.currentTurn === "player1") ||
+                    (!isPlayer1 && gameState.game.currentTurn === "player2");
                   return isMyTurn ? "text-green-800" : "text-orange-800";
-                })()
-              }`}>
+                })()}`}
+              >
                 {(() => {
                   const isPlayer1 = playerId === gameState.game.player1Id;
-                  const isMyTurn = (isPlayer1 && gameState.game.currentTurn === "player1") || 
-                                 (!isPlayer1 && gameState.game.currentTurn === "player2");
+                  const isMyTurn =
+                    (isPlayer1 && gameState.game.currentTurn === "player1") ||
+                    (!isPlayer1 && gameState.game.currentTurn === "player2");
                   return isMyTurn ? "Your Turn!" : "Opponent's Turn";
                 })()}
               </h3>
-              <p className={`text-sm ${
-                (() => {
+              <p
+                className={`text-sm ${(() => {
                   const isPlayer1 = playerId === gameState.game.player1Id;
-                  const isMyTurn = (isPlayer1 && gameState.game.currentTurn === "player1") || 
-                                 (!isPlayer1 && gameState.game.currentTurn === "player2");
+                  const isMyTurn =
+                    (isPlayer1 && gameState.game.currentTurn === "player1") ||
+                    (!isPlayer1 && gameState.game.currentTurn === "player2");
                   return isMyTurn ? "text-green-700" : "text-orange-700";
-                })()
-              }`}>
+                })()}`}
+              >
                 {(() => {
                   const isPlayer1 = playerId === gameState.game.player1Id;
-                  const isMyTurn = (isPlayer1 && gameState.game.currentTurn === "player1") || 
-                                 (!isPlayer1 && gameState.game.currentTurn === "player2");
-                  return isMyTurn 
+                  const isMyTurn =
+                    (isPlayer1 && gameState.game.currentTurn === "player1") ||
+                    (!isPlayer1 && gameState.game.currentTurn === "player2");
+                  return isMyTurn
                     ? "Click the current card to select it, then click a drop zone to place it chronologically."
                     : "Please wait for the other player to make their move.";
                 })()}
@@ -460,14 +498,24 @@ export default function Game() {
           <button
             onClick={() => {
               setShowHowToPlay(false);
-              localStorage.setItem('dismissedHowToPlay', 'true');
+              localStorage.setItem("dismissedHowToPlay", "true");
             }}
             className="absolute top-2 right-2 text-blue-400 hover:text-blue-600 transition-colors"
             data-testid="close-how-to-play"
             aria-label="Close instructions"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
           </button>
           <div className="flex items-start">
@@ -477,10 +525,13 @@ export default function Game() {
             <div className="pr-8">
               <h3 className="text-sm font-medium text-blue-800">How to Play</h3>
               <p className="text-sm text-blue-700">
-                <strong>Step 1:</strong> Click the purple "Current Card" below to select it. 
-                <strong>Step 2:</strong> Click a drop zone in your timeline above to place it chronologically. 
-                Choose <strong>"Before"</strong> the first card or <strong>"After"</strong> any existing card. 
-                Get 10 cards correctly placed to win!
+                <strong>Step 1:</strong> Click the purple "Current Card" below
+                to select it.
+                <strong>Step 2:</strong> Click a drop zone in your timeline
+                above to place it chronologically. Choose{" "}
+                <strong>"Before"</strong> the first card or{" "}
+                <strong>"After"</strong> any existing card. Get 10 cards
+                correctly placed to win!
               </p>
             </div>
           </div>
@@ -490,15 +541,15 @@ export default function Game() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           <div className="lg:col-span-3">
-            <Timeline 
-              gameState={gameState} 
+            <Timeline
+              gameState={gameState}
               onPlaceEvent={handlePlaceEvent}
               isPlacing={placeEventMutation.isPending}
               selectedCardId={selectedCardId}
               currentPlayerId={playerId || undefined}
             />
-            <CurrentCard 
-              gameState={gameState} 
+            <CurrentCard
+              gameState={gameState}
               onPlaceEvent={handlePlaceEvent}
               isPlacing={placeEventMutation.isPending}
               selectedCardId={selectedCardId}
@@ -508,15 +559,18 @@ export default function Game() {
               currentPlayerId={playerId || undefined}
             />
           </div>
-          
+
           <div className="lg:col-span-1">
-            <GameStats gameState={gameState} currentPlayerId={playerId || undefined} />
+            <GameStats
+              gameState={gameState}
+              currentPlayerId={playerId || undefined}
+            />
             <RecentActivity gameState={gameState} />
           </div>
         </div>
       </main>
 
-      <FeedbackModal 
+      <FeedbackModal
         isVisible={feedbackData.isVisible}
         isCorrect={feedbackData.isCorrect}
         message={feedbackData.message}
@@ -529,8 +583,16 @@ export default function Game() {
           <div className="bg-white rounded-lg max-w-md w-full p-8 text-center">
             <div className="mb-6">
               <div className="w-20 h-20 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 2L3 7v11h14V7l-7-5zM8 15.5a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0z" clipRule="evenodd" />
+                <svg
+                  className="w-10 h-10 text-white"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 2L3 7v11h14V7l-7-5zM8 15.5a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0z"
+                    clipRule="evenodd"
+                  />
                   <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
                 </svg>
               </div>
@@ -538,33 +600,62 @@ export default function Game() {
                 <>
                   {gameState.game.winnerPlayerId === playerId ? (
                     <>
-                      <h2 className="text-3xl font-bold text-gray-900 mb-2">🎉 You Won! 🎉</h2>
-                      <p className="text-lg text-gray-600 mb-2">Congratulations! You completed your timeline first!</p>
+                      <h2 className="text-3xl font-bold text-gray-900 mb-2">
+                        🎉 You Won! 🎉
+                      </h2>
+                      <p className="text-lg text-gray-600 mb-2">
+                        Congratulations! You completed your timeline first!
+                      </p>
                       <p className="text-sm text-gray-500">
-                        Final Score: You {gameState.game.player1Id === playerId ? gameState.game.player1Score : gameState.game.player2Score} - {gameState.game.player1Id === playerId ? gameState.game.player2Score : gameState.game.player1Score} {opponentNickname || "Opponent"}
+                        Final Score: You{" "}
+                        {gameState.game.player1Id === playerId
+                          ? gameState.game.player1Score
+                          : gameState.game.player2Score}{" "}
+                        -{" "}
+                        {gameState.game.player1Id === playerId
+                          ? gameState.game.player2Score
+                          : gameState.game.player1Score}{" "}
+                        {opponentNickname || "Opponent"}
                       </p>
                     </>
                   ) : (
                     <>
-                      <h2 className="text-3xl font-bold text-gray-900 mb-2">🎊 Game Complete! 🎊</h2>
-                      <p className="text-lg text-gray-600 mb-2">{opponentNickname || "Your opponent"} won this round!</p>
+                      <h2 className="text-3xl font-bold text-gray-900 mb-2">
+                        🎊 Game Complete! 🎊
+                      </h2>
+                      <p className="text-lg text-gray-600 mb-2">
+                        {opponentNickname || "Your opponent"} won this round!
+                      </p>
                       <p className="text-sm text-gray-500">
-                        Final Score: {opponentNickname || "Opponent"} {gameState.game.player1Id === playerId ? gameState.game.player2Score : gameState.game.player1Score} - {gameState.game.player1Id === playerId ? gameState.game.player1Score : gameState.game.player2Score} You
+                        Final Score: {opponentNickname || "Opponent"}{" "}
+                        {gameState.game.player1Id === playerId
+                          ? gameState.game.player2Score
+                          : gameState.game.player1Score}{" "}
+                        -{" "}
+                        {gameState.game.player1Id === playerId
+                          ? gameState.game.player1Score
+                          : gameState.game.player2Score}{" "}
+                        You
                       </p>
                     </>
                   )}
                 </>
               ) : (
                 <>
-                  <h2 className="text-3xl font-bold text-gray-900 mb-2">🎉 Congratulations! 🎉</h2>
-                  <p className="text-lg text-gray-600 mb-2">You've completed your historical timeline!</p>
+                  <h2 className="text-3xl font-bold text-gray-900 mb-2">
+                    🎉 Congratulations! 🎉
+                  </h2>
+                  <p className="text-lg text-gray-600 mb-2">
+                    You've completed your historical timeline!
+                  </p>
                   <p className="text-sm text-gray-500">
-                    You successfully placed {gameState?.game?.targetScore || 10} events in chronological order!
+                    You successfully placed {gameState?.game?.targetScore || 10}{" "}
+                    events in chronological order!
                   </p>
                 </>
               )}
             </div>
-            
+
             <div className="space-y-3">
               <button
                 onClick={handleNewGame}
@@ -578,23 +669,28 @@ export default function Game() {
                 className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-3 px-6 rounded-lg transition-colors"
                 data-testid="close-victory-modal"
               >
-                Continue Viewing Timeline
+                ⏳️ Review Timeline
               </button>
             </div>
           </div>
         </div>
       )}
-      
+
       {/* Player Joined Notification */}
       {showPlayerJoinedNotification && (
-        <div className="fixed top-4 right-4 bg-green-600 text-white p-4 rounded-lg shadow-lg z-50 animate-in slide-in-from-right-4 duration-300" data-testid="player-joined-notification">
+        <div
+          className="fixed top-4 right-4 bg-green-600 text-white p-4 rounded-lg shadow-lg z-50 animate-in slide-in-from-right-4 duration-300"
+          data-testid="player-joined-notification"
+        >
           <div className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
               <span className="text-white text-sm font-bold">👋</span>
             </div>
             <div>
               <p className="font-semibold">Player Joined!</p>
-              <p className="text-sm text-green-100">{joinedPlayerName} has joined the game</p>
+              <p className="text-sm text-green-100">
+                {joinedPlayerName} has joined the game
+              </p>
             </div>
           </div>
         </div>
