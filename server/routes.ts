@@ -215,11 +215,39 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       }
 
+      // Calculate total incorrect moves for each player
+      let playerStats;
+      if (game.roomCode) {
+        // Multiplayer game - calculate for both players
+        const player1IncorrectCount = moves.filter(
+          move => move.playerId === game.player1Id && !move.isCorrect
+        ).length;
+        const player2IncorrectCount = moves.filter(
+          move => move.playerId === game.player2Id && !move.isCorrect
+        ).length;
+        
+        playerStats = {
+          player1IncorrectCount,
+          player2IncorrectCount,
+        };
+      } else {
+        // Single player game
+        const player1IncorrectCount = moves.filter(
+          move => !move.isCorrect
+        ).length;
+        
+        playerStats = {
+          player1IncorrectCount,
+          player2IncorrectCount: 0,
+        };
+      }
+
       const gameState = {
         game,
         placedEvents,
         currentEvent,
         recentMoves,
+        playerStats,
       };
 
       res.json(gameState);

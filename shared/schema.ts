@@ -73,6 +73,10 @@ export type GameState = {
   recentMoves: (GameMove & { event: HistoricalEvent })[];
   currentPlayerId?: string;
   isMyTurn?: boolean;
+  playerStats?: {
+    player1IncorrectCount: number;
+    player2IncorrectCount: number;
+  };
 };
 
 // WebSocket message types for real-time communication
