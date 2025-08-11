@@ -25,6 +25,8 @@ It's About T⏳️me!! is a single-player educational game where players arrange
 - **Fixed API Endpoint Confusion**: Added helpful error messages when users access API endpoints directly instead of room URLs
 - **Critical Bug Fix**: Fixed room joining logic that was using room codes as game IDs, causing 404 errors and "loading game" issues
 - **Enhanced Player2 Joining**: Added nickname prompt for shareable link joins and fixed WebSocket notifications for proper player joining experience
+- **Fixed Multiplayer Slot Assignment**: Player1 now properly joins their own game preventing Player2 from taking the wrong slot
+- **Simplified Shareable Link Flow**: Always prompt for nickname on shareable link joins for consistent user experience
 
 ## User Preferences
 
