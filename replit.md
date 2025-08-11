@@ -22,6 +22,7 @@ It's About T⏳️me!! is a single-player educational game where players arrange
 - **Fixed Repeated Toast Notifications**: Implemented player tracking to prevent duplicate join notifications
 - **Added Shareable Room URLs**: Players can now join existing multiplayer rooms via direct URLs like `/room/ABC123`
 - **Enhanced Player2 Joining**: Automatic nickname prompt when joining via URL with WebSocket notifications to Player1
+- **Improved UX for Room Joining**: Replaced ugly browser prompt with beautiful React modal for nickname entry
 
 ## User Preferences
 
