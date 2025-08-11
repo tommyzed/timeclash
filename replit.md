@@ -23,6 +23,7 @@ It's About T⏳️me!! is a single-player educational game where players arrange
 - **Added Shareable Room Links**: Players can now share direct URLs like `/room/ABCDEF` for instant game joining
 - **Enhanced Error Handling**: Added clear error messages for expired/invalid room codes with auto-redirect to lobby
 - **Fixed API Endpoint Confusion**: Added helpful error messages when users access API endpoints directly instead of room URLs
+- **Critical Bug Fix**: Fixed room joining logic that was using room codes as game IDs, causing 404 errors and "loading game" issues
 
 ## User Preferences
 

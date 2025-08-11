@@ -25,10 +25,10 @@ export default function Game() {
   const { toast } = useToast();
 
   const [gameId, setGameId] = useState<string | null>(
-    gameParams?.gameId || roomParams?.roomCode || null
+    gameParams?.gameId || null
   );
   const [isMultiplayer, setIsMultiplayer] = useState<boolean>(
-    !!(gameParams?.gameId || roomParams?.roomCode) && !!playerId,
+    !!roomParams?.roomCode && !!playerId,
   );
   const [feedbackData, setFeedbackData] = useState<{
     isVisible: boolean;
