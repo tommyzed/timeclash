@@ -146,7 +146,7 @@ export default function Lobby() {
               data-testid="game-logo"
             />
           </div>
-          <p className="text-gray-600">
+          <p className="text-[#0798a5] font-semibold">
             Play a historical timeline game with friends!
           </p>
         </div>
