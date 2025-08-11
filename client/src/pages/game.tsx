@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { useRoute } from "wouter";
+import { useRoute, useLocation } from "wouter";
 import { queryClient } from "@/lib/queryClient";
 import { apiRequest } from "@/lib/queryClient";
 import { type GameState, type WebSocketMessage } from "@shared/schema";
@@ -17,9 +17,21 @@ import FeedbackModal from "@/components/FeedbackModal";
 export default function Game() {
   const [gameMatch, gameParams] = useRoute("/game/:gameId?");
   const [roomMatch, roomParams] = useRoute("/room/:roomCode");
+  const [location, setLocation] = useLocation();
+  
+  // Fix playerId extraction to avoid URL path contamination
   const urlParams = new URLSearchParams(window.location.search);
-  const playerId =
-    urlParams.get("playerId") || localStorage.getItem("playerId");
+  const urlPlayerId = urlParams.get("playerId");
+  const storedPlayerId = localStorage.getItem("playerId");
+  
+  // Clean playerId by removing any URL path segments that might have been contaminated
+  const cleanPlayerId = (id: string | null) => {
+    if (!id) return null;
+    // Remove any path segments that might have been concatenated
+    return id.split('/')[0].split('?')[0];
+  };
+  
+  const playerId = cleanPlayerId(urlPlayerId) || cleanPlayerId(storedPlayerId);
   const nickname = localStorage.getItem("nickname");
   const { toast } = useToast();
 
@@ -90,6 +102,11 @@ export default function Game() {
         title: "Joined Game!",
         description: `Welcome to the game room!`,
       });
+
+      // Navigate to the game URL with proper game ID and playerId
+      setTimeout(() => {
+        setLocation(`/game/${result.game.id}?playerId=${result.playerId}`);
+      }, 100);
 
       // Invalidate and refetch game state
       queryClient.invalidateQueries({ queryKey: ["/api/games", result.game.id] });
