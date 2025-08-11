@@ -138,6 +138,10 @@ export default function Game() {
   // Handle room code joining when component mounts
   useEffect(() => {
     if (roomParams?.roomCode && !gameId) {
+      // Show helpful message for cross-domain access
+      console.log('Joining room via shareable link:', roomParams.roomCode);
+      console.log('Current domain:', window.location.host);
+      
       // Prompt for nickname if joining via shareable link
       const enteredNickname = prompt("Welcome! Please enter your nickname to join the game:");
       if (!enteredNickname || enteredNickname.trim() === "") {
