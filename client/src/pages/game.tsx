@@ -301,8 +301,13 @@ export default function Game() {
 
       // Handle real-time updates here
       if (message.type === "move_made") {
+        console.log("Received move_made message:", message.data);
+        console.log("Current playerId:", playerId);
+        console.log("Move made by:", message.data.playerId);
+        
         // Show toast for opponent's move
         if (message.data.playerId !== playerId) {
+          console.log("Processing opponent's move for timeline update");
           // Get opponent's nickname and event details to show in toast
           console.log("Fetching data for toast:", {
             playerId: message.data.playerId,
@@ -359,8 +364,12 @@ export default function Game() {
             });
         }
 
-        // Refresh game state when opponent makes a move
+        // Always refresh game state when any move is made (own or opponent's)
+        console.log("Invalidating game state cache for gameId:", gameId);
         queryClient.invalidateQueries({ queryKey: ["/api/games", gameId] });
+        
+        // Also force refetch to ensure immediate update
+        queryClient.refetchQueries({ queryKey: ["/api/games", gameId] });
       }
     },
   });
