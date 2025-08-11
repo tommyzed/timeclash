@@ -1,8 +1,8 @@
-# Chronology - Historical Timeline Game
+# It's About T⏳️me!! - Historical Timeline Game
 
 ## Overview
 
-Chronology is a single-player educational game where players arrange historical events in chronological order. The application is a full-stack web game built with React and Express, featuring a click-based timeline interface where players select and place historical event cards in the correct temporal sequence. The game tracks scoring based on correct placements and provides immediate feedback on player moves.
+It's About T⏳️me!! is a single-player educational game where players arrange historical events in chronological order. The application is a full-stack web game built with React and Express, featuring a click-based timeline interface where players select and place historical event cards in the correct temporal sequence. The game tracks scoring based on correct placements and provides immediate feedback on player moves.
 
 ## Recent Changes (January 2025)
 

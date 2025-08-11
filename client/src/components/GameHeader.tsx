@@ -103,7 +103,7 @@ export default function GameHeader({ gameState, isMultiplayer, currentPlayerId, 
           <div className="flex items-center space-x-4">
             <h1 className="text-2xl font-bold text-gray-900">
               <Clock className="inline-block text-blue-600 mr-2 h-7 w-7" />
-              Chronology
+              It's About T⏳️me!!
             </h1>
             {getGameModeDisplay()}
             {nickname && (
