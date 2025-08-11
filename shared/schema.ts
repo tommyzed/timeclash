@@ -22,6 +22,7 @@ export const games = pgTable("games", {
   targetScore: integer("target_score").notNull().default(10),
   currentEventId: varchar("current_event_id"),
   placedEventIds: text("placed_event_ids").array().notNull().default([]),
+  attemptedEventIds: text("attempted_event_ids").array().notNull().default([]),
   gameStatus: varchar("game_status").notNull().default("waiting"), // waiting, playing, completed
   winnerPlayerId: varchar("winner_player_id"),
   createdAt: timestamp("created_at").notNull().default(sql`now()`),

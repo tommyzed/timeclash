@@ -17,6 +17,9 @@ It's About T⏳️me!! is a single-player educational game where players arrange
 - **Expanded Historical Dataset**: Added 400+ historical events spanning from 3.3M B.C. to 2022 C.E.
 - **Enhanced Card Variety**: Every game now starts with different events ensuring unique gameplay experiences
 - **Player-Specific Card Colors**: Blue cards for current player, orange for opponent, visual timeline ownership
+- **Fixed Card Reuse Bug**: Added attemptedEventIds tracking to prevent duplicate cards appearing in same game
+- **Enhanced Recent Moves**: Added player names with bold blue styling in Recent Moves section
+- **Fixed Repeated Toast Notifications**: Implemented player tracking to prevent duplicate join notifications
 
 ## User Preferences
 

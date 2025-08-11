@@ -4309,6 +4309,7 @@ export class MemStorage implements IStorage {
       targetScore: 10,
       currentEventId: null,
       placedEventIds: [startingEventId], // Start with random historical event
+      attemptedEventIds: [startingEventId], // Track starting event as attempted
       gameStatus: "waiting",
       winnerPlayerId: null,
       createdAt: new Date(),

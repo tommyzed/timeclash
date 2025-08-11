@@ -392,11 +392,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }
         }
 
+        // Add current event to attempted events list to prevent reuse
+        const newAttemptedEventIds = [...(game.attemptedEventIds || []), eventId];
+        updateData.attemptedEventIds = newAttemptedEventIds;
+
         // Get next event if game is not completed
         if (updateData.gameStatus !== "completed") {
           const nextEvent = await storage.getRandomHistoricalEvent([
             ...newPlacedEventIds,
-            eventId,
+            ...newAttemptedEventIds,
           ]);
           updateData.currentEventId = nextEvent?.id || null;
         } else {
@@ -428,9 +432,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
             game.currentTurn === "player1" ? "player2" : "player1";
         }
 
-        // Get a new event for the next turn
+        // Add current event to attempted events list to prevent reuse
+        const newAttemptedEventIds = [...(game.attemptedEventIds || []), eventId];
+        updateData.attemptedEventIds = newAttemptedEventIds;
+
+        // Get a new event for the next turn, excluding all attempted events
         const nextEvent = await storage.getRandomHistoricalEvent([
           ...game.placedEventIds,
+          ...newAttemptedEventIds,
         ]);
         updateData.currentEventId = nextEvent?.id || null;
 
