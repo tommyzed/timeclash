@@ -49,10 +49,13 @@ export function useWebSocket({ gameId, playerId, onMessage, onConnect, onDisconn
         
         // Join the game room if we have gameId and playerId
         if (gameId && playerId) {
+          console.log('Sending join_game message:', { gameId, playerId });
           sendMessage({
             type: 'join_game',
             data: { gameId, playerId }
           });
+        } else {
+          console.log('WebSocket connected but missing gameId or playerId:', { gameId, playerId });
         }
         
         onConnect?.();
@@ -144,7 +147,18 @@ export function useWebSocket({ gameId, playerId, onMessage, onConnect, onDisconn
     return () => {
       disconnect();
     };
-  }, [gameId, playerId]);
+  }, []);
+
+  // Re-send join_game message when gameId or playerId becomes available
+  useEffect(() => {
+    if (isConnected && gameId && playerId) {
+      console.log('Re-sending join_game message after connection established:', { gameId, playerId });
+      sendMessage({
+        type: 'join_game',
+        data: { gameId, playerId }
+      });
+    }
+  }, [isConnected, gameId, playerId]);
 
   return {
     isConnected,

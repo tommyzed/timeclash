@@ -214,8 +214,8 @@ export default function Game() {
 
   // WebSocket connection for multiplayer
   const { isConnected, sendMessage } = useWebSocket({
-    gameId: isMultiplayer ? gameId || undefined : undefined,
-    playerId: isMultiplayer ? playerId || undefined : undefined,
+    gameId: gameId || undefined,
+    playerId: playerId || undefined,
     onMessage: (message: WebSocketMessage) => {
       console.log("Received WebSocket message:", message);
 
