@@ -65,7 +65,7 @@ export default function GameHeader({
             data-testid="copy-room-code-button"
             title="Click to copy room code"
           >
-            <span>Share Room</span>
+            <span>Room {game.roomCode}</span>
             {copied ? (
               <Check className="h-3 w-3 text-green-600" />
             ) : (
@@ -150,9 +150,9 @@ export default function GameHeader({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center space-x-4">
-            <img 
-              src={logoImage} 
-              alt="It's About Time!!" 
+            <img
+              src={logoImage}
+              alt="It's About Time!!"
               className="h-8 w-auto"
               data-testid="game-header-logo"
             />
