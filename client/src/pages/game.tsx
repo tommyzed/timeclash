@@ -11,7 +11,7 @@ import Timeline from "@/components/Timeline";
 import CurrentCard from "@/components/CurrentCard";
 import GameStats from "@/components/GameStats";
 import RecentActivity from "@/components/RecentActivity";
-import GameControls from "@/components/GameControls";
+
 import FeedbackModal from "@/components/FeedbackModal";
 
 export default function Game() {
@@ -363,6 +363,7 @@ export default function Game() {
         nickname={nickname || undefined}
         opponentNickname={opponentNickname || undefined}
         onTargetChange={handleTargetChange}
+        onNewGame={handleNewGame}
       />
       
       {/* Turn indicator for multiplayer */}
@@ -493,7 +494,6 @@ export default function Game() {
           <div className="lg:col-span-1">
             <GameStats gameState={gameState} currentPlayerId={playerId || undefined} />
             <RecentActivity gameState={gameState} />
-            <GameControls onNewGame={handleNewGame} />
           </div>
         </div>
       </main>
