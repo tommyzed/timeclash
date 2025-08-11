@@ -48,8 +48,8 @@ export default function RecentActivity({ gameState }: RecentActivityProps) {
                         ? `${Math.abs(move.event.year)} B.C.`
                         : move.event.year;
                     const resultText = move.isCorrect
-                      ? `placed correctly! (${displayYear})`
-                      : `placed incorrectly (${displayYear})`;
+                      ? "Placed correctly! "
+                      : "Placed incorrectly ";
 
                     return move.playerName ? (
                       <>
@@ -57,9 +57,13 @@ export default function RecentActivity({ gameState }: RecentActivityProps) {
                           {move.playerName}
                         </span>
                         {" " + resultText}
+                        <span className="font-bold">({displayYear})</span>
                       </>
                     ) : (
-                      resultText
+                      <>
+                        {resultText}
+                        <span className="font-bold">({displayYear})</span>
+                      </>
                     );
                   })()}
                 </p>
