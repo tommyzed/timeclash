@@ -13,6 +13,7 @@ import { useLocation } from "wouter";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+import logoImage from "@assets/It's About Time Logo -sm_1754907859214.png";
 
 export default function Lobby() {
   const [nickname, setNickname] = useState("");
@@ -137,9 +138,14 @@ export default function Lobby() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">
-            It's About T⏳️me!!
-          </h1>
+          <div className="mb-4">
+            <img 
+              src={logoImage} 
+              alt="It's About Time!!" 
+              className="mx-auto h-32 w-auto"
+              data-testid="game-logo"
+            />
+          </div>
           <p className="text-gray-600">
             Play a historical timeline game with friends!
           </p>
