@@ -32,7 +32,11 @@ export default function Game() {
   };
   
   const playerId = cleanPlayerId(urlPlayerId) || cleanPlayerId(storedPlayerId);
-  const nickname = localStorage.getItem("nickname");
+  
+  // State for nickname that updates when joining via URL
+  const [currentNickname, setCurrentNickname] = useState<string | null>(
+    localStorage.getItem("nickname")
+  );
   const { toast } = useToast();
 
   const [gameId, setGameId] = useState<string | null>(
@@ -97,6 +101,7 @@ export default function Game() {
 
       setGameId(result.game.id);
       setIsMultiplayer(true);
+      setCurrentNickname(result.nickname || ""); // Update the nickname state
 
       toast({
         title: "Joined Game!",
@@ -179,12 +184,29 @@ export default function Game() {
           // If no opponent yet, clear the nickname
           setOpponentNickname("");
         }
+
+        // Also ensure current player's nickname is up to date
+        if (playerId && !currentNickname) {
+          fetch(`/api/players/${playerId}`)
+            .then((response) => response.json())
+            .then((player) => {
+              setCurrentNickname(player.nickname || "");
+              localStorage.setItem("nickname", player.nickname || "");
+            })
+            .catch(() => {
+              // Fallback to stored nickname
+              const storedNickname = localStorage.getItem("nickname");
+              if (storedNickname) {
+                setCurrentNickname(storedNickname);
+              }
+            });
+        }
       } else {
         // Clear opponent nickname for single player games
         setOpponentNickname("");
       }
     }
-  }, [gameState, playerId]);
+  }, [gameState, playerId, currentNickname]);
 
   // WebSocket connection for multiplayer
   const { isConnected, sendMessage } = useWebSocket({
@@ -492,7 +514,7 @@ export default function Game() {
         gameState={gameState}
         isMultiplayer={isMultiplayer}
         currentPlayerId={playerId || undefined}
-        nickname={nickname || undefined}
+        nickname={currentNickname || undefined}
         opponentNickname={opponentNickname || undefined}
         onTargetChange={handleTargetChange}
         onNewGame={handleNewGame}
