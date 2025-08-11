@@ -207,7 +207,7 @@ export default function GameHeader({
                 <h3 className="text-lg font-semibold text-gray-900 mb-4">Game Controls</h3>
                 <div className="space-y-3">
                   <button 
-                    className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 py-2 px-4 rounded-lg transition-colors flex items-center justify-center"
+                    className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 py-2 px-4 rounded-lg transition-colors flex items-center justify-start"
                     onClick={() => {
                       if (onNewGame) {
                         onNewGame();
@@ -221,7 +221,7 @@ export default function GameHeader({
                   </button>
                   
                   <button 
-                    className="w-full bg-blue-50 hover:bg-blue-100 text-blue-700 py-2 px-4 rounded-lg transition-colors flex items-center justify-center"
+                    className="w-full bg-blue-50 hover:bg-blue-100 text-blue-700 py-2 px-4 rounded-lg transition-colors flex items-center justify-start"
                     onClick={() => {
                       setLocation('/');
                       setShowSettings(false);
@@ -233,14 +233,14 @@ export default function GameHeader({
                   </button>
                   
                   <button 
-                    className="w-full text-center text-sm text-gray-500 hover:text-gray-700 transition-colors py-2"
+                    className="w-full text-left text-sm text-gray-500 hover:text-gray-700 transition-colors py-2 px-4 flex items-center justify-start"
                     onClick={() => {
                       setShowRulesModal(true);
                       setShowSettings(false);
                     }}
                     data-testid="button-rules"
                   >
-                    <HelpCircle className="inline mr-1 h-4 w-4" />
+                    <HelpCircle className="mr-1 h-4 w-4" />
                     View Rules
                   </button>
                 </div>
