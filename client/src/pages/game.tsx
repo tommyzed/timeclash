@@ -93,10 +93,14 @@ export default function Game() {
     },
     onError: (error: any) => {
       toast({
-        title: "Failed to Join Game",
-        description: error.message || "Could not join the game room",
+        title: "Room Not Found",
+        description: "This game room may have expired or doesn't exist. Please ask for a new room link.",
         variant: "destructive",
       });
+      // Redirect to lobby after a delay
+      setTimeout(() => {
+        window.location.href = '/lobby';
+      }, 3000);
     }
   });
 

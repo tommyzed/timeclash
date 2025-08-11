@@ -21,6 +21,8 @@ It's About T⏳️me!! is a single-player educational game where players arrange
 - **Enhanced Recent Moves**: Added player names with bold blue styling in Recent Moves section
 - **Fixed Repeated Toast Notifications**: Implemented player tracking to prevent duplicate join notifications
 - **Added Shareable Room Links**: Players can now share direct URLs like `/room/ABCDEF` for instant game joining
+- **Enhanced Error Handling**: Added clear error messages for expired/invalid room codes with auto-redirect to lobby
+- **Fixed API Endpoint Confusion**: Added helpful error messages when users access API endpoints directly instead of room URLs
 
 ## User Preferences
 
