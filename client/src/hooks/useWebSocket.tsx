@@ -24,11 +24,9 @@ export function useWebSocket({ gameId, playerId, onMessage, onConnect, onDisconn
 
     try {
       const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-      const host = window.location.host;
-      const wsUrl = `${protocol}//${host}/ws`;
+      const wsUrl = `${protocol}//${window.location.host}/ws`;
       
       console.log('Connecting to WebSocket:', wsUrl);
-      console.log('Debug info - protocol:', protocol, 'host:', host, 'location:', window.location);
       wsRef.current = new WebSocket(wsUrl);
 
       wsRef.current.onopen = () => {
