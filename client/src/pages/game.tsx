@@ -13,7 +13,6 @@ import GameStats from "@/components/GameStats";
 import RecentActivity from "@/components/RecentActivity";
 
 import FeedbackModal from "@/components/FeedbackModal";
-import NicknameModal from "@/components/NicknameModal";
 
 export default function Game() {
   const [gameMatch, gameParams] = useRoute("/game/:gameId?");
@@ -69,8 +68,6 @@ export default function Game() {
   });
   const [showVictoryModal, setShowVictoryModal] = useState(false);
   const [justWon, setJustWon] = useState(false);
-  const [showNicknameModal, setShowNicknameModal] = useState(false);
-  const [pendingRoomCode, setPendingRoomCode] = useState<string | null>(null);
 
   // Create a new game on component mount
   const createGameMutation = useMutation({
@@ -141,34 +138,24 @@ export default function Game() {
   // Handle room code joining when component mounts
   useEffect(() => {
     if (roomParams?.roomCode && !gameId) {
-      // Show nickname modal for joining via shareable link
-      setPendingRoomCode(roomParams.roomCode);
-      setShowNicknameModal(true);
+      // Prompt for nickname if joining via shareable link
+      const enteredNickname = prompt("Welcome! Please enter your nickname to join the game:");
+      if (!enteredNickname || enteredNickname.trim() === "") {
+        // Redirect to lobby if no nickname provided
+        window.location.href = '/lobby';
+        return;
+      }
+      
+      // Join the game with the entered nickname
+      joinGameMutation.mutate({
+        roomCode: roomParams.roomCode,
+        nickname: enteredNickname.trim()
+      });
     } else if (!gameId && !roomParams?.roomCode) {
       // Create new single-player game if no room code and no game ID
       createGameMutation.mutate();
     }
   }, [roomParams?.roomCode, gameId]);
-
-  const handleNicknameSubmit = (nickname: string) => {
-    if (pendingRoomCode) {
-      joinGameMutation.mutate({
-        roomCode: pendingRoomCode,
-        nickname: nickname
-      });
-      setShowNicknameModal(false);
-      setPendingRoomCode(null);
-    }
-  };
-
-  const handleNicknameCancel = () => {
-    setShowNicknameModal(false);
-    setPendingRoomCode(null);
-    // Redirect to lobby if user cancels
-    setTimeout(() => {
-      window.location.href = '/lobby';
-    }, 100);
-  };
 
   // Update multiplayer status when game state loads
   useEffect(() => {
@@ -811,14 +798,6 @@ export default function Game() {
           </div>
         </div>
       )}
-
-      {/* Nickname Modal for room joining */}
-      <NicknameModal
-        isOpen={showNicknameModal}
-        onSubmit={handleNicknameSubmit}
-        onCancel={handleNicknameCancel}
-        roomCode={pendingRoomCode || undefined}
-      />
     </div>
   );
 }
