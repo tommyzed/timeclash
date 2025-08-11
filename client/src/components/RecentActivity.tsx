@@ -27,7 +27,14 @@ export default function RecentActivity({ gameState }: RecentActivityProps) {
                 move.isCorrect ? 'bg-green-600' : 'bg-red-600'
               }`} />
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-gray-900">{move.event.title}</p>
+                <div className="flex items-center justify-between">
+                  <p className="text-sm font-medium text-gray-900">{move.event.title}</p>
+                  {move.playerName && (
+                    <span className="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-1 rounded-full">
+                      {move.playerName}
+                    </span>
+                  )}
+                </div>
                 <p className={`text-xs ${
                   move.isCorrect ? 'text-green-700' : 'text-red-700'
                 }`}>

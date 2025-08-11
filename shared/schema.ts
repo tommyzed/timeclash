@@ -70,7 +70,7 @@ export type GameState = {
   game: Game;
   placedEvents: PlacedEvent[];
   currentEvent: HistoricalEvent | null;
-  recentMoves: (GameMove & { event: HistoricalEvent })[];
+  recentMoves: (GameMove & { event: HistoricalEvent; playerName?: string })[];
   currentPlayerId?: string;
   isMyTurn?: boolean;
   playerStats?: {

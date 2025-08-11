@@ -204,14 +204,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
         ? await storage.getHistoricalEvent(game.currentEventId)
         : null;
 
-      // Get recent moves with event data
+      // Get recent moves with event data and player names
       const moves = await storage.getGameMoves(gameId);
       const recentMoves = [];
       for (const move of moves.slice(0, 5)) {
         // Get last 5 moves
         const event = await storage.getHistoricalEvent(move.eventId);
         if (event) {
-          recentMoves.push({ ...move, event });
+          let playerName = undefined;
+          
+          // Get player name if it's not single-player
+          if (move.playerId !== "single-player") {
+            try {
+              const player = await storage.getPlayer(move.playerId);
+              playerName = player?.nickname;
+            } catch (error) {
+              console.error("Error fetching player for recent move:", error);
+            }
+          }
+          
+          recentMoves.push({ ...move, event, playerName });
         }
       }
 
