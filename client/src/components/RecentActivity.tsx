@@ -8,41 +8,57 @@ export default function RecentActivity({ gameState }: RecentActivityProps) {
   const { recentMoves } = gameState;
 
   return (
-    <div className="bg-white rounded-xl shadow-sm p-6 mb-6" data-testid="recent-activity">
+    <div
+      className="bg-white rounded-xl shadow-sm p-6 mb-6"
+      data-testid="recent-activity"
+    >
       <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Moves</h3>
-      
+
       <div className="space-y-3">
         {recentMoves.length === 0 ? (
           <p className="text-sm text-gray-500 text-center py-4">No moves yet</p>
         ) : (
           recentMoves.map((move) => (
-            <div 
+            <div
               key={move.id}
               className={`flex items-start space-x-3 p-2 rounded-lg ${
-                move.isCorrect ? 'bg-green-50' : 'bg-red-50'
+                move.isCorrect ? "bg-green-50" : "bg-red-50"
               }`}
               data-testid={`move-${move.id}`}
             >
-              <div className={`w-2 h-2 rounded-full mt-2 ${
-                move.isCorrect ? 'bg-green-600' : 'bg-red-600'
-              }`} />
+              <div
+                className={`w-2 h-2 rounded-full mt-2 ${
+                  move.isCorrect ? "bg-green-600" : "bg-red-600"
+                }`}
+              />
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between">
-                  <p className="text-sm font-medium text-gray-900">{move.event.title}</p>
-                  {move.playerName && (
-                    <span className="text-xs font-medium text-blue-600 bg-blue-50 px-2 py-1 rounded-full">
-                      {move.playerName}
-                    </span>
-                  )}
+                  <p className="text-sm font-medium text-gray-900">
+                    {move.event.title}
+                  </p>
                 </div>
-                <p className={`text-xs ${
-                  move.isCorrect ? 'text-green-700' : 'text-red-700'
-                }`}>
+                <p
+                  className={`text-xs ${
+                    move.isCorrect ? "text-green-700" : "text-red-700"
+                  }`}
+                >
                   {(() => {
-                    const displayYear = move.event.year < 0 ? `${Math.abs(move.event.year)} B.C.` : move.event.year;
-                    return move.isCorrect 
-                      ? `Placed correctly (${displayYear})`
-                      : `Incorrect placement (${displayYear})`;
+                    const displayYear =
+                      move.event.year < 0
+                        ? `${Math.abs(move.event.year)} B.C.`
+                        : move.event.year;
+                    const resultText = move.isCorrect 
+                      ? `Placed correctly! (${displayYear})`
+                      : `Placed incorrectly (${displayYear})`;
+                    
+                    return move.playerName ? (
+                      <>
+                        <span className="font-bold text-blue-600">[{move.playerName}]</span>
+                        {' ' + resultText}
+                      </>
+                    ) : (
+                      resultText
+                    );
                   })()}
                 </p>
               </div>
