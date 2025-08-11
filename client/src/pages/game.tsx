@@ -176,9 +176,11 @@ export default function Game() {
             : gameState.game.player1Id;
 
         if (opponentId) {
+          console.log('Fetching opponent nickname for opponentId:', opponentId, 'currentPlayerId:', playerId);
           fetch(`/api/players/${opponentId}`)
             .then((response) => response.json())
             .then((player) => {
+              console.log('Opponent player data received:', player);
               setOpponentNickname(player.nickname || "Opponent");
             })
             .catch(() => {
@@ -191,9 +193,11 @@ export default function Game() {
 
         // Also ensure current player's nickname is up to date
         if (playerId && !currentNickname) {
+          console.log('Fetching current player nickname for playerId:', playerId);
           fetch(`/api/players/${playerId}`)
             .then((response) => response.json())
             .then((player) => {
+              console.log('Current player data received:', player);
               setCurrentNickname(player.nickname || "");
               localStorage.setItem("nickname", player.nickname || "");
             })

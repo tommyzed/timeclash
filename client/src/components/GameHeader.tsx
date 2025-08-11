@@ -91,13 +91,24 @@ export default function GameHeader({
       const player1Score = game.player1Score;
       const player2Score = game.player2Score;
 
-      // Get nicknames - use nickname prop for current player, opponentNickname for the other
+      // Get nicknames - assign correctly based on player1/player2 IDs
       const player1Nickname = isCurrentPlayerPlayer1
         ? nickname || "Player 1"
-        : opponentNickname || "Player 2";
+        : opponentNickname || "Player 1";
       const player2Nickname = isCurrentPlayerPlayer1
         ? opponentNickname || "Player 2"
         : nickname || "Player 2";
+
+      console.log('GameHeader nickname assignment:', {
+        isCurrentPlayerPlayer1,
+        currentPlayerId,
+        player1Id: game.player1Id,
+        player2Id: game.player2Id,
+        nickname,
+        opponentNickname,
+        player1Nickname,
+        player2Nickname
+      });
 
       return (
         <div className="flex items-center space-x-4">
