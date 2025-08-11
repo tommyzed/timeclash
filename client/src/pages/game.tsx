@@ -64,8 +64,31 @@ export default function Game() {
       });
       return await response.json();
     },
-    onSuccess: (game) => {
+    onSuccess: async (game) => {
       setGameId(game.id);
+      
+      // If this is a multiplayer game, Player1 needs to join their own game
+      if (!game.singlePlayer && playerId && nickname) {
+        try {
+          const joinResponse = await apiRequest("POST", "/api/games/join", {
+            roomCode: game.roomCode,
+            playerId: playerId,
+            nickname: nickname,
+          });
+          const joinResult = await joinResponse.json();
+          // Update game state with the joined version
+          queryClient.setQueryData(["/api/games", game.id], {
+            game: joinResult.game,
+            placedEvents: [],
+            currentEvent: null,
+            recentMoves: [],
+            playerStats: { player1IncorrectCount: 0, player2IncorrectCount: 0 }
+          });
+          setIsMultiplayer(true);
+        } catch (error) {
+          console.error("Failed to join own multiplayer game:", error);
+        }
+      }
     },
   });
 
