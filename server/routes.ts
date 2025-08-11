@@ -132,6 +132,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "Game is full or unavailable" });
       }
 
+      // Broadcast player joined message to other players in the game
+      broadcastToGame(updatedGame.id, {
+        type: "player_joined",
+        data: { playerId: finalPlayerId, roomCode: updatedGame.roomCode },
+      });
+
       res.json({ game: updatedGame, playerId: finalPlayerId });
     } catch (error) {
       console.error("Join game error:", error);
