@@ -42,7 +42,8 @@ export default function GameHeader({
   const handleCopyRoomCode = async () => {
     if (game.roomCode) {
       try {
-        await navigator.clipboard.writeText(game.roomCode);
+        const shareableLink = `${window.location.origin}/room/${game.roomCode}`;
+        await navigator.clipboard.writeText(shareableLink);
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
       } catch (err) {
@@ -149,9 +150,9 @@ export default function GameHeader({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center space-x-4">
-            <img 
-              src={logoImage} 
-              alt="It's About Time!!" 
+            <img
+              src={logoImage}
+              alt="It's About Time!!"
               className="h-8 w-auto"
               data-testid="game-header-logo"
             />
