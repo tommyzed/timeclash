@@ -67,5 +67,8 @@ app.use((req, res, next) => {
     reusePort: true,
   }, () => {
     log(`serving on port ${port}`);
+    if (process.env.NODE_ENV !== "development") {
+      log(`Production server running - WebSocket available at wss://${process.env.REPLIT_DEV_DOMAIN || 'localhost:' + port}/ws`);
+    }
   });
 })();

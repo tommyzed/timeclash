@@ -517,7 +517,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
   const httpServer = createServer(app);
 
   // Set up WebSocket server for real-time multiplayer
-  const wss = new WebSocketServer({ server: httpServer, path: "/ws" });
+  const wss = new WebSocketServer({ 
+    server: httpServer, 
+    path: "/ws",
+    // Enable proper headers for deployed environment
+    ...(process.env.NODE_ENV !== "development" && {
+      perMessageDeflate: false,
+      verifyClient: () => true
+    })
+  });
 
   wss.on("connection", (ws: WebSocket, req) => {
     console.log("WebSocket connection established");
