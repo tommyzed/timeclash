@@ -36,6 +36,7 @@ export default function Game() {
   const [showPlayerJoinedNotification, setShowPlayerJoinedNotification] = useState(false);
   const [joinedPlayerName, setJoinedPlayerName] = useState<string>("");
   const [opponentNickname, setOpponentNickname] = useState<string>("");
+  const [notifiedPlayerIds, setNotifiedPlayerIds] = useState<Set<string>>(new Set());
   const [showHowToPlay, setShowHowToPlay] = useState(() => {
     // Check localStorage to see if user has dismissed the card before
     return localStorage.getItem('dismissedHowToPlay') !== 'true';
@@ -106,23 +107,40 @@ export default function Game() {
       
       // Handle player joined notification
       if (message.type === 'player_joined' && message.data.playerId !== playerId) {
-        // Fetch the player's nickname from the server
-        fetch(`/api/players/${message.data.playerId}`)
-          .then(response => response.json())
-          .then(player => {
-            const playerName = player.nickname || "A friend";
-            setJoinedPlayerName(playerName);
-            setOpponentNickname(playerName); // Also update the header
-            setShowPlayerJoinedNotification(true);
-            setTimeout(() => setShowPlayerJoinedNotification(false), 4000);
-          })
-          .catch(() => {
-            const fallbackName = "A friend";
-            setJoinedPlayerName(fallbackName);
-            setOpponentNickname(fallbackName); // Also update the header
-            setShowPlayerJoinedNotification(true);
-            setTimeout(() => setShowPlayerJoinedNotification(false), 4000);
-          });
+        // Only show notification if we haven't already notified about this player
+        if (!notifiedPlayerIds.has(message.data.playerId)) {
+          // Mark this player as notified
+          setNotifiedPlayerIds(prev => new Set(prev).add(message.data.playerId));
+          
+          // Fetch the player's nickname from the server
+          fetch(`/api/players/${message.data.playerId}`)
+            .then(response => response.json())
+            .then(player => {
+              const playerName = player.nickname || "A friend";
+              setJoinedPlayerName(playerName);
+              setOpponentNickname(playerName); // Also update the header
+              setShowPlayerJoinedNotification(true);
+              setTimeout(() => setShowPlayerJoinedNotification(false), 4000);
+            })
+            .catch(() => {
+              const fallbackName = "A friend";
+              setJoinedPlayerName(fallbackName);
+              setOpponentNickname(fallbackName); // Also update the header
+              setShowPlayerJoinedNotification(true);
+              setTimeout(() => setShowPlayerJoinedNotification(false), 4000);
+            });
+        } else {
+          // Player already notified, just update opponent nickname silently
+          fetch(`/api/players/${message.data.playerId}`)
+            .then(response => response.json())
+            .then(player => {
+              const playerName = player.nickname || "A friend";
+              setOpponentNickname(playerName);
+            })
+            .catch(() => {
+              setOpponentNickname("A friend");
+            });
+        }
       }
       
       // Handle game completion
