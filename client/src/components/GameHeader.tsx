@@ -11,7 +11,14 @@ interface GameHeaderProps {
   onTargetChange?: (newTarget: number) => void;
 }
 
-export default function GameHeader({ gameState, isMultiplayer, currentPlayerId, nickname, opponentNickname, onTargetChange }: GameHeaderProps) {
+export default function GameHeader({
+  gameState,
+  isMultiplayer,
+  currentPlayerId,
+  nickname,
+  opponentNickname,
+  onTargetChange,
+}: GameHeaderProps) {
   const { game } = gameState;
   const [copied, setCopied] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
@@ -24,11 +31,11 @@ export default function GameHeader({ gameState, isMultiplayer, currentPlayerId, 
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
       } catch (err) {
-        console.error('Failed to copy room code:', err);
+        console.error("Failed to copy room code:", err);
       }
     }
   };
-  
+
   const getGameModeDisplay = () => {
     if (isMultiplayer && game.roomCode) {
       return (
@@ -61,35 +68,57 @@ export default function GameHeader({ gameState, isMultiplayer, currentPlayerId, 
 
   const getScoreDisplay = () => {
     if (isMultiplayer) {
-      const currentPlayerScore = currentPlayerId === game.player1Id ? game.player1Score : game.player2Score;
-      const opponentScore = currentPlayerId === game.player1Id ? game.player2Score : game.player1Score;
+      // Determine if current player is player1 or player2
+      const isCurrentPlayerPlayer1 = currentPlayerId === game.player1Id;
       
+      // Get scores for both players
+      const player1Score = game.player1Score;
+      const player2Score = game.player2Score;
+      
+      // Get nicknames - use nickname prop for current player, opponentNickname for the other
+      const player1Nickname = isCurrentPlayerPlayer1 
+        ? (nickname || "Player 1") 
+        : (opponentNickname || "Player 2");
+      const player2Nickname = isCurrentPlayerPlayer1 
+        ? (opponentNickname || "Player 2") 
+        : (nickname || "Player 2");
+
       return (
         <div className="flex items-center space-x-4">
           <div className="text-center" data-testid="score-display">
-            <div className="text-lg font-bold text-blue-600">{currentPlayerScore}</div>
-            <div className="text-xs text-gray-500">YOUR SCORE</div>
+            <div className="text-lg font-bold text-blue-600">
+              {player1Score}
+            </div>
+            <div className="text-xs text-gray-500 uppercase">{player1Nickname}</div>
           </div>
           <div className="text-center">
-            <div className="text-lg font-bold text-orange-600">{opponentScore}</div>
-            <div className="text-xs text-gray-500">OPPONENT</div>
+            <div className="text-lg font-bold text-orange-600">
+              {player2Score}
+            </div>
+            <div className="text-xs text-gray-500 uppercase">{player2Nickname}</div>
           </div>
           <div className="text-center">
-            <div className="text-lg font-bold text-gray-400">{game.targetScore}</div>
+            <div className="text-lg font-bold text-gray-400">
+              {game.targetScore}
+            </div>
             <div className="text-xs text-gray-500">TARGET</div>
           </div>
         </div>
       );
     }
-    
+
     return (
       <div className="flex items-center space-x-6">
         <div className="text-center" data-testid="score-display">
-          <div className="text-2xl font-bold text-blue-600">{game.player1Score || 0}</div>
+          <div className="text-2xl font-bold text-blue-600">
+            {game.player1Score || 0}
+          </div>
           <div className="text-xs text-gray-500">CARDS PLACED</div>
         </div>
         <div className="text-center">
-          <div className="text-2xl font-bold text-gray-400">{game.targetScore}</div>
+          <div className="text-2xl font-bold text-gray-400">
+            {game.targetScore}
+          </div>
           <div className="text-xs text-gray-500">TARGET</div>
         </div>
       </div>
@@ -102,24 +131,14 @@ export default function GameHeader({ gameState, isMultiplayer, currentPlayerId, 
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center space-x-4">
             <h1 className="text-2xl font-bold text-gray-900">
-              <Clock className="inline-block text-blue-600 mr-2 h-7 w-7" />
               It's About T⏳️me!!
             </h1>
             {getGameModeDisplay()}
-            {nickname && (
-              <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-medium">
-                You: {nickname}
-              </span>
-            )}
-            {isMultiplayer && opponentNickname && (
-              <span className="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-sm font-medium">
-                Opponent: {opponentNickname}
-              </span>
-            )}
+
           </div>
           <div className="flex items-center space-x-6">
             {getScoreDisplay()}
-            <button 
+            <button
               onClick={() => setShowSettings(true)}
               className="bg-gray-100 hover:bg-gray-200 p-2 rounded-lg transition-colors"
               data-testid="settings-button"
@@ -145,7 +164,7 @@ export default function GameHeader({ gameState, isMultiplayer, currentPlayerId, 
                 <X className="w-6 h-6" />
               </button>
             </div>
-            
+
             <div className="space-y-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -165,7 +184,9 @@ export default function GameHeader({ gameState, isMultiplayer, currentPlayerId, 
                     data-testid="target-score-slider"
                   />
                   <div className="w-16 text-center">
-                    <span className="text-lg font-bold text-blue-600">{targetScore}</span>
+                    <span className="text-lg font-bold text-blue-600">
+                      {targetScore}
+                    </span>
                     <div className="text-xs text-gray-500">cards</div>
                   </div>
                 </div>
@@ -175,7 +196,7 @@ export default function GameHeader({ gameState, isMultiplayer, currentPlayerId, 
                   <span>15 (Challenge)</span>
                 </div>
               </div>
-              
+
               <div className="flex space-x-3 pt-4 border-t border-gray-200">
                 <button
                   onClick={() => {
