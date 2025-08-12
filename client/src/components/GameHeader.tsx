@@ -42,8 +42,7 @@ export default function GameHeader({
   const handleCopyRoomCode = async () => {
     if (game.roomCode) {
       try {
-        const shareableLink = `${window.location.origin}/room/${game.roomCode}`;
-        await navigator.clipboard.writeText(shareableLink);
+        await navigator.clipboard.writeText(game.roomCode);
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
       } catch (err) {
@@ -91,24 +90,13 @@ export default function GameHeader({
       const player1Score = game.player1Score;
       const player2Score = game.player2Score;
 
-      // Get nicknames - assign correctly based on player1/player2 IDs
+      // Get nicknames - use nickname prop for current player, opponentNickname for the other
       const player1Nickname = isCurrentPlayerPlayer1
         ? nickname || "Player 1"
-        : opponentNickname || "Player 1";
+        : opponentNickname || "Player 2";
       const player2Nickname = isCurrentPlayerPlayer1
         ? opponentNickname || "Player 2"
         : nickname || "Player 2";
-
-      console.log('GameHeader nickname assignment:', {
-        isCurrentPlayerPlayer1,
-        currentPlayerId,
-        player1Id: game.player1Id,
-        player2Id: game.player2Id,
-        nickname,
-        opponentNickname,
-        player1Nickname,
-        player2Nickname
-      });
 
       return (
         <div className="flex items-center space-x-4">
@@ -161,9 +149,9 @@ export default function GameHeader({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center space-x-4">
-            <img
-              src={logoImage}
-              alt="It's About Time!!"
+            <img 
+              src={logoImage} 
+              alt="It's About Time!!" 
               className="h-8 w-auto"
               data-testid="game-header-logo"
             />
@@ -308,7 +296,9 @@ export default function GameHeader({
           <div className="bg-white rounded-lg max-w-md w-full max-h-[80vh] overflow-y-auto">
             <div className="p-6">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-bold text-gray-900">Game Rules</h2>
+                <h2 className="text-xl font-bold text-gray-900">
+                  How to Play It's About T⏳️me!!
+                </h2>
                 <button
                   onClick={() => setShowRulesModal(false)}
                   className="text-gray-400 hover:text-gray-600 transition-colors"

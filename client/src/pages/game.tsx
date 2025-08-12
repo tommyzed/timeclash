@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { useRoute, useLocation } from "wouter";
+import { useRoute } from "wouter";
 import { queryClient } from "@/lib/queryClient";
 import { apiRequest } from "@/lib/queryClient";
 import { type GameState, type WebSocketMessage } from "@shared/schema";
@@ -15,35 +15,16 @@ import RecentActivity from "@/components/RecentActivity";
 import FeedbackModal from "@/components/FeedbackModal";
 
 export default function Game() {
-  const [gameMatch, gameParams] = useRoute("/game/:gameId?");
-  const [roomMatch, roomParams] = useRoute("/room/:roomCode");
-  const [location, setLocation] = useLocation();
-  
-  // Fix playerId extraction to avoid URL path contamination
+  const [match, params] = useRoute("/game/:gameId?");
   const urlParams = new URLSearchParams(window.location.search);
-  const urlPlayerId = urlParams.get("playerId");
-  const storedPlayerId = localStorage.getItem("playerId");
-  
-  // Clean playerId by removing any URL path segments that might have been contaminated
-  const cleanPlayerId = (id: string | null) => {
-    if (!id) return null;
-    // Remove any path segments that might have been concatenated
-    return id.split('/')[0].split('?')[0];
-  };
-  
-  const playerId = cleanPlayerId(urlPlayerId) || cleanPlayerId(storedPlayerId);
-  
-  // State for nickname that updates when joining via URL
-  const [currentNickname, setCurrentNickname] = useState<string | null>(
-    localStorage.getItem("nickname")
-  );
+  const playerId =
+    urlParams.get("playerId") || localStorage.getItem("playerId");
+  const nickname = localStorage.getItem("nickname");
   const { toast } = useToast();
 
-  const [gameId, setGameId] = useState<string | null>(
-    gameParams?.gameId || null
-  );
+  const [gameId, setGameId] = useState<string | null>(params?.gameId || null);
   const [isMultiplayer, setIsMultiplayer] = useState<boolean>(
-    !!(gameParams?.gameId || roomParams?.roomCode) && !!playerId,
+    !!params?.gameId && !!playerId,
   );
   const [feedbackData, setFeedbackData] = useState<{
     isVisible: boolean;
@@ -84,82 +65,11 @@ export default function Game() {
     },
   });
 
-  // Join a game by room code for shareable links
-  const joinGameMutation = useMutation({
-    mutationFn: async (data: { roomCode: string; nickname: string }) => {
-      const response = await apiRequest("POST", "/api/games/join", {
-        roomCode: data.roomCode.toUpperCase(),
-        nickname: data.nickname,
-      });
-      return await response.json();
-    },
-    onSuccess: (result) => {
-      // Store player info in localStorage
-      localStorage.setItem("playerId", result.playerId);
-      localStorage.setItem("nickname", result.nickname || "");
-      localStorage.setItem("gameId", result.game.id);
-
-      setGameId(result.game.id);
-      setIsMultiplayer(true);
-      setCurrentNickname(result.nickname || ""); // Update the nickname state
-
-      toast({
-        title: "Joined Game!",
-        description: `Welcome to the game room!`,
-      });
-
-      // Navigate to the game URL with proper game ID and playerId
-      setTimeout(() => {
-        setLocation(`/game/${result.game.id}?playerId=${result.playerId}`);
-      }, 100);
-
-      // Invalidate and refetch game state
-      queryClient.invalidateQueries({ queryKey: ["/api/games", result.game.id] });
-    },
-    onError: (error: any) => {
-      toast({
-        title: "Room Not Found",
-        description: "This game room may have expired or doesn't exist. Please ask for a new room link.",
-        variant: "destructive",
-      });
-      // Redirect to lobby after a delay
-      setTimeout(() => {
-        window.location.href = '/lobby';
-      }, 3000);
-    }
-  });
-
   // Get game state
   const { data: gameState, isLoading } = useQuery({
     queryKey: ["/api/games", gameId],
     enabled: !!gameId,
   }) as { data: GameState | undefined; isLoading: boolean };
-
-  // Handle room code joining when component mounts
-  useEffect(() => {
-    if (roomParams?.roomCode && !gameId) {
-      // Show helpful message for cross-domain access
-      console.log('Joining room via shareable link:', roomParams.roomCode);
-      console.log('Current domain:', window.location.host);
-      
-      // Prompt for nickname if joining via shareable link
-      const enteredNickname = prompt("Welcome! Please enter your nickname to join the game:");
-      if (!enteredNickname || enteredNickname.trim() === "") {
-        // Redirect to lobby if no nickname provided
-        window.location.href = '/lobby';
-        return;
-      }
-      
-      // Join the game with the entered nickname
-      joinGameMutation.mutate({
-        roomCode: roomParams.roomCode,
-        nickname: enteredNickname.trim()
-      });
-    } else if (!gameId && !roomParams?.roomCode) {
-      // Create new single-player game if no room code and no game ID
-      createGameMutation.mutate();
-    }
-  }, [roomParams?.roomCode, gameId]);
 
   // Update multiplayer status when game state loads
   useEffect(() => {
@@ -176,11 +86,9 @@ export default function Game() {
             : gameState.game.player1Id;
 
         if (opponentId) {
-          console.log('Fetching opponent nickname for opponentId:', opponentId, 'currentPlayerId:', playerId);
           fetch(`/api/players/${opponentId}`)
             .then((response) => response.json())
             .then((player) => {
-              console.log('Opponent player data received:', player);
               setOpponentNickname(player.nickname || "Opponent");
             })
             .catch(() => {
@@ -190,36 +98,17 @@ export default function Game() {
           // If no opponent yet, clear the nickname
           setOpponentNickname("");
         }
-
-        // Also ensure current player's nickname is up to date
-        if (playerId && !currentNickname) {
-          console.log('Fetching current player nickname for playerId:', playerId);
-          fetch(`/api/players/${playerId}`)
-            .then((response) => response.json())
-            .then((player) => {
-              console.log('Current player data received:', player);
-              setCurrentNickname(player.nickname || "");
-              localStorage.setItem("nickname", player.nickname || "");
-            })
-            .catch(() => {
-              // Fallback to stored nickname
-              const storedNickname = localStorage.getItem("nickname");
-              if (storedNickname) {
-                setCurrentNickname(storedNickname);
-              }
-            });
-        }
       } else {
         // Clear opponent nickname for single player games
         setOpponentNickname("");
       }
     }
-  }, [gameState, playerId, currentNickname]);
+  }, [gameState, playerId]);
 
   // WebSocket connection for multiplayer
   const { isConnected, sendMessage } = useWebSocket({
-    gameId: gameId || undefined,
-    playerId: playerId || undefined,
+    gameId: isMultiplayer ? gameId || undefined : undefined,
+    playerId: isMultiplayer ? playerId || undefined : undefined,
     onMessage: (message: WebSocketMessage) => {
       console.log("Received WebSocket message:", message);
 
@@ -301,13 +190,8 @@ export default function Game() {
 
       // Handle real-time updates here
       if (message.type === "move_made") {
-        console.log("Received move_made message:", message.data);
-        console.log("Current playerId:", playerId);
-        console.log("Move made by:", message.data.playerId);
-        
         // Show toast for opponent's move
         if (message.data.playerId !== playerId) {
-          console.log("Processing opponent's move for timeline update");
           // Get opponent's nickname and event details to show in toast
           console.log("Fetching data for toast:", {
             playerId: message.data.playerId,
@@ -364,12 +248,8 @@ export default function Game() {
             });
         }
 
-        // Always refresh game state when any move is made (own or opponent's)
-        console.log("Invalidating game state cache for gameId:", gameId);
+        // Refresh game state when opponent makes a move
         queryClient.invalidateQueries({ queryKey: ["/api/games", gameId] });
-        
-        // Also force refetch to ensure immediate update
-        queryClient.refetchQueries({ queryKey: ["/api/games", gameId] });
       }
     },
   });
@@ -531,7 +411,7 @@ export default function Game() {
         gameState={gameState}
         isMultiplayer={isMultiplayer}
         currentPlayerId={playerId || undefined}
-        nickname={currentNickname || undefined}
+        nickname={nickname || undefined}
         opponentNickname={opponentNickname || undefined}
         onTargetChange={handleTargetChange}
         onNewGame={handleNewGame}

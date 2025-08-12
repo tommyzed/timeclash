@@ -24,21 +24,9 @@ export function useWebSocket({ gameId, playerId, onMessage, onConnect, onDisconn
 
     try {
       const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-      let host = window.location.host;
-      
-      // Handle potential domain mismatch in Replit environments
-      // If we're on a different domain, try to use the current domain for WebSocket
-      const wsUrl = `${protocol}//${host}/ws`;
+      const wsUrl = `${protocol}//${window.location.host}/ws`;
       
       console.log('Connecting to WebSocket:', wsUrl);
-      console.log('Environment debug:', {
-        protocol,
-        host,
-        href: window.location.href,
-        origin: window.location.origin,
-        repl_domain: window.location.hostname
-      });
-      
       wsRef.current = new WebSocket(wsUrl);
 
       wsRef.current.onopen = () => {
@@ -49,13 +37,10 @@ export function useWebSocket({ gameId, playerId, onMessage, onConnect, onDisconn
         
         // Join the game room if we have gameId and playerId
         if (gameId && playerId) {
-          console.log('Sending join_game message:', { gameId, playerId });
           sendMessage({
             type: 'join_game',
             data: { gameId, playerId }
           });
-        } else {
-          console.log('WebSocket connected but missing gameId or playerId:', { gameId, playerId });
         }
         
         onConnect?.();
@@ -82,7 +67,6 @@ export function useWebSocket({ gameId, playerId, onMessage, onConnect, onDisconn
         if (event.code !== 1000 && reconnectAttempts.current < maxReconnectAttempts) {
           const delay = Math.min(1000 * Math.pow(2, reconnectAttempts.current), 30000);
           console.log(`Attempting to reconnect in ${delay}ms (attempt ${reconnectAttempts.current + 1})`);
-          console.log('Reconnect will use URL:', `${protocol}//${window.location.host}/ws`);
           
           reconnectTimeoutRef.current = setTimeout(() => {
             reconnectAttempts.current++;
@@ -93,23 +77,7 @@ export function useWebSocket({ gameId, playerId, onMessage, onConnect, onDisconn
 
       wsRef.current.onerror = (error) => {
         console.error('WebSocket error:', error);
-        console.error('WebSocket URL that failed:', wsUrl);
-        console.error('Current location details:', {
-          href: window.location.href,
-          host: window.location.host,
-          protocol: window.location.protocol
-        });
-        
-        // For cross-domain issues, provide helpful error message
-        const isDomainMismatch = wsUrl.includes('.replit.app') && 
-                                 !window.location.host.includes(wsUrl.split('//')[1].split('/')[0]);
-        
-        if (isDomainMismatch) {
-          setConnectionError('Cross-domain connection issue - please refresh the page');
-          console.warn('Domain mismatch detected - WebSocket connection may fail due to cross-origin restrictions');
-        } else {
-          setConnectionError('Connection failed');
-        }
+        setConnectionError('Connection failed');
       };
 
     } catch (error) {
@@ -147,18 +115,7 @@ export function useWebSocket({ gameId, playerId, onMessage, onConnect, onDisconn
     return () => {
       disconnect();
     };
-  }, []);
-
-  // Re-send join_game message when gameId or playerId becomes available
-  useEffect(() => {
-    if (isConnected && gameId && playerId) {
-      console.log('Re-sending join_game message after connection established:', { gameId, playerId });
-      sendMessage({
-        type: 'join_game',
-        data: { gameId, playerId }
-      });
-    }
-  }, [isConnected, gameId, playerId]);
+  }, [gameId, playerId]);
 
   return {
     isConnected,

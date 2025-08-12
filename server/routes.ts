@@ -123,12 +123,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "Game is full or unavailable" });
       }
 
-      // Broadcast player joined message to other players in the game
-      broadcastToGame(updatedGame.id, {
-        type: "player_joined",
-        data: { playerId: player.id, roomCode: updatedGame.roomCode || "" },
-      });
-
       res.json({ game: updatedGame, playerId: player.id });
     } catch (error) {
       res.status(500).json({ message: "Failed to join game" });
@@ -517,15 +511,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   const httpServer = createServer(app);
 
   // Set up WebSocket server for real-time multiplayer
-  const wss = new WebSocketServer({ 
-    server: httpServer, 
-    path: "/ws",
-    // Enable proper headers for deployed environment
-    ...(process.env.NODE_ENV !== "development" && {
-      perMessageDeflate: false,
-      verifyClient: () => true
-    })
-  });
+  const wss = new WebSocketServer({ server: httpServer, path: "/ws" });
 
   wss.on("connection", (ws: WebSocket, req) => {
     console.log("WebSocket connection established");
