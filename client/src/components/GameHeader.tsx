@@ -42,11 +42,12 @@ export default function GameHeader({
   const handleCopyRoomCode = async () => {
     if (game.roomCode) {
       try {
-        await navigator.clipboard.writeText(game.roomCode);
+        const shareableLink = `${window.location.origin}/room/${game.roomCode}`;
+        await navigator.clipboard.writeText(shareableLink);
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
       } catch (err) {
-        console.error("Failed to copy room code:", err);
+        console.error("Failed to copy shareable link:", err);
       }
     }
   };
@@ -62,9 +63,9 @@ export default function GameHeader({
             onClick={handleCopyRoomCode}
             className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm font-medium flex items-center space-x-1 transition-colors"
             data-testid="copy-room-code-button"
-            title="Click to copy room code"
+            title="Click to copy shareable link"
           >
-            <span>Room: {game.roomCode}</span>
+            <span>Share: {game.roomCode}</span>
             {copied ? (
               <Check className="h-3 w-3 text-green-600" />
             ) : (
