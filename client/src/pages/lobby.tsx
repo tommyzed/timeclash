@@ -70,17 +70,11 @@ export default function Lobby() {
         throw new Error("Please enter a nickname");
       }
 
-      // Create player first
-      const playerResponse = await apiRequest("POST", "/api/players", {
-        nickname: nickname.trim(),
-      });
-      const player = await playerResponse.json();
-
       // Create game with room code
       const gameResponse = await apiRequest("POST", "/api/games", {});
       const game = await gameResponse.json();
 
-      // Join the game as player 1
+      // Join the game as player 1 (server creates the player)
       const joinResponse = await apiRequest("POST", "/api/games/join", {
         roomCode: game.roomCode,
         nickname: nickname.trim(),

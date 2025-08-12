@@ -165,35 +165,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ message: "Game not found" });
       }
 
-      // Get placed events with player information
-      const placedEvents = [];
+      // Fetch moves once and reuse to avoid N+1 queries
+      const allMoves = await storage.getGameMoves(gameId);
+      const placedEvents = [] as Array<{
+        event: any;
+        position: number;
+        placedByPlayerId?: string;
+        placedByPlayerName?: string;
+      }>;
       for (let i = 0; i < game.placedEventIds.length; i++) {
         const eventId = game.placedEventIds[i];
         const event = await storage.getHistoricalEvent(eventId);
-        if (event) {
-          // Find who placed this event by looking through moves
-          const moves = await storage.getGameMoves(gameId);
-          const placementMove = moves.find(
-            (move) => move.eventId === eventId && move.isCorrect,
-          );
-
-          let placedByPlayerName = undefined;
-          if (placementMove && placementMove.playerId !== "single-player") {
-            try {
-              const player = await storage.getPlayer(placementMove.playerId);
-              placedByPlayerName = player?.nickname;
-            } catch (error) {
-              console.error("Error fetching player for placed event:", error);
-            }
+        if (!event) continue;
+        const placementMove = allMoves.find(
+          (move) => move.eventId === eventId && move.isCorrect,
+        );
+        let placedByPlayerName = undefined as string | undefined;
+        if (placementMove && placementMove.playerId !== "single-player") {
+          try {
+            const player = await storage.getPlayer(placementMove.playerId);
+            placedByPlayerName = player?.nickname;
+          } catch (error) {
+            console.error("Error fetching player for placed event:", error);
           }
-
-          placedEvents.push({
-            event,
-            position: i,
-            placedByPlayerId: placementMove?.playerId,
-            placedByPlayerName,
-          });
         }
+        placedEvents.push({
+          event,
+          position: i,
+          placedByPlayerId: placementMove?.playerId,
+          placedByPlayerName,
+        });
       }
 
       // Sort placed events by year for proper timeline order
@@ -205,7 +206,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         : null;
 
       // Get recent moves with event data and player names
-      const moves = await storage.getGameMoves(gameId);
+      const moves = allMoves;
       const recentMoves = [];
       for (const move of moves.slice(0, 5)) {
         // Get last 5 moves
@@ -532,9 +533,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
             playerConnections.set(playerId, ws);
 
             // Broadcast that player joined
+            // Broadcast player joined with correct identifiers
+            const game = await storage.getGame(gameId);
             broadcastToGame(gameId, {
               type: "player_joined",
-              data: { playerId, roomCode: gameId },
+              data: { playerId, roomCode: game?.roomCode ?? "" },
             });
             break;
 
@@ -553,7 +556,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
                 playerId: movePlayerId,
                 eventId,
                 position,
-                isCorrect: true,
+                // This handler only mirrors a client event; correctness is
+                // determined by HTTP place endpoint. Use false as placeholder.
+                isCorrect: false,
               },
             });
             break;
