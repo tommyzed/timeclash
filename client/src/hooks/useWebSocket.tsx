@@ -17,6 +17,16 @@ export function useWebSocket({ gameId, playerId, onMessage, onConnect, onDisconn
   const reconnectAttempts = useRef(0);
   const maxReconnectAttempts = 5;
 
+  // Keep latest identifiers in refs so handlers always read current values
+  const latestGameIdRef = useRef<string | undefined>(gameId);
+  const latestPlayerIdRef = useRef<string | undefined>(playerId);
+  const lastJoinedGameIdRef = useRef<string | undefined>(undefined);
+
+  useEffect(() => {
+    latestGameIdRef.current = gameId;
+    latestPlayerIdRef.current = playerId;
+  }, [gameId, playerId]);
+
   const connect = () => {
     if (wsRef.current?.readyState === WebSocket.OPEN) {
       return;
@@ -35,12 +45,11 @@ export function useWebSocket({ gameId, playerId, onMessage, onConnect, onDisconn
         setConnectionError(null);
         reconnectAttempts.current = 0;
         
-        // Join the game room if we have gameId and playerId
-        if (gameId && playerId) {
-          sendMessage({
-            type: 'join_game',
-            data: { gameId, playerId }
-          });
+        // Join the current game room if identifiers are available
+        if (latestGameIdRef.current && latestPlayerIdRef.current) {
+          const joinData = { gameId: latestGameIdRef.current, playerId: latestPlayerIdRef.current };
+          sendMessage({ type: 'join_game', data: joinData });
+          lastJoinedGameIdRef.current = latestGameIdRef.current;
         }
         
         onConnect?.();
@@ -109,13 +118,26 @@ export function useWebSocket({ gameId, playerId, onMessage, onConnect, onDisconn
     }
   };
 
+  // Establish connection on mount, clean up on unmount (do not close on id changes)
   useEffect(() => {
     connect();
-    
     return () => {
       disconnect();
     };
-  }, [gameId, playerId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // When identifiers change and we're connected, send a fresh join to switch rooms server-side
+  useEffect(() => {
+    if (!isConnected || !wsRef.current || wsRef.current.readyState !== WebSocket.OPEN) return;
+    if (!latestGameIdRef.current || !latestPlayerIdRef.current) return;
+
+    if (lastJoinedGameIdRef.current !== latestGameIdRef.current) {
+      const joinData = { gameId: latestGameIdRef.current, playerId: latestPlayerIdRef.current };
+      sendMessage({ type: 'join_game', data: joinData });
+      lastJoinedGameIdRef.current = latestGameIdRef.current;
+    }
+  }, [isConnected, gameId, playerId]);
 
   return {
     isConnected,

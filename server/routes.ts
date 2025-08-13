@@ -532,8 +532,15 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
             gameRooms.get(gameId)?.add(ws);
             playerConnections.set(playerId, ws);
 
-            // Broadcast that player joined
-            // Broadcast player joined with correct identifiers
+            // Player may re-join to a different game after a new game is created.
+            // Move this socket to the new game's room by removing it from all rooms first.
+            gameRooms.forEach((connections) => connections.delete(ws));
+            if (!gameRooms.has(gameId)) {
+              gameRooms.set(gameId, new Set());
+            }
+            gameRooms.get(gameId)?.add(ws);
+
+            // Broadcast that player joined with correct identifiers
             const game = await storage.getGame(gameId);
             broadcastToGame(gameId, {
               type: "player_joined",

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { useRoute } from "wouter";
+import { useRoute, useLocation } from "wouter";
 import { queryClient } from "@/lib/queryClient";
 import { apiRequest } from "@/lib/queryClient";
 import { type GameState, type WebSocketMessage } from "@shared/schema";
@@ -16,6 +16,7 @@ import FeedbackModal from "@/components/FeedbackModal";
 
 export default function Game() {
   const [match, params] = useRoute("/game/:gameId?");
+  const [, navigate] = useLocation();
   const urlParams = new URLSearchParams(window.location.search);
   const playerId =
     urlParams.get("playerId") || localStorage.getItem("playerId");
@@ -60,8 +61,35 @@ export default function Game() {
       });
       return await response.json();
     },
-    onSuccess: (game) => {
-      setGameId(game.id);
+    onSuccess: async (game) => {
+      const isSinglePlayerGame = !playerId;
+      if (isSinglePlayerGame) {
+        setGameId(game.id);
+        return;
+      }
+
+      // Multiplayer: join the newly created game as a new player (like lobby flow)
+      try {
+        const joinResponse = await apiRequest("POST", "/api/games/join", {
+          roomCode: game.roomCode,
+          nickname: (nickname || "Player").toString(),
+        });
+        const joinResult = await joinResponse.json();
+
+        // Persist new player identity and game id
+        localStorage.setItem("playerId", joinResult.playerId);
+        if (nickname) {
+          localStorage.setItem("nickname", nickname);
+        }
+        localStorage.setItem("gameId", joinResult.game.id);
+
+        // Navigate to new game URL so the Game ID in the route updates
+        navigate(`/game/${joinResult.game.id}?playerId=${joinResult.playerId}`);
+        setGameId(joinResult.game.id);
+      } catch (error) {
+        // Fallback: if join fails, at least show the created game
+        setGameId(game.id);
+      }
     },
   });
 
