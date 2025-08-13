@@ -50,6 +50,15 @@ export default function Game() {
   });
   const [showVictoryModal, setShowVictoryModal] = useState(false);
   const [justWon, setJustWon] = useState(false);
+  const [newGameRequest, setNewGameRequest] = useState<{
+    isVisible: boolean;
+    requestingPlayerId: string;
+    requestingPlayerName: string;
+  }>({
+    isVisible: false,
+    requestingPlayerId: "",
+    requestingPlayerName: "",
+  });
 
   // Create a new game on component mount
   const createGameMutation = useMutation({
@@ -279,6 +288,37 @@ export default function Game() {
         // Refresh game state when opponent makes a move
         queryClient.invalidateQueries({ queryKey: ["/api/games", gameId] });
       }
+
+      // Handle new game request
+      if (message.type === "new_game_request") {
+        setNewGameRequest({
+          isVisible: true,
+          requestingPlayerId: message.data.requestingPlayerId,
+          requestingPlayerName: message.data.requestingPlayerName,
+        });
+      }
+
+      // Handle new game accepted
+      if (message.type === "new_game_accepted") {
+        // Navigate to the new game
+        navigate(`/game/${message.data.newGameId}?playerId=${playerId}`);
+        setGameId(message.data.newGameId);
+        
+        toast({
+          title: "New Game Started!",
+          description: "Both players have accepted the new game.",
+          variant: "success",
+        });
+      }
+
+      // Handle new game rejected
+      if (message.type === "new_game_rejected") {
+        toast({
+          title: "New Game Rejected",
+          description: "Your opponent declined to start a new game.",
+          variant: "destructive",
+        });
+      }
     },
   });
 
@@ -353,13 +393,61 @@ export default function Game() {
     setFeedbackData((prev) => ({ ...prev, isVisible: false }));
   };
 
+  const handleAcceptNewGame = () => {
+    if (gameId && playerId) {
+      const message = {
+        type: "new_game_response",
+        data: {
+          gameId,
+          respondingPlayerId: playerId,
+          accepted: true,
+        },
+      };
+      sendMessage(message);
+    }
+    setNewGameRequest({ isVisible: false, requestingPlayerId: "", requestingPlayerName: "" });
+  };
+
+  const handleRejectNewGame = () => {
+    if (gameId && playerId) {
+      sendMessage({
+        type: "new_game_response",
+        data: {
+          gameId,
+          respondingPlayerId: playerId,
+          accepted: false,
+        },
+      });
+    }
+    setNewGameRequest({ isVisible: false, requestingPlayerId: "", requestingPlayerName: "" });
+  };
+
   const handleNewGame = () => {
-    setGameId(null);
-    setSelectedCardId(null);
-    setFeedbackData({ isVisible: false, isCorrect: false, message: "" });
-    setShowVictoryModal(false);
-    setJustWon(false);
-    createGameMutation.mutate();
+    if (isMultiplayer && gameId && playerId && nickname) {
+      // Send new game request to opponent via WebSocket
+      sendMessage({
+        type: "new_game_request",
+        data: {
+          gameId,
+          requestingPlayerId: playerId,
+          requestingPlayerName: nickname,
+        },
+      });
+      
+      toast({
+        title: "New Game Request Sent",
+        description: "Waiting for your opponent to accept...",
+        variant: "default",
+      });
+    } else {
+      // Single player or no multiplayer context - create new game immediately
+      setGameId(null);
+      setSelectedCardId(null);
+      setFeedbackData({ isVisible: false, isCorrect: false, message: "" });
+      setShowVictoryModal(false);
+      setJustWon(false);
+      createGameMutation.mutate();
+    }
   };
 
   const handleSelectCard = (cardId: string) => {
@@ -698,6 +786,55 @@ export default function Game() {
                 data-testid="close-victory-modal"
               >
                 ⏳️ Review Timeline
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* New Game Request Modal */}
+      {newGameRequest.isVisible && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
+            <div className="text-center mb-6">
+              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg
+                  className="w-8 h-8 text-blue-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                  />
+                </svg>
+              </div>
+              <h2 className="text-xl font-bold text-gray-900 mb-2">
+                New Game Request
+              </h2>
+              <p className="text-gray-600">
+                <span className="font-medium">{newGameRequest.requestingPlayerName}</span>{" "}
+                wants to start a new game. Would you like to join?
+              </p>
+            </div>
+
+            <div className="flex space-x-3">
+              <button
+                onClick={handleAcceptNewGame}
+                className="flex-1 bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
+                data-testid="accept-new-game-button"
+              >
+                Accept
+              </button>
+              <button
+                onClick={handleRejectNewGame}
+                className="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 font-medium py-2 px-4 rounded-lg transition-colors"
+                data-testid="reject-new-game-button"
+              >
+                Decline
               </button>
             </div>
           </div>

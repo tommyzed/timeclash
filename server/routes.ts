@@ -525,12 +525,19 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
           case "join_game":
             const { gameId, playerId } = message.data;
 
+            console.log("Player joining game:", { gameId, playerId });
+
             // Add connection to game room
             if (!gameRooms.has(gameId)) {
               gameRooms.set(gameId, new Set());
             }
             gameRooms.get(gameId)?.add(ws);
             playerConnections.set(playerId, ws);
+
+            console.log("Player connections after join:", {
+              size: playerConnections.size,
+              keys: Array.from(playerConnections.keys())
+            });
 
             // Player may re-join to a different game after a new game is created.
             // Move this socket to the new game's room by removing it from all rooms first.
@@ -568,6 +575,153 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
                 isCorrect: false,
               },
             });
+            break;
+
+          case "new_game_request":
+            const { gameId: requestGameId, requestingPlayerId, requestingPlayerName } = message.data;
+            
+            // Get the current game to find the opponent
+            const currentGame = await storage.getGame(requestGameId);
+            if (!currentGame) {
+              console.log("Game not found:", requestGameId);
+              ws.send(JSON.stringify({
+                type: "error",
+                data: { message: "Game not found" },
+              }));
+              break;
+            }
+
+            // Find the opponent player ID
+            const opponentPlayerId = currentGame.player1Id === requestingPlayerId 
+              ? currentGame.player2Id 
+              : currentGame.player1Id;
+
+            if (!opponentPlayerId) {
+              console.log("No opponent found");
+              ws.send(JSON.stringify({
+                type: "error",
+                data: { message: "No opponent found" },
+              }));
+              break;
+            }
+
+            // Send new game request to all players in the game room (except the requester)
+            const gameConnections = gameRooms.get(requestGameId);
+            if (gameConnections) {
+              let sentToOpponent = false;
+              gameConnections.forEach((connection) => {
+                if (connection !== ws && connection.readyState === WebSocket.OPEN) {
+                  connection.send(JSON.stringify({
+                    type: "new_game_request",
+                    data: { requestingPlayerId, requestingPlayerName },
+                  }));
+                  sentToOpponent = true;
+                }
+              });
+              
+              if (!sentToOpponent) {
+                ws.send(JSON.stringify({
+                  type: "error",
+                  data: { message: "Opponent not connected" },
+                }));
+              }
+            } else {
+              ws.send(JSON.stringify({
+                type: "error",
+                data: { message: "Game room not found" },
+              }));
+            }
+            break;
+
+          case "new_game_response":
+            const { gameId: responseGameId, respondingPlayerId, accepted } = message.data;
+            
+            // Get the current game to find the requester
+            const responseGame = await storage.getGame(responseGameId);
+            if (!responseGame) {
+              ws.send(JSON.stringify({
+                type: "error",
+                data: { message: "Game not found" },
+              }));
+              break;
+            }
+
+            // Find the requester player ID
+            const requesterPlayerId = responseGame.player1Id === respondingPlayerId 
+              ? responseGame.player2Id 
+              : responseGame.player1Id;
+
+            if (!requesterPlayerId) {
+              ws.send(JSON.stringify({
+                type: "error",
+                data: { message: "Requester not found" },
+              }));
+              break;
+            }
+
+            if (accepted) {
+              try {
+                // Create a new game with a new room code
+                const newRoomCode = Math.random().toString(36).substring(2, 8).toUpperCase();
+                const newGame = await storage.createGame(newRoomCode);
+                
+                // Set the initial turn to player1 and get a random event for the first turn
+                const currentEvent = await storage.getRandomHistoricalEvent(
+                  newGame.placedEventIds,
+                );
+
+                // Assign the players to the new game
+                await storage.updateGame(newGame.id, {
+                  player1Id: requesterPlayerId,
+                  player2Id: respondingPlayerId,
+                  currentTurn: "player1",
+                  currentEventId: currentEvent?.id,
+                  gameStatus: "playing"
+                });
+                
+                if (currentEvent) {
+                  newGame.currentEventId = currentEvent.id;
+                }
+                newGame.player1Id = requesterPlayerId;
+                newGame.player2Id = respondingPlayerId;
+                newGame.currentTurn = "player1";
+                newGame.gameStatus = "playing";
+
+
+
+                // Send acceptance to all players in the game room
+                const responseGameConnections = gameRooms.get(responseGameId);
+                if (responseGameConnections) {
+                  responseGameConnections.forEach((connection) => {
+                    if (connection.readyState === WebSocket.OPEN) {
+                      connection.send(JSON.stringify({
+                        type: "new_game_accepted",
+                        data: { newGameId: newGame.id, roomCode: newGame.roomCode },
+                      }));
+                    }
+                  });
+                }
+              } catch (error) {
+                console.error("Error creating new game:", error);
+                ws.send(JSON.stringify({
+                  type: "error",
+                  data: { message: "Failed to create new game" },
+                }));
+              }
+            } else {
+              // Send rejection to requester
+              const responseGameConnections = gameRooms.get(responseGameId);
+              if (responseGameConnections) {
+                responseGameConnections.forEach((connection) => {
+                  if (connection !== ws && connection.readyState === WebSocket.OPEN) {
+                    connection.send(JSON.stringify({
+                      type: "new_game_rejected",
+                      data: { rejectingPlayerId: respondingPlayerId },
+                    }));
+                  }
+                });
+              }
+            }
             break;
         }
       } catch (error) {

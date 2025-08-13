@@ -86,6 +86,9 @@ export type WebSocketMessage =
   | { type: 'player_joined'; data: { playerId: string; roomCode: string } }
   | { type: 'move_made'; data: { playerId: string; eventId: string; position: number; isCorrect: boolean } }
   | { type: 'game_completed'; data: { winnerPlayerId: string; finalScores: { player1: number; player2: number } } }
+  | { type: 'new_game_request'; data: { requestingPlayerId: string; requestingPlayerName: string } }
+  | { type: 'new_game_accepted'; data: { newGameId: string; roomCode: string } }
+  | { type: 'new_game_rejected'; data: { rejectingPlayerId: string } }
   | { type: 'error'; data: { message: string } };
 
 // Player management
