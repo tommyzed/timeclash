@@ -1,5 +1,5 @@
-#!/usr/bin/env python3
 import csv
+import json
 
 def process_csv_events():
     events = []
@@ -7,10 +7,7 @@ def process_csv_events():
     # Read the CSV file
     with open('attached_assets/Chronology Data (Gemini, Wikipedia, Wikidata) - Start research_1754390078178.csv', 'r', encoding='utf-8') as f:
         reader = csv.DictReader(f)
-        for i, row in enumerate(reader):
-            if i >= 50:  # Limit to first 50 events for performance
-                break
-            
+        for row in reader:
             # Map category to match existing format
             category_map = {
                 'Science/Tech': 'Science',
@@ -27,29 +24,17 @@ def process_csv_events():
             if len(title) > 80:
                 title = title[:77] + "..."
             
-            # Clean up quotes
-            title = title.replace('"', '\\"')
-            description = row['Event Description'].replace('"', '\\"')
-            
             events.append({
                 'id': row['Event ID'],
                 'title': title,
-                'description': description,
+                'description': row['Event Description'],
                 'year': int(row['Year']),
                 'category': category
             })
     
-    # Generate TypeScript array
-    print('const events: HistoricalEvent[] = [')
-    for event in events:
-        print(f'      {{')
-        print(f'        id: "{event["id"]}",')
-        print(f'        title: "{event["title"]}",')
-        print(f'        description: "{event["description"]}",')
-        print(f'        year: {event["year"]},')
-        print(f'        category: "{event["category"]}"')
-        print(f'      }},')
-    print('    ];')
+    # Write to JSON file
+    with open('server/events.json', 'w', encoding='utf-8') as f:
+        json.dump(events, f, indent=2)
 
 if __name__ == "__main__":
     process_csv_events()

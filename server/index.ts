@@ -1,4 +1,5 @@
 import express, { type Request, Response, NextFunction } from "express";
+import { initStorage } from "./storage";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 
@@ -36,10 +37,14 @@ app.use((req, res, next) => {
   next();
 });
 
-(async () => {
-  const server = await registerRoutes(app);
+console.log("Starting server...");
 
-  app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+(async () => {
+  try {
+    const storage = await initStorage();
+    const server = await registerRoutes(app, storage);
+
+    app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
 
@@ -69,4 +74,8 @@ app.use((req, res, next) => {
   }, () => {
     log(`serving on port ${port}`);
   });
+  } catch (error) {
+    console.error("Failed to start server:", error);
+    process.exit(1);
+  }
 })();
