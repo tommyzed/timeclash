@@ -155,6 +155,29 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
     }
   });
 
+  // Update player color
+  app.post("/api/players/:playerId/color", async (req, res) => {
+    try {
+      const { playerId } = req.params;
+      const { color } = req.body;
+
+      if (!color) {
+        return res.status(400).json({ message: "Color is required" });
+      }
+
+      const updatedPlayer = await storage.updatePlayerColor(playerId, color);
+
+      if (!updatedPlayer) {
+        return res.status(404).json({ message: "Player not found" });
+      }
+
+      res.json(updatedPlayer);
+    } catch (error) {
+      console.error("Update player color error:", error);
+      res.status(500).json({ message: "Failed to update player color" });
+    }
+  });
+
   // Get game state
   app.get("/api/games/:gameId", async (req, res) => {
     try {

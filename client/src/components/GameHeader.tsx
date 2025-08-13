@@ -21,6 +21,8 @@ interface GameHeaderProps {
   opponentNickname?: string;
   onTargetChange?: (newTarget: number) => void;
   onNewGame?: () => void;
+  playerColor?: string | null;
+  setPlayerColor?: (color: string) => void;
 }
 
 export default function GameHeader({
@@ -31,6 +33,8 @@ export default function GameHeader({
   opponentNickname,
   onTargetChange,
   onNewGame,
+  playerColor,
+  setPlayerColor,
 }: GameHeaderProps) {
   const { game } = gameState;
   const [copied, setCopied] = useState(false);
@@ -38,6 +42,37 @@ export default function GameHeader({
   const [showRulesModal, setShowRulesModal] = useState(false);
   const [targetScore, setTargetScore] = useState(game.targetScore);
   const [, setLocation] = useLocation();
+
+  const availableColors = [
+    "blue",
+    "orange",
+    "green",
+    "pink",
+    "purple",
+    "red",
+    "teal",
+    "yellow",
+  ];
+
+  const handleColorChange = async (color: string) => {
+    if (currentPlayerId && setPlayerColor) {
+      try {
+        const response = await fetch(
+          `/api/players/${currentPlayerId}/color`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ color }),
+          },
+        );
+        if (response.ok) {
+          setPlayerColor(color);
+        }
+      } catch (error) {
+        console.error("Failed to update player color:", error);
+      }
+    }
+  };
 
   const handleCopyRoomCode = async () => {
     if (game.roomCode) {
@@ -216,6 +251,32 @@ export default function GameHeader({
                   <span>5 (Quick)</span>
                   <span>10 (Default)</span>
                   <span>15 (Challenge)</span>
+                </div>
+              </div>
+
+              {/* Color Selection */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  My Card Color
+                </label>
+                <p className="text-sm text-gray-500 mb-3">
+                  Choose the color for the cards you place on the timeline.
+                </p>
+                <div className="flex flex-wrap gap-3">
+                  {availableColors.map((color) => (
+                    <button
+                      key={color}
+                      onClick={() => handleColorChange(color)}
+                      className={`w-10 h-10 rounded-full border-2 transition-transform transform hover:scale-110 ${
+                        playerColor === color
+                          ? "border-blue-600 ring-2 ring-blue-600"
+                          : "border-gray-200"
+                      }`}
+                      style={{ backgroundColor: color }}
+                      data-testid={`color-button-${color}`}
+                      aria-label={`Select ${color} color`}
+                    />
+                  ))}
                 </div>
               </div>
 
