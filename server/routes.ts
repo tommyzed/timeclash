@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { WebSocketServer, WebSocket } from "ws";
-import { storage } from "./storage";
+import { IStorage } from "./storage";
 import {
   insertGameMoveSchema,
   insertPlayerSchema,
@@ -25,7 +25,7 @@ function broadcastToGame(gameId: string, message: WebSocketMessage) {
   }
 }
 
-export async function registerRoutes(app: Express): Promise<Server> {
+export async function registerRoutes(app: Express, storage: IStorage): Promise<Server> {
   // Get all historical events
   app.get("/api/events", async (req, res) => {
     try {
