@@ -10,6 +10,7 @@ interface TimelineCardProps {
   placedByPlayerName?: string;
   placedByPlayerId?: string;
   currentPlayerId?: string;
+  playerColor?: string | null;
 }
 
 export default function TimelineCard({ 
@@ -21,18 +22,29 @@ export default function TimelineCard({
   onDragEnd,
   placedByPlayerName,
   placedByPlayerId,
-  currentPlayerId
+  currentPlayerId,
+  playerColor
 }: TimelineCardProps) {
+  const colorMap: { [key: string]: string } = {
+    blue: "from-blue-500 to-blue-600",
+    orange: "from-orange-500 to-orange-600",
+    green: "from-green-500 to-green-600",
+    pink: "from-pink-500 to-pink-600",
+    purple: "from-purple-500 to-purple-600",
+    red: "from-red-500 to-red-600",
+    yellow: "from-yellow-500 to-yellow-600",
+  };
+
   const getCardColor = () => {
     if (isStarting) return "from-green-500 to-green-600";
     if (isPlaced && placedByPlayerId) {
-      // In single-player mode (placedByPlayerId === "single-player"), use blue
+      // In single-player mode, use the selected color or default to blue
       if (placedByPlayerId === "single-player") {
-        return "from-blue-500 to-blue-600";
+        return playerColor ? colorMap[playerColor] : "from-blue-500 to-blue-600";
       }
-      // In multiplayer mode: current player gets blue, opponent gets orange
+      // In multiplayer mode: current player gets their selected color, opponent gets orange
       if (currentPlayerId && placedByPlayerId === currentPlayerId) {
-        return "from-blue-500 to-blue-600";
+        return playerColor ? colorMap[playerColor] : "from-blue-500 to-blue-600";
       } else {
         return "from-orange-500 to-orange-600";
       }
@@ -45,8 +57,6 @@ export default function TimelineCard({
     if (isPlaced) return "CORRECTLY PLACED";
     return "When Did This Happen?";
   };
-
-
 
   return (
     <div 

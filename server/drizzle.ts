@@ -114,6 +114,11 @@ export class DrizzleStorage implements IStorage {
     return result[0];
   }
 
+  async updatePlayerColor(id: string, color: string): Promise<schema.Player | undefined> {
+    const result = await db.update(schema.players).set({ color }).where(eq(schema.players.id, id)).returning();
+    return result[0];
+  }
+
   async getGameMoves(gameId: string): Promise<schema.GameMove[]> {
     return db.select().from(schema.gameMoves).where(eq(schema.gameMoves.gameId, gameId)).orderBy(sql`${schema.gameMoves.createdAt} desc`);
   }

@@ -92,6 +92,7 @@ export type WebSocketMessage =
 export const players = pgTable("players", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   nickname: varchar("nickname").notNull(),
+  color: varchar("color"),
   createdAt: timestamp("created_at").notNull().default(sql`now()`),
 });
 

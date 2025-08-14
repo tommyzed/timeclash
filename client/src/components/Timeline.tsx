@@ -8,6 +8,7 @@ interface TimelineProps {
   isPlacing: boolean;
   selectedCardId: string | null;
   currentPlayerId?: string;
+  playerColor?: string | null;
 }
 
 export default function Timeline({
@@ -16,6 +17,7 @@ export default function Timeline({
   isPlacing,
   selectedCardId,
   currentPlayerId,
+  playerColor,
 }: TimelineProps) {
   const { placedEvents, currentEvent } = gameState;
 
@@ -79,6 +81,7 @@ export default function Timeline({
                 placedByPlayerName={placedEvent.placedByPlayerName}
                 placedByPlayerId={placedEvent.placedByPlayerId}
                 currentPlayerId={currentPlayerId}
+                playerColor={playerColor}
               />
 
               {/* Drop zone after each card */}

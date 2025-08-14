@@ -41,6 +41,7 @@ export default function Game() {
     useState(false);
   const [joinedPlayerName, setJoinedPlayerName] = useState<string>("");
   const [opponentNickname, setOpponentNickname] = useState<string>("");
+  const [playerColor, setPlayerColor] = useState<string | null>(null);
   const [notifiedPlayerIds, setNotifiedPlayerIds] = useState<Set<string>>(
     new Set(),
   );
@@ -125,6 +126,17 @@ export default function Game() {
         } else {
           // If no opponent yet, clear the nickname
           setOpponentNickname("");
+        }
+
+        // Fetch current player's color
+        if (playerId) {
+          fetch(`/api/players/${playerId}`)
+            .then((response) => response.json())
+            .then((player) => {
+              if (player.color) {
+                setPlayerColor(player.color);
+              }
+            });
         }
       } else {
         // Clear opponent nickname for single player games
@@ -443,6 +455,8 @@ export default function Game() {
         opponentNickname={opponentNickname || undefined}
         onTargetChange={handleTargetChange}
         onNewGame={handleNewGame}
+        playerColor={playerColor}
+        setPlayerColor={setPlayerColor}
       />
 
       {/* Turn indicator for multiplayer */}
@@ -575,6 +589,7 @@ export default function Game() {
               isPlacing={placeEventMutation.isPending}
               selectedCardId={selectedCardId}
               currentPlayerId={playerId || undefined}
+              playerColor={playerColor}
             />
             <CurrentCard
               gameState={gameState}

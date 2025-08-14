@@ -30,6 +30,7 @@ export interface IStorage {
   // Players
   createPlayer(player: InsertPlayer): Promise<Player>;
   getPlayer(id: string): Promise<Player | undefined>;
+  updatePlayerColor(id: string, color: string): Promise<Player | undefined>;
 
   // Game Moves
   getGameMoves(gameId: string): Promise<GameMove[]>;
@@ -157,6 +158,7 @@ export class MemStorage implements IStorage {
     const newPlayer: Player = {
       id: randomUUID(),
       nickname: player.nickname,
+      color: null,
       createdAt: new Date(),
     };
 
@@ -166,6 +168,18 @@ export class MemStorage implements IStorage {
 
   async getPlayer(id: string): Promise<Player | undefined> {
     return this.players.get(id);
+  }
+
+  async updatePlayerColor(
+    id: string,
+    color: string,
+  ): Promise<Player | undefined> {
+    const player = this.players.get(id);
+    if (!player) return undefined;
+
+    const updatedPlayer = { ...player, color };
+    this.players.set(id, updatedPlayer);
+    return updatedPlayer;
   }
 
   async updateGame(
