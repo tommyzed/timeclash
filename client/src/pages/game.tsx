@@ -141,6 +141,8 @@ export default function Game() {
       } else {
         // Clear opponent nickname for single player games
         setOpponentNickname("");
+        // For single player, get color from local storage or use default
+        setPlayerColor(localStorage.getItem("playerColor") || "blue");
       }
     }
   }, [gameState, playerId]);
