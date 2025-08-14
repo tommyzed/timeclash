@@ -32,7 +32,6 @@ export default function TimelineCard({
     pink: "from-pink-500 to-pink-600",
     purple: "from-purple-500 to-purple-600",
     red: "from-red-500 to-red-600",
-    teal: "from-teal-500 to-teal-600",
     yellow: "from-yellow-500 to-yellow-600",
   };
 
@@ -58,8 +57,6 @@ export default function TimelineCard({
     if (isPlaced) return "CORRECTLY PLACED";
     return "When Did This Happen?";
   };
-
-
 
   return (
     <div 
