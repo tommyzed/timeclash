@@ -94,6 +94,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
         res.json(game);
       }
     } catch (error) {
+      console.error("Create game error:", error);
       res.status(500).json({ message: "Failed to create game" });
     }
   });
@@ -125,6 +126,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
 
       res.json({ game: updatedGame, playerId: player.id });
     } catch (error) {
+      console.error("Join game error:", error);
       res.status(500).json({ message: "Failed to join game" });
     }
   });
@@ -136,6 +138,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
       const player = await storage.createPlayer(playerData);
       res.json(player);
     } catch (error) {
+      console.error("Create player error:", error);
       res.status(500).json({ message: "Failed to create player" });
     }
   });
@@ -288,6 +291,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
 
       res.json(gameState);
     } catch (error) {
+      console.error("Fetch game state error:", error);
       res.status(500).json({ message: "Failed to fetch game state" });
     }
   });
