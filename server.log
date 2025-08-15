@@ -1,6 +1,4 @@
 
 > rest-express@1.0.0 dev
-> NODE_ENV=development tsx --env-file=.env server/index.ts
+> NODE_ENV=development tsx server/index.ts
 
-Starting server...
-9:10:58 AM [express] serving on port 5000

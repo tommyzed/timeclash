@@ -692,29 +692,23 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
                 const newRoomCode = Math.random().toString(36).substring(2, 8).toUpperCase();
                 const newGame = await storage.createGame(newRoomCode);
                 
-                // Set the initial turn to player1 and get a random event for the first turn
+                // Set the initial turn and get a random event for the first turn
                 const currentEvent = await storage.getRandomHistoricalEvent(
                   newGame.placedEventIds,
                 );
+
+                // Randomly decide who goes first
+                const firstTurn = Math.random() < 0.5 ? "player1" : "player2";
+                console.log("First turn:", firstTurn);
 
                 // Assign the players to the new game
                 await storage.updateGame(newGame.id, {
                   player1Id: requesterPlayerId,
                   player2Id: respondingPlayerId,
-                  currentTurn: "player1",
+                  currentTurn: firstTurn,
                   currentEventId: currentEvent?.id,
                   gameStatus: "playing"
                 });
-                
-                if (currentEvent) {
-                  newGame.currentEventId = currentEvent.id;
-                }
-                newGame.player1Id = requesterPlayerId;
-                newGame.player2Id = respondingPlayerId;
-                newGame.currentTurn = "player1";
-                newGame.gameStatus = "playing";
-
-
 
                 // Send acceptance to all players in the game room
                 const responseGameConnections = gameRooms.get(responseGameId);
