@@ -17,15 +17,17 @@ export function useWebSocket({ gameId, playerId, onMessage, onConnect, onDisconn
   const reconnectAttempts = useRef(0);
   const maxReconnectAttempts = 5;
 
-  // Keep latest identifiers in refs so handlers always read current values
+  // Keep latest identifiers and callbacks in refs so handlers always read current values
   const latestGameIdRef = useRef<string | undefined>(gameId);
   const latestPlayerIdRef = useRef<string | undefined>(playerId);
+  const latestOnMessageRef = useRef<((message: WebSocketMessage) => void) | undefined>(onMessage);
   const lastJoinedGameIdRef = useRef<string | undefined>(undefined);
 
   useEffect(() => {
     latestGameIdRef.current = gameId;
     latestPlayerIdRef.current = playerId;
-  }, [gameId, playerId]);
+    latestOnMessageRef.current = onMessage;
+  }, [gameId, playerId, onMessage]);
 
   const connect = () => {
     if (wsRef.current?.readyState === WebSocket.OPEN) {
@@ -58,8 +60,8 @@ export function useWebSocket({ gameId, playerId, onMessage, onConnect, onDisconn
       wsRef.current.onmessage = (event) => {
         try {
           const message: WebSocketMessage = JSON.parse(event.data);
-          console.log('WebSocket message received:', message);
-          onMessage?.(message);
+          // Use the ref to ensure the latest onMessage handler is called
+          latestOnMessageRef.current?.(message);
         } catch (error) {
           console.error('Failed to parse WebSocket message:', error);
         }
