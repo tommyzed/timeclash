@@ -699,6 +699,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
 
                 // Randomly decide who goes first
                 const firstTurn = Math.random() < 0.5 ? "player1" : "player2";
+                console.log("First turn:", firstTurn);
 
                 // Assign the players to the new game
                 await storage.updateGame(newGame.id, {
