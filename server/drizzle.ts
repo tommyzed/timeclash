@@ -96,9 +96,15 @@ export class DrizzleStorage implements IStorage {
 
     let updatedGame;
     if (!game.player1Id) {
-      updatedGame = await this.updateGame(gameId, { player1Id: playerId, currentTurn: "player1" });
+      updatedGame = await this.updateGame(gameId, { player1Id: playerId });
     } else if (!game.player2Id) {
-      updatedGame = await this.updateGame(gameId, { player2Id: playerId, gameStatus: "playing" });
+      // When player 2 joins, randomly decide who goes first
+      const firstTurn = Math.random() < 0.5 ? "player1" : "player2";
+      updatedGame = await this.updateGame(gameId, {
+        player2Id: playerId,
+        gameStatus: "playing",
+        currentTurn: firstTurn,
+      });
     } else {
       return undefined; // Game is full
     }
