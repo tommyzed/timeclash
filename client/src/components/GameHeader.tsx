@@ -54,21 +54,29 @@ export default function GameHeader({
   ];
 
   const handleColorChange = async (color: string) => {
-    if (currentPlayerId && setPlayerColor) {
-      try {
-        const response = await fetch(
-          `/api/players/${currentPlayerId}/color`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ color }),
-          },
-        );
-        if (response.ok) {
-          setPlayerColor(color);
+    if (setPlayerColor) {
+      if (isMultiplayer) {
+        if (currentPlayerId) {
+          try {
+            const response = await fetch(
+              `/api/players/${currentPlayerId}/color`,
+              {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ color }),
+              },
+            );
+            if (response.ok) {
+              setPlayerColor(color);
+            }
+          } catch (error) {
+            console.error("Failed to update player color:", error);
+          }
         }
-      } catch (error) {
-        console.error("Failed to update player color:", error);
+      } else {
+        // Single-player mode
+        setPlayerColor(color);
+        localStorage.setItem("playerColor", color);
       }
     }
   };
