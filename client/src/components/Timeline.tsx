@@ -35,7 +35,7 @@ export default function Timeline({
       </div>
 
       <div className="relative overflow-x-auto pb-4">
-        <div className="flex items-center min-w-max">
+        <div className="flex items-start min-w-max">
           {/* Drop zone before the first card */}
           <div className="flex-shrink-0 w-16 flex items-center justify-center">
             <div
