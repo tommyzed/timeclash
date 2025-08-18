@@ -23,6 +23,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface GameHeaderProps {
   gameState: GameState;
@@ -259,8 +260,8 @@ export default function GameHeader({
       {/* Settings Modal */}
       {showSettings && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg max-w-md w-full p-6">
-            <div className="flex items-center justify-between mb-6">
+          <div className="bg-white rounded-lg max-w-md w-full">
+            <div className="flex items-center justify-between p-6 pb-0">
               <h2 className="text-xl font-bold text-gray-900">Game Settings</h2>
               <button
                 onClick={() => setShowSettings(false)}
@@ -271,11 +272,11 @@ export default function GameHeader({
                 <X className="w-6 h-6" />
               </button>
             </div>
-
-            <div className="space-y-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Target Score
+            <ScrollArea className="max-h-[80vh] p-6">
+              <div className="space-y-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Target Score
                 </label>
                 <p className="text-sm text-gray-500 mb-3">
                   Number of cards to place correctly to win the game.
@@ -436,7 +437,7 @@ export default function GameHeader({
                   </button>
                 </div>
               </div>
-            </div>
+            </ScrollArea>
           </div>
         </div>
       )}
