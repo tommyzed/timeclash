@@ -438,6 +438,10 @@ export default function Game() {
   };
 
   const handleNewGame = () => {
+    // Close any open modals first
+    setShowVictoryModal(false);
+    setShowLossModal(false);
+
     if (isMultiplayer && gameId && playerId && nickname) {
       // Send new game request to opponent via WebSocket
       sendMessage({
@@ -459,7 +463,6 @@ export default function Game() {
       setGameId(null);
       setSelectedCardId(null);
       setFeedbackData({ isVisible: false, isCorrect: false, message: "" });
-      setShowVictoryModal(false);
       setJustWon(false);
       createGameMutation.mutate();
     }
