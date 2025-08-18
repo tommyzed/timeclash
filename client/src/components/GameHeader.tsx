@@ -230,7 +230,7 @@ export default function GameHeader({
                     🤔 Return to the Game Lobby?
                   </AlertDialogTitle>
                   <AlertDialogDescription>
-                    ⚠️ Your game will immediately end and cannot be recovered! ⚠️
+                    ❗ Your game will immediately end and cannot be recovered! ❗
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
@@ -260,7 +260,7 @@ export default function GameHeader({
                   <AlertDialogHeader>
                     <AlertDialogTitle>🤔 Start a New Game?</AlertDialogTitle>
                     <AlertDialogDescription>
-                      ⚠️ This will end your current game and start a fresh one. ⚠️
+                      ❗ This will end your current game and start a fresh one. ❗
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
