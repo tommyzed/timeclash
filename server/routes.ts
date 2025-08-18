@@ -415,8 +415,18 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
           const newScore = game.player1Score + 1;
           updateData.player1Score = newScore;
 
+          if (game.gameMode === "hard") {
+            updateData.attempts = (game.attempts || 0) + 1;
+          }
+
           if (newScore >= game.targetScore) {
             updateData.gameStatus = "completed";
+          } else if (
+            game.gameMode === "hard" &&
+            (updateData.attempts || game.attempts) >= (game.maxAttempts || 0)
+          ) {
+            updateData.gameStatus = "completed";
+            updateData.winnerPlayerId = "computer";
           }
         }
 
@@ -436,7 +446,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
         }
 
         await storage.updateGame(gameId, updateData);
-        
+
         // If game is completed in multiplayer, broadcast game completion
         if (updateData.gameStatus === "completed" && game.roomCode) {
           broadcastToGame(gameId, {
@@ -444,8 +454,14 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
             data: {
               winnerPlayerId: updateData.winnerPlayerId,
               finalScores: {
-                player1: playerId === game.player1Id ? game.player1Score + 1 : game.player1Score,
-                player2: playerId === game.player2Id ? game.player2Score + 1 : game.player2Score,
+                player1:
+                  playerId === game.player1Id
+                    ? game.player1Score + 1
+                    : game.player1Score,
+                player2:
+                  playerId === game.player2Id
+                    ? game.player2Score + 1
+                    : game.player2Score,
               },
             },
           });
@@ -458,6 +474,12 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
           // Switch turns after incorrect move
           updateData.currentTurn =
             game.currentTurn === "player1" ? "player2" : "player1";
+        } else if (game.gameMode === "hard") {
+          updateData.attempts = (game.attempts || 0) + 1;
+          if (updateData.attempts >= (game.maxAttempts || 0)) {
+            updateData.gameStatus = "completed";
+            updateData.winnerPlayerId = "computer";
+          }
         }
 
         // Add current event to attempted events list to prevent reuse
@@ -465,11 +487,15 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
         updateData.attemptedEventIds = newAttemptedEventIds;
 
         // Get a new event for the next turn, excluding all attempted events
-        const nextEvent = await storage.getRandomHistoricalEvent([
-          ...game.placedEventIds,
-          ...newAttemptedEventIds,
-        ]);
-        updateData.currentEventId = nextEvent?.id || null;
+        if (updateData.gameStatus !== "completed") {
+          const nextEvent = await storage.getRandomHistoricalEvent([
+            ...game.placedEventIds,
+            ...newAttemptedEventIds,
+          ]);
+          updateData.currentEventId = nextEvent?.id || null;
+        } else {
+          updateData.currentEventId = null;
+        }
 
         await storage.updateGame(gameId, updateData);
       }
@@ -508,13 +534,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
   app.patch("/api/games/:gameId/settings", async (req, res) => {
     try {
       const { gameId } = req.params;
-      const { targetScore } = req.body;
-
-      if (!targetScore || targetScore < 5 || targetScore > 15) {
-        return res
-          .status(400)
-          .json({ message: "Target score must be between 5 and 15" });
-      }
+      const { targetScore, gameMode } = req.body;
 
       const game = await storage.getGame(gameId);
       if (!game) {
@@ -528,7 +548,34 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
           .json({ message: "Cannot change settings of completed game" });
       }
 
-      await storage.updateGame(gameId, { targetScore });
+      const updateData: Partial<Game> = {};
+
+      if (targetScore !== undefined) {
+        if (targetScore < 5 || targetScore > 15) {
+          return res
+            .status(400)
+            .json({ message: "Target score must be between 5 and 15" });
+        }
+        updateData.targetScore = targetScore;
+      }
+
+      if (gameMode !== undefined && !game.roomCode) {
+        updateData.gameMode = gameMode;
+        if (gameMode === "hard") {
+          const scoreForAttempts =
+            targetScore !== undefined ? targetScore : game.targetScore;
+          updateData.maxAttempts = Math.floor(scoreForAttempts * 1.5);
+          updateData.attempts = 0; // Reset attempts when enabling
+        } else {
+          updateData.maxAttempts = null;
+        }
+      } else if (targetScore !== undefined && game.gameMode === "hard") {
+        updateData.maxAttempts = Math.floor(targetScore * 1.5);
+      }
+
+      if (Object.keys(updateData).length > 0) {
+        await storage.updateGame(gameId, updateData);
+      }
       res.json({ message: "Settings updated successfully" });
     } catch (error) {
       console.error("Update settings error:", error);

@@ -26,6 +26,9 @@ export const games = pgTable("games", {
   gameStatus: varchar("game_status").notNull().default("waiting"), // waiting, playing, completed
   winnerPlayerId: varchar("winner_player_id"),
   createdAt: timestamp("created_at").notNull().default(sql`now()`),
+  gameMode: varchar("game_mode").notNull().default("normal"), // 'normal' or 'hard'
+  maxAttempts: integer("max_attempts"),
+  attempts: integer("attempts").notNull().default(0),
 });
 
 export const gameMoves = pgTable("game_moves", {

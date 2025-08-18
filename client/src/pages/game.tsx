@@ -50,6 +50,7 @@ export default function Game() {
     return localStorage.getItem("dismissedHowToPlay") !== "true";
   });
   const [showVictoryModal, setShowVictoryModal] = useState(false);
+  const [showLossModal, setShowLossModal] = useState(false);
   const [justWon, setJustWon] = useState(false);
   const [newGameRequest, setNewGameRequest] = useState<{
     isVisible: boolean;
@@ -469,15 +470,16 @@ export default function Game() {
     setSelectedCardId(cardId);
   };
 
-  const handleTargetChange = async (newTarget: number) => {
+  const handleSettingsChange = async (settings: {
+    targetScore: number;
+    gameMode: "normal" | "hard";
+  }) => {
     if (gameId) {
       try {
-        await apiRequest("PATCH", `/api/games/${gameId}/settings`, {
-          targetScore: newTarget,
-        });
+        await apiRequest("PATCH", `/api/games/${gameId}/settings`, settings);
         queryClient.invalidateQueries({ queryKey: ["/api/games", gameId] });
       } catch (error) {
-        console.error("Failed to update target score:", error);
+        console.error("Failed to update settings:", error);
       }
     }
   };
@@ -485,8 +487,10 @@ export default function Game() {
   // Check for game completion and show victory modal
   useEffect(() => {
     if (gameState?.game && gameState.game.gameStatus === "completed") {
-      // For single-player games, check if we just won
-      if (!isMultiplayer && justWon) {
+      if (gameState.game.winnerPlayerId === "computer") {
+        setShowLossModal(true);
+      } else if (!isMultiplayer && justWon) {
+        // For single-player games, check if we just won
         setShowVictoryModal(true);
         setJustWon(false);
 
@@ -517,7 +521,7 @@ export default function Game() {
       }
       // For multiplayer games, the confetti is handled by WebSocket 'game_completed' message
     }
-  }, [gameState?.game?.gameStatus, justWon, isMultiplayer]);
+  }, [gameState?.game, justWon, isMultiplayer]);
 
   const handleDeselectCard = () => {
     console.log("Game: Card deselected");
@@ -543,7 +547,7 @@ export default function Game() {
         currentPlayerId={playerId || undefined}
         nickname={nickname || undefined}
         opponentNickname={opponentNickname || undefined}
-        onTargetChange={handleTargetChange}
+        onSettingsChange={handleSettingsChange}
         onNewGame={handleNewGame}
         playerColor={playerColor}
         setPlayerColor={setPlayerColor}
@@ -801,6 +805,54 @@ export default function Game() {
                 onClick={() => setShowVictoryModal(false)}
                 className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-3 px-6 rounded-lg transition-colors"
                 data-testid="close-victory-modal"
+              >
+                ⏳️ Review Timeline
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Loss Modal */}
+      {showLossModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-lg max-w-md w-full p-8 text-center">
+            <div className="mb-6">
+              <div className="w-20 h-20 bg-gradient-to-r from-red-500 to-red-700 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg
+                  className="w-10 h-10 text-white"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </div>
+              <h2 className="text-3xl font-bold text-gray-900 mb-2">
+                Game Over
+              </h2>
+              <p className="text-lg text-gray-600 mb-2">
+                You ran out of attempts!
+              </p>
+              <p className="text-sm text-gray-500">
+                Better luck next time!
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              <button
+                onClick={handleNewGame}
+                className="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+                data-testid="play-again-button-loss"
+              >
+                🔄 Play Again
+              </button>
+              <button
+                onClick={() => setShowLossModal(false)}
+                className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-3 px-6 rounded-lg transition-colors"
               >
                 ⏳️ Review Timeline
               </button>
