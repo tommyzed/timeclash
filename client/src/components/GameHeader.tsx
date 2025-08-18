@@ -103,7 +103,7 @@ export default function GameHeader({
       return (
         <div className="flex items-center space-x-2">
           <span className="bg-green-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-            Multiplayer
+            Multi
           </span>
           <button
             onClick={handleCopyRoomCode}
@@ -490,7 +490,7 @@ export default function GameHeader({
 
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-2">
-                    Multi
+                    Multiplayer
                   </h3>
                   <p>
                     In multiplayer mode, take turns with your opponent. Only
