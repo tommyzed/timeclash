@@ -123,7 +123,7 @@ export default function GameHeader({
     }
     return (
       <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-        Single Player
+        Single
       </span>
     );
   };
@@ -490,7 +490,7 @@ export default function GameHeader({
 
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-2">
-                    Multiplayer
+                    Multi
                   </h3>
                   <p>
                     In multiplayer mode, take turns with your opponent. Only
