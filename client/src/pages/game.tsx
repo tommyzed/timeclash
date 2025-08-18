@@ -21,7 +21,7 @@ export default function Game() {
   const playerId =
     urlParams.get("playerId") || localStorage.getItem("playerId");
   const nickname = localStorage.getItem("nickname");
-  const { toast } = useToast();
+  const { toast, dismiss } = useToast();
 
   const [gameId, setGameId] = useState<string | null>(params?.gameId || null);
   const [isMultiplayer, setIsMultiplayer] = useState<boolean>(
@@ -64,11 +64,12 @@ export default function Game() {
 
   // Create a new game on component mount
   const createGameMutation = useMutation({
-    mutationFn: async () => {
+    mutationFn: async (settings: { gameMode?: "normal" | "hard", targetScore?: number }) => {
       // Explicitly specify singlePlayer flag based on current context
       const isSinglePlayerGame = !playerId; // If no playerId, it's single player
       const response = await apiRequest("POST", "/api/games", {
         singlePlayer: isSinglePlayerGame,
+        ...settings,
       });
       return await response.json();
     },
@@ -376,7 +377,9 @@ export default function Game() {
   useEffect(() => {
     // Only create a single-player game if we don't have a gameId from URL
     if (!gameId && !isMultiplayer) {
-      createGameMutation.mutate();
+      const gameMode = localStorage.getItem("gameMode") as "normal" | "hard" | null;
+      const targetScore = Number(localStorage.getItem("targetScore")) || 10;
+      createGameMutation.mutate({ gameMode: gameMode || "normal", targetScore });
     }
   }, []);
 
@@ -438,6 +441,10 @@ export default function Game() {
   };
 
   const handleNewGame = () => {
+    dismiss();
+    setShowVictoryModal(false);
+    setShowLossModal(false);
+
     if (isMultiplayer && gameId && playerId && nickname) {
       // Send new game request to opponent via WebSocket
       sendMessage({
@@ -459,9 +466,10 @@ export default function Game() {
       setGameId(null);
       setSelectedCardId(null);
       setFeedbackData({ isVisible: false, isCorrect: false, message: "" });
-      setShowVictoryModal(false);
       setJustWon(false);
-      createGameMutation.mutate();
+      const gameMode = localStorage.getItem("gameMode") as "normal" | "hard" | null;
+      const targetScore = Number(localStorage.getItem("targetScore")) || 10;
+      createGameMutation.mutate({ gameMode: gameMode || "normal", targetScore });
     }
   };
 

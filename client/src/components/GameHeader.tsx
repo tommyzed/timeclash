@@ -255,7 +255,11 @@ export default function GameHeader({
                     min="5"
                     max="15"
                     value={targetScore}
-                    onChange={(e) => setTargetScore(Number(e.target.value))}
+                    onChange={(e) => {
+                      const newScore = Number(e.target.value);
+                      setTargetScore(newScore);
+                      localStorage.setItem("targetScore", newScore.toString());
+                    }}
                     className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
                     data-testid="target-score-slider"
                   />
@@ -285,7 +289,10 @@ export default function GameHeader({
                   </p>
                   <div className="flex space-x-2">
                     <button
-                      onClick={() => setGameMode("normal")}
+                      onClick={() => {
+                        setGameMode("normal");
+                        localStorage.setItem("gameMode", "normal");
+                      }}
                       className={`flex-1 py-2 px-4 rounded-lg transition-colors text-sm font-medium ${
                         gameMode === "normal"
                           ? "bg-blue-600 text-white"
@@ -296,7 +303,10 @@ export default function GameHeader({
                       Normal
                     </button>
                     <button
-                      onClick={() => setGameMode("hard")}
+                      onClick={() => {
+                        setGameMode("hard");
+                        localStorage.setItem("gameMode", "hard");
+                      }}
                       className={`flex-1 py-2 px-4 rounded-lg transition-colors text-sm font-medium ${
                         gameMode === "hard"
                           ? "bg-red-600 text-white"
