@@ -227,11 +227,10 @@ export default function GameHeader({
               <AlertDialogContent>
                 <AlertDialogHeader>
                   <AlertDialogTitle>
-                    Are you sure you want to return to the lobby?
+                    Return to the Game Lobby?
                   </AlertDialogTitle>
                   <AlertDialogDescription>
-                    Your current game progress will be saved, but you will leave
-                    the current match.
+                    ⚠️ Your game will immediately end and cannot be recovered! ⚠️
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
