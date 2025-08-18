@@ -285,7 +285,10 @@ export default function GameHeader({
                   </p>
                   <div className="flex space-x-2">
                     <button
-                      onClick={() => setGameMode("normal")}
+                      onClick={() => {
+                        setGameMode("normal");
+                        localStorage.setItem("gameMode", "normal");
+                      }}
                       className={`flex-1 py-2 px-4 rounded-lg transition-colors text-sm font-medium ${
                         gameMode === "normal"
                           ? "bg-blue-600 text-white"
@@ -296,7 +299,10 @@ export default function GameHeader({
                       Normal
                     </button>
                     <button
-                      onClick={() => setGameMode("hard")}
+                      onClick={() => {
+                        setGameMode("hard");
+                        localStorage.setItem("gameMode", "hard");
+                      }}
                       className={`flex-1 py-2 px-4 rounded-lg transition-colors text-sm font-medium ${
                         gameMode === "hard"
                           ? "bg-red-600 text-white"

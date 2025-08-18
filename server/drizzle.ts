@@ -71,7 +71,7 @@ export class DrizzleStorage implements IStorage {
     return result[0];
   }
 
-  async createGame(roomCode?: string): Promise<schema.Game> {
+  async createGame(roomCode?: string, gameMode: "normal" | "hard" = "normal"): Promise<schema.Game> {
     const randomStartingEvent = await this.getRandomHistoricalEvent();
     const startingEventId = randomStartingEvent?.id || "1";
 
@@ -79,6 +79,9 @@ export class DrizzleStorage implements IStorage {
       roomCode: roomCode,
       placedEventIds: [startingEventId],
       attemptedEventIds: [startingEventId],
+      gameMode: gameMode,
+      attempts: 0,
+      maxAttempts: gameMode === 'hard' ? 15 : null,
     };
 
     const result = await db.insert(schema.games).values(newGame).returning();

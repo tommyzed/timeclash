@@ -64,11 +64,12 @@ export default function Game() {
 
   // Create a new game on component mount
   const createGameMutation = useMutation({
-    mutationFn: async () => {
+    mutationFn: async ({ gameMode }: { gameMode?: "normal" | "hard" }) => {
       // Explicitly specify singlePlayer flag based on current context
       const isSinglePlayerGame = !playerId; // If no playerId, it's single player
       const response = await apiRequest("POST", "/api/games", {
         singlePlayer: isSinglePlayerGame,
+        gameMode: gameMode,
       });
       return await response.json();
     },
@@ -376,7 +377,8 @@ export default function Game() {
   useEffect(() => {
     // Only create a single-player game if we don't have a gameId from URL
     if (!gameId && !isMultiplayer) {
-      createGameMutation.mutate();
+      const gameMode = localStorage.getItem("gameMode") as "normal" | "hard" | null;
+      createGameMutation.mutate({ gameMode: gameMode || "normal" });
     }
   }, []);
 
@@ -464,7 +466,8 @@ export default function Game() {
       setSelectedCardId(null);
       setFeedbackData({ isVisible: false, isCorrect: false, message: "" });
       setJustWon(false);
-      createGameMutation.mutate();
+      const gameMode = localStorage.getItem("gameMode") as "normal" | "hard" | null;
+      createGameMutation.mutate({ gameMode: gameMode || "normal" });
     }
   };
 
