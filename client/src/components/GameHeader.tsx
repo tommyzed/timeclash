@@ -245,13 +245,46 @@ export default function GameHeader({
           </div>
           <div className="flex items-center space-x-6">
             {getScoreDisplay()}
-            <button
-              onClick={() => setShowSettings(true)}
-              className="bg-gray-100 hover:bg-gray-200 p-2 rounded-lg transition-colors"
-              data-testid="settings-button"
-            >
-              <Settings className="h-5 w-5 text-gray-600" />
-            </button>
+            <div className="flex items-center space-x-2">
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <button
+                    className="bg-gray-100 hover:bg-gray-200 p-2 rounded-lg transition-colors"
+                    data-testid="new-game-button"
+                    title="Start a new game"
+                  >
+                    <RotateCcw className="h-5 w-5 text-gray-600" />
+                  </button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Start a new game?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This will end your current game and start a fresh one.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={() => {
+                        if (onNewGame) {
+                          onNewGame();
+                        }
+                      }}
+                    >
+                      Confirm
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+              <button
+                onClick={() => setShowSettings(true)}
+                className="bg-gray-100 hover:bg-gray-200 p-2 rounded-lg transition-colors"
+                data-testid="settings-button"
+              >
+                <Settings className="h-5 w-5 text-gray-600" />
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -409,20 +442,6 @@ export default function GameHeader({
               {/* Game Controls Section */}
               <div className="border-t border-gray-200 pt-6">
                 <div className="space-y-3">
-                  <button
-                    className="w-full bg-gray-100 hover:bg-blue-100 text-gray-700 py-2 px-4 rounded-lg transition-colors flex items-center justify-start"
-                    onClick={() => {
-                      if (onNewGame) {
-                        onNewGame();
-                      }
-                      setShowSettings(false);
-                    }}
-                    data-testid="button-new-game"
-                  >
-                    <RotateCcw className="mr-2 h-4 w-4" />
-                    New Game
-                  </button>
-
                   <button
                     className="w-full bg-gray-100 hover:bg-blue-100 text-gray-700 py-2 px-4 rounded-lg transition-colors flex items-center justify-start"
                     onClick={() => {
