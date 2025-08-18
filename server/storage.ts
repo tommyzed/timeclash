@@ -23,7 +23,7 @@ export interface IStorage {
   // Games
   getGame(id: string): Promise<Game | undefined>;
   getGameByRoomCode(roomCode: string): Promise<Game | undefined>;
-  createGame(roomCode?: string, gameMode?: "normal" | "hard"): Promise<Game>;
+  createGame(roomCode?: string, gameMode?: "normal" | "hard", targetScore?: number): Promise<Game>;
   updateGame(id: string, updates: Partial<Game>): Promise<Game | undefined>;
   joinGame(gameId: string, playerId: string): Promise<Game | undefined>;
 
@@ -99,7 +99,7 @@ export class MemStorage implements IStorage {
     return this.games.get(id);
   }
 
-  async createGame(roomCode?: string, gameMode: "normal" | "hard" = "normal"): Promise<Game> {
+  async createGame(roomCode?: string, gameMode: "normal" | "hard" = "normal", targetScore: number = 10): Promise<Game> {
     const id = randomUUID();
 
     // Get a truly random starting event using multiple attempts for better randomization
@@ -118,7 +118,7 @@ export class MemStorage implements IStorage {
       currentTurn: null,
       player1Score: 0,
       player2Score: 0,
-      targetScore: 10,
+      targetScore: targetScore,
       currentEventId: null,
       placedEventIds: [startingEventId], // Start with random historical event
       attemptedEventIds: [startingEventId], // Track starting event as attempted
@@ -127,7 +127,7 @@ export class MemStorage implements IStorage {
       createdAt: new Date(),
       gameMode: gameMode,
       attempts: 0,
-      maxAttempts: gameMode === 'hard' ? 15 : null,
+      maxAttempts: gameMode === 'hard' ? Math.floor(targetScore * 1.5) : null,
     };
 
     this.games.set(id, game);

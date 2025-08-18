@@ -54,11 +54,11 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
   // Create a new game (single player or with room code for multiplayer)
   app.post("/api/games", async (req, res) => {
     try {
-      const { roomCode, singlePlayer, gameMode } = req.body;
+      const { roomCode, singlePlayer, gameMode, targetScore } = req.body;
 
       // For single player games, don't create room codes or player systems
       if (singlePlayer) {
-        const game = await storage.createGame(undefined, gameMode);
+        const game = await storage.createGame(undefined, gameMode, targetScore);
 
         // Get a random event for the first turn (excluding the starting card)
         const currentEvent = await storage.getRandomHistoricalEvent(
@@ -77,7 +77,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
         // Multiplayer game creation
         const generatedRoomCode =
           roomCode || Math.random().toString(36).substring(2, 8).toUpperCase();
-        const game = await storage.createGame(generatedRoomCode, gameMode);
+        const game = await storage.createGame(generatedRoomCode, gameMode, targetScore);
 
         // Get a random event for the first turn (excluding the starting card)
         const currentEvent = await storage.getRandomHistoricalEvent(

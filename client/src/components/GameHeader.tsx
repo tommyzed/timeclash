@@ -255,7 +255,11 @@ export default function GameHeader({
                     min="5"
                     max="15"
                     value={targetScore}
-                    onChange={(e) => setTargetScore(Number(e.target.value))}
+                    onChange={(e) => {
+                      const newScore = Number(e.target.value);
+                      setTargetScore(newScore);
+                      localStorage.setItem("targetScore", newScore.toString());
+                    }}
                     className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
                     data-testid="target-score-slider"
                   />
