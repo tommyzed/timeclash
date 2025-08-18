@@ -437,6 +437,7 @@ export default function GameHeader({
                   </button>
                 </div>
               </div>
+            </div>
             </ScrollArea>
           </div>
         </div>
