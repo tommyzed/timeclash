@@ -12,6 +12,17 @@ import { type GameState } from "@shared/schema";
 import { useState } from "react";
 import { useLocation } from "wouter";
 import logoImage from "@assets/It's About Time Logo -sm_1754907859214.png";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 interface GameHeaderProps {
   gameState: GameState;
@@ -204,12 +215,33 @@ export default function GameHeader({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center space-x-4">
-            <img 
-              src={logoImage} 
-              alt="It's About Time!!" 
-              className="h-8 w-auto"
-              data-testid="game-header-logo"
-            />
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <img
+                  src={logoImage}
+                  alt="It's About Time!!"
+                  className="h-8 w-auto cursor-pointer"
+                  data-testid="game-header-logo"
+                />
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>
+                    Are you sure you want to return to the lobby?
+                  </AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Your current game progress will be saved, but you will leave
+                    the current match.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction onClick={() => setLocation("/")}>
+                    Return to Lobby
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
             {getGameModeDisplay()}
           </div>
           <div className="flex items-center space-x-6">
@@ -390,18 +422,6 @@ export default function GameHeader({
                   >
                     <RotateCcw className="mr-2 h-4 w-4" />
                     New Game
-                  </button>
-
-                  <button
-                    className="w-full bg-gray-100 hover:bg-blue-100 text-gray-700 py-2 px-4 rounded-lg transition-colors flex items-center justify-start"
-                    onClick={() => {
-                      setLocation("/");
-                      setShowSettings(false);
-                    }}
-                    data-testid="button-return-lobby"
-                  >
-                    <Home className="mr-2 h-4 w-4" />
-                    Return to Lobby
                   </button>
 
                   <button
