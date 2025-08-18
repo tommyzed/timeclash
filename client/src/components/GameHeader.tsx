@@ -19,7 +19,10 @@ interface GameHeaderProps {
   currentPlayerId?: string;
   nickname?: string;
   opponentNickname?: string;
-  onTargetChange?: (newTarget: number) => void;
+  onSettingsChange?: (settings: {
+    targetScore: number;
+    gameMode: "normal" | "hard";
+  }) => void;
   onNewGame?: () => void;
   playerColor?: string | null;
   setPlayerColor?: (color: string) => void;
@@ -31,7 +34,7 @@ export default function GameHeader({
   currentPlayerId,
   nickname,
   opponentNickname,
-  onTargetChange,
+  onSettingsChange,
   onNewGame,
   playerColor,
   setPlayerColor,
@@ -41,6 +44,7 @@ export default function GameHeader({
   const [showSettings, setShowSettings] = useState(false);
   const [showRulesModal, setShowRulesModal] = useState(false);
   const [targetScore, setTargetScore] = useState(game.targetScore);
+  const [gameMode, setGameMode] = useState(game.gameMode);
   const [, setLocation] = useLocation();
 
   const availableColors = [
@@ -183,6 +187,14 @@ export default function GameHeader({
           </div>
           <div className="text-xs text-gray-500">TARGET</div>
         </div>
+        {game.gameMode === "hard" && (
+          <div className="text-center">
+            <div className="text-2xl font-bold text-red-600">
+              {game.attempts} / {game.maxAttempts}
+            </div>
+            <div className="text-xs text-gray-500">ATTEMPTS</div>
+          </div>
+        )}
       </div>
     );
   };
@@ -261,6 +273,43 @@ export default function GameHeader({
                 </div>
               </div>
 
+              {/* Game Mode Selection */}
+              {!isMultiplayer && (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Game Mode
+                  </label>
+                  <p className="text-sm text-gray-500 mb-3">
+                    In Hard Mode, you have a limited number of attempts to reach
+                    the target.
+                  </p>
+                  <div className="flex space-x-2">
+                    <button
+                      onClick={() => setGameMode("normal")}
+                      className={`flex-1 py-2 px-4 rounded-lg transition-colors text-sm font-medium ${
+                        gameMode === "normal"
+                          ? "bg-blue-600 text-white"
+                          : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                      }`}
+                      data-testid="normal-mode-button"
+                    >
+                      Normal
+                    </button>
+                    <button
+                      onClick={() => setGameMode("hard")}
+                      className={`flex-1 py-2 px-4 rounded-lg transition-colors text-sm font-medium ${
+                        gameMode === "hard"
+                          ? "bg-red-600 text-white"
+                          : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                      }`}
+                      data-testid="hard-mode-button"
+                    >
+                      Hard
+                    </button>
+                  </div>
+                </div>
+              )}
+
               {/* Color Selection */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -290,8 +339,11 @@ export default function GameHeader({
               <div className="flex space-x-3 pt-4 border-t border-gray-200">
                 <button
                   onClick={() => {
-                    if (onTargetChange) {
-                      onTargetChange(targetScore);
+                    if (onSettingsChange) {
+                      onSettingsChange({
+                        targetScore,
+                        gameMode: gameMode as "normal" | "hard",
+                      });
                     }
                     setShowSettings(false);
                   }}
@@ -303,6 +355,7 @@ export default function GameHeader({
                 <button
                   onClick={() => {
                     setTargetScore(game.targetScore);
+                    setGameMode(game.gameMode);
                     setShowSettings(false);
                   }}
                   className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-lg transition-colors"
