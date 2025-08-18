@@ -227,7 +227,7 @@ export default function GameHeader({
               <AlertDialogContent>
                 <AlertDialogHeader>
                   <AlertDialogTitle>
-                    Return to the Game Lobby?
+                    🤔 Return to the Game Lobby?
                   </AlertDialogTitle>
                   <AlertDialogDescription>
                     ⚠️ Your game will immediately end and cannot be recovered! ⚠️
@@ -258,9 +258,9 @@ export default function GameHeader({
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
-                    <AlertDialogTitle>Start a new game?</AlertDialogTitle>
+                    <AlertDialogTitle>🤔 Start a New Game?</AlertDialogTitle>
                     <AlertDialogDescription>
-                      This will end your current game and start a fresh one.
+                      ⚠️ This will end your current game and start a fresh one. ⚠️
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
