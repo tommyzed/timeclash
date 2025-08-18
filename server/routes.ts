@@ -6,6 +6,7 @@ import {
   insertGameMoveSchema,
   insertPlayerSchema,
   type WebSocketMessage,
+  type Game,
 } from "@shared/schema";
 import { z } from "zod";
 import { randomUUID } from "crypto";
