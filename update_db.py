@@ -38,6 +38,7 @@ def update_database():
                 """,
                 (event['id'], event['title'], event['description'], event['year'], event['category'])
             )
+            print(f"Inserted {event['id']} into the database.")
 
         conn.commit()
         print(f"Successfully inserted {len(events)} events into the database.")
