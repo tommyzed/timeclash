@@ -11,6 +11,7 @@ import {
 import { type GameState } from "@shared/schema";
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
+import { useIsMobile } from "@/hooks/use-mobile";
 import logoImage from "@assets/It's About Time Logo -sm_1754907859214.png";
 import {
   AlertDialog,
@@ -57,6 +58,7 @@ export default function GameHeader({
   const [targetScore, setTargetScore] = useState(game.targetScore);
   const [gameMode, setGameMode] = useState(game.gameMode);
   const [, setLocation] = useLocation();
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     if (showSettings) {
@@ -225,8 +227,16 @@ export default function GameHeader({
   return (
     <header className="bg-white shadow-sm border-b" data-testid="game-header">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-4">
-          <div className="flex items-center space-x-4">
+        <div
+          className={`flex ${
+            isMobile
+              ? "flex-col space-y-4 items-center"
+              : "justify-between items-center"
+          } py-4`}
+        >
+          <div
+            className={`flex items-center ${isMobile ? "space-x-2" : "space-x-4"}`}
+          >
             <AlertDialog>
               <AlertDialogTrigger asChild>
                 <img
@@ -255,7 +265,11 @@ export default function GameHeader({
             </AlertDialog>
             {getGameModeDisplay()}
           </div>
-          <div className="flex items-center space-x-6">
+          <div
+            className={`flex items-center ${
+              isMobile ? "flex-col space-y-4" : "space-x-6"
+            }`}
+          >
             {getScoreDisplay()}
             <div className="flex items-center space-x-2">
               <AlertDialog>
