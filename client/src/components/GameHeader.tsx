@@ -422,7 +422,7 @@ export default function GameHeader({
                 {/* Allow Stealing Option */}
                 {isMultiplayer && (
                   <div>
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center">
                       <label
                         htmlFor="allow-stealing"
                         className="text-sm font-medium text-gray-700"
@@ -435,7 +435,7 @@ export default function GameHeader({
                         checked={allowStealing}
                         onChange={(e) => setAllowStealing(e.target.checked)}
                         data-testid="allow-stealing-switch"
-                        className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                        className="ml-2 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                       />
                     </div>
                     <p className="text-sm text-gray-500 mt-1">
