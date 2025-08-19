@@ -60,6 +60,8 @@ def update_database():
         print("Database connection closed.")
 
 if __name__ == "__main__":
-    # The user provided the DATABASE_URL, so we will set it as an environment variable for the script
-    os.environ['DATABASE_URL'] = 'postgresql://neondb_owner:npg_yFG0zxqMJ3Uh@ep-steep-violet-a2k9bpve-pooler.eu-central-1.aws.neon.tech/neondb?sslmode=require'
+    # To run this script, you must first set the DATABASE_URL environment variable.
+    # For example:
+    # export DATABASE_URL='your_database_url_here'
+    # python update_db.py
     update_database()
