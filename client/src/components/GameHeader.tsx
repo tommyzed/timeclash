@@ -9,7 +9,7 @@ import {
   HelpCircle,
 } from "lucide-react";
 import { type GameState } from "@shared/schema";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import logoImage from "@assets/It's About Time Logo -sm_1754907859214.png";
 import {
@@ -58,6 +58,18 @@ export default function GameHeader({
   const [targetScore, setTargetScore] = useState(game.targetScore);
   const [gameMode, setGameMode] = useState(game.gameMode);
   const [, setLocation] = useLocation();
+
+  useEffect(() => {
+    if (showSettings) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [showSettings]);
 
   const availableColors = [
     "blue",
