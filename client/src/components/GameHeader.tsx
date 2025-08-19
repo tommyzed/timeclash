@@ -228,7 +228,7 @@ export default function GameHeader({
     <div
       className={
         isMobile
-          ? "absolute top-1 right-1 flex space-x-1"
+          ? "flex items-center space-x-1"
           : "flex items-center space-x-2"
       }
     >
@@ -306,17 +306,18 @@ export default function GameHeader({
             </AlertDialog>
             {getGameModeDisplay()}
           </div>
-          {!isMobile && (
+          {!isMobile ? (
             <div className="flex items-center space-x-6">
               {getScoreDisplay()}
               <GameActions />
             </div>
+          ) : (
+            <GameActions />
           )}
         </div>
         {isMobile && (
           <div className="mt-4 flex justify-center">{getScoreDisplay()}</div>
         )}
-        {isMobile && <GameActions />}
       </div>
 
       {/* Settings Modal */}
