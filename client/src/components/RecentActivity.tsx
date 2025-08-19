@@ -43,13 +43,21 @@ export default function RecentActivity({ gameState }: RecentActivityProps) {
                   }`}
                 >
                   {(() => {
+                    const isStealing = !!gameState.game.stealingPlayerId;
+                    const isMostRecentMove = recentMoves[0]?.id === move.id;
                     const displayYear =
                       move.event.year < 0
                         ? `${Math.abs(move.event.year)} B.C.`
                         : move.event.year;
+
+                    const yearToDisplay =
+                      isStealing && isMostRecentMove && !move.isCorrect
+                        ? "???"
+                        : displayYear;
+
                     const resultText = move.isCorrect
-                      ? `Placed correctly! (${displayYear})`
-                      : `Placed incorrectly (${displayYear})`;
+                      ? `Placed correctly! (${yearToDisplay})`
+                      : `Placed incorrectly (${yearToDisplay})`;
 
                     return move.playerName ? (
                       <>
