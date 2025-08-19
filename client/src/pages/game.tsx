@@ -170,6 +170,9 @@ export default function Game() {
         message.type === "player_joined" &&
         message.data.playerId !== playerId
       ) {
+        // Refresh game state when a player joins
+        queryClient.invalidateQueries({ queryKey: ["/api/games", gameId] });
+
         // Only show notification if we haven't already notified about this player
         if (!notifiedPlayerIds.has(message.data.playerId)) {
           // Mark this player as notified
