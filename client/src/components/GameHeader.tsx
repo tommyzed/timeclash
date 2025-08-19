@@ -9,7 +9,7 @@ import {
   HelpCircle,
 } from "lucide-react";
 import { type GameState } from "@shared/schema";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import logoImage from "@assets/It's About Time Logo -sm_1754907859214.png";
 import {
@@ -57,6 +57,18 @@ export default function GameHeader({
   const [targetScore, setTargetScore] = useState(game.targetScore);
   const [gameMode, setGameMode] = useState(game.gameMode);
   const [, setLocation] = useLocation();
+
+  useEffect(() => {
+    if (showSettings) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [showSettings]);
 
   const availableColors = [
     "blue",
@@ -292,8 +304,8 @@ export default function GameHeader({
       {/* Settings Modal */}
       {showSettings && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg max-w-md w-full p-6">
-            <div className="flex items-center justify-between mb-6">
+          <div className="bg-white rounded-lg max-w-md w-full flex flex-col max-h-[90vh]">
+            <div className="flex items-center justify-between p-6 border-b">
               <h2 className="text-xl font-bold text-gray-900">Game Settings</h2>
               <button
                 onClick={() => setShowSettings(false)}
@@ -304,113 +316,148 @@ export default function GameHeader({
                 <X className="w-6 h-6" />
               </button>
             </div>
-
-            <div className="space-y-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Target Score
-                </label>
-                <p className="text-sm text-gray-500 mb-3">
-                  Number of cards to place correctly to win the game.
-                </p>
-                <div className="flex items-center space-x-4">
-                  <input
-                    type="range"
-                    min="5"
-                    max="15"
-                    value={targetScore}
-                    onChange={(e) => {
-                      const newScore = Number(e.target.value);
-                      setTargetScore(newScore);
-                      localStorage.setItem("targetScore", newScore.toString());
-                    }}
-                    className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-                    data-testid="target-score-slider"
-                  />
-                  <div className="w-16 text-center">
-                    <span className="text-lg font-bold text-blue-600">
-                      {targetScore}
-                    </span>
-                    <div className="text-xs text-gray-500">cards</div>
-                  </div>
-                </div>
-                <div className="flex justify-between text-xs text-gray-400 mt-1">
-                  <span>5 (Quick)</span>
-                  <span>10 (Default)</span>
-                  <span>15 (Challenge)</span>
-                </div>
-              </div>
-
-              {/* Game Mode Selection */}
-              {!isMultiplayer && (
+            <div className="flex-grow overflow-y-auto">
+              <div className="p-6 space-y-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Game Mode
+                    Target Score
                   </label>
                   <p className="text-sm text-gray-500 mb-3">
-                    In Hard Mode, you have a limited number of attempts to reach
-                    the target.
+                    Number of cards to place correctly to win the game.
                   </p>
-                  <div className="flex space-x-2">
-                    <button
-                      onClick={() => {
-                        setGameMode("normal");
-                        localStorage.setItem("gameMode", "normal");
+                  <div className="flex items-center space-x-4">
+                    <input
+                      type="range"
+                      min="5"
+                      max="15"
+                      value={targetScore}
+                      onChange={(e) => {
+                        const newScore = Number(e.target.value);
+                        setTargetScore(newScore);
+                        localStorage.setItem(
+                          "targetScore",
+                          newScore.toString(),
+                        );
                       }}
-                      className={`flex-1 py-2 px-4 rounded-lg transition-colors text-sm font-medium ${
-                        gameMode === "normal"
-                          ? "bg-blue-600 text-white"
-                          : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                      }`}
-                      data-testid="normal-mode-button"
+                      className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                      data-testid="target-score-slider"
+                    />
+                    <div className="w-16 text-center">
+                      <span className="text-lg font-bold text-blue-600">
+                        {targetScore}
+                      </span>
+                      <div className="text-xs text-gray-500">cards</div>
+                    </div>
+                  </div>
+                  <div className="flex justify-between text-xs text-gray-400 mt-1">
+                    <span>5 (Quick)</span>
+                    <span>10 (Default)</span>
+                    <span>15 (Challenge)</span>
+                  </div>
+                </div>
+
+                {/* Game Mode Selection */}
+                {!isMultiplayer && (
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Game Mode
+                    </label>
+                    <p className="text-sm text-gray-500 mb-3">
+                      In Hard Mode, you have a limited number of attempts to
+                      reach the target.
+                    </p>
+                    <div className="flex space-x-2">
+                      <button
+                        onClick={() => {
+                          setGameMode("normal");
+                          localStorage.setItem("gameMode", "normal");
+                        }}
+                        className={`flex-1 py-2 px-4 rounded-lg transition-colors text-sm font-medium ${
+                          gameMode === "normal"
+                            ? "bg-blue-600 text-white"
+                            : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                        }`}
+                        data-testid="normal-mode-button"
+                      >
+                        Normal
+                      </button>
+                      <button
+                        onClick={() => {
+                          setGameMode("hard");
+                          localStorage.setItem("gameMode", "hard");
+                        }}
+                        className={`flex-1 py-2 px-4 rounded-lg transition-colors text-sm font-medium ${
+                          gameMode === "hard"
+                            ? "bg-red-600 text-white"
+                            : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                        }`}
+                        data-testid="hard-mode-button"
+                      >
+                        Hard
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Color Selection */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    My Card Color
+                  </label>
+                  <p className="text-sm text-gray-500 mb-3">
+                    Choose the color for the cards you place on the timeline.
+                  </p>
+                  <div className="flex flex-wrap gap-3">
+                    {availableColors.map((color) => (
+                      <button
+                        key={color}
+                        onClick={() => handleColorChange(color)}
+                        className={`w-10 h-10 rounded-full border-2 transition-transform transform hover:scale-110 ${
+                          playerColor === color
+                            ? "border-blue-600 ring-2 ring-blue-600"
+                            : "border-gray-200"
+                        }`}
+                        style={{ backgroundColor: color }}
+                        data-testid={`color-button-${color}`}
+                        aria-label={`Select ${color} color`}
+                      />
+                    ))}
+                  </div>
+                </div>
+                {/* Game Controls Section */}
+                <div className="border-t border-gray-200 pt-6">
+                  <div className="space-y-3">
+                    <button
+                      className="w-full bg-gray-100 hover:bg-blue-100 text-gray-700 py-2 px-4 rounded-lg transition-colors flex items-center justify-start"
+                      onClick={() => {
+                        if (onNewGame) {
+                          onNewGame();
+                        }
+                        setShowSettings(false);
+                      }}
+                      data-testid="button-new-game"
                     >
-                      Normal
+                      <RotateCcw className="mr-2 h-4 w-4" />
+                      New Game
                     </button>
+
                     <button
+                      className="w-full bg-gray-100 hover:bg-blue-100 text-gray-700 py-2 px-4 rounded-lg transition-colors flex items-center justify-start"
                       onClick={() => {
-                        setGameMode("hard");
-                        localStorage.setItem("gameMode", "hard");
+                        setShowRulesModal(true);
+                        setShowSettings(false);
                       }}
-                      className={`flex-1 py-2 px-4 rounded-lg transition-colors text-sm font-medium ${
-                        gameMode === "hard"
-                          ? "bg-red-600 text-white"
-                          : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                      }`}
-                      data-testid="hard-mode-button"
+                      data-testid="button-rules"
                     >
-                      Hard
+                      <HelpCircle className="mr-1 h-4 w-4" />
+                      View Rules
                     </button>
                   </div>
                 </div>
-              )}
-
-              {/* Color Selection */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  My Card Color
-                </label>
-                <p className="text-sm text-gray-500 mb-3">
-                  Choose the color for the cards you place on the timeline.
-                </p>
-                <div className="flex flex-wrap gap-3">
-                  {availableColors.map((color) => (
-                    <button
-                      key={color}
-                      onClick={() => handleColorChange(color)}
-                      className={`w-10 h-10 rounded-full border-2 transition-transform transform hover:scale-110 ${
-                        playerColor === color
-                          ? "border-blue-600 ring-2 ring-blue-600"
-                          : "border-gray-200"
-                      }`}
-                      style={{ backgroundColor: color }}
-                      data-testid={`color-button-${color}`}
-                      aria-label={`Select ${color} color`}
-                    />
-                  ))}
-                </div>
               </div>
-
-              <div className="flex space-x-3 pt-4 border-t border-gray-200">
+            </div>
+            <div className="p-6 border-t">
+              <div className="flex space-x-3">
                 <button
                   onClick={() => {
                     if (onSettingsChange) {
