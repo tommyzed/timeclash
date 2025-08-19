@@ -24,8 +24,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 
 interface GameHeaderProps {
   gameState: GameState;
@@ -424,26 +422,27 @@ export default function GameHeader({
                 {/* Allow Stealing Option */}
                 {isMultiplayer && (
                   <div>
-                    <Label
+                    <label
                       htmlFor="allow-stealing"
                       className="block text-sm font-medium text-gray-700 mb-2"
                     >
                       Allow Stealing
-                    </Label>
+                    </label>
                     <p className="text-sm text-gray-500 mb-3">
                       When a player makes an incorrect move, the opponent can
                       try to steal the card.
                     </p>
                     <div className="flex items-center space-x-2">
-                      <Switch
+                      <input
+                        type="checkbox"
                         id="allow-stealing"
                         checked={allowStealing}
-                        onCheckedChange={setAllowStealing}
+                        onChange={(e) => setAllowStealing(e.target.checked)}
                         data-testid="allow-stealing-switch"
                       />
-                      <Label htmlFor="allow-stealing">
+                      <label htmlFor="allow-stealing">
                         {allowStealing ? "Enabled" : "Disabled"}
-                      </Label>
+                      </label>
                     </div>
                   </div>
                 )}
