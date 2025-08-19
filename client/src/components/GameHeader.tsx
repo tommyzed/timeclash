@@ -11,6 +11,7 @@ import {
 import { type GameState } from "@shared/schema";
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
+import { useIsMobile } from "@/hooks/use-mobile";
 import logoImage from "@assets/It's About Time Logo -sm_1754907859214.png";
 import {
   AlertDialog,
@@ -57,6 +58,7 @@ export default function GameHeader({
   const [targetScore, setTargetScore] = useState(game.targetScore);
   const [gameMode, setGameMode] = useState(game.gameMode);
   const [, setLocation] = useLocation();
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     if (showSettings) {
@@ -222,10 +224,59 @@ export default function GameHeader({
     );
   };
 
+  const GameActions = () => (
+    <div
+      className={
+        isMobile
+          ? "absolute top-1 right-1 flex space-x-1"
+          : "flex items-center space-x-2"
+      }
+    >
+      <AlertDialog>
+        <AlertDialogTrigger asChild>
+          <button
+            className="bg-gray-100 hover:bg-gray-200 p-2 rounded-lg transition-colors"
+            data-testid="new-game-button"
+            title="Start a new game"
+          >
+            <RotateCcw className="h-5 w-5 text-gray-600" />
+          </button>
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>🤔 Start a New Game?</AlertDialogTitle>
+            <AlertDialogDescription>
+              ❗ This will end your current game and start a fresh one. ❗
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => {
+                if (onNewGame) {
+                  onNewGame();
+                }
+              }}
+            >
+              Confirm
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+      <button
+        onClick={() => setShowSettings(true)}
+        className="bg-gray-100 hover:bg-gray-200 p-2 rounded-lg transition-colors"
+        data-testid="settings-button"
+      >
+        <Settings className="h-5 w-5 text-gray-600" />
+      </button>
+    </div>
+  );
+
   return (
     <header className="bg-white shadow-sm border-b" data-testid="game-header">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 relative">
+        <div className="flex justify-between items-center">
           <div className="flex items-center space-x-4">
             <AlertDialog>
               <AlertDialogTrigger asChild>
@@ -255,50 +306,17 @@ export default function GameHeader({
             </AlertDialog>
             {getGameModeDisplay()}
           </div>
-          <div className="flex items-center space-x-6">
-            {getScoreDisplay()}
-            <div className="flex items-center space-x-2">
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <button
-                    className="bg-gray-100 hover:bg-gray-200 p-2 rounded-lg transition-colors"
-                    data-testid="new-game-button"
-                    title="Start a new game"
-                  >
-                    <RotateCcw className="h-5 w-5 text-gray-600" />
-                  </button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>🤔 Start a New Game?</AlertDialogTitle>
-                    <AlertDialogDescription>
-                      ❗ This will end your current game and start a fresh one. ❗
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction
-                      onClick={() => {
-                        if (onNewGame) {
-                          onNewGame();
-                        }
-                      }}
-                    >
-                      Confirm
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
-              <button
-                onClick={() => setShowSettings(true)}
-                className="bg-gray-100 hover:bg-gray-200 p-2 rounded-lg transition-colors"
-                data-testid="settings-button"
-              >
-                <Settings className="h-5 w-5 text-gray-600" />
-              </button>
+          {!isMobile && (
+            <div className="flex items-center space-x-6">
+              {getScoreDisplay()}
+              <GameActions />
             </div>
-          </div>
+          )}
         </div>
+        {isMobile && (
+          <div className="mt-4 flex justify-center">{getScoreDisplay()}</div>
+        )}
+        {isMobile && <GameActions />}
       </div>
 
       {/* Settings Modal */}
