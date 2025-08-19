@@ -374,7 +374,7 @@ export default function GameHeader({
                         }}
                         className={`flex-1 py-2 px-4 rounded-lg transition-colors text-sm font-medium ${
                           gameMode === "normal"
-                            ? "bg-blue-600 text-white"
+                            ? "bg-green-600 text-white"
                             : "bg-gray-200 text-gray-700 hover:bg-gray-300"
                         }`}
                         data-testid="normal-mode-button"
@@ -422,36 +422,6 @@ export default function GameHeader({
                         aria-label={`Select ${color} color`}
                       />
                     ))}
-                  </div>
-                </div>
-                {/* Game Controls Section */}
-                <div className="border-t border-gray-200 pt-6">
-                  <div className="space-y-3">
-                    <button
-                      className="w-full bg-gray-100 hover:bg-blue-100 text-gray-700 py-2 px-4 rounded-lg transition-colors flex items-center justify-start"
-                      onClick={() => {
-                        if (onNewGame) {
-                          onNewGame();
-                        }
-                        setShowSettings(false);
-                      }}
-                      data-testid="button-new-game"
-                    >
-                      <RotateCcw className="mr-2 h-4 w-4" />
-                      New Game
-                    </button>
-
-                    <button
-                      className="w-full bg-gray-100 hover:bg-blue-100 text-gray-700 py-2 px-4 rounded-lg transition-colors flex items-center justify-start"
-                      onClick={() => {
-                        setShowRulesModal(true);
-                        setShowSettings(false);
-                      }}
-                      data-testid="button-rules"
-                    >
-                      <HelpCircle className="mr-1 h-4 w-4" />
-                      View Rules
-                    </button>
                   </div>
                 </div>
               </div>
