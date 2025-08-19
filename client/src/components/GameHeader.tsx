@@ -422,28 +422,26 @@ export default function GameHeader({
                 {/* Allow Stealing Option */}
                 {isMultiplayer && (
                   <div>
-                    <label
-                      htmlFor="allow-stealing"
-                      className="block text-sm font-medium text-gray-700 mb-2"
-                    >
-                      Allow Stealing
-                    </label>
-                    <p className="text-sm text-gray-500 mb-3">
-                      When a player makes an incorrect move, the opponent can
-                      try to steal the card.
-                    </p>
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center">
+                      <label
+                        htmlFor="allow-stealing"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        Allow Stealing
+                      </label>
                       <input
                         type="checkbox"
                         id="allow-stealing"
                         checked={allowStealing}
                         onChange={(e) => setAllowStealing(e.target.checked)}
                         data-testid="allow-stealing-switch"
+                        className="ml-2 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                       />
-                      <label htmlFor="allow-stealing">
-                        {allowStealing ? "Enabled" : "Disabled"}
-                      </label>
                     </div>
+                    <p className="text-sm text-gray-500 mt-1">
+                      When a player makes an incorrect move, the opponent can
+                      try to steal the card.
+                    </p>
                   </div>
                 )}
 
