@@ -23,7 +23,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface GameHeaderProps {
   gameState: GameState;
@@ -284,7 +283,7 @@ export default function GameHeader({
                 <X className="w-6 h-6" />
               </button>
             </div>
-            <ScrollArea className="flex-grow">
+            <div className="flex-grow overflow-y-auto">
               <div className="p-6 space-y-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -423,7 +422,7 @@ export default function GameHeader({
                   </div>
                 </div>
               </div>
-            </ScrollArea>
+            </div>
             <div className="p-6 border-t">
               <div className="flex space-x-3">
                 <button
