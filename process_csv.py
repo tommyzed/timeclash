@@ -21,8 +21,6 @@ def process_csv_events():
             
             # Create title (truncated description if too long)
             title = row['Event Description']
-            if len(title) > 80:
-                title = title[:77] + "..."
             
             events.append({
                 'id': row['Event ID'],

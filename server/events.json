@@ -29,7 +29,7 @@
   },
   {
     "id": "5",
-    "title": "The first known representational paintings are created in the Chauvet Caves i...",
+    "title": "The first known representational paintings are created in the Chauvet Caves in France.",
     "description": "The first known representational paintings are created in the Chauvet Caves in France.",
     "year": -31000,
     "category": "Culture"
@@ -64,7 +64,7 @@
   },
   {
     "id": "10",
-    "title": "Agriculture begins in the Fertile Crescent with the cultivation of wheat and ...",
+    "title": "Agriculture begins in the Fertile Crescent with the cultivation of wheat and barley.",
     "description": "Agriculture begins in the Fertile Crescent with the cultivation of wheat and barley.",
     "year": -10000,
     "category": "History"
@@ -127,7 +127,7 @@
   },
   {
     "id": "16",
-    "title": "The wheel is invented in Eastern Europe, revolutionizing transport and machin...",
+    "title": "The wheel is invented in Eastern Europe, revolutionizing transport and machinery.",
     "description": "The wheel is invented in Eastern Europe, revolutionizing transport and machinery.",
     "year": -4000,
     "category": "Science"
@@ -155,21 +155,21 @@
   },
   {
     "id": "18",
-    "title": "The first system of writing (cuneiform) is developed by the Sumerians in Meso...",
+    "title": "The first system of writing (cuneiform) is developed by the Sumerians in Mesopotamia.",
     "description": "The first system of writing (cuneiform) is developed by the Sumerians in Mesopotamia.",
     "year": -3400,
     "category": "History"
   },
   {
     "id": "19",
-    "title": "The first known wheeled vehicle, the Ljubljana Marshes Wheel, is made in Slov...",
+    "title": "The first known wheeled vehicle, the Ljubljana Marshes Wheel, is made in Slovenia.",
     "description": "The first known wheeled vehicle, the Ljubljana Marshes Wheel, is made in Slovenia.",
     "year": -3200,
     "category": "Science"
   },
   {
     "id": "20",
-    "title": "The first dynasty of Egypt is established, unifying the Upper and Lower kingd...",
+    "title": "The first dynasty of Egypt is established, unifying the Upper and Lower kingdoms.",
     "description": "The first dynasty of Egypt is established, unifying the Upper and Lower kingdoms.",
     "year": -3100,
     "category": "Politics"
@@ -323,7 +323,7 @@
   },
   {
     "id": "38",
-    "title": "The First Temple in Jerusalem (Solomon's Temple) is destroyed by the Babyloni...",
+    "title": "The First Temple in Jerusalem (Solomon's Temple) is destroyed by the Babylonians.",
     "description": "The First Temple in Jerusalem (Solomon's Temple) is destroyed by the Babylonians.",
     "year": -586,
     "category": "Politics"
@@ -358,7 +358,7 @@
   },
   {
     "id": "43",
-    "title": "The philosopher Pythagoras studies mathematics and the movement of celestial ...",
+    "title": "The philosopher Pythagoras studies mathematics and the movement of celestial bodies.",
     "description": "The philosopher Pythagoras studies mathematics and the movement of celestial bodies.",
     "year": -500,
     "category": "Science"
@@ -407,14 +407,14 @@
   },
   {
     "id": "49",
-    "title": "Plato founds the Academy in Athens, one of the earliest institutions of highe...",
+    "title": "Plato founds the Academy in Athens, one of the earliest institutions of higher learning.",
     "description": "Plato founds the Academy in Athens, one of the earliest institutions of higher learning.",
     "year": -387,
     "category": "Culture"
   },
   {
     "id": "50",
-    "title": "Alexander the Great becomes king of Macedon after the assassination of his fa...",
+    "title": "Alexander the Great becomes king of Macedon after the assassination of his father, Philip II.",
     "description": "Alexander the Great becomes king of Macedon after the assassination of his father, Philip II.",
     "year": -336,
     "category": "Politics"
@@ -470,7 +470,7 @@
   },
   {
     "id": "57",
-    "title": "Rome destroys Carthage, ending the Punic Wars and securing Mediterranean domi...",
+    "title": "Rome destroys Carthage, ending the Punic Wars and securing Mediterranean dominance.",
     "description": "Rome destroys Carthage, ending the Punic Wars and securing Mediterranean dominance.",
     "year": -146,
     "category": "Politics"
@@ -498,7 +498,7 @@
   },
   {
     "id": "61",
-    "title": "Octavian is granted the title Augustus, marking the end of the Roman Republic...",
+    "title": "Octavian is granted the title Augustus, marking the end of the Roman Republic and the beginning of the Roman Empire.",
     "description": "Octavian is granted the title Augustus, marking the end of the Roman Republic and the beginning of the Roman Empire.",
     "year": -27,
     "category": "Politics"
@@ -582,14 +582,14 @@
   },
   {
     "id": "72",
-    "title": "The Roman Empire is divided into Eastern and Western halves by Emperor Diocle...",
+    "title": "The Roman Empire is divided into Eastern and Western halves by Emperor Diocletian.",
     "description": "The Roman Empire is divided into Eastern and Western halves by Emperor Diocletian.",
     "year": 286,
     "category": "Politics"
   },
   {
     "id": "73",
-    "title": "Emperor Constantine issues the Edict of Milan, granting religious tolerance t...",
+    "title": "Emperor Constantine issues the Edict of Milan, granting religious tolerance to Christians in the Roman Empire.",
     "description": "Emperor Constantine issues the Edict of Milan, granting religious tolerance to Christians in the Roman Empire.",
     "year": 313,
     "category": "Politics"
@@ -610,7 +610,7 @@
   },
   {
     "id": "76",
-    "title": "The Roman Empire is permanently split into the Eastern and Western Roman Empi...",
+    "title": "The Roman Empire is permanently split into the Eastern and Western Roman Empires.",
     "description": "The Roman Empire is permanently split into the Eastern and Western Roman Empires.",
     "year": 395,
     "category": "Politics"
@@ -638,7 +638,7 @@
   },
   {
     "id": "79",
-    "title": "The last Western Roman Emperor, Romulus Augustulus, is deposed, marking the f...",
+    "title": "The last Western Roman Emperor, Romulus Augustulus, is deposed, marking the fall of the Western Roman Empire.",
     "description": "The last Western Roman Emperor, Romulus Augustulus, is deposed, marking the fall of the Western Roman Empire.",
     "year": 476,
     "category": "Politics"
@@ -687,7 +687,7 @@
   },
   {
     "id": "85",
-    "title": "The Tang Dynasty is established in China, beginning a golden age of culture a...",
+    "title": "The Tang Dynasty is established in China, beginning a golden age of culture and innovation.",
     "description": "The Tang Dynasty is established in China, beginning a golden age of culture and innovation.",
     "year": 618,
     "category": "Politics"
@@ -701,7 +701,7 @@
   },
   {
     "id": "86",
-    "title": "The Prophet Muhammad migrates from Mecca to Medina (the Hijra), marking the b...",
+    "title": "The Prophet Muhammad migrates from Mecca to Medina (the Hijra), marking the beginning of the Islamic calendar.",
     "description": "The Prophet Muhammad migrates from Mecca to Medina (the Hijra), marking the beginning of the Islamic calendar.",
     "year": 622,
     "category": "Culture"
@@ -729,28 +729,28 @@
   },
   {
     "id": "90",
-    "title": "Muslim forces cross the Strait of Gibraltar and begin the conquest of the Ibe...",
+    "title": "Muslim forces cross the Strait of Gibraltar and begin the conquest of the Iberian Peninsula.",
     "description": "Muslim forces cross the Strait of Gibraltar and begin the conquest of the Iberian Peninsula.",
     "year": 711,
     "category": "Politics"
   },
   {
     "id": "91",
-    "title": "Charles Martel's Frankish army defeats Muslim invaders at the Battle of Tours...",
+    "title": "Charles Martel's Frankish army defeats Muslim invaders at the Battle of Tours, halting their advance into Europe.",
     "description": "Charles Martel's Frankish army defeats Muslim invaders at the Battle of Tours, halting their advance into Europe.",
     "year": 732,
     "category": "Politics"
   },
   {
     "id": "92",
-    "title": "Vikings raid the monastery at Lindisfarne, marking the beginning of the Vikin...",
+    "title": "Vikings raid the monastery at Lindisfarne, marking the beginning of the Viking Age in Europe.",
     "description": "Vikings raid the monastery at Lindisfarne, marking the beginning of the Viking Age in Europe.",
     "year": 793,
     "category": "Politics"
   },
   {
     "id": "93",
-    "title": "Charlemagne is crowned Emperor of the Romans by Pope Leo III, founding the Ca...",
+    "title": "Charlemagne is crowned Emperor of the Romans by Pope Leo III, founding the Carolingian Empire.",
     "description": "Charlemagne is crowned Emperor of the Romans by Pope Leo III, founding the Carolingian Empire.",
     "year": 800,
     "category": "Politics"
@@ -778,7 +778,7 @@
   },
   {
     "id": "97",
-    "title": "The Song Dynasty is established in China, known for its technological advance...",
+    "title": "The Song Dynasty is established in China, known for its technological advancements.",
     "description": "The Song Dynasty is established in China, known for its technological advancements.",
     "year": 960,
     "category": "Politics"
@@ -806,21 +806,21 @@
   },
   {
     "id": "99",
-    "title": "The Great Schism formally divides the Christian church into the Roman Catholi...",
+    "title": "The Great Schism formally divides the Christian church into the Roman Catholic and Eastern Orthodox branches.",
     "description": "The Great Schism formally divides the Christian church into the Roman Catholic and Eastern Orthodox branches.",
     "year": 1054,
     "category": "Culture"
   },
   {
     "id": "100",
-    "title": "William the Conqueror leads the Norman invasion of England, winning the Battl...",
+    "title": "William the Conqueror leads the Norman invasion of England, winning the Battle of Hastings.",
     "description": "William the Conqueror leads the Norman invasion of England, winning the Battle of Hastings.",
     "year": 1066,
     "category": "Politics"
   },
   {
     "id": "101",
-    "title": "The first movable type printing system is invented by Bi Sheng in Song Dynast...",
+    "title": "The first movable type printing system is invented by Bi Sheng in Song Dynasty China.",
     "description": "The first movable type printing system is invented by Bi Sheng in Song Dynasty China.",
     "year": 1088,
     "category": "Science"
@@ -862,7 +862,7 @@
   },
   {
     "id": "107",
-    "title": "Genghis Khan is proclaimed ruler of all Mongols, beginning the expansion of t...",
+    "title": "Genghis Khan is proclaimed ruler of all Mongols, beginning the expansion of the Mongol Empire.",
     "description": "Genghis Khan is proclaimed ruler of all Mongols, beginning the expansion of the Mongol Empire.",
     "year": 1206,
     "category": "Politics"
@@ -911,7 +911,7 @@
   },
   {
     "id": "113",
-    "title": "The artist Giotto completes the Scrovegni Chapel frescoes, a landmark of the ...",
+    "title": "The artist Giotto completes the Scrovegni Chapel frescoes, a landmark of the early Renaissance.",
     "description": "The artist Giotto completes the Scrovegni Chapel frescoes, a landmark of the early Renaissance.",
     "year": 1306,
     "category": "Culture"
@@ -925,7 +925,7 @@
   },
   {
     "id": "115",
-    "title": "The Black Death pandemic arrives in Europe, eventually killing a third of the...",
+    "title": "The Black Death pandemic arrives in Europe, eventually killing a third of the population.",
     "description": "The Black Death pandemic arrives in Europe, eventually killing a third of the population.",
     "year": 1347,
     "category": "History"
@@ -953,7 +953,7 @@
   },
   {
     "id": "434",
-    "title": "The use of a single, consistent light source in painting is pioneered by Masa...",
+    "title": "The use of a single, consistent light source in painting is pioneered by Masaccio.",
     "description": "The use of a single, consistent light source in painting is pioneered by Masaccio.",
     "year": 1420,
     "category": "Culture"
@@ -967,7 +967,7 @@
   },
   {
     "id": "120",
-    "title": "Jan van Eyck paints The Arnolfini Portrait, a masterpiece of the Northern Ren...",
+    "title": "Jan van Eyck paints The Arnolfini Portrait, a masterpiece of the Northern Renaissance.",
     "description": "Jan van Eyck paints The Arnolfini Portrait, a masterpiece of the Northern Renaissance.",
     "year": 1434,
     "category": "Culture"
@@ -981,14 +981,14 @@
   },
   {
     "id": "122",
-    "title": "Johannes Gutenberg invents the printing press with movable type in Mainz, Ger...",
+    "title": "Johannes Gutenberg invents the printing press with movable type in Mainz, Germany.",
     "description": "Johannes Gutenberg invents the printing press with movable type in Mainz, Germany.",
     "year": 1439,
     "category": "Science"
   },
   {
     "id": "123",
-    "title": "The Ottoman Empire, under Sultan Mehmed II, conquers Constantinople, ending t...",
+    "title": "The Ottoman Empire, under Sultan Mehmed II, conquers Constantinople, ending the Byzantine Empire.",
     "description": "The Ottoman Empire, under Sultan Mehmed II, conquers Constantinople, ending the Byzantine Empire.",
     "year": 1453,
     "category": "Politics"
@@ -1009,28 +1009,28 @@
   },
   {
     "id": "126",
-    "title": "Bartolomeu Dias of Portugal rounds the Cape of Good Hope, opening a sea route...",
+    "title": "Bartolomeu Dias of Portugal rounds the Cape of Good Hope, opening a sea route to the East.",
     "description": "Bartolomeu Dias of Portugal rounds the Cape of Good Hope, opening a sea route to the East.",
     "year": 1488,
     "category": "Exploration"
   },
   {
     "id": "127",
-    "title": "Christopher Columbus, sailing for Spain, makes his first voyage to the Americ...",
+    "title": "Christopher Columbus, sailing for Spain, makes his first voyage to the Americas, landing in the Bahamas.",
     "description": "Christopher Columbus, sailing for Spain, makes his first voyage to the Americas, landing in the Bahamas.",
     "year": 1492,
     "category": "Exploration"
   },
   {
     "id": "128",
-    "title": "The Treaty of Tordesillas divides the newly discovered lands outside Europe b...",
+    "title": "The Treaty of Tordesillas divides the newly discovered lands outside Europe between Portugal and Spain.",
     "description": "The Treaty of Tordesillas divides the newly discovered lands outside Europe between Portugal and Spain.",
     "year": 1494,
     "category": "Politics"
   },
   {
     "id": "129",
-    "title": "Vasco da Gama of Portugal arrives in India, establishing a direct sea route f...",
+    "title": "Vasco da Gama of Portugal arrives in India, establishing a direct sea route from Europe.",
     "description": "Vasco da Gama of Portugal arrives in India, establishing a direct sea route from Europe.",
     "year": 1498,
     "category": "Exploration"
@@ -1051,14 +1051,14 @@
   },
   {
     "id": "132",
-    "title": "Niccol\u00f2 Machiavelli writes The Prince, a foundational work of modern politica...",
+    "title": "Niccol\u00f2 Machiavelli writes The Prince, a foundational work of modern political science.",
     "description": "Niccol\u00f2 Machiavelli writes The Prince, a foundational work of modern political science.",
     "year": 1513,
     "category": "Culture"
   },
   {
     "id": "133",
-    "title": "Martin Luther posts his Ninety-five Theses, beginning the Protestant Reformat...",
+    "title": "Martin Luther posts his Ninety-five Theses, beginning the Protestant Reformation.",
     "description": "Martin Luther posts his Ninety-five Theses, beginning the Protestant Reformation.",
     "year": 1517,
     "category": "Culture"
@@ -1072,7 +1072,7 @@
   },
   {
     "id": "135",
-    "title": "Ferdinand Magellan's expedition completes the first circumnavigation of the E...",
+    "title": "Ferdinand Magellan's expedition completes the first circumnavigation of the Earth.",
     "description": "Ferdinand Magellan's expedition completes the first circumnavigation of the Earth.",
     "year": 1522,
     "category": "Exploration"
@@ -1086,14 +1086,14 @@
   },
   {
     "id": "137",
-    "title": "Nicolaus Copernicus publishes On the Revolutions of the Heavenly Spheres, pro...",
+    "title": "Nicolaus Copernicus publishes On the Revolutions of the Heavenly Spheres, proposing a heliocentric model of the universe.",
     "description": "Nicolaus Copernicus publishes On the Revolutions of the Heavenly Spheres, proposing a heliocentric model of the universe.",
     "year": 1543,
     "category": "Science"
   },
   {
     "id": "138",
-    "title": "The Council of Trent begins, marking the start of the Catholic Counter-Reform...",
+    "title": "The Council of Trent begins, marking the start of the Catholic Counter-Reformation.",
     "description": "The Council of Trent begins, marking the start of the Catholic Counter-Reformation.",
     "year": 1545,
     "category": "Culture"
@@ -1114,7 +1114,7 @@
   },
   {
     "id": "141",
-    "title": "Gerardus Mercator creates the Mercator projection map, revolutionizing naviga...",
+    "title": "Gerardus Mercator creates the Mercator projection map, revolutionizing navigation.",
     "description": "Gerardus Mercator creates the Mercator projection map, revolutionizing navigation.",
     "year": 1569,
     "category": "Science"
@@ -1142,21 +1142,21 @@
   },
   {
     "id": "144",
-    "title": "The British East India Company is founded, becoming a major force in global t...",
+    "title": "The British East India Company is founded, becoming a major force in global trade and colonialism.",
     "description": "The British East India Company is founded, becoming a major force in global trade and colonialism.",
     "year": 1600,
     "category": "History"
   },
   {
     "id": "145",
-    "title": "The Dutch East India Company is established, the first multinational corporat...",
+    "title": "The Dutch East India Company is established, the first multinational corporation.",
     "description": "The Dutch East India Company is established, the first multinational corporation.",
     "year": 1602,
     "category": "History"
   },
   {
     "id": "146",
-    "title": "The Tokugawa shogunate is established in Japan, beginning a long period of is...",
+    "title": "The Tokugawa shogunate is established in Japan, beginning a long period of isolationist rule.",
     "description": "The Tokugawa shogunate is established in Japan, beginning a long period of isolationist rule.",
     "year": 1603,
     "category": "Politics"
@@ -1170,7 +1170,7 @@
   },
   {
     "id": "147",
-    "title": "The first permanent English settlement in North America is established at Jam...",
+    "title": "The first permanent English settlement in North America is established at Jamestown, Virginia.",
     "description": "The first permanent English settlement in North America is established at Jamestown, Virginia.",
     "year": 1607,
     "category": "Exploration"
@@ -1184,7 +1184,7 @@
   },
   {
     "id": "149",
-    "title": "Galileo Galilei observes the moons of Jupiter, supporting the heliocentric mo...",
+    "title": "Galileo Galilei observes the moons of Jupiter, supporting the heliocentric model.",
     "description": "Galileo Galilei observes the moons of Jupiter, supporting the heliocentric model.",
     "year": 1610,
     "category": "Science"
@@ -1219,7 +1219,7 @@
   },
   {
     "id": "153",
-    "title": "Harvard University is founded in Cambridge, Massachusetts, the oldest institu...",
+    "title": "Harvard University is founded in Cambridge, Massachusetts, the oldest institution of higher learning in the U.S.",
     "description": "Harvard University is founded in Cambridge, Massachusetts, the oldest institution of higher learning in the U.S.",
     "year": 1636,
     "category": "History"
@@ -1254,7 +1254,7 @@
   },
   {
     "id": "157",
-    "title": "King Charles I of England is executed, and the Commonwealth of England is est...",
+    "title": "King Charles I of England is executed, and the Commonwealth of England is established.",
     "description": "King Charles I of England is executed, and the Commonwealth of England is established.",
     "year": 1649,
     "category": "Politics"
@@ -1268,7 +1268,7 @@
   },
   {
     "id": "159",
-    "title": "The pendulum clock is invented by Christiaan Huygens, greatly improving timek...",
+    "title": "The pendulum clock is invented by Christiaan Huygens, greatly improving timekeeping accuracy.",
     "description": "The pendulum clock is invented by Christiaan Huygens, greatly improving timekeeping accuracy.",
     "year": 1656,
     "category": "Science"
@@ -1296,7 +1296,7 @@
   },
   {
     "id": "163",
-    "title": "Isaac Newton publishes Philosophi\u00e6 Naturalis Principia Mathematica, outlining...",
+    "title": "Isaac Newton publishes Philosophi\u00e6 Naturalis Principia Mathematica, outlining the laws of motion and universal gravitation.",
     "description": "Isaac Newton publishes Philosophi\u00e6 Naturalis Principia Mathematica, outlining the laws of motion and universal gravitation.",
     "year": 1687,
     "category": "Science"
@@ -1324,7 +1324,7 @@
   },
   {
     "id": "166",
-    "title": "The Acts of Union unite the Kingdom of England and the Kingdom of Scotland to...",
+    "title": "The Acts of Union unite the Kingdom of England and the Kingdom of Scotland to create Great Britain.",
     "description": "The Acts of Union unite the Kingdom of England and the Kingdom of Scotland to create Great Britain.",
     "year": 1707,
     "category": "Politics"
@@ -1352,14 +1352,14 @@
   },
   {
     "id": "169",
-    "title": "Denis Diderot's Encyclop\u00e9die is first published, a key text of the Enlightenm...",
+    "title": "Denis Diderot's Encyclop\u00e9die is first published, a key text of the Enlightenment.",
     "description": "Denis Diderot's Encyclop\u00e9die is first published, a key text of the Enlightenment.",
     "year": 1751,
     "category": "Culture"
   },
   {
     "id": "170",
-    "title": "Benjamin Franklin conducts his kite experiment, proving that lightning is ele...",
+    "title": "Benjamin Franklin conducts his kite experiment, proving that lightning is electricity.",
     "description": "Benjamin Franklin conducts his kite experiment, proving that lightning is electricity.",
     "year": 1752,
     "category": "Science"
@@ -1380,14 +1380,14 @@
   },
   {
     "id": "441",
-    "title": "The spinning jenny is invented by James Hargreaves, revolutionizing textile p...",
+    "title": "The spinning jenny is invented by James Hargreaves, revolutionizing textile production.",
     "description": "The spinning jenny is invented by James Hargreaves, revolutionizing textile production.",
     "year": 1764,
     "category": "Science"
   },
   {
     "id": "173",
-    "title": "James Watt invents the improved steam engine with a separate condenser, a key...",
+    "title": "James Watt invents the improved steam engine with a separate condenser, a key innovation of the Industrial Revolution.",
     "description": "James Watt invents the improved steam engine with a separate condenser, a key innovation of the Industrial Revolution.",
     "year": 1765,
     "category": "Science"
@@ -1422,7 +1422,7 @@
   },
   {
     "id": "178",
-    "title": "Adam Smith publishes The Wealth of Nations, a foundational text of modern eco...",
+    "title": "Adam Smith publishes The Wealth of Nations, a foundational text of modern economics.",
     "description": "Adam Smith publishes The Wealth of Nations, a foundational text of modern economics.",
     "year": 1776,
     "category": "History"
@@ -1436,7 +1436,7 @@
   },
   {
     "id": "180",
-    "title": "The Montgolfier brothers launch the first manned hot air balloon flight in Pa...",
+    "title": "The Montgolfier brothers launch the first manned hot air balloon flight in Paris.",
     "description": "The Montgolfier brothers launch the first manned hot air balloon flight in Paris.",
     "year": 1783,
     "category": "Exploration"
@@ -1485,7 +1485,7 @@
   },
   {
     "id": "185",
-    "title": "Eli Whitney invents the cotton gin, revolutionizing the cotton industry and e...",
+    "title": "Eli Whitney invents the cotton gin, revolutionizing the cotton industry and entrenching slavery in the American South.",
     "description": "Eli Whitney invents the cotton gin, revolutionizing the cotton industry and entrenching slavery in the American South.",
     "year": 1793,
     "category": "Science"
@@ -1499,7 +1499,7 @@
   },
   {
     "id": "187",
-    "title": "The Rosetta Stone is discovered in Egypt, providing the key to deciphering an...",
+    "title": "The Rosetta Stone is discovered in Egypt, providing the key to deciphering ancient hieroglyphs.",
     "description": "The Rosetta Stone is discovered in Egypt, providing the key to deciphering ancient hieroglyphs.",
     "year": 1799,
     "category": "Science"
@@ -1520,7 +1520,7 @@
   },
   {
     "id": "190",
-    "title": "The United States purchases the Louisiana Territory from France, doubling the...",
+    "title": "The United States purchases the Louisiana Territory from France, doubling the size of the country.",
     "description": "The United States purchases the Louisiana Territory from France, doubling the size of the country.",
     "year": 1803,
     "category": "Politics"
@@ -1611,7 +1611,7 @@
   },
   {
     "id": "201",
-    "title": "The world's first public railway opens between Stockton and Darlington in Eng...",
+    "title": "The world's first public railway opens between Stockton and Darlington in England.",
     "description": "The world's first public railway opens between Stockton and Darlington in England.",
     "year": 1825,
     "category": "Science"
@@ -1639,7 +1639,7 @@
   },
   {
     "id": "204",
-    "title": "Michael Faraday discovers electromagnetic induction, the principle behind the...",
+    "title": "Michael Faraday discovers electromagnetic induction, the principle behind the electric generator.",
     "description": "Michael Faraday discovers electromagnetic induction, the principle behind the electric generator.",
     "year": 1831,
     "category": "Science"
@@ -1723,7 +1723,7 @@
   },
   {
     "id": "214",
-    "title": "The California Gold Rush begins, sparking mass migration to the West Coast of...",
+    "title": "The California Gold Rush begins, sparking mass migration to the West Coast of the U.S.",
     "description": "The California Gold Rush begins, sparking mass migration to the West Coast of the U.S.",
     "year": 1848,
     "category": "History"
@@ -1737,14 +1737,14 @@
   },
   {
     "id": "215",
-    "title": "The Great Exhibition is held in London's Crystal Palace, showcasing industria...",
+    "title": "The Great Exhibition is held in London's Crystal Palace, showcasing industrial technology.",
     "description": "The Great Exhibition is held in London's Crystal Palace, showcasing industrial technology.",
     "year": 1851,
     "category": "History"
   },
   {
     "id": "216",
-    "title": "Harriet Beecher Stowe publishes Uncle Tom's Cabin, galvanizing anti-slavery s...",
+    "title": "Harriet Beecher Stowe publishes Uncle Tom's Cabin, galvanizing anti-slavery sentiment.",
     "description": "Harriet Beecher Stowe publishes Uncle Tom's Cabin, galvanizing anti-slavery sentiment.",
     "year": 1852,
     "category": "Culture"
@@ -1758,7 +1758,7 @@
   },
   {
     "id": "217",
-    "title": "The Crimean War begins, pitting Russia against an alliance of Britain, France...",
+    "title": "The Crimean War begins, pitting Russia against an alliance of Britain, France, and the Ottoman Empire.",
     "description": "The Crimean War begins, pitting Russia against an alliance of Britain, France, and the Ottoman Empire.",
     "year": 1854,
     "category": "Politics"
@@ -1898,7 +1898,7 @@
   },
   {
     "id": "234",
-    "title": "The German Empire is proclaimed with Wilhelm I as Emperor and Otto von Bismar...",
+    "title": "The German Empire is proclaimed with Wilhelm I as Emperor and Otto von Bismarck as Chancellor.",
     "description": "The German Empire is proclaimed with Wilhelm I as Emperor and Otto von Bismarck as Chancellor.",
     "year": 1871,
     "category": "Politics"
@@ -1926,14 +1926,14 @@
   },
   {
     "id": "237",
-    "title": "The Battle of the Little Bighorn takes place, where Lakota, Cheyenne, and Ara...",
+    "title": "The Battle of the Little Bighorn takes place, where Lakota, Cheyenne, and Arapaho warriors defeat the U.S. 7th Cavalry.",
     "description": "The Battle of the Little Bighorn takes place, where Lakota, Cheyenne, and Arapaho warriors defeat the U.S. 7th Cavalry.",
     "year": 1876,
     "category": "Politics"
   },
   {
     "id": "238",
-    "title": "Thomas Edison invents the phonograph, the first device to record and reproduc...",
+    "title": "Thomas Edison invents the phonograph, the first device to record and reproduce sound.",
     "description": "Thomas Edison invents the phonograph, the first device to record and reproduce sound.",
     "year": 1877,
     "category": "Science"
@@ -1954,7 +1954,7 @@
   },
   {
     "id": "241",
-    "title": "The Prime Meridian is established at Greenwich, London, standardizing global ...",
+    "title": "The Prime Meridian is established at Greenwich, London, standardizing global time and longitude.",
     "description": "The Prime Meridian is established at Greenwich, London, standardizing global time and longitude.",
     "year": 1884,
     "category": "Science"
@@ -1975,14 +1975,14 @@
   },
   {
     "id": "243",
-    "title": "Karl Benz patents the Benz Patent-Motorwagen, the first gasoline-powered auto...",
+    "title": "Karl Benz patents the Benz Patent-Motorwagen, the first gasoline-powered automobile.",
     "description": "Karl Benz patents the Benz Patent-Motorwagen, the first gasoline-powered automobile.",
     "year": 1886,
     "category": "Science"
   },
   {
     "id": "244",
-    "title": "Sir Arthur Conan Doyle publishes the first Sherlock Holmes story, A Study in ...",
+    "title": "Sir Arthur Conan Doyle publishes the first Sherlock Holmes story, A Study in Scarlet.",
     "description": "Sir Arthur Conan Doyle publishes the first Sherlock Holmes story, A Study in Scarlet.",
     "year": 1887,
     "category": "Culture"
@@ -2010,7 +2010,7 @@
   },
   {
     "id": "247",
-    "title": "The Wounded Knee Massacre occurs, the last major conflict of the American Ind...",
+    "title": "The Wounded Knee Massacre occurs, the last major conflict of the American Indian Wars.",
     "description": "The Wounded Knee Massacre occurs, the last major conflict of the American Indian Wars.",
     "year": 1890,
     "category": "Politics"
@@ -2073,7 +2073,7 @@
   },
   {
     "id": "255",
-    "title": "The Spanish-American War begins, leading to U.S. acquisition of Puerto Rico, ...",
+    "title": "The Spanish-American War begins, leading to U.S. acquisition of Puerto Rico, Guam, and the Philippines.",
     "description": "The Spanish-American War begins, leading to U.S. acquisition of Puerto Rico, Guam, and the Philippines.",
     "year": 1898,
     "category": "Politics"
@@ -2122,7 +2122,7 @@
   },
   {
     "id": "261",
-    "title": "The Wright brothers make the first sustained, controlled, powered airplane fl...",
+    "title": "The Wright brothers make the first sustained, controlled, powered airplane flight at Kitty Hawk, North Carolina.",
     "description": "The Wright brothers make the first sustained, controlled, powered airplane flight at Kitty Hawk, North Carolina.",
     "year": 1903,
     "category": "Science"
@@ -2136,7 +2136,7 @@
   },
   {
     "id": "263",
-    "title": "Albert Einstein publishes his theory of special relativity, including the equ...",
+    "title": "Albert Einstein publishes his theory of special relativity, including the equation E=mc2.",
     "description": "Albert Einstein publishes his theory of special relativity, including the equation E=mc2.",
     "year": 1905,
     "category": "Science"
@@ -2150,7 +2150,7 @@
   },
   {
     "id": "265",
-    "title": "Henry Ford introduces the Model T automobile, making cars affordable for the ...",
+    "title": "Henry Ford introduces the Model T automobile, making cars affordable for the masses.",
     "description": "Henry Ford introduces the Model T automobile, making cars affordable for the masses.",
     "year": 1908,
     "category": "Science"
@@ -2164,7 +2164,7 @@
   },
   {
     "id": "266",
-    "title": "The Haber-Bosch process is invented, allowing for the industrial production o...",
+    "title": "The Haber-Bosch process is invented, allowing for the industrial production of ammonia for fertilizers.",
     "description": "The Haber-Bosch process is invented, allowing for the industrial production of ammonia for fertilizers.",
     "year": 1909,
     "category": "Science"
@@ -2199,7 +2199,7 @@
   },
   {
     "id": "271",
-    "title": "The moving assembly line is introduced by Henry Ford, revolutionizing manufac...",
+    "title": "The moving assembly line is introduced by Henry Ford, revolutionizing manufacturing.",
     "description": "The moving assembly line is introduced by Henry Ford, revolutionizing manufacturing.",
     "year": 1913,
     "category": "Science"
@@ -2213,7 +2213,7 @@
   },
   {
     "id": "272",
-    "title": "World War I begins after the assassination of Archduke Franz Ferdinand of Aus...",
+    "title": "World War I begins after the assassination of Archduke Franz Ferdinand of Austria in Sarajevo.",
     "description": "World War I begins after the assassination of Archduke Franz Ferdinand of Austria in Sarajevo.",
     "year": 1914,
     "category": "Politics"
@@ -2248,7 +2248,7 @@
   },
   {
     "id": "277",
-    "title": "The Russian Revolution begins, leading to the overthrow of the Tsar and the r...",
+    "title": "The Russian Revolution begins, leading to the overthrow of the Tsar and the rise of the Bolsheviks.",
     "description": "The Russian Revolution begins, leading to the overthrow of the Tsar and the rise of the Bolsheviks.",
     "year": 1917,
     "category": "Politics"
@@ -2269,14 +2269,14 @@
   },
   {
     "id": "280",
-    "title": "The Spanish Flu pandemic begins, ultimately killing an estimated 50 million p...",
+    "title": "The Spanish Flu pandemic begins, ultimately killing an estimated 50 million people worldwide.",
     "description": "The Spanish Flu pandemic begins, ultimately killing an estimated 50 million people worldwide.",
     "year": 1918,
     "category": "History"
   },
   {
     "id": "281",
-    "title": "The Treaty of Versailles is signed, formally ending World War I and imposing ...",
+    "title": "The Treaty of Versailles is signed, formally ending World War I and imposing harsh terms on Germany.",
     "description": "The Treaty of Versailles is signed, formally ending World War I and imposing harsh terms on Germany.",
     "year": 1919,
     "category": "Politics"
@@ -2290,7 +2290,7 @@
   },
   {
     "id": "283",
-    "title": "The 19th Amendment to the U.S. Constitution is ratified, granting women the r...",
+    "title": "The 19th Amendment to the U.S. Constitution is ratified, granting women the right to vote.",
     "description": "The 19th Amendment to the U.S. Constitution is ratified, granting women the right to vote.",
     "year": 1920,
     "category": "Politics"
@@ -2304,7 +2304,7 @@
   },
   {
     "id": "285",
-    "title": "The Ottoman Sultanate is abolished, and the Republic of Turkey is later estab...",
+    "title": "The Ottoman Sultanate is abolished, and the Republic of Turkey is later established.",
     "description": "The Ottoman Sultanate is abolished, and the Republic of Turkey is later established.",
     "year": 1922,
     "category": "Politics"
@@ -2325,7 +2325,7 @@
   },
   {
     "id": "288",
-    "title": "Vladimir Lenin dies, and Joseph Stalin begins his consolidation of power in t...",
+    "title": "Vladimir Lenin dies, and Joseph Stalin begins his consolidation of power in the Soviet Union.",
     "description": "Vladimir Lenin dies, and Joseph Stalin begins his consolidation of power in the Soviet Union.",
     "year": 1924,
     "category": "Politics"
@@ -2402,7 +2402,7 @@
   },
   {
     "id": "297",
-    "title": "Franklin D. Roosevelt is elected President of the United States, promising a ...",
+    "title": "Franklin D. Roosevelt is elected President of the United States, promising a \"New Deal\".",
     "description": "Franklin D. Roosevelt is elected President of the United States, promising a \"New Deal\".",
     "year": 1932,
     "category": "Politics"
@@ -2423,7 +2423,7 @@
   },
   {
     "id": "463",
-    "title": "Nylon, the first fully synthetic fiber, is produced by Wallace Carothers at D...",
+    "title": "Nylon, the first fully synthetic fiber, is produced by Wallace Carothers at DuPont.",
     "description": "Nylon, the first fully synthetic fiber, is produced by Wallace Carothers at DuPont.",
     "year": 1935,
     "category": "Science"
@@ -2437,7 +2437,7 @@
   },
   {
     "id": "301",
-    "title": "The Japanese invasion of China begins, marking the start of World War II in A...",
+    "title": "The Japanese invasion of China begins, marking the start of World War II in Asia.",
     "description": "The Japanese invasion of China begins, marking the start of World War II in Asia.",
     "year": 1937,
     "category": "Politics"
@@ -2472,7 +2472,7 @@
   },
   {
     "id": "305",
-    "title": "Japan attacks the U.S. naval base at Pearl Harbor, bringing the United States...",
+    "title": "Japan attacks the U.S. naval base at Pearl Harbor, bringing the United States into World War II.",
     "description": "Japan attacks the U.S. naval base at Pearl Harbor, bringing the United States into World War II.",
     "year": 1941,
     "category": "Politics"
@@ -2486,7 +2486,7 @@
   },
   {
     "id": "307",
-    "title": "The Battle of Stalingrad ends with a decisive Soviet victory, a turning point...",
+    "title": "The Battle of Stalingrad ends with a decisive Soviet victory, a turning point in World War II.",
     "description": "The Battle of Stalingrad ends with a decisive Soviet victory, a turning point in World War II.",
     "year": 1943,
     "category": "Politics"
@@ -2500,7 +2500,7 @@
   },
   {
     "id": "308",
-    "title": "Allied forces land in Normandy on D-Day, opening a second front in Western Eu...",
+    "title": "Allied forces land in Normandy on D-Day, opening a second front in Western Europe.",
     "description": "Allied forces land in Normandy on D-Day, opening a second front in Western Europe.",
     "year": 1944,
     "category": "Politics"
@@ -2598,7 +2598,7 @@
   },
   {
     "id": "319",
-    "title": "The People's Republic of China is established under the leadership of Mao Zed...",
+    "title": "The People's Republic of China is established under the leadership of Mao Zedong.",
     "description": "The People's Republic of China is established under the leadership of Mao Zedong.",
     "year": 1949,
     "category": "Politics"
@@ -2633,7 +2633,7 @@
   },
   {
     "id": "323",
-    "title": "Edmund Hillary and Tenzing Norgay become the first to reach the summit of Mou...",
+    "title": "Edmund Hillary and Tenzing Norgay become the first to reach the summit of Mount Everest.",
     "description": "Edmund Hillary and Tenzing Norgay become the first to reach the summit of Mount Everest.",
     "year": 1953,
     "category": "Exploration"
@@ -2647,7 +2647,7 @@
   },
   {
     "id": "324",
-    "title": "The U.S. Supreme Court rules in Brown v. Board of Education that racial segre...",
+    "title": "The U.S. Supreme Court rules in Brown v. Board of Education that racial segregation in public schools is unconstitutional.",
     "description": "The U.S. Supreme Court rules in Brown v. Board of Education that racial segregation in public schools is unconstitutional.",
     "year": 1954,
     "category": "Politics"
@@ -2675,7 +2675,7 @@
   },
   {
     "id": "327",
-    "title": "The Montgomery Bus Boycott begins after Rosa Parks is arrested for refusing t...",
+    "title": "The Montgomery Bus Boycott begins after Rosa Parks is arrested for refusing to give up her seat.",
     "description": "The Montgomery Bus Boycott begins after Rosa Parks is arrested for refusing to give up her seat.",
     "year": 1955,
     "category": "History"
@@ -2696,21 +2696,21 @@
   },
   {
     "id": "328",
-    "title": "The Soviet Union launches Sputnik 1, the first artificial satellite, beginnin...",
+    "title": "The Soviet Union launches Sputnik 1, the first artificial satellite, beginning the Space Age.",
     "description": "The Soviet Union launches Sputnik 1, the first artificial satellite, beginning the Space Age.",
     "year": 1957,
     "category": "Exploration"
   },
   {
     "id": "329",
-    "title": "The National Aeronautics and Space Administration (NASA) is established in th...",
+    "title": "The National Aeronautics and Space Administration (NASA) is established in the United States.",
     "description": "The National Aeronautics and Space Administration (NASA) is established in the United States.",
     "year": 1958,
     "category": "Exploration"
   },
   {
     "id": "330",
-    "title": "The integrated circuit (microchip) is independently invented by Jack Kilby an...",
+    "title": "The integrated circuit (microchip) is independently invented by Jack Kilby and Robert Noyce.",
     "description": "The integrated circuit (microchip) is independently invented by Jack Kilby and Robert Noyce.",
     "year": 1958,
     "category": "Science"
@@ -2766,14 +2766,14 @@
   },
   {
     "id": "336",
-    "title": "The Cuban Missile Crisis brings the United States and the Soviet Union to the...",
+    "title": "The Cuban Missile Crisis brings the United States and the Soviet Union to the brink of nuclear war.",
     "description": "The Cuban Missile Crisis brings the United States and the Soviet Union to the brink of nuclear war.",
     "year": 1962,
     "category": "Politics"
   },
   {
     "id": "337",
-    "title": "Martin Luther King Jr. delivers his \"I Have a Dream\" speech during the March ...",
+    "title": "Martin Luther King Jr. delivers his \"I Have a Dream\" speech during the March on Washington.",
     "description": "Martin Luther King Jr. delivers his \"I Have a Dream\" speech during the March on Washington.",
     "year": 1963,
     "category": "History"
@@ -2794,7 +2794,7 @@
   },
   {
     "id": "339",
-    "title": "The Civil Rights Act is signed into law in the United States, outlawing discr...",
+    "title": "The Civil Rights Act is signed into law in the United States, outlawing discrimination.",
     "description": "The Civil Rights Act is signed into law in the United States, outlawing discrimination.",
     "year": 1964,
     "category": "Politics"
@@ -2808,7 +2808,7 @@
   },
   {
     "id": "340",
-    "title": "The Voting Rights Act is signed into law in the United States, protecting Afr...",
+    "title": "The Voting Rights Act is signed into law in the United States, protecting African American voting rights.",
     "description": "The Voting Rights Act is signed into law in the United States, protecting African American voting rights.",
     "year": 1965,
     "category": "Politics"
@@ -2843,7 +2843,7 @@
   },
   {
     "id": "344",
-    "title": "The U.S. Apollo 11 mission lands the first humans, Neil Armstrong and Buzz Al...",
+    "title": "The U.S. Apollo 11 mission lands the first humans, Neil Armstrong and Buzz Aldrin, on the Moon.",
     "description": "The U.S. Apollo 11 mission lands the first humans, Neil Armstrong and Buzz Aldrin, on the Moon.",
     "year": 1969,
     "category": "Exploration"
@@ -2878,7 +2878,7 @@
   },
   {
     "id": "347",
-    "title": "The Watergate scandal begins, leading to the resignation of President Richard...",
+    "title": "The Watergate scandal begins, leading to the resignation of President Richard Nixon.",
     "description": "The Watergate scandal begins, leading to the resignation of President Richard Nixon.",
     "year": 1972,
     "category": "Politics"
@@ -2941,7 +2941,7 @@
   },
   {
     "id": "353",
-    "title": "The Apple II computer is released, one of the first successful personal compu...",
+    "title": "The Apple II computer is released, one of the first successful personal computers.",
     "description": "The Apple II computer is released, one of the first successful personal computers.",
     "year": 1977,
     "category": "Science"
@@ -2955,7 +2955,7 @@
   },
   {
     "id": "355",
-    "title": "The first \"test-tube baby,\" Louise Brown, is born via in vitro fertilization ...",
+    "title": "The first \"test-tube baby,\" Louise Brown, is born via in vitro fertilization (IVF).",
     "description": "The first \"test-tube baby,\" Louise Brown, is born via in vitro fertilization (IVF).",
     "year": 1978,
     "category": "Science"
@@ -2990,7 +2990,7 @@
   },
   {
     "id": "358",
-    "title": "The World Health Organization declares smallpox to have been eradicated globa...",
+    "title": "The World Health Organization declares smallpox to have been eradicated globally.",
     "description": "The World Health Organization declares smallpox to have been eradicated globally.",
     "year": 1980,
     "category": "Science"
@@ -3039,21 +3039,21 @@
   },
   {
     "id": "362",
-    "title": "The first Apple Macintosh computer is released, popularizing the graphical us...",
+    "title": "The first Apple Macintosh computer is released, popularizing the graphical user interface.",
     "description": "The first Apple Macintosh computer is released, popularizing the graphical user interface.",
     "year": 1984,
     "category": "Science"
   },
   {
     "id": "489",
-    "title": "The first commercially available cell phone, the Motorola DynaTAC 8000X, is c...",
+    "title": "The first commercially available cell phone, the Motorola DynaTAC 8000X, is created.",
     "description": "The first commercially available cell phone, the Motorola DynaTAC 8000X, is created.",
     "year": 1984,
     "category": "Science"
   },
   {
     "id": "363",
-    "title": "Mikhail Gorbachev becomes leader of the Soviet Union, initiating reforms of g...",
+    "title": "Mikhail Gorbachev becomes leader of the Soviet Union, initiating reforms of glasnost and perestroika.",
     "description": "Mikhail Gorbachev becomes leader of the Soviet Union, initiating reforms of glasnost and perestroika.",
     "year": 1985,
     "category": "Politics"
@@ -3088,7 +3088,7 @@
   },
   {
     "id": "368",
-    "title": "Pro-democracy protests in Tiananmen Square, Beijing, are suppressed by the Ch...",
+    "title": "Pro-democracy protests in Tiananmen Square, Beijing, are suppressed by the Chinese government.",
     "description": "Pro-democracy protests in Tiananmen Square, Beijing, are suppressed by the Chinese government.",
     "year": 1989,
     "category": "Politics"
@@ -3151,21 +3151,21 @@
   },
   {
     "id": "375",
-    "title": "The Velvet Divorce peacefully splits Czechoslovakia into the Czech Republic a...",
+    "title": "The Velvet Divorce peacefully splits Czechoslovakia into the Czech Republic and Slovakia.",
     "description": "The Velvet Divorce peacefully splits Czechoslovakia into the Czech Republic and Slovakia.",
     "year": 1993,
     "category": "Politics"
   },
   {
     "id": "376",
-    "title": "The first democratic, multiracial elections are held in South Africa, with Ne...",
+    "title": "The first democratic, multiracial elections are held in South Africa, with Nelson Mandela elected president.",
     "description": "The first democratic, multiracial elections are held in South Africa, with Nelson Mandela elected president.",
     "year": 1994,
     "category": "Politics"
   },
   {
     "id": "377",
-    "title": "The Rwandan genocide occurs, resulting in the deaths of approximately 800,000...",
+    "title": "The Rwandan genocide occurs, resulting in the deaths of approximately 800,000 people.",
     "description": "The Rwandan genocide occurs, resulting in the deaths of approximately 800,000 people.",
     "year": 1994,
     "category": "Politics"
@@ -3270,7 +3270,7 @@
   },
   {
     "id": "387",
-    "title": "Terrorist attacks on September 11th destroy the World Trade Center in New Yor...",
+    "title": "Terrorist attacks on September 11th destroy the World Trade Center in New York and damage the Pentagon.",
     "description": "Terrorist attacks on September 11th destroy the World Trade Center in New York and damage the Pentagon.",
     "year": 2001,
     "category": "Politics"
@@ -3298,7 +3298,7 @@
   },
   {
     "id": "390",
-    "title": "The Space Shuttle Columbia disintegrates upon re-entry, killing all seven ast...",
+    "title": "The Space Shuttle Columbia disintegrates upon re-entry, killing all seven astronauts.",
     "description": "The Space Shuttle Columbia disintegrates upon re-entry, killing all seven astronauts.",
     "year": 2003,
     "category": "Exploration"
@@ -3354,14 +3354,14 @@
   },
   {
     "id": "397",
-    "title": "A global financial crisis begins, triggered by the collapse of the U.S. housi...",
+    "title": "A global financial crisis begins, triggered by the collapse of the U.S. housing market.",
     "description": "A global financial crisis begins, triggered by the collapse of the U.S. housing market.",
     "year": 2008,
     "category": "History"
   },
   {
     "id": "398",
-    "title": "Barack Obama is elected as the first African American President of the United...",
+    "title": "Barack Obama is elected as the first African American President of the United States.",
     "description": "Barack Obama is elected as the first African American President of the United States.",
     "year": 2008,
     "category": "Politics"
@@ -3375,14 +3375,14 @@
   },
   {
     "id": "400",
-    "title": "The Arab Spring, a series of pro-democracy uprisings, begins across the Middl...",
+    "title": "The Arab Spring, a series of pro-democracy uprisings, begins across the Middle East and North Africa.",
     "description": "The Arab Spring, a series of pro-democracy uprisings, begins across the Middle East and North Africa.",
     "year": 2010,
     "category": "Politics"
   },
   {
     "id": "401",
-    "title": "The largest oil spill in U.S. history occurs in the Gulf of Mexico after the ...",
+    "title": "The largest oil spill in U.S. history occurs in the Gulf of Mexico after the Deepwater Horizon explosion.",
     "description": "The largest oil spill in U.S. history occurs in the Gulf of Mexico after the Deepwater Horizon explosion.",
     "year": 2010,
     "category": "History"
@@ -3424,7 +3424,7 @@
   },
   {
     "id": "406",
-    "title": "The Paris Agreement on climate change is adopted by nearly every country in t...",
+    "title": "The Paris Agreement on climate change is adopted by nearly every country in the world.",
     "description": "The Paris Agreement on climate change is adopted by nearly every country in the world.",
     "year": 2015,
     "category": "Politics"
@@ -3452,7 +3452,7 @@
   },
   {
     "id": "409",
-    "title": "The first detection of a gravitational wave from a neutron star merger is ann...",
+    "title": "The first detection of a gravitational wave from a neutron star merger is announced.",
     "description": "The first detection of a gravitational wave from a neutron star merger is announced.",
     "year": 2017,
     "category": "Science"
@@ -3480,7 +3480,7 @@
   },
   {
     "id": "413",
-    "title": "The James Webb Space Telescope is launched, succeeding the Hubble Space Teles...",
+    "title": "The James Webb Space Telescope is launched, succeeding the Hubble Space Telescope.",
     "description": "The James Webb Space Telescope is launched, succeeding the Hubble Space Telescope.",
     "year": 2021,
     "category": "Exploration"
@@ -3494,7 +3494,7 @@
   },
   {
     "id": "415",
-    "title": "The generative AI model ChatGPT is launched to the public, sparking widesprea...",
+    "title": "The generative AI model ChatGPT is launched to the public, sparking widespread interest in artificial intelligence.",
     "description": "The generative AI model ChatGPT is launched to the public, sparking widespread interest in artificial intelligence.",
     "year": 2022,
     "category": "Science"
