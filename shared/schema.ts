@@ -29,6 +29,8 @@ export const games = pgTable("games", {
   gameMode: varchar("game_mode").notNull().default("normal"), // 'normal' or 'hard'
   maxAttempts: integer("max_attempts"),
   attempts: integer("attempts").notNull().default(0),
+  allowStealing: boolean("allow_stealing").notNull().default(false),
+  stealingPlayerId: varchar("stealing_player_id"),
 });
 
 export const gameMoves = pgTable("game_moves", {

@@ -24,6 +24,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 
 interface GameHeaderProps {
   gameState: GameState;
@@ -34,6 +36,7 @@ interface GameHeaderProps {
   onSettingsChange?: (settings: {
     targetScore: number;
     gameMode: "normal" | "hard";
+    allowStealing: boolean;
   }) => void;
   onNewGame?: () => void;
   playerColor?: string | null;
@@ -57,6 +60,7 @@ export default function GameHeader({
   const [showRulesModal, setShowRulesModal] = useState(false);
   const [targetScore, setTargetScore] = useState(game.targetScore);
   const [gameMode, setGameMode] = useState(game.gameMode);
+  const [allowStealing, setAllowStealing] = useState(game.allowStealing);
   const [, setLocation] = useLocation();
   const isMobile = useIsMobile();
 
@@ -417,6 +421,33 @@ export default function GameHeader({
                   </div>
                 )}
 
+                {/* Allow Stealing Option */}
+                {isMultiplayer && (
+                  <div>
+                    <Label
+                      htmlFor="allow-stealing"
+                      className="block text-sm font-medium text-gray-700 mb-2"
+                    >
+                      Allow Stealing
+                    </Label>
+                    <p className="text-sm text-gray-500 mb-3">
+                      When a player makes an incorrect move, the opponent can
+                      try to steal the card.
+                    </p>
+                    <div className="flex items-center space-x-2">
+                      <Switch
+                        id="allow-stealing"
+                        checked={allowStealing}
+                        onCheckedChange={setAllowStealing}
+                        data-testid="allow-stealing-switch"
+                      />
+                      <Label htmlFor="allow-stealing">
+                        {allowStealing ? "Enabled" : "Disabled"}
+                      </Label>
+                    </div>
+                  </div>
+                )}
+
                 {/* Color Selection */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -452,6 +483,7 @@ export default function GameHeader({
                       onSettingsChange({
                         targetScore,
                         gameMode: gameMode as "normal" | "hard",
+                        allowStealing,
                       });
                     }
                     setShowSettings(false);
