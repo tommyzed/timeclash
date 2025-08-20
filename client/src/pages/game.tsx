@@ -291,7 +291,7 @@ export default function Game() {
                 title: toastTitle,
                 description: toastDescription,
                 variant: message.data.isCorrect ? "success" : "destructive",
-                emoji: message.data.isCorrect ? "✅" : "❌",
+                emoji: message.data.isCorrect ? "🎉" : "🙅",
               });
             })
             .catch((error) => {
@@ -304,7 +304,7 @@ export default function Game() {
                 title: `Opponent ${status}!`,
                 description: `Your opponent just made a move.`,
                 variant: message.data.isCorrect ? "success" : "destructive",
-                emoji: message.data.isCorrect ? "✅" : "❌",
+                emoji: message.data.isCorrect ? "🎉" : "🙅",
               });
             });
         }
@@ -332,7 +332,7 @@ export default function Game() {
           title: "New Game Started!",
           description: "Both players have accepted the new game.",
           variant: "success",
-          emoji: "🎉",
+          emoji: "🤗",
         });
       }
 
@@ -342,7 +342,7 @@ export default function Game() {
           title: "New Game Rejected",
           description: "Your opponent declined to start a new game.",
           variant: "destructive",
-          emoji: "😢",
+          emoji: "😿",
         });
       }
 
