@@ -12,6 +12,13 @@ import { randomUUID, webcrypto } from "crypto";
 import fs from "fs";
 import path from "path";
 
+export type CreateGameOptions = {
+  roomCode?: string;
+  gameMode?: "normal" | "hard";
+  targetScore?: number;
+  allowStealing?: boolean;
+};
+
 export interface IStorage {
   // Historical Events
   getHistoricalEvent(id: string): Promise<HistoricalEvent | undefined>;
@@ -23,7 +30,7 @@ export interface IStorage {
   // Games
   getGame(id: string): Promise<Game | undefined>;
   getGameByRoomCode(roomCode: string): Promise<Game | undefined>;
-  createGame(roomCode?: string, gameMode?: "normal" | "hard", targetScore?: number): Promise<Game>;
+  createGame(options: CreateGameOptions): Promise<Game>;
   updateGame(id: string, updates: Partial<Game>): Promise<Game | undefined>;
   joinGame(gameId: string, playerId: string): Promise<Game | undefined>;
 
@@ -99,7 +106,8 @@ export class MemStorage implements IStorage {
     return this.games.get(id);
   }
 
-  async createGame(roomCode?: string, gameMode: "normal" | "hard" = "normal", targetScore: number = 10): Promise<Game> {
+  async createGame(options: CreateGameOptions): Promise<Game> {
+    const { roomCode, gameMode = "normal", targetScore = 10, allowStealing = false } = options;
     const id = randomUUID();
 
     // Get a truly random starting event using multiple attempts for better randomization
@@ -128,7 +136,7 @@ export class MemStorage implements IStorage {
       gameMode: gameMode,
       attempts: 0,
       maxAttempts: gameMode === "hard" ? Math.floor(targetScore * 1.5) : null,
-      allowStealing: false,
+      allowStealing: allowStealing,
       stealingPlayerId: null,
     };
 
