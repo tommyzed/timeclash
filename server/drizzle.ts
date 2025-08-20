@@ -1,7 +1,7 @@
 import { drizzle } from "drizzle-orm/node-postgres";
 import pg from "pg";
 import * as schema from "@shared/schema";
-import { IStorage } from "./storage";
+import { IStorage, type CreateGameOptions } from "./storage";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -71,7 +71,8 @@ export class DrizzleStorage implements IStorage {
     return result[0];
   }
 
-  async createGame(roomCode?: string, gameMode: "normal" | "hard" = "normal", targetScore: number = 10): Promise<schema.Game> {
+  async createGame(options: CreateGameOptions): Promise<schema.Game> {
+    const { roomCode, gameMode = "normal", targetScore = 10, allowStealing = false } = options;
     const randomStartingEvent = await this.getRandomHistoricalEvent();
     const startingEventId = randomStartingEvent?.id || "1";
 
@@ -83,6 +84,7 @@ export class DrizzleStorage implements IStorage {
       targetScore: targetScore,
       attempts: 0,
       maxAttempts: gameMode === 'hard' ? Math.floor(targetScore * 1.5) : null,
+      allowStealing: allowStealing,
     };
 
     const result = await db.insert(schema.games).values(newGame).returning();

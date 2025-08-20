@@ -59,7 +59,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
 
       // For single player games, don't create room codes or player systems
       if (singlePlayer) {
-        const game = await storage.createGame(undefined, gameMode, targetScore);
+        const game = await storage.createGame({ gameMode, targetScore });
 
         // Get a random event for the first turn (excluding the starting card)
         const currentEvent = await storage.getRandomHistoricalEvent(
@@ -78,7 +78,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
         // Multiplayer game creation
         const generatedRoomCode =
           roomCode || Math.random().toString(36).substring(2, 8).toUpperCase();
-        const game = await storage.createGame(generatedRoomCode, gameMode, targetScore);
+        const game = await storage.createGame({ roomCode: generatedRoomCode, gameMode, targetScore });
 
         // Get a random event for the first turn (excluding the starting card)
         const currentEvent = await storage.getRandomHistoricalEvent(
@@ -791,7 +791,12 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
               try {
                 // Create a new game with a new room code
                 const newRoomCode = Math.random().toString(36).substring(2, 8).toUpperCase();
-                const newGame = await storage.createGame(newRoomCode);
+                const newGame = await storage.createGame({
+                  roomCode: newRoomCode,
+                  gameMode: responseGame.gameMode as "normal" | "hard",
+                  targetScore: responseGame.targetScore,
+                  allowStealing: responseGame.allowStealing,
+                });
                 
                 // Set the initial turn and get a random event for the first turn
                 const currentEvent = await storage.getRandomHistoricalEvent(
