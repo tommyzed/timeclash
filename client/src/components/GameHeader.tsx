@@ -65,6 +65,12 @@ export default function GameHeader({
   const isMobile = useIsMobile();
 
   useEffect(() => {
+    setTargetScore(game.targetScore);
+    setGameMode(game.gameMode);
+    setAllowStealing(game.allowStealing);
+  }, [game.targetScore, game.gameMode, game.allowStealing]);
+
+  useEffect(() => {
     if (showSettings) {
       document.body.style.overflow = "hidden";
     } else {
