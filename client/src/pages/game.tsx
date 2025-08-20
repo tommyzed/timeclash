@@ -352,7 +352,7 @@ export default function Game() {
           title: "Game settings updated",
           description: "A Player has changed the game settings.",
          variant: "warning",
-         emoji: "⚙️",
+         emoji: "🛠",
         });
       }
     },
