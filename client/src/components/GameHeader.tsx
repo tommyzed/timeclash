@@ -253,7 +253,7 @@ export default function GameHeader({
       <AlertDialog>
         <AlertDialogTrigger asChild>
           <button
-            className="bg-gray-100 hover:bg-gray-200 p-2 rounded-lg transition-colors"
+            className="hover:bg-gray-100 p-2 rounded-lg transition-colors"
             data-testid="new-game-button"
             title="Start a new game"
           >
@@ -283,7 +283,7 @@ export default function GameHeader({
       </AlertDialog>
       <button
         onClick={() => setShowSettings(true)}
-        className="bg-gray-100 hover:bg-gray-200 p-2 rounded-lg transition-colors"
+        className="hover:bg-gray-100 p-2 rounded-lg transition-colors"
         data-testid="settings-button"
       >
         <Settings className="h-5 w-5 text-gray-600" />
