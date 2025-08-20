@@ -34,6 +34,7 @@ export default function Lobby() {
         title: "Room Link Opened!",
         description: `Ready to join room ${params.roomCode}. Just enter your nickname and click Join Game.`,
         variant: "success",
+        emoji: "🤗",
       });
     }
   }, [params.roomCode, toast]);
@@ -60,6 +61,7 @@ export default function Lobby() {
         title: "Error",
         description: error.message || "Failed to create single player game",
         variant: "destructive",
+        emoji: "🐳",
       });
     },
   });
@@ -92,7 +94,8 @@ export default function Lobby() {
       toast({
         title: "Multiplayer Game Created!",
         description: `Room code: ${data.roomCode}. Share this with your friend!`,
-        variant: "warning",
+        variant: "success",
+        emoji: "😸",
       });
 
       navigate(`/game/${data.game.id}?playerId=${data.playerId}`);
@@ -102,6 +105,7 @@ export default function Lobby() {
         title: "Error",
         description: error.message || "Failed to create game",
         variant: "destructive",
+        emoji: "🐳",
       });
     },
   });
@@ -132,6 +136,8 @@ export default function Lobby() {
       toast({
         title: "Joined Game!",
         description: `Welcome to the game, ${nickname}!`,
+        variant: "warning",
+        emoji: "🥳",
       });
 
       navigate(`/game/${data.game.id}?playerId=${data.playerId}`);
@@ -141,6 +147,7 @@ export default function Lobby() {
         title: "Error",
         description: error.message || "Failed to join game",
         variant: "destructive",
+        emoji: "🐳",
       });
     },
   });
