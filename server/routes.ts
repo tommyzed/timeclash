@@ -625,6 +625,10 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
 
       if (Object.keys(updateData).length > 0) {
         await storage.updateGame(gameId, updateData);
+        broadcastToGame(gameId, {
+          type: "settings_changed",
+          data: updateData,
+        });
       }
       res.json({ message: "Settings updated successfully" });
     } catch (error) {
