@@ -187,6 +187,7 @@ export default function Game() {
                 title: "Player Joined!",
                 description: `${playerName} has joined the game.`,
                 variant: "success",
+                emoji: "👋",
               });
             })
             .catch(() => {
@@ -196,6 +197,7 @@ export default function Game() {
                 title: "Player Joined!",
                 description: `${fallbackName} has joined the game.`,
                 variant: "success",
+                emoji: "👋",
               });
             });
         } else {
@@ -289,6 +291,7 @@ export default function Game() {
                 title: toastTitle,
                 description: toastDescription,
                 variant: message.data.isCorrect ? "success" : "destructive",
+                emoji: message.data.isCorrect ? "✅" : "❌",
               });
             })
             .catch((error) => {
@@ -301,6 +304,7 @@ export default function Game() {
                 title: `Opponent ${status}!`,
                 description: `Your opponent just made a move.`,
                 variant: message.data.isCorrect ? "success" : "destructive",
+                emoji: message.data.isCorrect ? "✅" : "❌",
               });
             });
         }
@@ -328,6 +332,7 @@ export default function Game() {
           title: "New Game Started!",
           description: "Both players have accepted the new game.",
           variant: "success",
+          emoji: "🎉",
         });
       }
 
@@ -337,6 +342,7 @@ export default function Game() {
           title: "New Game Rejected",
           description: "Your opponent declined to start a new game.",
           variant: "destructive",
+          emoji: "😢",
         });
       }
 
@@ -346,6 +352,7 @@ export default function Game() {
           title: "Game settings updated",
           description: "A Player has changed the game settings.",
          variant: "warning",
+         emoji: "⚙️",
         });
       }
     },
@@ -473,6 +480,7 @@ export default function Game() {
         title: "New Game Request Sent",
         description: "Waiting for your opponent to accept...",
         variant: "default",
+        emoji: "❓",
       });
     } else {
       // Single player or no multiplayer context - create new game immediately
