@@ -17,7 +17,7 @@ export function Toaster() {
         return (
           <Toast key={id} {...props}>
             <div className="flex items-center">
-              {emoji && <div className="text-2xl mr-2">{emoji}</div>}
+              {emoji && <div className="text-2xl mr-3">{emoji}</div>}
               <div className="grid gap-1">
                 {title && <ToastTitle>{title}</ToastTitle>}
                 {description && (
