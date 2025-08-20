@@ -37,9 +37,6 @@ export default function Game() {
     message: "",
   });
   const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
-  const [showPlayerJoinedNotification, setShowPlayerJoinedNotification] =
-    useState(false);
-  const [joinedPlayerName, setJoinedPlayerName] = useState<string>("");
   const [opponentNickname, setOpponentNickname] = useState<string>("");
   const [playerColor, setPlayerColor] = useState<string | null>(null);
   const [notifiedPlayerIds, setNotifiedPlayerIds] = useState<Set<string>>(
@@ -185,17 +182,23 @@ export default function Game() {
             .then((response) => response.json())
             .then((player) => {
               const playerName = player.nickname || "A friend";
-              setJoinedPlayerName(playerName);
               setOpponentNickname(playerName); // Also update the header
-              setShowPlayerJoinedNotification(true);
-              setTimeout(() => setShowPlayerJoinedNotification(false), 4000);
+              toast({
+                title: "Player Joined!",
+                description: `${playerName} has joined the game.`,
+                variant: "success",
+                emoji: "👋",
+              });
             })
             .catch(() => {
               const fallbackName = "A friend";
-              setJoinedPlayerName(fallbackName);
               setOpponentNickname(fallbackName); // Also update the header
-              setShowPlayerJoinedNotification(true);
-              setTimeout(() => setShowPlayerJoinedNotification(false), 4000);
+              toast({
+                title: "Player Joined!",
+                description: `${fallbackName} has joined the game.`,
+                variant: "success",
+                emoji: "👋",
+              });
             });
         } else {
           // Player already notified, just update opponent nickname silently
@@ -288,6 +291,7 @@ export default function Game() {
                 title: toastTitle,
                 description: toastDescription,
                 variant: message.data.isCorrect ? "success" : "destructive",
+                emoji: message.data.isCorrect ? "✅" : "❌",
               });
             })
             .catch((error) => {
@@ -300,6 +304,7 @@ export default function Game() {
                 title: `Opponent ${status}!`,
                 description: `Your opponent just made a move.`,
                 variant: message.data.isCorrect ? "success" : "destructive",
+                emoji: message.data.isCorrect ? "✅" : "❌",
               });
             });
         }
@@ -327,6 +332,7 @@ export default function Game() {
           title: "New Game Started!",
           description: "Both players have accepted the new game.",
           variant: "success",
+          emoji: "🎉",
         });
       }
 
@@ -336,6 +342,7 @@ export default function Game() {
           title: "New Game Rejected",
           description: "Your opponent declined to start a new game.",
           variant: "destructive",
+          emoji: "😢",
         });
       }
 
@@ -345,6 +352,7 @@ export default function Game() {
           title: "Game settings updated",
           description: "A Player has changed the game settings.",
          variant: "warning",
+         emoji: "⚙️",
         });
       }
     },
@@ -472,6 +480,7 @@ export default function Game() {
         title: "New Game Request Sent",
         description: "Waiting for your opponent to accept...",
         variant: "default",
+        emoji: "❓",
       });
     } else {
       // Single player or no multiplayer context - create new game immediately
@@ -945,25 +954,6 @@ export default function Game() {
         </div>
       )}
 
-      {/* Player Joined Notification */}
-      {showPlayerJoinedNotification && (
-        <div
-          className="fixed top-4 right-4 bg-green-600 text-white p-4 rounded-lg shadow-lg z-50 animate-in slide-in-from-right-4 duration-300"
-          data-testid="player-joined-notification"
-        >
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-              <span className="text-white text-sm font-bold">👋</span>
-            </div>
-            <div>
-              <p className="font-semibold">Player Joined!</p>
-              <p className="text-sm text-green-100">
-                {joinedPlayerName} has joined the game
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
