@@ -343,7 +343,7 @@ export default function Game() {
         queryClient.invalidateQueries({ queryKey: ["/api/games", gameId] });
         toast({
           title: "Game settings updated",
-          description: "The host has changed the game settings.",
+          description: "A Player has changed the game settings.",
         });
       }
     },
