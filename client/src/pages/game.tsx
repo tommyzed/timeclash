@@ -484,6 +484,7 @@ export default function Game() {
   const handleSettingsChange = async (settings: {
     targetScore: number;
     gameMode: "normal" | "hard";
+    allowStealing: boolean;
   }) => {
     if (gameId) {
       try {
