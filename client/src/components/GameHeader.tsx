@@ -14,7 +14,7 @@ import { useLocation } from "wouter";
 import { useIsMobile } from "@/hooks/use-mobile";
 import logoImage from "@assets/It's About Time Logo -sm_1754907859214.png";
 import burglarIcon from "@/assets/burglar.png";
-import muscleIcon from "@/assets/muscle.jpeg";
+import muscleIcon from "@/assets/weights.png";
 import {
   AlertDialog,
   AlertDialogAction,
