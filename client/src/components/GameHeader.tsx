@@ -14,6 +14,7 @@ import { useLocation } from "wouter";
 import { useIsMobile } from "@/hooks/use-mobile";
 import logoImage from "@assets/It's About Time Logo -sm_1754907859214.png";
 import burglarIcon from "@/assets/burglar.png";
+import muscleIcon from "@/assets/muscle.jpeg";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -157,8 +158,15 @@ export default function GameHeader({
       );
     }
     return (
-      <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-        Single
+      <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium flex items-center space-x-1">
+        <span>Single</span>
+        {game.gameMode === "hard" && (
+          <img
+            src={muscleIcon}
+            alt="Hard mode is enabled"
+            className="w-4 h-4"
+          />
+        )}
       </span>
     );
   };
