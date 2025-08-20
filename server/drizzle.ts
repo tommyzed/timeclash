@@ -100,7 +100,11 @@ export class DrizzleStorage implements IStorage {
 
     let updatedGame;
     if (!game.player1Id) {
-      updatedGame = await this.updateGame(gameId, { player1Id: playerId });
+      // When player 1 joins, set them as the current turn
+      updatedGame = await this.updateGame(gameId, {
+        player1Id: playerId,
+        currentTurn: "player1",
+      });
     } else if (!game.player2Id) {
       // When player 2 joins, randomly decide who goes first
       const firstTurn = Math.random() < 0.5 ? "player1" : "player2";

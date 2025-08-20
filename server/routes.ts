@@ -125,6 +125,16 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
         return res.status(400).json({ message: "Game is full or unavailable" });
       }
 
+      console.log("Updated game state on join:", updatedGame);
+
+      // Broadcast the player joined event to the room
+      if (updatedGame) {
+        broadcastToGame(game.id, {
+          type: "player_joined",
+          data: { playerId: player.id, roomCode: game.roomCode as string },
+        });
+      }
+
       res.json({ game: updatedGame, playerId: player.id });
     } catch (error) {
       console.error("Join game error:", error);
@@ -390,7 +400,21 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
           placedEventIds: newPlacedEventIds,
         };
 
-        if (game.roomCode && playerId) {
+        if (game.stealingPlayerId) {
+          // A steal was successful
+          updateData.stealingPlayerId = null; // Clear stealing mode
+
+          // Award point to the stealer
+          if (playerId === game.player1Id) {
+            updateData.player1Score = game.player1Score + 1;
+          } else if (playerId === game.player2Id) {
+            updateData.player2Score = game.player2Score + 1;
+          }
+
+          // Turn goes back to the other player
+          updateData.currentTurn =
+            game.currentTurn === "player1" ? "player2" : "player1";
+        } else if (game.roomCode && playerId) {
           // Multiplayer game - update specific player score
           if (playerId === game.player1Id) {
             updateData.player1Score = game.player1Score + 1;
@@ -472,9 +496,25 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
         let updateData: any = {};
 
         if (game.roomCode && playerId) {
-          // Switch turns after incorrect move
-          updateData.currentTurn =
-            game.currentTurn === "player1" ? "player2" : "player1";
+          if (game.stealingPlayerId) {
+            // A steal was attempted and failed
+            updateData.stealingPlayerId = null; // Clear stealing mode
+
+            // The card is forfeited, and the turn goes to the other player (who was the original player)
+            updateData.currentTurn =
+              game.currentTurn === "player1" ? "player2" : "player1";
+          } else if (game.allowStealing) {
+            // Enter stealing mode
+            const opponentPlayer =
+              game.currentTurn === "player1" ? game.player2Id : game.player1Id;
+            updateData.stealingPlayerId = opponentPlayer;
+            updateData.currentTurn =
+              game.currentTurn === "player1" ? "player2" : "player1";
+          } else {
+            // Switch turns after incorrect move
+            updateData.currentTurn =
+              game.currentTurn === "player1" ? "player2" : "player1";
+          }
         } else if (game.gameMode === "hard") {
           updateData.attempts = (game.attempts || 0) + 1;
           if (updateData.attempts >= (game.maxAttempts || 0)) {
@@ -487,13 +527,18 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
         const newAttemptedEventIds = [...(game.attemptedEventIds || []), eventId];
         updateData.attemptedEventIds = newAttemptedEventIds;
 
-        // Get a new event for the next turn, excluding all attempted events
+        // Get a new event for the next turn, but only if not in stealing mode
         if (updateData.gameStatus !== "completed") {
-          const nextEvent = await storage.getRandomHistoricalEvent([
-            ...game.placedEventIds,
-            ...newAttemptedEventIds,
-          ]);
-          updateData.currentEventId = nextEvent?.id || null;
+          if (updateData.stealingPlayerId) {
+            // In stealing mode, keep the current event
+            updateData.currentEventId = game.currentEventId;
+          } else {
+            const nextEvent = await storage.getRandomHistoricalEvent([
+              ...game.placedEventIds,
+              ...newAttemptedEventIds,
+            ]);
+            updateData.currentEventId = nextEvent?.id || null;
+          }
         } else {
           updateData.currentEventId = null;
         }
@@ -535,7 +580,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
   app.patch("/api/games/:gameId/settings", async (req, res) => {
     try {
       const { gameId } = req.params;
-      const { targetScore, gameMode } = req.body;
+      const { targetScore, gameMode, allowStealing } = req.body;
 
       const game = await storage.getGame(gameId);
       if (!game) {
@@ -558,6 +603,10 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
             .json({ message: "Target score must be between 5 and 15" });
         }
         updateData.targetScore = targetScore;
+      }
+
+      if (allowStealing !== undefined) {
+        updateData.allowStealing = allowStealing;
       }
 
       if (gameMode !== undefined && !game.roomCode) {

@@ -127,7 +127,9 @@ export class MemStorage implements IStorage {
       createdAt: new Date(),
       gameMode: gameMode,
       attempts: 0,
-      maxAttempts: gameMode === 'hard' ? Math.floor(targetScore * 1.5) : null,
+      maxAttempts: gameMode === "hard" ? Math.floor(targetScore * 1.5) : null,
+      allowStealing: false,
+      stealingPlayerId: null,
     };
 
     this.games.set(id, game);

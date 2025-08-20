@@ -13,6 +13,7 @@ import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { useIsMobile } from "@/hooks/use-mobile";
 import logoImage from "@assets/It's About Time Logo -sm_1754907859214.png";
+import burglarIcon from "@/assets/burglar.png";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -34,6 +35,7 @@ interface GameHeaderProps {
   onSettingsChange?: (settings: {
     targetScore: number;
     gameMode: "normal" | "hard";
+    allowStealing: boolean;
   }) => void;
   onNewGame?: () => void;
   playerColor?: string | null;
@@ -57,6 +59,7 @@ export default function GameHeader({
   const [showRulesModal, setShowRulesModal] = useState(false);
   const [targetScore, setTargetScore] = useState(game.targetScore);
   const [gameMode, setGameMode] = useState(game.gameMode);
+  const [allowStealing, setAllowStealing] = useState(game.allowStealing);
   const [, setLocation] = useLocation();
   const isMobile = useIsMobile();
 
@@ -127,8 +130,15 @@ export default function GameHeader({
     if (isMultiplayer && game.roomCode) {
       return (
         <div className="flex items-center space-x-2">
-          <span className="bg-green-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-            Multi
+          <span className="bg-green-600 text-white px-3 py-1 rounded-full text-sm font-medium flex items-center space-x-1">
+            <span>Multi</span>
+            {game.allowStealing && (
+              <img
+                src={burglarIcon}
+                alt="Stealing is enabled"
+                className="w-4 h-4"
+              />
+            )}
           </span>
           <button
             onClick={handleCopyRoomCode}
@@ -418,6 +428,32 @@ export default function GameHeader({
                   </div>
                 )}
 
+                {/* Allow Stealing Option */}
+                {isMultiplayer && (
+                  <div>
+                    <div className="flex items-center">
+                      <label
+                        htmlFor="allow-stealing"
+                        className="text-sm font-medium text-gray-700"
+                      >
+                        Allow Stealing
+                      </label>
+                      <input
+                        type="checkbox"
+                        id="allow-stealing"
+                        checked={allowStealing}
+                        onChange={(e) => setAllowStealing(e.target.checked)}
+                        data-testid="allow-stealing-switch"
+                        className="ml-2 h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                      />
+                    </div>
+                    <p className="text-sm text-gray-500 mt-1">
+                      When a player makes an incorrect move, the opponent can
+                      try to steal the card.
+                    </p>
+                  </div>
+                )}
+
                 {/* Color Selection */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -453,6 +489,7 @@ export default function GameHeader({
                       onSettingsChange({
                         targetScore,
                         gameMode: gameMode as "normal" | "hard",
+                        allowStealing,
                       });
                     }
                     setShowSettings(false);

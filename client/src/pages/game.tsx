@@ -170,6 +170,9 @@ export default function Game() {
         message.type === "player_joined" &&
         message.data.playerId !== playerId
       ) {
+        // Refresh game state when a player joins
+        queryClient.invalidateQueries({ queryKey: ["/api/games", gameId] });
+
         // Only show notification if we haven't already notified about this player
         if (!notifiedPlayerIds.has(message.data.playerId)) {
           // Mark this player as notified
@@ -481,6 +484,7 @@ export default function Game() {
   const handleSettingsChange = async (settings: {
     targetScore: number;
     gameMode: "normal" | "hard";
+    allowStealing: boolean;
   }) => {
     if (gameId) {
       try {
@@ -609,6 +613,13 @@ export default function Game() {
                   const isMyTurn =
                     (isPlayer1 && gameState.game.currentTurn === "player1") ||
                     (!isPlayer1 && gameState.game.currentTurn === "player2");
+
+                  if (gameState.game.stealingPlayerId) {
+                    return gameState.game.stealingPlayerId === playerId
+                      ? "Steal Attempt!"
+                      : "Opponent Stealing!";
+                  }
+
                   return isMyTurn ? "Your Turn!" : "Opponent's Turn";
                 })()}
               </h3>
@@ -626,6 +637,13 @@ export default function Game() {
                   const isMyTurn =
                     (isPlayer1 && gameState.game.currentTurn === "player1") ||
                     (!isPlayer1 && gameState.game.currentTurn === "player2");
+
+                  if (gameState.game.stealingPlayerId) {
+                    return gameState.game.stealingPlayerId === playerId
+                      ? "Your opponent made a mistake! Place the card correctly to steal it."
+                      : "You made a mistake! Your opponent is now attempting to steal the card.";
+                  }
+
                   return isMyTurn
                     ? "Click the current card to select it, then click a drop zone to place it chronologically."
                     : "Please wait for the other player to make their move.";
