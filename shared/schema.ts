@@ -94,6 +94,7 @@ export type WebSocketMessage =
   | { type: 'new_game_request'; data: { requestingPlayerId: string; requestingPlayerName: string } }
   | { type: 'new_game_accepted'; data: { newGameId: string; roomCode: string } }
   | { type: 'new_game_rejected'; data: { rejectingPlayerId: string } }
+  | { type: 'settings_changed'; data: Partial<Game> }
   | { type: 'error'; data: { message: string } };
 
 // Player management

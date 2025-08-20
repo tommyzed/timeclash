@@ -338,6 +338,14 @@ export default function Game() {
           variant: "destructive",
         });
       }
+
+      if (message.type === "settings_changed") {
+        queryClient.invalidateQueries({ queryKey: ["/api/games", gameId] });
+        toast({
+          title: "Game settings updated",
+          description: "The host has changed the game settings.",
+        });
+      }
     },
   });
 
