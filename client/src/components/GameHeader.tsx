@@ -163,10 +163,17 @@ export default function GameHeader({
         </div>
       );
     }
+    
+
+    const isHardMode = game.gameMode === "hard";
     return (
-      <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium flex items-center space-x-1">
+      <span
+        className={`text-white px-3 py-1 rounded-full text-sm font-medium flex items-center space-x-1 ${
+          isHardMode ? "bg-red-600" : "bg-blue-600"
+        }`}
+      >
         <span>Single</span>
-        {game.gameMode === "hard" && (
+        {isHardMode && (
           <img
             src={muscleIcon}
             alt="Hard mode is enabled"
