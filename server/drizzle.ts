@@ -38,6 +38,7 @@ export class DrizzleStorage implements IStorage {
   }
 
   private async loadHistoricalEvents() {
+    console.log("Cache is stale/invalid. Refreshing event data from db.");
     this.historicalEventsCache = await db.select().from(schema.historicalEvents);
     this.cacheLastRefreshed = new Date();
   }
