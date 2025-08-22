@@ -12,7 +12,7 @@ def update_database():
         print("Error: DATABASE_URL environment variable not set.")
         return
 
-    events_file = 'server/events.json'
+    events_file = '../server/events.json'
 
     try:
         print(f"Reading event data from {events_file}...")

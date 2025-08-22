@@ -5,7 +5,7 @@ def process_csv_events():
     events = []
     
     # Read the CSV file
-    with open('attached_assets/Chronology Data (Gemini, Wikipedia, Wikidata) - Start research_1754390078178.csv', 'r', encoding='utf-8') as f:
+    with open('../attached_assets/Chronology Data - V0.2.csv', 'r', encoding='utf-8') as f:
         reader = csv.DictReader(f)
         for row in reader:
             # Map category to match existing format
@@ -31,7 +31,7 @@ def process_csv_events():
             })
     
     # Write to JSON file
-    with open('server/events.json', 'w', encoding='utf-8') as f:
+    with open('../server/events.json', 'w', encoding='utf-8') as f:
         json.dump(events, f, indent=2)
 
 if __name__ == "__main__":
