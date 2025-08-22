@@ -19,12 +19,19 @@ export const pool = new Pool({
 const db = drizzle(pool, { schema });
 
 export class DrizzleStorage implements IStorage {
+  private historicalEventsCache: schema.HistoricalEvent[] | null = null;
+
   private constructor() {}
 
   static async build() {
     const storage = new DrizzleStorage();
     await storage.seed();
+    await storage.loadHistoricalEvents();
     return storage;
+  }
+
+  private async loadHistoricalEvents() {
+    this.historicalEventsCache = await db.select().from(schema.historicalEvents);
   }
 
   private async seed() {
@@ -43,23 +50,26 @@ export class DrizzleStorage implements IStorage {
   }
 
   async getHistoricalEvent(id: string): Promise<schema.HistoricalEvent | undefined> {
-    const result = await db.select().from(schema.historicalEvents).where(eq(schema.historicalEvents.id, id));
-    return result[0];
+    return this.historicalEventsCache?.find(event => event.id === id);
   }
 
   async getAllHistoricalEvents(): Promise<schema.HistoricalEvent[]> {
-    return db.select().from(schema.historicalEvents);
+    return this.historicalEventsCache || [];
   }
 
   async getRandomHistoricalEvent(
     excludeIds?: string[],
   ): Promise<schema.HistoricalEvent | undefined> {
-    const query = excludeIds
-      ? db.select().from(schema.historicalEvents).where(sql`${schema.historicalEvents.id} not in ${excludeIds}`).orderBy(sql`random()`).limit(1)
-      : db.select().from(schema.historicalEvents).orderBy(sql`random()`).limit(1);
+    const availableEvents = this.historicalEventsCache?.filter(
+      (event) => !excludeIds?.includes(event.id),
+    );
 
-    const result = await query;
-    return result[0];
+    if (!availableEvents || availableEvents.length === 0) {
+      return undefined;
+    }
+
+    const randomIndex = Math.floor(Math.random() * availableEvents.length);
+    return availableEvents[randomIndex];
   }
   async getGame(id: string): Promise<schema.Game | undefined> {
     const result = await db.select().from(schema.games).where(eq(schema.games.id, id));
