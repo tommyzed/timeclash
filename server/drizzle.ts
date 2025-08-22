@@ -27,6 +27,7 @@ export class DrizzleStorage implements IStorage {
     this.cacheTtlHours = process.env.HISTORICAL_EVENTS_CACHE_TTL_HOURS
       ? parseInt(process.env.HISTORICAL_EVENTS_CACHE_TTL_HOURS, 10)
       : 1;
+    console.log("Events Cache TTL (hours): ", this.cacheTtlHours);
   }
 
   static async build() {
