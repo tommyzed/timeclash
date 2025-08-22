@@ -20,8 +20,14 @@ const db = drizzle(pool, { schema });
 
 export class DrizzleStorage implements IStorage {
   private historicalEventsCache: schema.HistoricalEvent[] | null = null;
+  private cacheLastRefreshed: Date | null = null;
+  private cacheTtlHours: number;
 
-  private constructor() {}
+  private constructor() {
+    this.cacheTtlHours = process.env.HISTORICAL_EVENTS_CACHE_TTL_HOURS
+      ? parseInt(process.env.HISTORICAL_EVENTS_CACHE_TTL_HOURS, 10)
+      : 1;
+  }
 
   static async build() {
     const storage = new DrizzleStorage();
@@ -32,6 +38,21 @@ export class DrizzleStorage implements IStorage {
 
   private async loadHistoricalEvents() {
     this.historicalEventsCache = await db.select().from(schema.historicalEvents);
+    this.cacheLastRefreshed = new Date();
+  }
+
+  private isCacheStale(): boolean {
+    if (!this.cacheLastRefreshed) {
+      return true;
+    }
+    const ageInHours = (new Date().getTime() - this.cacheLastRefreshed.getTime()) / (1000 * 60 * 60);
+    return ageInHours > this.cacheTtlHours;
+  }
+
+  private async ensureCacheIsFresh() {
+    if (this.isCacheStale()) {
+      await this.loadHistoricalEvents();
+    }
   }
 
   private async seed() {
@@ -49,17 +70,20 @@ export class DrizzleStorage implements IStorage {
     await db.insert(schema.historicalEvents).values(events);
   }
 
-  async getHistoricalEvent(id: string): Promise<schema.HistoricalEvent | undefined> {
+  async getHistoricalEvent(id:string): Promise<schema.HistoricalEvent | undefined> {
+    await this.ensureCacheIsFresh();
     return this.historicalEventsCache?.find(event => event.id === id);
   }
 
   async getAllHistoricalEvents(): Promise<schema.HistoricalEvent[]> {
+    await this.ensureCacheIsFresh();
     return this.historicalEventsCache || [];
   }
 
   async getRandomHistoricalEvent(
     excludeIds?: string[],
   ): Promise<schema.HistoricalEvent | undefined> {
+    await this.ensureCacheIsFresh();
     const availableEvents = this.historicalEventsCache?.filter(
       (event) => !excludeIds?.includes(event.id),
     );
