@@ -129,7 +129,7 @@ export default function SettingsDialog({
         <div className="flex-grow overflow-y-auto" onScroll={handleScroll}>
           <div className="p-6 space-y-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
                 Target Score
               </label>
               <p className="text-sm text-gray-500 mb-3">
@@ -165,7 +165,7 @@ export default function SettingsDialog({
 
             {!isMultiplayer && (
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
                   Game Mode
                 </label>
                 <p className="text-sm text-gray-500 mb-3">
@@ -210,7 +210,7 @@ export default function SettingsDialog({
                 <div className="flex items-center">
                   <label
                     htmlFor="allow-stealing"
-                    className="text-sm font-medium text-gray-700"
+                    className="text-sm font-semibold text-gray-700"
                   >
                     Allow Stealing
                   </label>
@@ -231,7 +231,7 @@ export default function SettingsDialog({
             )}
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
                 Event Categories
               </label>
               <p className="text-sm text-gray-500 mb-3">
@@ -261,7 +261,7 @@ export default function SettingsDialog({
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
                 My Card Color
               </label>
               <p className="text-sm text-gray-500 mb-3">
