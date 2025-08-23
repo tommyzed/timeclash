@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { type GameState } from "@shared/schema";
 import { useState, useEffect } from "react";
+import SettingsDialog from "./SettingsDialog";
 import { useLocation } from "wouter";
 import { useIsMobile } from "@/hooks/use-mobile";
 import logoImage from "@assets/It's About Time Logo -sm_1754907859214.png";
@@ -37,6 +38,7 @@ interface GameHeaderProps {
     targetScore: number;
     gameMode: "normal" | "hard";
     allowStealing: boolean;
+    categories: string[];
   }) => void;
   onNewGame?: () => void;
   playerColor?: string | null;
@@ -58,9 +60,11 @@ export default function GameHeader({
   const [copied, setCopied] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showRulesModal, setShowRulesModal] = useState(false);
+<<<<<<< HEAD
   const [targetScore, setTargetScore] = useState(game.targetScore);
   const [gameMode, setGameMode] = useState(game.gameMode);
   const [allowStealing, setAllowStealing] = useState(game.allowStealing);
+  const [categories, setCategories] = useState<string[]>(game.categories);
   const [, setLocation] = useLocation();
   const isMobile = useIsMobile();
 
@@ -68,7 +72,13 @@ export default function GameHeader({
     setTargetScore(game.targetScore);
     setGameMode(game.gameMode);
     setAllowStealing(game.allowStealing);
-  }, [game.targetScore, game.gameMode, game.allowStealing]);
+    setCategories(game.categories);
+  }, [
+    game.targetScore,
+    game.gameMode,
+    game.allowStealing,
+    game.categories,
+  ]);
 
   useEffect(() => {
     if (showSettings) {
@@ -91,6 +101,24 @@ export default function GameHeader({
     "red",
     "yellow",
   ];
+=======
+  const [, setLocation] = useLocation();
+  const isMobile = useIsMobile();
+
+>>>>>>> feature/redesign-settings-dialog
+
+  const handleCategoryChange = (category: string) => {
+    setCategories((prev) => {
+      const newCategories = prev.includes(category)
+        ? prev.filter((c) => c !== category)
+        : [...prev, category];
+      // Ensure at least one category is selected
+      if (newCategories.length === 0) {
+        return prev;
+      }
+      return newCategories;
+    });
+  };
 
   const handleColorChange = async (color: string) => {
     if (setPlayerColor) {
@@ -351,6 +379,7 @@ export default function GameHeader({
         )}
       </div>
 
+<<<<<<< HEAD
       {/* Settings Modal */}
       {showSettings && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
@@ -475,6 +504,37 @@ export default function GameHeader({
                   </div>
                 )}
 
+                {/* Category Selection */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Event Categories
+                  </label>
+                  <p className="text-sm text-gray-500 mb-3">
+                    Choose which categories of events to include in the game.
+                  </p>
+                  <div className="grid grid-cols-2 gap-3">
+                    {["Politics", "Science", "History", "Culture"].map(
+                      (category) => (
+                        <div key={category} className="flex items-center">
+                          <input
+                            type="checkbox"
+                            id={`category-${category}`}
+                            checked={categories.includes(category)}
+                            onChange={() => handleCategoryChange(category)}
+                            className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                          />
+                          <label
+                            htmlFor={`category-${category}`}
+                            className="ml-2 text-sm text-gray-700"
+                          >
+                            {category}
+                          </label>
+                        </div>
+                      ),
+                    )}
+                  </div>
+                </div>
+
                 {/* Color Selection */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -511,6 +571,7 @@ export default function GameHeader({
                         targetScore,
                         gameMode: gameMode as "normal" | "hard",
                         allowStealing,
+                        categories,
                       });
                     }
                     setShowSettings(false);
@@ -524,6 +585,8 @@ export default function GameHeader({
                   onClick={() => {
                     setTargetScore(game.targetScore);
                     setGameMode(game.gameMode);
+                    setAllowStealing(game.allowStealing);
+                    setCategories(game.categories);
                     setShowSettings(false);
                   }}
                   className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-lg transition-colors"
@@ -553,6 +616,25 @@ export default function GameHeader({
           </div>
         </div>
       )}
+=======
+      <SettingsDialog
+        isOpen={showSettings}
+        onClose={() => setShowSettings(false)}
+        onSettingsChange={(newSettings) => {
+          if (onSettingsChange) {
+            onSettingsChange(newSettings);
+          }
+        }}
+        onShowRules={() => {
+          setShowRulesModal(true);
+          setShowSettings(false);
+        }}
+        game={game}
+        isMultiplayer={!!isMultiplayer}
+        playerColor={playerColor || null}
+        handleColorChange={handleColorChange}
+      />
+>>>>>>> feature/redesign-settings-dialog
 
       {/* Rules Modal */}
       {showRulesModal && (

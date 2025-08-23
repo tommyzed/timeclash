@@ -31,6 +31,10 @@ export const games = pgTable("games", {
   attempts: integer("attempts").notNull().default(0),
   allowStealing: boolean("allow_stealing").notNull().default(false),
   stealingPlayerId: varchar("stealing_player_id"),
+  categories: text("categories")
+    .array()
+    .notNull()
+    .default(sql`'{"Politics", "Science", "History", "Culture"}'::text[]`),
 });
 
 export const gameMoves = pgTable("game_moves", {

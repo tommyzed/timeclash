@@ -795,7 +795,7 @@
     "title": "Leif Erikson, a Norse explorer, lands in North America, which he calls Vinland.",
     "description": "Leif Erikson, a Norse explorer, lands in North America, which he calls Vinland.",
     "year": 1000,
-    "category": "Exploration"
+    "category": "History"
   },
   {
     "id": "115",
@@ -893,7 +893,7 @@
     "title": "Marco Polo begins his famous journey to China along the Silk Road.",
     "description": "Marco Polo begins his famous journey to China along the Silk Road.",
     "year": 1271,
-    "category": "Exploration"
+    "category": "History"
   },
   {
     "id": "129",
@@ -949,7 +949,7 @@
     "title": "Chinese admiral Zheng He begins his series of seven major naval expeditions.",
     "description": "Chinese admiral Zheng He begins his series of seven major naval expeditions.",
     "year": 1405,
-    "category": "Exploration"
+    "category": "History"
   },
   {
     "id": "137",
@@ -1012,14 +1012,14 @@
     "title": "Bartolomeu Dias of Portugal rounds the Cape of Good Hope, opening a sea route to the East.",
     "description": "Bartolomeu Dias of Portugal rounds the Cape of Good Hope, opening a sea route to the East.",
     "year": 1488,
-    "category": "Exploration"
+    "category": "History"
   },
   {
     "id": "146",
     "title": "Christopher Columbus, sailing for Spain, makes his first voyage to the Americas, landing in the Bahamas.",
     "description": "Christopher Columbus, sailing for Spain, makes his first voyage to the Americas, landing in the Bahamas.",
     "year": 1492,
-    "category": "Exploration"
+    "category": "History"
   },
   {
     "id": "147",
@@ -1033,7 +1033,7 @@
     "title": "Vasco da Gama of Portugal arrives in India, establishing a direct sea route from Europe.",
     "description": "Vasco da Gama of Portugal arrives in India, establishing a direct sea route from Europe.",
     "year": 1498,
-    "category": "Exploration"
+    "category": "History"
   },
   {
     "id": "149",
@@ -1075,7 +1075,7 @@
     "title": "Ferdinand Magellan's expedition completes the first circumnavigation of the Earth.",
     "description": "Ferdinand Magellan's expedition completes the first circumnavigation of the Earth.",
     "year": 1522,
-    "category": "Exploration"
+    "category": "History"
   },
   {
     "id": "155",
@@ -1173,7 +1173,7 @@
     "title": "The first permanent English settlement in North America is established at Jamestown, Virginia.",
     "description": "The first permanent English settlement in North America is established at Jamestown, Virginia.",
     "year": 1607,
-    "category": "Exploration"
+    "category": "History"
   },
   {
     "id": "169",
@@ -1201,7 +1201,7 @@
     "title": "The Pilgrims land at Plymouth Rock, establishing a colony in Massachusetts.",
     "description": "The Pilgrims land at Plymouth Rock, establishing a colony in Massachusetts.",
     "year": 1620,
-    "category": "Exploration"
+    "category": "History"
   },
   {
     "id": "173",
@@ -1404,7 +1404,7 @@
     "title": "James Cook claims the east coast of Australia for Great Britain.",
     "description": "James Cook claims the east coast of Australia for Great Britain.",
     "year": 1770,
-    "category": "Exploration"
+    "category": "History"
   },
   {
     "id": "202",
@@ -1439,7 +1439,7 @@
     "title": "The Montgolfier brothers launch the first manned hot air balloon flight in Paris.",
     "description": "The Montgolfier brothers launch the first manned hot air balloon flight in Paris.",
     "year": 1783,
-    "category": "Exploration"
+    "category": "History"
   },
   {
     "id": "207",
@@ -1586,7 +1586,7 @@
     "title": "Antarctica is first sighted by a Russian expedition.",
     "description": "Antarctica is first sighted by a Russian expedition.",
     "year": 1820,
-    "category": "Exploration"
+    "category": "History"
   },
   {
     "id": "228",
