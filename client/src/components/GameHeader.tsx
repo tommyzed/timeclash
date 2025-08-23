@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { type GameState } from "@shared/schema";
 import { useState, useEffect } from "react";
+import SettingsDialog from "./SettingsDialog";
 import { useLocation } from "wouter";
 import { useIsMobile } from "@/hooks/use-mobile";
 import logoImage from "@assets/It's About Time Logo -sm_1754907859214.png";
@@ -59,6 +60,7 @@ export default function GameHeader({
   const [copied, setCopied] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showRulesModal, setShowRulesModal] = useState(false);
+<<<<<<< HEAD
   const [targetScore, setTargetScore] = useState(game.targetScore);
   const [gameMode, setGameMode] = useState(game.gameMode);
   const [allowStealing, setAllowStealing] = useState(game.allowStealing);
@@ -99,6 +101,11 @@ export default function GameHeader({
     "red",
     "yellow",
   ];
+=======
+  const [, setLocation] = useLocation();
+  const isMobile = useIsMobile();
+
+>>>>>>> feature/redesign-settings-dialog
 
   const handleCategoryChange = (category: string) => {
     setCategories((prev) => {
@@ -372,6 +379,7 @@ export default function GameHeader({
         )}
       </div>
 
+<<<<<<< HEAD
       {/* Settings Modal */}
       {showSettings && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
@@ -608,6 +616,25 @@ export default function GameHeader({
           </div>
         </div>
       )}
+=======
+      <SettingsDialog
+        isOpen={showSettings}
+        onClose={() => setShowSettings(false)}
+        onSettingsChange={(newSettings) => {
+          if (onSettingsChange) {
+            onSettingsChange(newSettings);
+          }
+        }}
+        onShowRules={() => {
+          setShowRulesModal(true);
+          setShowSettings(false);
+        }}
+        game={game}
+        isMultiplayer={!!isMultiplayer}
+        playerColor={playerColor || null}
+        handleColorChange={handleColorChange}
+      />
+>>>>>>> feature/redesign-settings-dialog
 
       {/* Rules Modal */}
       {showRulesModal && (
