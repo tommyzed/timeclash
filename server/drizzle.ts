@@ -84,11 +84,18 @@ export class DrizzleStorage implements IStorage {
 
   async getRandomHistoricalEvent(
     excludeIds?: string[],
+    categories?: string[],
   ): Promise<schema.HistoricalEvent | undefined> {
     await this.ensureCacheIsFresh();
-    const availableEvents = this.historicalEventsCache?.filter(
+    let availableEvents = this.historicalEventsCache?.filter(
       (event) => !excludeIds?.includes(event.id),
     );
+
+    if (categories && categories.length > 0) {
+      availableEvents = availableEvents?.filter((event) =>
+        categories.includes(event.category),
+      );
+    }
 
     if (!availableEvents || availableEvents.length === 0) {
       return undefined;
@@ -108,8 +115,17 @@ export class DrizzleStorage implements IStorage {
   }
 
   async createGame(options: CreateGameOptions): Promise<schema.Game> {
-    const { roomCode, gameMode = "normal", targetScore = 10, allowStealing = false } = options;
-    const randomStartingEvent = await this.getRandomHistoricalEvent();
+    const {
+      roomCode,
+      gameMode = "normal",
+      targetScore = 10,
+      allowStealing = false,
+      categories = ["Politics", "Science", "History", "Culture"],
+    } = options;
+    const randomStartingEvent = await this.getRandomHistoricalEvent(
+      [],
+      categories,
+    );
     const startingEventId = randomStartingEvent?.id || "1";
 
     const newGame: schema.InsertGame = {
@@ -119,8 +135,9 @@ export class DrizzleStorage implements IStorage {
       gameMode: gameMode,
       targetScore: targetScore,
       attempts: 0,
-      maxAttempts: gameMode === 'hard' ? Math.floor(targetScore * 1.5) : null,
+      maxAttempts: gameMode === "hard" ? Math.floor(targetScore * 1.5) : null,
       allowStealing: allowStealing,
+      categories: categories,
     };
 
     const result = await db.insert(schema.games).values(newGame).returning();

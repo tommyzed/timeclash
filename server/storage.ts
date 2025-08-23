@@ -17,6 +17,7 @@ export type CreateGameOptions = {
   gameMode?: "normal" | "hard";
   targetScore?: number;
   allowStealing?: boolean;
+  categories?: string[];
 };
 
 export interface IStorage {
@@ -25,6 +26,7 @@ export interface IStorage {
   getAllHistoricalEvents(): Promise<HistoricalEvent[]>;
   getRandomHistoricalEvent(
     excludeIds?: string[],
+    categories?: string[],
   ): Promise<HistoricalEvent | undefined>;
 
   // Games
@@ -88,10 +90,17 @@ export class MemStorage implements IStorage {
 
   async getRandomHistoricalEvent(
     excludeIds?: string[],
+    categories?: string[],
   ): Promise<HistoricalEvent | undefined> {
-    const availableEvents = Array.from(this.historicalEvents.values()).filter(
+    let availableEvents = Array.from(this.historicalEvents.values()).filter(
       (event) => !excludeIds?.includes(event.id),
     );
+
+    if (categories && categories.length > 0) {
+      availableEvents = availableEvents.filter((event) =>
+        categories.includes(event.category),
+      );
+    }
 
     if (availableEvents.length === 0) return undefined;
 
@@ -107,13 +116,22 @@ export class MemStorage implements IStorage {
   }
 
   async createGame(options: CreateGameOptions): Promise<Game> {
-    const { roomCode, gameMode = "normal", targetScore = 10, allowStealing = false } = options;
+    const {
+      roomCode,
+      gameMode = "normal",
+      targetScore = 10,
+      allowStealing = false,
+      categories = ["Politics", "Science", "History", "Culture"],
+    } = options;
     const id = randomUUID();
 
     // Get a truly random starting event using multiple attempts for better randomization
     let randomStartingEvent;
     for (let attempt = 0; attempt < 5; attempt++) {
-      randomStartingEvent = await this.getRandomHistoricalEvent();
+      randomStartingEvent = await this.getRandomHistoricalEvent(
+        [],
+        categories,
+      );
       if (randomStartingEvent) break;
     }
     const startingEventId = randomStartingEvent?.id || "1"; // Fallback to ID "1" if no event found
@@ -138,6 +156,7 @@ export class MemStorage implements IStorage {
       maxAttempts: gameMode === "hard" ? Math.floor(targetScore * 1.5) : null,
       allowStealing: allowStealing,
       stealingPlayerId: null,
+      categories: categories,
     };
 
     this.games.set(id, game);
