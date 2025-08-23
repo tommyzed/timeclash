@@ -191,7 +191,7 @@ export default function Game() {
                 title: "Player Joined!",
                 description: `${playerName} has joined the game.`,
                 variant: "success",
-                emoji: "🥳",
+                emoji: "👋",
               });
             })
             .catch(() => {
@@ -201,7 +201,7 @@ export default function Game() {
                 title: "Player Joined!",
                 description: `${fallbackName} has joined the game.`,
                 variant: "success",
-                emoji: "🥳",
+                emoji: "👋",
               });
             });
         } else {
