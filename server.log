@@ -1,6 +1,0 @@
-Starting server...
-DrizzleStorage.build() called
-Events Cache TTL (hours):  1
-DrizzleStorage instance created
-storage.seed() completed
-Cache is stale/invalid. Refreshing event data from db.

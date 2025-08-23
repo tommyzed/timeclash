@@ -55,21 +55,15 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
   // Create a new game (single player or with room code for multiplayer)
   app.post("/api/games", async (req, res) => {
     try {
-      const { roomCode, singlePlayer, gameMode, targetScore, categories } =
-        req.body;
+      const { roomCode, singlePlayer, gameMode, targetScore } = req.body;
 
       // For single player games, don't create room codes or player systems
       if (singlePlayer) {
-        const game = await storage.createGame({
-          gameMode,
-          targetScore,
-          categories,
-        });
+        const game = await storage.createGame({ gameMode, targetScore });
 
         // Get a random event for the first turn (excluding the starting card)
         const currentEvent = await storage.getRandomHistoricalEvent(
           game.placedEventIds,
-          game.categories,
         );
 
         if (currentEvent) {
@@ -84,17 +78,11 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
         // Multiplayer game creation
         const generatedRoomCode =
           roomCode || Math.random().toString(36).substring(2, 8).toUpperCase();
-        const game = await storage.createGame({
-          roomCode: generatedRoomCode,
-          gameMode,
-          targetScore,
-          categories,
-        });
+        const game = await storage.createGame({ roomCode: generatedRoomCode, gameMode, targetScore });
 
         // Get a random event for the first turn (excluding the starting card)
         const currentEvent = await storage.getRandomHistoricalEvent(
           game.placedEventIds,
-          game.categories,
         );
 
         if (currentEvent) {
@@ -473,10 +461,10 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
 
         // Get next event if game is not completed
         if (updateData.gameStatus !== "completed") {
-          const nextEvent = await storage.getRandomHistoricalEvent(
-            [...newPlacedEventIds, ...newAttemptedEventIds],
-            game.categories,
-          );
+          const nextEvent = await storage.getRandomHistoricalEvent([
+            ...newPlacedEventIds,
+            ...newAttemptedEventIds,
+          ]);
           updateData.currentEventId = nextEvent?.id || null;
         } else {
           updateData.currentEventId = null;
@@ -545,10 +533,10 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
             // In stealing mode, keep the current event
             updateData.currentEventId = game.currentEventId;
           } else {
-            const nextEvent = await storage.getRandomHistoricalEvent(
-              [...game.placedEventIds, ...newAttemptedEventIds],
-              game.categories,
-            );
+            const nextEvent = await storage.getRandomHistoricalEvent([
+              ...game.placedEventIds,
+              ...newAttemptedEventIds,
+            ]);
             updateData.currentEventId = nextEvent?.id || null;
           }
         } else {
@@ -592,7 +580,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
   app.patch("/api/games/:gameId/settings", async (req, res) => {
     try {
       const { gameId } = req.params;
-      const { targetScore, gameMode, allowStealing, categories } = req.body;
+      const { targetScore, gameMode, allowStealing } = req.body;
 
       const game = await storage.getGame(gameId);
       if (!game) {
@@ -619,19 +607,6 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
 
       if (allowStealing !== undefined) {
         updateData.allowStealing = allowStealing;
-      }
-
-      if (categories !== undefined) {
-        if (
-          !Array.isArray(categories) ||
-          categories.length === 0 ||
-          !categories.every((c) =>
-            ["Politics", "Science", "History", "Culture"].includes(c),
-          )
-        ) {
-          return res.status(400).json({ message: "Invalid categories" });
-        }
-        updateData.categories = categories;
       }
 
       if (gameMode !== undefined && !game.roomCode) {
@@ -821,13 +796,11 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
                   gameMode: responseGame.gameMode as "normal" | "hard",
                   targetScore: responseGame.targetScore,
                   allowStealing: responseGame.allowStealing,
-                  categories: responseGame.categories,
                 });
                 
                 // Set the initial turn and get a random event for the first turn
                 const currentEvent = await storage.getRandomHistoricalEvent(
                   newGame.placedEventIds,
-                  newGame.categories,
                 );
 
                 // Randomly decide who goes first

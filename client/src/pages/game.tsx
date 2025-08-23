@@ -61,11 +61,7 @@ export default function Game() {
 
   // Create a new game on component mount
   const createGameMutation = useMutation({
-    mutationFn: async (settings: {
-      gameMode?: "normal" | "hard";
-      targetScore?: number;
-      categories?: string[];
-    }) => {
+    mutationFn: async (settings: { gameMode?: "normal" | "hard", targetScore?: number }) => {
       // Explicitly specify singlePlayer flag based on current context
       const isSinglePlayerGame = !playerId; // If no playerId, it's single player
       const response = await apiRequest("POST", "/api/games", {
@@ -401,14 +397,9 @@ export default function Game() {
   useEffect(() => {
     // Only create a single-player game if we don't have a gameId from URL
     if (!gameId && !isMultiplayer) {
-      const gameMode =
-        (localStorage.getItem("gameMode") as "normal" | "hard") || "normal";
+      const gameMode = localStorage.getItem("gameMode") as "normal" | "hard" | null;
       const targetScore = Number(localStorage.getItem("targetScore")) || 10;
-      const categories = JSON.parse(
-        localStorage.getItem("categories") ||
-          '["Politics", "Science", "History", "Culture"]',
-      );
-      createGameMutation.mutate({ gameMode, targetScore, categories });
+      createGameMutation.mutate({ gameMode: gameMode || "normal", targetScore });
     }
   }, []);
 
@@ -497,14 +488,9 @@ export default function Game() {
       setSelectedCardId(null);
       setFeedbackData({ isVisible: false, isCorrect: false, message: "" });
       setJustWon(false);
-      const gameMode =
-        (localStorage.getItem("gameMode") as "normal" | "hard") || "normal";
+      const gameMode = localStorage.getItem("gameMode") as "normal" | "hard" | null;
       const targetScore = Number(localStorage.getItem("targetScore")) || 10;
-      const categories = JSON.parse(
-        localStorage.getItem("categories") ||
-          '["Politics", "Science", "History", "Culture"]',
-      );
-      createGameMutation.mutate({ gameMode, targetScore, categories });
+      createGameMutation.mutate({ gameMode: gameMode || "normal", targetScore });
     }
   };
 
@@ -517,12 +503,10 @@ export default function Game() {
     targetScore: number;
     gameMode: "normal" | "hard";
     allowStealing: boolean;
-    categories: string[];
   }) => {
     if (gameId) {
       try {
         await apiRequest("PATCH", `/api/games/${gameId}/settings`, settings);
-        localStorage.setItem("categories", JSON.stringify(settings.categories));
         queryClient.invalidateQueries({ queryKey: ["/api/games", gameId] });
       } catch (error) {
         console.error("Failed to update settings:", error);
