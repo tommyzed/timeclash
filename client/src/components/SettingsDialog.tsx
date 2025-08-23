@@ -286,8 +286,19 @@ export default function SettingsDialog({
             </div>
           </div>
         </div>
-        <div className="p-4 border-t bg-gray-100">
-          <div className="flex justify-end space-x-3">
+        <div className="p-4 border-t bg-gray-100 flex justify-between items-center">
+          <button
+            className="text-sm text-gray-600 hover:text-blue-600 flex items-center transition-colors"
+            onClick={() => {
+              onShowRules();
+              onClose();
+            }}
+            data-testid="button-rules"
+          >
+            <HelpCircle className="mr-1 h-4 w-4" />
+            View Rules
+          </button>
+          <div className="flex space-x-3">
             <button
               onClick={handleCancel}
               className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg transition-colors"
@@ -302,22 +313,6 @@ export default function SettingsDialog({
             >
               Apply Settings
             </button>
-          </div>
-
-          <div className="border-t border-gray-200 mt-4 pt-4">
-            <div className="space-y-3">
-              <button
-                className="w-full bg-gray-100 hover:bg-blue-100 text-gray-700 py-2 px-4 rounded-lg transition-colors flex items-center justify-start"
-                onClick={() => {
-                  onShowRules();
-                  onClose();
-                }}
-                data-testid="button-rules"
-              >
-                <HelpCircle className="mr-1 h-4 w-4" />
-                View Rules
-              </button>
-            </div>
           </div>
         </div>
       </div>
