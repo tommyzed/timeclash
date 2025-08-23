@@ -112,7 +112,7 @@ export default function SettingsDialog({
       <div className="bg-white rounded-lg max-w-md w-full flex flex-col max-h-[90vh]">
         <div
           className={cn(
-            "flex items-center justify-between p-4 border-b bg-gray-50 transition-shadow",
+            "flex items-center justify-between p-4 border-b bg-gray-100 transition-shadow",
             isScrolled && "shadow-sm",
           )}
         >
@@ -286,21 +286,21 @@ export default function SettingsDialog({
             </div>
           </div>
         </div>
-        <div className="p-4 border-t bg-gray-50">
-          <div className="flex space-x-3">
-            <button
-              onClick={handleApply}
-              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
-              data-testid="save-settings-button"
-            >
-              Apply Settings
-            </button>
+        <div className="p-4 border-t bg-gray-100">
+          <div className="flex justify-end space-x-3">
             <button
               onClick={handleCancel}
-              className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 px-4 rounded-lg transition-colors"
+              className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg transition-colors"
               data-testid="cancel-settings-button"
             >
               Cancel
+            </button>
+            <button
+              onClick={handleApply}
+              className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
+              data-testid="save-settings-button"
+            >
+              Apply Settings
             </button>
           </div>
 
