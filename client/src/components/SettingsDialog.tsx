@@ -112,7 +112,7 @@ export default function SettingsDialog({
       <div className="bg-white rounded-lg max-w-md w-full flex flex-col max-h-[90vh]">
         <div
           className={cn(
-            "flex items-center justify-between p-4 border-b bg-purple-100 transition-shadow",
+            "flex items-center justify-between p-4 border-b bg-blue-100 transition-shadow",
             isScrolled && "shadow-sm",
           )}
         >
@@ -286,7 +286,7 @@ export default function SettingsDialog({
             </div>
           </div>
         </div>
-        <div className="p-4 border-t bg-purple-100 flex justify-between items-center">
+        <div className="p-4 border-t bg-blue-100 flex justify-between items-center">
           <button
             className="text-sm text-gray-600 hover:text-blue-600 flex items-center transition-colors"
             onClick={() => {
