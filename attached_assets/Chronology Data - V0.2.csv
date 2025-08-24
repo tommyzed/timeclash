@@ -1,63 +1,63 @@
 Event ID,Year,Event Description,Category,Era
 1,-3300000,"The first stone tools are made in Kenya, marking the beginning of technology.",Science/Tech,Ancient World
 2,-2300000,Homo habilis achieves the first likely control of fire and cooking.,Science/Tech,Ancient World
-3,-350000,Early humans invent paint using ground ochre pigment in Zambia.,Arts/Culture,Ancient World
-4,-45000,Anatomically modern humans arrive in Europe.,Civilization,Ancient World
-5,-31000,The first known representational paintings are created in the Chauvet Caves in France.,Arts/Culture,Ancient World
+3,-350000,Early humans invent paint using ground ochre pigment in Zambia.,Culture,Ancient World
+4,-45000,Anatomically modern humans arrive in Europe.,History,Ancient World
+5,-31000,The first known representational paintings are created in the Chauvet Caves in France.,Culture,Ancient World
 6,-28000,The first ceramics and evidence of weaving are created in Moravia.,Science/Tech,Ancient World
-7,-23000,"The dog is domesticated in Siberia, becoming humanity's first animal companion.",Civilization,Ancient World
-8,-22000,"The Venus of Willendorf, one of the earliest known sculptures, is carved.",Arts/Culture,Ancient World
+7,-23000,"The dog is domesticated in Siberia, becoming humanity's first animal companion.",History,Ancient World
+8,-22000,"The Venus of Willendorf, one of the earliest known sculptures, is carved.",Culture,Ancient World
 9,-18000,"The first pottery is created in China, used for cooking and storage.",Science/Tech,Ancient World
-10,-10000,Agriculture begins in the Fertile Crescent with the cultivation of wheat and barley.,Civilization,Ancient World
-11,-9500,"Göbekli Tepe, the world's oldest known temple complex, is built in Turkey.",Arts/Culture,Ancient World
+10,-10000,Agriculture begins in the Fertile Crescent with the cultivation of wheat and barley.,History,Ancient World
+11,-9500,"Göbekli Tepe, the world's oldest known temple complex, is built in Turkey.",Culture,Ancient World
 12,-9000,Mudbricks and clay mortar are first used in Jericho.,Science/Tech,Ancient World
-13,-8000,Rice is first domesticated and cultivated along the Yangtze River in China.,Civilization,Ancient World
-14,-7000,The first known alcohol fermentation (mead) occurs in China.,Civilization,Ancient World
+13,-8000,Rice is first domesticated and cultivated along the Yangtze River in China.,History,Ancient World
+14,-7000,The first known alcohol fermentation (mead) occurs in China.,History,Ancient World
 15,-6500,"Evidence of lead smelting is found in Çatalhöyük, Turkey.",Science/Tech,Ancient World
 16,-6000,The first evidence of copper smelting is found in modern-day Serbia.,Science/Tech,Ancient World
-17,-5500,The first evidence of cheese-making is found in Poland.,Civilization,Ancient World
-18,-5000,"The Sumerian civilization evolves in Mesopotamia, developing the first cities.",Civilization,Ancient World
+17,-5500,The first evidence of cheese-making is found in Poland.,History,Ancient World
+18,-5000,"The Sumerian civilization evolves in Mesopotamia, developing the first cities.",History,Ancient World
 19,-4000,"The wheel is invented in Eastern Europe, revolutionizing transport and machinery.",Science/Tech,Ancient World
 20,-4000,Paved roads are constructed in the Mesopotamian city of Ur.,Science/Tech,Ancient World
-21,-3630,The first silk garments are produced in China through sericulture.,Civilization,Ancient World
-22,-3500,The horse is first domesticated on the Eurasian Steppes.,Civilization,Ancient World
-23,-3400,The first system of writing (cuneiform) is developed by the Sumerians in Mesopotamia.,Civilization,Ancient World
+21,-3630,The first silk garments are produced in China through sericulture.,History,Ancient World
+22,-3500,The horse is first domesticated on the Eurasian Steppes.,History,Ancient World
+23,-3400,The first system of writing (cuneiform) is developed by the Sumerians in Mesopotamia.,History,Ancient World
 24,-3200,"The first known wheeled vehicle, the Ljubljana Marshes Wheel, is made in Slovenia.",Science/Tech,Ancient World
 25,-3100,"The first dynasty of Egypt is established, unifying the Upper and Lower kingdoms.",Politics/War,Ancient World
 26,-3000,"Papyrus, an early form of paper, is developed in Egypt.",Science/Tech,Ancient World
 27,-2650,The first ruler or measuring rod is used in Sumer.,Science/Tech,Ancient World
-28,-2600,The Indus Valley Civilization flourishes with planned cities like Mohenjo-daro.,Civilization,Ancient World
-29,-2560,The Great Pyramid of Giza is completed in Egypt under Pharaoh Khufu.,Arts/Culture,Ancient World
-30,-2400,The first known forks are used in Bronze Age China.,Civilization,Ancient World
-31,-2300,The first known dictionary is created on clay tablets in Mesopotamia.,Arts/Culture,Ancient World
+28,-2600,The Indus Valley Civilization flourishes with planned cities like Mohenjo-daro.,History,Ancient World
+29,-2560,The Great Pyramid of Giza is completed in Egypt under Pharaoh Khufu.,Culture,Ancient World
+30,-2400,The first known forks are used in Bronze Age China.,History,Ancient World
+31,-2300,The first known dictionary is created on clay tablets in Mesopotamia.,Culture,Ancient World
 32,-2000,"The chariot is invented in Russia and Kazakhstan, transforming warfare.",Science/Tech,Ancient World
-33,-1800,The first alphabetic writing system appears in the Sinai Peninsula.,Civilization,Ancient World
-34,-1780,King Hammurabi of Babylon issues his comprehensive legal code.,Civilization,Ancient World
+33,-1800,The first alphabetic writing system appears in the Sinai Peninsula.,History,Ancient World
+34,-1780,King Hammurabi of Babylon issues his comprehensive legal code.,History,Ancient World
 35,-1600,"The first known surgical treatise, the Edwin Smith Papyrus, appears in Egypt.",Science/Tech,Ancient World
 36,-1500,The sundial is invented in Ancient Egypt or Babylonia.,Science/Tech,Ancient World
 37,-1400,"The water clock is invented in Egypt, allowing timekeeping at night.",Science/Tech,Ancient World
 38,-1300,The lathe is invented in Ancient Egypt.,Science/Tech,Ancient World
 39,-1200,"The Iron Age begins in the Near East, replacing bronze with a stronger metal.",Science/Tech,Ancient World
 40,-1027,The Zhou dynasty begins its long rule in China.,Politics/War,Ancient World
-41,-850,Homer is believed to have composed the epic poems The Iliad and The Odyssey.,Arts/Culture,Ancient World
-42,-776,"The first Olympic Games are recorded in Olympia, Greece.",Arts/Culture,Ancient World
+41,-850,Homer is believed to have composed the epic poems The Iliad and The Odyssey.,Culture,Ancient World
+42,-776,"The first Olympic Games are recorded in Olympia, Greece.",Culture,Ancient World
 43,-753,The city of Rome is traditionally founded by Romulus.,Politics/War,Ancient World
 44,-653,The Persian Empire begins its rise to prominence in the Middle East.,Politics/War,Ancient World
 45,-650,The crossbow is invented in China.,Science/Tech,Ancient World
-46,-600,Coins are first used as currency in Lydia (modern-day Turkey).,Civilization,Ancient World
+46,-600,Coins are first used as currency in Lydia (modern-day Turkey).,History,Ancient World
 47,-586,The First Temple in Jerusalem (Solomon's Temple) is destroyed by the Babylonians.,Politics/War,Ancient World
-48,-563,"Siddhartha Gautama, the Buddha, is born in Lumbini, Nepal.",Arts/Culture,Ancient World
-49,-551,The philosopher Confucius is born in China.,Arts/Culture,Ancient World
+48,-563,"Siddhartha Gautama, the Buddha, is born in Lumbini, Nepal.",Culture,Ancient World
+49,-551,The philosopher Confucius is born in China.,Culture,Ancient World
 50,-509,The Roman Republic is founded after the overthrow of the last Roman king.,Politics/War,Ancient World
 51,-508,"Democracy is introduced in Athens, Greece, under the reforms of Cleisthenes.",Politics/War,Ancient World
 52,-500,The philosopher Pythagoras studies mathematics and the movement of celestial bodies.,Science/Tech,Ancient World
 53,-490,The Athenians defeat the Persians at the Battle of Marathon.,Politics/War,Ancient World
 54,-485,"The catapult is invented by Ajatashatru in Magadha, India.",Science/Tech,Ancient World
-55,-469,"The philosopher Socrates is born in Athens, Greece.",Arts/Culture,Ancient World
-56,-447,Construction begins on the Parthenon temple on the Athenian Acropolis.,Arts/Culture,Ancient World
+55,-469,"The philosopher Socrates is born in Athens, Greece.",Culture,Ancient World
+56,-447,Construction begins on the Parthenon temple on the Athenian Acropolis.,Culture,Ancient World
 57,-431,The Peloponnesian War begins between Athens and Sparta.,Politics/War,Ancient World
 58,-399,Socrates is tried and executed in Athens for corrupting the youth.,Politics/War,Ancient World
-59,-387,"Plato founds the Academy in Athens, one of the earliest institutions of higher learning.",Arts/Culture,Ancient World
+59,-387,"Plato founds the Academy in Athens, one of the earliest institutions of higher learning.",Culture,Ancient World
 60,-336,"Alexander the Great becomes king of Macedon after the assassination of his father, Philip II.",Politics/War,Ancient World
 61,-323,"Alexander the Great dies in Babylon, ending his vast conquests.",Politics/War,Ancient World
 62,-300,"Euclid writes Elements, a foundational work of geometry.",Science/Tech,Ancient World
@@ -71,150 +71,150 @@ Event ID,Year,Event Description,Category,Era
 70,-73,The slave rebellion led by Spartacus begins in the Roman Republic.,Politics/War,Ancient World
 71,-44,Julius Caesar is assassinated by a group of Roman senators.,Politics/War,Ancient World
 72,-27,"Octavian is granted the title Augustus, marking the end of the Roman Republic and the beginning of the Roman Empire.",Politics/War,Ancient World
-73,-4,Jesus Christ is born in Bethlehem (widely accepted date).,Arts/Culture,Ancient World
+73,-4,Jesus Christ is born in Bethlehem (widely accepted date).,Culture,Ancient World
 74,1,"The aeolipile, a simple steam turbine, is described by Hero of Alexandria.",Science/Tech,Ancient World
-75,29,Jesus Christ is crucified in Jerusalem.,Arts/Culture,Ancient World
-76,64,"The Great Fire of Rome occurs, which Emperor Nero blames on Christians.",Civilization,Ancient World
+75,29,Jesus Christ is crucified in Jerusalem.,Culture,Ancient World
+76,64,"The Great Fire of Rome occurs, which Emperor Nero blames on Christians.",History,Ancient World
 77,70,Roman armies under Titus destroy the Second Temple in Jerusalem.,Politics/War,Ancient World
-78,79,"Mount Vesuvius erupts, destroying the Roman cities of Pompeii and Herculaneum.",Civilization,Ancient World
-79,80,The Colosseum is completed in Rome.,Arts/Culture,Ancient World
+78,79,"Mount Vesuvius erupts, destroying the Roman cities of Pompeii and Herculaneum.",History,Ancient World
+79,80,The Colosseum is completed in Rome.,Culture,Ancient World
 80,105,Cai Lun is credited with standardizing paper production in China.,Science/Tech,Ancient World
 81,122,Construction begins on Hadrian's Wall in Roman Britain.,Politics/War,Ancient World
 82,132,The seismometer is invented in Han Dynasty China by Zhang Heng.,Science/Tech,Ancient World
 83,220,"The Han Dynasty collapses, leading to the Three Kingdoms period in China.",Politics/War,Ancient World
 84,286,The Roman Empire is divided into Eastern and Western halves by Emperor Diocletian.,Politics/War,Ancient World
 85,313,"Emperor Constantine issues the Edict of Milan, granting religious tolerance to Christians in the Roman Empire.",Politics/War,Ancient World
-86,325,The First Council of Nicaea establishes the core tenets of Christian orthodoxy.,Arts/Culture,Ancient World
+86,325,The First Council of Nicaea establishes the core tenets of Christian orthodoxy.,Culture,Ancient World
 87,330,Constantine the Great moves the capital of the Roman Empire to Constantinople.,Politics/War,Ancient World
 88,395,The Roman Empire is permanently split into the Eastern and Western Roman Empires.,Politics/War,Ancient World
 89,400,The rust-resistant Iron pillar of Delhi is constructed in India.,Science/Tech,Ancient World
 90,410,"The Visigoths, led by Alaric, sack the city of Rome.",Politics/War,Ancient World
 91,455,"The Vandals sack Rome, contributing to the Western Empire's decline.",Politics/War,Ancient World
 92,476,"The last Western Roman Emperor, Romulus Augustulus, is deposed, marking the fall of the Western Roman Empire.",Politics/War,Ancient World
-93,527,Justinian I becomes emperor of the Byzantine (Eastern Roman) Empire.,Politics/War,Post-Classical/Early Modern
-94,529,"The Academy in Athens, founded by Plato, is closed by Emperor Justinian.",Arts/Culture,Post-Classical/Early Modern
-95,537,The Hagia Sophia cathedral is completed in Constantinople under Justinian I.,Arts/Culture,Post-Classical/Early Modern
-96,570,"The Prophet Muhammad, founder of Islam, is born in Mecca.",Arts/Culture,Post-Classical/Early Modern
-97,589,Toilet paper is first mentioned in use in Sui Dynasty China.,Science/Tech,Post-Classical/Early Modern
-98,589,"The horse collar is developed in China, revolutionizing agriculture.",Science/Tech,Post-Classical/Early Modern
-99,618,"The Tang Dynasty is established in China, beginning a golden age of culture and innovation.",Politics/War,Post-Classical/Early Modern
-100,619,The toothbrush is invented in Tang Dynasty China.,Science/Tech,Post-Classical/Early Modern
-101,622,"The Prophet Muhammad migrates from Mecca to Medina (the Hijra), marking the beginning of the Islamic calendar.",Arts/Culture,Post-Classical/Early Modern
-102,632,"The Prophet Muhammad dies, leading to the establishment of the first Caliphate.",Politics/War,Post-Classical/Early Modern
-103,650,Porcelain is invented by Chinese artists during the Tang Dynasty.,Science/Tech,Post-Classical/Early Modern
-104,672,"Greek fire, an incendiary weapon, is invented in the Byzantine Empire.",Science/Tech,Post-Classical/Early Modern
-105,711,Muslim forces cross the Strait of Gibraltar and begin the conquest of the Iberian Peninsula.,Politics/War,Post-Classical/Early Modern
-106,732,"Charles Martel's Frankish army defeats Muslim invaders at the Battle of Tours, halting their advance into Europe.",Politics/War,Post-Classical/Early Modern
-107,793,"Vikings raid the monastery at Lindisfarne, marking the beginning of the Viking Age in Europe.",Politics/War,Post-Classical/Early Modern
-108,800,"Charlemagne is crowned Emperor of the Romans by Pope Leo III, founding the Carolingian Empire.",Politics/War,Post-Classical/Early Modern
-109,800,Gunpowder is invented by alchemists in Tang Dynasty China.,Science/Tech,Post-Classical/Early Modern
-110,820,The mathematician al-Khwarizmi writes a foundational book on algebra in Baghdad.,Science/Tech,Post-Classical/Early Modern
-111,868,"The Diamond Sutra is printed in China, the world's earliest dated, printed book.",Arts/Culture,Post-Classical/Early Modern
-112,960,"The Song Dynasty is established in China, known for its technological advancements.",Politics/War,Post-Classical/Early Modern
-113,974,The first fountain pen is invented in Arab Egypt.,Science/Tech,Post-Classical/Early Modern
-114,1000,"Leif Erikson, a Norse explorer, lands in North America, which he calls Vinland.",Exploration,Post-Classical/Early Modern
-115,1025,Musical notes (solmization) are invented by Guido of Arezzo.,Arts/Culture,Post-Classical/Early Modern
-116,1054,The Great Schism formally divides the Christian church into the Roman Catholic and Eastern Orthodox branches.,Arts/Culture,Post-Classical/Early Modern
-117,1066,"William the Conqueror leads the Norman invasion of England, winning the Battle of Hastings.",Politics/War,Post-Classical/Early Modern
-118,1088,The first movable type printing system is invented by Bi Sheng in Song Dynasty China.,Science/Tech,Post-Classical/Early Modern
-119,1096,The First Crusade is launched by European Christians to reclaim the Holy Land.,Politics/War,Post-Classical/Early Modern
-120,1117,The University of Oxford is established in England.,Civilization,Post-Classical/Early Modern
-121,1150,The University of Paris is established in France.,Civilization,Post-Classical/Early Modern
-122,1187,Saladin recaptures Jerusalem from the Crusaders.,Politics/War,Post-Classical/Early Modern
-123,1199,Europeans first begin to use the magnetic compass for navigation.,Science/Tech,Post-Classical/Early Modern
-124,1206,"Genghis Khan is proclaimed ruler of all Mongols, beginning the expansion of the Mongol Empire.",Politics/War,Post-Classical/Early Modern
-125,1209,The University of Cambridge is established in England.,Civilization,Post-Classical/Early Modern
-126,1215,"King John of England is forced to sign the Magna Carta, limiting royal power.",Politics/War,Post-Classical/Early Modern
-127,1250,"The first known musical round, ""Sumer is icumen in,"" is written in England.",Arts/Culture,Post-Classical/Early Modern
-128,1271,Marco Polo begins his famous journey to China along the Silk Road.,Exploration,Post-Classical/Early Modern
-129,1286,The first eyeglasses are invented in Italy.,Science/Tech,Post-Classical/Early Modern
-130,1299,Osman I establishes the Ottoman Empire in Anatolia.,Politics/War,Post-Classical/Early Modern
-131,1306,"The artist Giotto completes the Scrovegni Chapel frescoes, a landmark of the early Renaissance.",Arts/Culture,Post-Classical/Early Modern
-132,1325,The Aztecs found the city of Tenochtitlan on Lake Texcoco.,Civilization,Post-Classical/Early Modern
-133,1347,"The Black Death pandemic arrives in Europe, eventually killing a third of the population.",Civilization,Post-Classical/Early Modern
-134,1368,"The Ming Dynasty is established in China, overthrowing Mongol rule.",Politics/War,Post-Classical/Early Modern
-135,1397,"The Medici Bank is established in Florence, fueling the Renaissance.",Civilization,Post-Classical/Early Modern
-136,1405,Chinese admiral Zheng He begins his series of seven major naval expeditions.,Exploration,Post-Classical/Early Modern
-137,1420,"The use of a single, consistent light source in painting is pioneered by Masaccio.",Arts/Culture,Post-Classical/Early Modern
-138,1429,Joan of Arc leads the French army to victory at the Siege of Orléans.,Politics/War,Post-Classical/Early Modern
-139,1434,"Jan van Eyck paints The Arnolfini Portrait, a masterpiece of the Northern Renaissance.",Arts/Culture,Post-Classical/Early Modern
-140,1436,Filippo Brunelleschi completes the dome of the Florence Cathedral.,Arts/Culture,Post-Classical/Early Modern
-141,1439,"Johannes Gutenberg invents the printing press with movable type in Mainz, Germany.",Science/Tech,Post-Classical/Early Modern
-142,1453,"The Ottoman Empire, under Sultan Mehmed II, conquers Constantinople, ending the Byzantine Empire.",Politics/War,Post-Classical/Early Modern
-143,1455,"The Gutenberg Bible is printed, the first major book printed using movable type.",Arts/Culture,Post-Classical/Early Modern
-144,1485,Leonardo da Vinci invents the sfumato painting technique.,Arts/Culture,Post-Classical/Early Modern
-145,1488,"Bartolomeu Dias of Portugal rounds the Cape of Good Hope, opening a sea route to the East.",Exploration,Post-Classical/Early Modern
-146,1492,"Christopher Columbus, sailing for Spain, makes his first voyage to the Americas, landing in the Bahamas.",Exploration,Post-Classical/Early Modern
-147,1494,The Treaty of Tordesillas divides the newly discovered lands outside Europe between Portugal and Spain.,Politics/War,Post-Classical/Early Modern
-148,1498,"Vasco da Gama of Portugal arrives in India, establishing a direct sea route from Europe.",Exploration,Post-Classical/Early Modern
-149,1503,Leonardo da Vinci begins painting the Mona Lisa.,Arts/Culture,Post-Classical/Early Modern
-150,1508,Michelangelo begins painting the ceiling of the Sistine Chapel in Rome.,Arts/Culture,Post-Classical/Early Modern
-151,1513,"Niccolò Machiavelli writes The Prince, a foundational work of modern political science.",Arts/Culture,Post-Classical/Early Modern
-152,1517,"Martin Luther posts his Ninety-five Theses, beginning the Protestant Reformation.",Arts/Culture,Post-Classical/Early Modern
-153,1519,Hernán Cortés begins the Spanish conquest of the Aztec Empire.,Politics/War,Post-Classical/Early Modern
-154,1522,Ferdinand Magellan's expedition completes the first circumnavigation of the Earth.,Exploration,Post-Classical/Early Modern
-155,1533,Francisco Pizarro completes the Spanish conquest of the Inca Empire.,Politics/War,Post-Classical/Early Modern
-156,1543,"Nicolaus Copernicus publishes On the Revolutions of the Heavenly Spheres, proposing a heliocentric model of the universe.",Science/Tech,Post-Classical/Early Modern
-157,1545,"The Council of Trent begins, marking the start of the Catholic Counter-Reformation.",Arts/Culture,Post-Classical/Early Modern
-158,1558,"Elizabeth I becomes Queen of England, beginning the Elizabethan era.",Politics/War,Post-Classical/Early Modern
-159,1564,"William Shakespeare is born in Stratford-upon-Avon, England.",Arts/Culture,Post-Classical/Early Modern
-160,1569,"Gerardus Mercator creates the Mercator projection map, revolutionizing navigation.",Science/Tech,Post-Classical/Early Modern
-161,1582,Pope Gregory XIII introduces the Gregorian calendar.,Civilization,Post-Classical/Early Modern
-162,1588,"The English fleet defeats the Spanish Armada, preventing an invasion of England.",Politics/War,Post-Classical/Early Modern
-163,1597,Opera is invented by Jacopo Peri with his work Dafne.,Arts/Culture,Post-Classical/Early Modern
-164,1600,"The British East India Company is founded, becoming a major force in global trade and colonialism.",Civilization,Post-Classical/Early Modern
-165,1602,"The Dutch East India Company is established, the first multinational corporation.",Civilization,Post-Classical/Early Modern
-166,1603,"The Tokugawa shogunate is established in Japan, beginning a long period of isolationist rule.",Politics/War,Post-Classical/Early Modern
-167,1605,"The first newspaper, Relation, is published by Johann Carolus in Strassburg.",Civilization,Post-Classical/Early Modern
-168,1607,"The first permanent English settlement in North America is established at Jamestown, Virginia.",Exploration,Post-Classical/Early Modern
-169,1608,The telescope is invented in the Netherlands.,Science/Tech,Post-Classical/Early Modern
-170,1610,"Galileo Galilei observes the moons of Jupiter, supporting the heliocentric model.",Science/Tech,Post-Classical/Early Modern
-171,1618,The Thirty Years' War begins in Central Europe.,Politics/War,Post-Classical/Early Modern
-172,1620,"The Pilgrims land at Plymouth Rock, establishing a colony in Massachusetts.",Exploration,Post-Classical/Early Modern
-173,1620,The first compound microscope appears in Europe.,Science/Tech,Post-Classical/Early Modern
-174,1632,The city of Boston is founded in the Massachusetts Bay Colony.,Civilization,Post-Classical/Early Modern
-175,1636,"Harvard University is founded in Cambridge, Massachusetts, the oldest institution of higher learning in the U.S.",Civilization,Post-Classical/Early Modern
-176,1642,The English Civil War begins between Parliamentarians and Royalists.,Politics/War,Post-Classical/Early Modern
-177,1642,The mechanical calculator (Pascaline) is built by Blaise Pascal.,Science/Tech,Post-Classical/Early Modern
-178,1643,The barometer is invented by Evangelista Torricelli.,Science/Tech,Post-Classical/Early Modern
-179,1644,The Ming Dynasty in China collapses and is replaced by the Qing Dynasty.,Politics/War,Post-Classical/Early Modern
-180,1649,"King Charles I of England is executed, and the Commonwealth of England is established.",Politics/War,Post-Classical/Early Modern
-181,1652,The Dutch East India Company founds Cape Town in South Africa.,Civilization,Post-Classical/Early Modern
-182,1656,"The pendulum clock is invented by Christiaan Huygens, greatly improving timekeeping accuracy.",Science/Tech,Post-Classical/Early Modern
-183,1665,Robert Hooke discovers cells using a microscope.,Science/Tech,Post-Classical/Early Modern
-184,1666,The Great Fire of London destroys large parts of the city.,Civilization,Post-Classical/Early Modern
-185,1682,"Peter the Great becomes Tsar of Russia, beginning a period of modernization.",Politics/War,Post-Classical/Early Modern
-186,1687,"Isaac Newton publishes Philosophiæ Naturalis Principia Mathematica, outlining the laws of motion and universal gravitation.",Science/Tech,Post-Classical/Early Modern
-187,1688,The Glorious Revolution in England establishes a constitutional monarchy.,Politics/War,Post-Classical/Early Modern
-188,1694,"The Bank of England is established, centralizing the nation's finances.",Civilization,Post-Classical/Early Modern
-189,1698,Thomas Savery develops a steam-powered water pump for draining mines.,Science/Tech,Post-Classical/Early Modern
-190,1707,The Acts of Union unite the Kingdom of England and the Kingdom of Scotland to create Great Britain.,Politics/War,Post-Classical/Early Modern
-191,1709,Bartolomeo Cristofori crafts the first piano.,Arts/Culture,Post-Classical/Early Modern
-192,1712,Thomas Newcomen builds the first commercially successful steam engine.,Science/Tech,Post-Classical/Early Modern
-193,1733,"The flying shuttle is invented by John Kay, speeding up the weaving process.",Science/Tech,Post-Classical/Early Modern
-194,1751,"Denis Diderot's Encyclopédie is first published, a key text of the Enlightenment.",Arts/Culture,Post-Classical/Early Modern
-195,1752,"Benjamin Franklin conducts his kite experiment, proving that lightning is electricity.",Science/Tech,Post-Classical/Early Modern
-196,1756,"The Seven Years' War, a global conflict, begins between major European powers.",Politics/War,Post-Classical/Early Modern
-197,1760,The Industrial Revolution begins to accelerate in Great Britain.,Science/Tech,Post-Classical/Early Modern
-198,1764,"The spinning jenny is invented by James Hargreaves, revolutionizing textile production.",Science/Tech,Post-Classical/Early Modern
-199,1765,"James Watt invents the improved steam engine with a separate condenser, a key innovation of the Industrial Revolution.",Science/Tech,Post-Classical/Early Modern
-200,1769,Nicolas-Joseph Cugnot builds the first steam-powered automobile.,Science/Tech,Post-Classical/Early Modern
-201,1770,James Cook claims the east coast of Australia for Great Britain.,Exploration,Post-Classical/Early Modern
-202,1773,The Boston Tea Party protests British taxation in the American colonies.,Politics/War,Post-Classical/Early Modern
-203,1776,The American colonies declare independence from Great Britain on July 4th.,Politics/War,Post-Classical/Early Modern
-204,1776,"Adam Smith publishes The Wealth of Nations, a foundational text of modern economics.",Civilization,Post-Classical/Early Modern
-205,1781,The planet Uranus is discovered by William Herschel.,Science/Tech,Post-Classical/Early Modern
-206,1783,The Montgolfier brothers launch the first manned hot air balloon flight in Paris.,Exploration,Post-Classical/Early Modern
-207,1783,"The Treaty of Paris is signed, officially ending the American Revolutionary War.",Politics/War,Post-Classical/Early Modern
-208,1787,The United States Constitution is written in Philadelphia.,Politics/War,Post-Classical/Early Modern
-209,1789,The French Revolution begins with the storming of the Bastille.,Politics/War,Post-Classical/Early Modern
-210,1790,The first sewing machine is invented by Thomas Saint.,Science/Tech,Post-Classical/Early Modern
-211,1791,The Bill of Rights is added to the U.S. Constitution.,Politics/War,Post-Classical/Early Modern
-212,1792,The modern semaphore telegraph is invented by Claude Chappe.,Science/Tech,Post-Classical/Early Modern
-213,1793,"Eli Whitney invents the cotton gin, revolutionizing the cotton industry and entrenching slavery in the American South.",Science/Tech,Post-Classical/Early Modern
-214,1796,"Edward Jenner develops the first successful vaccine, for smallpox.",Science/Tech,Post-Classical/Early Modern
-215,1799,"The Rosetta Stone is discovered in Egypt, providing the key to deciphering ancient hieroglyphs.",Science/Tech,Post-Classical/Early Modern
-216,1799,Napoleon Bonaparte comes to power in France in a coup d'état.,Politics/War,Post-Classical/Early Modern
+93,527,Justinian I becomes emperor of the Byzantine (Eastern Roman) Empire.,Politics/War,Post-Classical
+94,529,"The Academy in Athens, founded by Plato, is closed by Emperor Justinian.",Culture,Post-Classical
+95,537,The Hagia Sophia cathedral is completed in Constantinople under Justinian I.,Culture,Post-Classical
+96,570,"The Prophet Muhammad, founder of Islam, is born in Mecca.",Culture,Post-Classical
+97,589,Toilet paper is first mentioned in use in Sui Dynasty China.,Science/Tech,Post-Classical
+98,589,"The horse collar is developed in China, revolutionizing agriculture.",Science/Tech,Post-Classical
+99,618,"The Tang Dynasty is established in China, beginning a golden age of culture and innovation.",Politics/War,Post-Classical
+100,619,The toothbrush is invented in Tang Dynasty China.,Science/Tech,Post-Classical
+101,622,"The Prophet Muhammad migrates from Mecca to Medina (the Hijra), marking the beginning of the Islamic calendar.",Culture,Post-Classical
+102,632,"The Prophet Muhammad dies, leading to the establishment of the first Caliphate.",Politics/War,Post-Classical
+103,650,Porcelain is invented by Chinese artists during the Tang Dynasty.,Science/Tech,Post-Classical
+104,672,"Greek fire, an incendiary weapon, is invented in the Byzantine Empire.",Science/Tech,Post-Classical
+105,711,Muslim forces cross the Strait of Gibraltar and begin the conquest of the Iberian Peninsula.,Politics/War,Post-Classical
+106,732,"Charles Martel's Frankish army defeats Muslim invaders at the Battle of Tours, halting their advance into Europe.",Politics/War,Post-Classical
+107,793,"Vikings raid the monastery at Lindisfarne, marking the beginning of the Viking Age in Europe.",Politics/War,Post-Classical
+108,800,"Charlemagne is crowned Emperor of the Romans by Pope Leo III, founding the Carolingian Empire.",Politics/War,Post-Classical
+109,800,Gunpowder is invented by alchemists in Tang Dynasty China.,Science/Tech,Post-Classical
+110,820,The mathematician al-Khwarizmi writes a foundational book on algebra in Baghdad.,Science/Tech,Post-Classical
+111,868,"The Diamond Sutra is printed in China, the world's earliest dated, printed book.",Culture,Post-Classical
+112,960,"The Song Dynasty is established in China, known for its technological advancements.",Politics/War,Post-Classical
+113,974,The first fountain pen is invented in Arab Egypt.,Science/Tech,Post-Classical
+114,1000,"Leif Erikson, a Norse explorer, lands in North America, which he calls Vinland.",History,Post-Classical
+115,1025,Musical notes (solmization) are invented by Guido of Arezzo.,Culture,Post-Classical
+116,1054,The Great Schism formally divides the Christian church into the Roman Catholic and Eastern Orthodox branches.,Culture,Post-Classical
+117,1066,"William the Conqueror leads the Norman invasion of England, winning the Battle of Hastings.",Politics/War,Post-Classical
+118,1088,The first movable type printing system is invented by Bi Sheng in Song Dynasty China.,Science/Tech,Post-Classical
+119,1096,The First Crusade is launched by European Christians to reclaim the Holy Land.,Politics/War,Post-Classical
+120,1117,The University of Oxford is established in England.,History,Post-Classical
+121,1150,The University of Paris is established in France.,History,Post-Classical
+122,1187,Saladin recaptures Jerusalem from the Crusaders.,Politics/War,Post-Classical
+123,1199,Europeans first begin to use the magnetic compass for navigation.,Science/Tech,Post-Classical
+124,1206,"Genghis Khan is proclaimed ruler of all Mongols, beginning the expansion of the Mongol Empire.",Politics/War,Post-Classical
+125,1209,The University of Cambridge is established in England.,History,Post-Classical
+126,1215,"King John of England is forced to sign the Magna Carta, limiting royal power.",Politics/War,Post-Classical
+127,1250,"The first known musical round, ""Sumer is icumen in,"" is written in England.",Culture,Post-Classical
+128,1271,Marco Polo begins his famous journey to China along the Silk Road.,History,Post-Classical
+129,1286,The first eyeglasses are invented in Italy.,Science/Tech,Post-Classical
+130,1299,Osman I establishes the Ottoman Empire in Anatolia.,Politics/War,Post-Classical
+131,1306,"The artist Giotto completes the Scrovegni Chapel frescoes, a landmark of the early Renaissance.",Culture,Post-Classical
+132,1325,The Aztecs found the city of Tenochtitlan on Lake Texcoco.,History,Post-Classical
+133,1347,"The Black Death pandemic arrives in Europe, eventually killing a third of the population.",History,Post-Classical
+134,1368,"The Ming Dynasty is established in China, overthrowing Mongol rule.",Politics/War,Post-Classical
+135,1397,"The Medici Bank is established in Florence, fueling the Renaissance.",History,Post-Classical
+136,1405,Chinese admiral Zheng He begins his series of seven major naval expeditions.,History,Post-Classical
+137,1420,"The use of a single, consistent light source in painting is pioneered by Masaccio.",Culture,Post-Classical
+138,1429,Joan of Arc leads the French army to victory at the Siege of Orléans.,Politics/War,Post-Classical
+139,1434,"Jan van Eyck paints The Arnolfini Portrait, a masterpiece of the Northern Renaissance.",Culture,Post-Classical
+140,1436,Filippo Brunelleschi completes the dome of the Florence Cathedral.,Culture,Post-Classical
+141,1439,"Johannes Gutenberg invents the printing press with movable type in Mainz, Germany.",Science/Tech,Post-Classical
+142,1453,"The Ottoman Empire, under Sultan Mehmed II, conquers Constantinople, ending the Byzantine Empire.",Politics/War,Post-Classical
+143,1455,"The Gutenberg Bible is printed, the first major book printed using movable type.",Culture,Post-Classical
+144,1485,Leonardo da Vinci invents the sfumato painting technique.,Culture,Post-Classical
+145,1488,"Bartolomeu Dias of Portugal rounds the Cape of Good Hope, opening a sea route to the East.",History,Post-Classical
+146,1492,"Christopher Columbus, sailing for Spain, makes his first voyage to the Americas, landing in the Bahamas.",History,Post-Classical
+147,1494,The Treaty of Tordesillas divides the newly discovered lands outside Europe between Portugal and Spain.,Politics/War,Post-Classical
+148,1498,"Vasco da Gama of Portugal arrives in India, establishing a direct sea route from Europe.",History,Post-Classical
+149,1503,Leonardo da Vinci begins painting the Mona Lisa.,Culture,Post-Classical
+150,1508,Michelangelo begins painting the ceiling of the Sistine Chapel in Rome.,Culture,Post-Classical
+151,1513,"Niccolò Machiavelli writes The Prince, a foundational work of modern political science.",Culture,Post-Classical
+152,1517,"Martin Luther posts his Ninety-five Theses, beginning the Protestant Reformation.",Culture,Post-Classical
+153,1519,Hernán Cortés begins the Spanish conquest of the Aztec Empire.,Politics/War,Post-Classical
+154,1522,Ferdinand Magellan's expedition completes the first circumnavigation of the Earth.,History,Post-Classical
+155,1533,Francisco Pizarro completes the Spanish conquest of the Inca Empire.,Politics/War,Post-Classical
+156,1543,"Nicolaus Copernicus publishes On the Revolutions of the Heavenly Spheres, proposing a heliocentric model of the universe.",Science/Tech,Post-Classical
+157,1545,"The Council of Trent begins, marking the start of the Catholic Counter-Reformation.",Culture,Post-Classical
+158,1558,"Elizabeth I becomes Queen of England, beginning the Elizabethan era.",Politics/War,Post-Classical
+159,1564,"William Shakespeare is born in Stratford-upon-Avon, England.",Culture,Post-Classical
+160,1569,"Gerardus Mercator creates the Mercator projection map, revolutionizing navigation.",Science/Tech,Post-Classical
+161,1582,Pope Gregory XIII introduces the Gregorian calendar.,History,Post-Classical
+162,1588,"The English fleet defeats the Spanish Armada, preventing an invasion of England.",Politics/War,Post-Classical
+163,1597,Opera is invented by Jacopo Peri with his work Dafne.,Culture,Post-Classical
+164,1600,"The British East India Company is founded, becoming a major force in global trade and colonialism.",History,Post-Classical
+165,1602,"The Dutch East India Company is established, the first multinational corporation.",History,Post-Classical
+166,1603,"The Tokugawa shogunate is established in Japan, beginning a long period of isolationist rule.",Politics/War,Post-Classical
+167,1605,"The first newspaper, Relation, is published by Johann Carolus in Strassburg.",History,Post-Classical
+168,1607,"The first permanent English settlement in North America is established at Jamestown, Virginia.",History,Post-Classical
+169,1608,The telescope is invented in the Netherlands.,Science/Tech,Post-Classical
+170,1610,"Galileo Galilei observes the moons of Jupiter, supporting the heliocentric model.",Science/Tech,Post-Classical
+171,1618,The Thirty Years' War begins in Central Europe.,Politics/War,Post-Classical
+172,1620,"The Pilgrims land at Plymouth Rock, establishing a colony in Massachusetts.",History,Post-Classical
+173,1620,The first compound microscope appears in Europe.,Science/Tech,Post-Classical
+174,1632,The city of Boston is founded in the Massachusetts Bay Colony.,History,Post-Classical
+175,1636,"Harvard University is founded in Cambridge, Massachusetts, the oldest institution of higher learning in the U.S.",History,Post-Classical
+176,1642,The English Civil War begins between Parliamentarians and Royalists.,Politics/War,Post-Classical
+177,1642,The mechanical calculator (Pascaline) is built by Blaise Pascal.,Science/Tech,Post-Classical
+178,1643,The barometer is invented by Evangelista Torricelli.,Science/Tech,Post-Classical
+179,1644,The Ming Dynasty in China collapses and is replaced by the Qing Dynasty.,Politics/War,Post-Classical
+180,1649,"King Charles I of England is executed, and the Commonwealth of England is established.",Politics/War,Post-Classical
+181,1652,The Dutch East India Company founds Cape Town in South Africa.,History,Post-Classical
+182,1656,"The pendulum clock is invented by Christiaan Huygens, greatly improving timekeeping accuracy.",Science/Tech,Post-Classical
+183,1665,Robert Hooke discovers cells using a microscope.,Science/Tech,Post-Classical
+184,1666,The Great Fire of London destroys large parts of the city.,History,Post-Classical
+185,1682,"Peter the Great becomes Tsar of Russia, beginning a period of modernization.",Politics/War,Post-Classical
+186,1687,"Isaac Newton publishes Philosophiæ Naturalis Principia Mathematica, outlining the laws of motion and universal gravitation.",Science/Tech,Post-Classical
+187,1688,The Glorious Revolution in England establishes a constitutional monarchy.,Politics/War,Post-Classical
+188,1694,"The Bank of England is established, centralizing the nation's finances.",History,Post-Classical
+189,1698,Thomas Savery develops a steam-powered water pump for draining mines.,Science/Tech,Post-Classical
+190,1707,The Acts of Union unite the Kingdom of England and the Kingdom of Scotland to create Great Britain.,Politics/War,Post-Classical
+191,1709,Bartolomeo Cristofori crafts the first piano.,Culture,Post-Classical
+192,1712,Thomas Newcomen builds the first commercially successful steam engine.,Science/Tech,Post-Classical
+193,1733,"The flying shuttle is invented by John Kay, speeding up the weaving process.",Science/Tech,Post-Classical
+194,1751,"Denis Diderot's Encyclopédie is first published, a key text of the Enlightenment.",Culture,Post-Classical
+195,1752,"Benjamin Franklin conducts his kite experiment, proving that lightning is electricity.",Science/Tech,Post-Classical
+196,1756,"The Seven Years' War, a global conflict, begins between major European powers.",Politics/War,Post-Classical
+197,1760,The Industrial Revolution begins to accelerate in Great Britain.,Science/Tech,Post-Classical
+198,1764,"The spinning jenny is invented by James Hargreaves, revolutionizing textile production.",Science/Tech,Post-Classical
+199,1765,"James Watt invents the improved steam engine with a separate condenser, a key innovation of the Industrial Revolution.",Science/Tech,Post-Classical
+200,1769,Nicolas-Joseph Cugnot builds the first steam-powered automobile.,Science/Tech,Post-Classical
+201,1770,James Cook claims the east coast of Australia for Great Britain.,History,Post-Classical
+202,1773,The Boston Tea Party protests British taxation in the American colonies.,Politics/War,Post-Classical
+203,1776,The American colonies declare independence from Great Britain on July 4th.,Politics/War,Post-Classical
+204,1776,"Adam Smith publishes The Wealth of Nations, a foundational text of modern economics.",History,Post-Classical
+205,1781,The planet Uranus is discovered by William Herschel.,Science/Tech,Post-Classical
+206,1783,The Montgolfier brothers launch the first manned hot air balloon flight in Paris.,History,Post-Classical
+207,1783,"The Treaty of Paris is signed, officially ending the American Revolutionary War.",Politics/War,Post-Classical
+208,1787,The United States Constitution is written in Philadelphia.,Politics/War,Post-Classical
+209,1789,The French Revolution begins with the storming of the Bastille.,Politics/War,Post-Classical
+210,1790,The first sewing machine is invented by Thomas Saint.,Science/Tech,Post-Classical
+211,1791,The Bill of Rights is added to the U.S. Constitution.,Politics/War,Post-Classical
+212,1792,The modern semaphore telegraph is invented by Claude Chappe.,Science/Tech,Post-Classical
+213,1793,"Eli Whitney invents the cotton gin, revolutionizing the cotton industry and entrenching slavery in the American South.",Science/Tech,Post-Classical
+214,1796,"Edward Jenner develops the first successful vaccine, for smallpox.",Science/Tech,Post-Classical
+215,1799,"The Rosetta Stone is discovered in Egypt, providing the key to deciphering ancient hieroglyphs.",Science/Tech,Post-Classical
+216,1799,Napoleon Bonaparte comes to power in France in a coup d'état.,Politics/War,Post-Classical
 217,1800,"Alessandro Volta invents the voltaic pile, the first chemical battery.",Science/Tech,Modern Era
 218,1803,"The United States purchases the Louisiana Territory from France, doubling the size of the country.",Politics/War,Modern Era
 219,1804,Napoleon Bonaparte crowns himself Emperor of the French.,Politics/War,Modern Era
@@ -225,8 +225,8 @@ Event ID,Year,Event Description,Category,Era
 224,1815,"Napoleon is defeated at the Battle of Waterloo, ending his rule.",Politics/War,Modern Era
 225,1816,René Laennec invents the stethoscope.,Science/Tech,Modern Era
 226,1816,The first stethoscope is invented by René Laennec.,Science/Tech,Modern Era
-227,1820,Antarctica is first sighted by a Russian expedition.,Exploration,Modern Era
-228,1821,The harmonica is invented by Christian Friedrich Ludwig Buschmann.,Arts/Culture,Modern Era
+227,1820,Antarctica is first sighted by a Russian expedition.,History,Modern Era
+228,1821,The harmonica is invented by Christian Friedrich Ludwig Buschmann.,Culture,Modern Era
 229,1822,Jean-François Champollion deciphers the Rosetta Stone.,Science/Tech,Modern Era
 230,1823,"The Monroe Doctrine is declared, opposing European colonialism in the Americas.",Politics/War,Modern Era
 231,1825,The world's first public railway opens between Stockton and Darlington in England.,Science/Tech,Modern Era
@@ -242,13 +242,13 @@ Event ID,Year,Event Description,Category,Era
 241,1840,"The Treaty of Waitangi is signed, establishing New Zealand as a British colony.",Politics/War,Modern Era
 242,1842,Anesthesia is used for the first time in surgery.,Science/Tech,Modern Era
 243,1844,The first modern general anesthetic is created by Hanaoka Seishū.,Science/Tech,Modern Era
-244,1845,"The Irish Potato Famine begins, leading to mass starvation and emigration.",Civilization,Modern Era
+244,1845,"The Irish Potato Famine begins, leading to mass starvation and emigration.",History,Modern Era
 245,1846,The Mexican-American War begins over territorial disputes.,Politics/War,Modern Era
-246,1848,Karl Marx and Friedrich Engels publish The Communist Manifesto.,Arts/Culture,Modern Era
-247,1848,"The California Gold Rush begins, sparking mass migration to the West Coast of the U.S.",Civilization,Modern Era
+246,1848,Karl Marx and Friedrich Engels publish The Communist Manifesto.,Culture,Modern Era
+247,1848,"The California Gold Rush begins, sparking mass migration to the West Coast of the U.S.",History,Modern Era
 248,1849,The safety pin is invented by Walter Hunt.,Science/Tech,Modern Era
-249,1851,"The Great Exhibition is held in London's Crystal Palace, showcasing industrial technology.",Civilization,Modern Era
-250,1852,"Harriet Beecher Stowe publishes Uncle Tom's Cabin, galvanizing anti-slavery sentiment.",Arts/Culture,Modern Era
+249,1851,"The Great Exhibition is held in London's Crystal Palace, showcasing industrial technology.",History,Modern Era
+250,1852,"Harriet Beecher Stowe publishes Uncle Tom's Cabin, galvanizing anti-slavery sentiment.",Culture,Modern Era
 251,1852,The safety brake elevator is invented by Elisha Otis.,Science/Tech,Modern Era
 252,1854,"The Crimean War begins, pitting Russia against an alliance of Britain, France, and the Ottoman Empire.",Politics/War,Modern Era
 253,1855,The Bessemer process for mass-producing steel is patented by Henry Bessemer.,Science/Tech,Modern Era
@@ -258,7 +258,7 @@ Event ID,Year,Event Description,Category,Era
 257,1859,"The Suez Canal construction begins, connecting the Mediterranean and Red Seas.",Science/Tech,Modern Era
 258,1861,The American Civil War begins with the Confederate attack on Fort Sumter.,Politics/War,Modern Era
 259,1861,Serfdom is abolished in Russia by Tsar Alexander II.,Politics/War,Modern Era
-260,1862,The first paper money is issued in the United States.,Civilization,Modern Era
+260,1862,The first paper money is issued in the United States.,History,Modern Era
 261,1863,President Abraham Lincoln issues the Emancipation Proclamation.,Politics/War,Modern Era
 262,1863,"The first London Underground line opens, the world's first subway system.",Science/Tech,Modern Era
 263,1864,Louis Pasteur invents the pasteurization process.,Science/Tech,Modern Era
@@ -271,7 +271,7 @@ Event ID,Year,Event Description,Category,Era
 270,1869,Dmitri Mendeleev creates the Periodic Table of Elements.,Science/Tech,Modern Era
 271,1870,"The Franco-Prussian War begins, leading to the unification of Germany.",Politics/War,Modern Era
 272,1871,The German Empire is proclaimed with Wilhelm I as Emperor and Otto von Bismarck as Chancellor.,Politics/War,Modern Era
-273,1872,Yellowstone National Park is established as the world's first national park.,Civilization,Modern Era
+273,1872,Yellowstone National Park is established as the world's first national park.,History,Modern Era
 274,1873,"The first practical typewriter, the Sholes and Glidden typewriter, is produced.",Science/Tech,Modern Era
 275,1876,Alexander Graham Bell is granted a patent for the telephone.,Science/Tech,Modern Era
 276,1876,"The Battle of the Little Bighorn takes place, where Lakota, Cheyenne, and Arapaho warriors defeat the U.S. 7th Cavalry.",Politics/War,Modern Era
@@ -282,18 +282,18 @@ Event ID,Year,Event Description,Category,Era
 281,1884,The first practical machine gun is invented by Hiram Maxim.,Science/Tech,Modern Era
 282,1885,The first modern safety bicycle is invented by John Kemp Starley.,Science/Tech,Modern Era
 283,1886,"Karl Benz patents the Benz Patent-Motorwagen, the first gasoline-powered automobile.",Science/Tech,Modern Era
-284,1887,"Sir Arthur Conan Doyle publishes the first Sherlock Holmes story, A Study in Scarlet.",Arts/Culture,Modern Era
+284,1887,"Sir Arthur Conan Doyle publishes the first Sherlock Holmes story, A Study in Scarlet.",Culture,Modern Era
 285,1888,Heinrich Hertz demonstrates the existence of radio waves.,Science/Tech,Modern Era
 286,1888,The ballpoint pen is invented by John J. Loud.,Science/Tech,Modern Era
-287,1889,The Eiffel Tower is inaugurated in Paris for the World's Fair.,Arts/Culture,Modern Era
+287,1889,The Eiffel Tower is inaugurated in Paris for the World's Fair.,Culture,Modern Era
 288,1890,"The Wounded Knee Massacre occurs, the last major conflict of the American Indian Wars.",Politics/War,Modern Era
-289,1891,The first public old-age pension scheme is initiated in Germany.,Civilization,Modern Era
+289,1891,The first public old-age pension scheme is initiated in Germany.,History,Modern Era
 290,1891,The zipper is invented by Whitcomb Judson.,Science/Tech,Modern Era
 291,1892,Fingerprinting is officially adopted for criminal identification.,Science/Tech,Modern Era
 292,1893,New Zealand becomes the first country to grant women the right to vote.,Politics/War,Modern Era
 293,1895,Wilhelm Röntgen discovers X-rays.,Science/Tech,Modern Era
-294,1895,The Lumière brothers hold the first public screening of a motion picture.,Arts/Culture,Modern Era
-295,1896,"The modern Olympic Games are revived in Athens, Greece.",Arts/Culture,Modern Era
+294,1895,The Lumière brothers hold the first public screening of a motion picture.,Culture,Modern Era
+295,1896,"The modern Olympic Games are revived in Athens, Greece.",Culture,Modern Era
 296,1897,J.J. Thomson discovers the electron.,Science/Tech,Modern Era
 297,1898,"The Spanish-American War begins, leading to U.S. acquisition of Puerto Rico, Guam, and the Philippines.",Politics/War,Modern Era
 298,1898,Marie and Pierre Curie discover radium and polonium.,Science/Tech,Modern Era
