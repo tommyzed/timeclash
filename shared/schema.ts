@@ -9,6 +9,7 @@ export const historicalEvents = pgTable("historical_events", {
   description: text("description").notNull(),
   year: integer("year").notNull(),
   category: text("category").notNull(),
+  era: text("era").notNull(),
 });
 
 export const games = pgTable("games", {
@@ -35,6 +36,10 @@ export const games = pgTable("games", {
     .array()
     .notNull()
     .default(sql`'{"Politics", "Science", "History", "Culture"}'::text[]`),
+  eras: text("eras")
+    .array()
+    .notNull()
+    .default(sql`'{"Ancient", "Classical", "Modern"}'::text[]`),
 });
 
 export const gameMoves = pgTable("game_moves", {

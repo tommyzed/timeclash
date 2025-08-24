@@ -55,7 +55,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
   // Create a new game (single player or with room code for multiplayer)
   app.post("/api/games", async (req, res) => {
     try {
-      const { roomCode, singlePlayer, gameMode, targetScore, categories } =
+      const { roomCode, singlePlayer, gameMode, targetScore, categories, eras } =
         req.body;
 
       // For single player games, don't create room codes or player systems
@@ -64,12 +64,14 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
           gameMode,
           targetScore,
           categories,
+          eras,
         });
 
         // Get a random event for the first turn (excluding the starting card)
         const currentEvent = await storage.getRandomHistoricalEvent(
           game.placedEventIds,
           game.categories,
+          game.eras,
         );
 
         if (currentEvent) {
@@ -89,12 +91,14 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
           gameMode,
           targetScore,
           categories,
+          eras,
         });
 
         // Get a random event for the first turn (excluding the starting card)
         const currentEvent = await storage.getRandomHistoricalEvent(
           game.placedEventIds,
           game.categories,
+          game.eras,
         );
 
         if (currentEvent) {
@@ -476,6 +480,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
           const nextEvent = await storage.getRandomHistoricalEvent(
             [...newPlacedEventIds, ...newAttemptedEventIds],
             game.categories,
+            game.eras,
           );
           updateData.currentEventId = nextEvent?.id || null;
         } else {
@@ -548,6 +553,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
             const nextEvent = await storage.getRandomHistoricalEvent(
               [...game.placedEventIds, ...newAttemptedEventIds],
               game.categories,
+              game.eras,
             );
             updateData.currentEventId = nextEvent?.id || null;
           }
@@ -592,7 +598,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
   app.patch("/api/games/:gameId/settings", async (req, res) => {
     try {
       const { gameId } = req.params;
-      const { targetScore, gameMode, allowStealing, categories } = req.body;
+      const { targetScore, gameMode, allowStealing, categories, eras } = req.body;
 
       const game = await storage.getGame(gameId);
       if (!game) {
@@ -632,6 +638,19 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
           return res.status(400).json({ message: "Invalid categories" });
         }
         updateData.categories = categories;
+      }
+
+      if (eras !== undefined) {
+        if (
+          !Array.isArray(eras) ||
+          eras.length === 0 ||
+          !eras.every((c) =>
+            ["Ancient", "Classical", "Modern"].includes(c),
+          )
+        ) {
+          return res.status(400).json({ message: "Invalid eras" });
+        }
+        updateData.eras = eras;
       }
 
       if (gameMode !== undefined && !game.roomCode) {
@@ -822,12 +841,14 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
                   targetScore: responseGame.targetScore,
                   allowStealing: responseGame.allowStealing,
                   categories: responseGame.categories,
+                  eras: responseGame.eras,
                 });
                 
                 // Set the initial turn and get a random event for the first turn
                 const currentEvent = await storage.getRandomHistoricalEvent(
                   newGame.placedEventIds,
                   newGame.categories,
+                  newGame.eras,
                 );
 
                 // Randomly decide who goes first

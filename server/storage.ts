@@ -18,6 +18,7 @@ export type CreateGameOptions = {
   targetScore?: number;
   allowStealing?: boolean;
   categories?: string[];
+  eras?: string[];
 };
 
 export interface IStorage {
@@ -27,6 +28,7 @@ export interface IStorage {
   getRandomHistoricalEvent(
     excludeIds?: string[],
     categories?: string[],
+    eras?: string[],
   ): Promise<HistoricalEvent | undefined>;
 
   // Games
@@ -91,6 +93,7 @@ export class MemStorage implements IStorage {
   async getRandomHistoricalEvent(
     excludeIds?: string[],
     categories?: string[],
+    eras?: string[],
   ): Promise<HistoricalEvent | undefined> {
     let availableEvents = Array.from(this.historicalEvents.values()).filter(
       (event) => !excludeIds?.includes(event.id),
@@ -99,6 +102,12 @@ export class MemStorage implements IStorage {
     if (categories && categories.length > 0) {
       availableEvents = availableEvents.filter((event) =>
         categories.includes(event.category),
+      );
+    }
+
+    if (eras && eras.length > 0) {
+      availableEvents = availableEvents.filter((event) =>
+        eras.includes(event.era),
       );
     }
 
@@ -122,6 +131,7 @@ export class MemStorage implements IStorage {
       targetScore = 10,
       allowStealing = false,
       categories = ["Politics", "Science", "History", "Culture"],
+      eras = ["Ancient", "Classical", "Modern"],
     } = options;
     const id = randomUUID();
 
@@ -131,6 +141,7 @@ export class MemStorage implements IStorage {
       randomStartingEvent = await this.getRandomHistoricalEvent(
         [],
         categories,
+        eras,
       );
       if (randomStartingEvent) break;
     }
@@ -157,6 +168,7 @@ export class MemStorage implements IStorage {
       allowStealing: allowStealing,
       stealingPlayerId: null,
       categories: categories,
+      eras: eras,
     };
 
     this.games.set(id, game);

@@ -7,6 +7,7 @@ interface Settings {
   gameMode: "normal" | "hard";
   allowStealing: boolean;
   categories: string[];
+  eras: string[];
 }
 
 interface SettingsDialogProps {
@@ -39,6 +40,7 @@ export default function SettingsDialog({
   const [categories, setCategories] = useState<string[]>(
     initialSettings.categories,
   );
+  const [eras, setEras] = useState<string[]>(initialSettings.eras);
   const [isScrolled, setIsScrolled] = useState(false);
 
   // Reset internal state when the dialog is opened
@@ -48,6 +50,7 @@ export default function SettingsDialog({
       setGameMode(initialSettings.gameMode);
       setAllowStealing(initialSettings.allowStealing);
       setCategories(initialSettings.categories);
+      setEras(initialSettings.eras);
       setIsScrolled(false); // Reset scroll state
     }
   }, [isOpen, initialSettings]);
@@ -86,12 +89,27 @@ export default function SettingsDialog({
     });
   };
 
+  const availableEras = ["Ancient", "Classical", "Modern"];
+
+  const handleEraChange = (era: string) => {
+    setEras((prev) => {
+      const newEras = prev.includes(era)
+        ? prev.filter((c) => c !== era)
+        : [...prev, era];
+      if (newEras.length === 0) {
+        return prev;
+      }
+      return newEras;
+    });
+  };
+
   const handleApply = () => {
     onSettingsChange({
       targetScore,
       gameMode,
       allowStealing,
       categories,
+      eras,
     });
     onClose();
   };
@@ -229,6 +247,36 @@ export default function SettingsDialog({
                 </p>
               </div>
             )}
+
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Event Eras
+              </label>
+              <p className="text-sm text-gray-500 mb-3">
+                Choose which eras of events to include in the game.
+              </p>
+              <div className="grid grid-cols-2 gap-3">
+                {availableEras.map(
+                  (era) => (
+                    <div key={era} className="flex items-center">
+                      <input
+                        type="checkbox"
+                        id={`era-${era}`}
+                        checked={eras.includes(era)}
+                        onChange={() => handleEraChange(era)}
+                        className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                      />
+                      <label
+                        htmlFor={`era-${era}`}
+                        className="ml-2 text-sm text-gray-700"
+                      >
+                        {era}
+                      </label>
+                    </div>
+                  ),
+                )}
+              </div>
+            </div>
 
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
