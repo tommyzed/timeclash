@@ -39,6 +39,7 @@ interface GameHeaderProps {
     gameMode: "normal" | "hard";
     allowStealing: boolean;
     categories: string[];
+    eras: string[];
   }) => void;
   onNewGame?: () => void;
   playerColor?: string | null;
@@ -335,6 +336,7 @@ export default function GameHeader({
           gameMode: game.gameMode,
           allowStealing: game.allowStealing,
           categories: game.categories,
+          eras: game.eras,
         }}
         isMultiplayer={isMultiplayer ?? false}
         playerColor={playerColor ?? null}
