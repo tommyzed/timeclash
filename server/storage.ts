@@ -258,7 +258,13 @@ export class MemStorage implements IStorage {
 }
 
 import { DrizzleStorage } from "./drizzle";
+import { log } from "./log";
 
 export async function initStorage(): Promise<IStorage> {
-  return DrizzleStorage.build();
+  if (process.env.DATABASE_URL) {
+    log("Using Drizzle storage");
+    return DrizzleStorage.build();
+  }
+  log("Using memory storage");
+  return new MemStorage();
 }
