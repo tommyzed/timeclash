@@ -24,17 +24,35 @@ export default function CurrentCard({ gameState, onPlaceEvent, isPlacing, select
 
   if (!currentEvent) {
     if (game.gameStatus === 'completed') {
-      return (
-        <div className="mt-6 bg-white rounded-xl shadow-sm p-6" data-testid="game-completed">
-          <div className="text-center">
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <i className="fas fa-trophy text-2xl text-green-600"></i>
+      const playerWon = isMultiplayer
+        ? game.winnerPlayerId === currentPlayerId
+        : game.winnerPlayerId !== 'computer';
+
+      if (playerWon) {
+        return (
+          <div className="mt-6 bg-white rounded-xl shadow-sm p-6" data-testid="game-completed">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i className="fas fa-trophy text-2xl text-green-600"></i>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Congratulations!</h3>
+              <p className="text-gray-600">You've successfully completed your timeline!</p>
             </div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">Congratulations!</h3>
-            <p className="text-gray-600">You've successfully completed your timeline!</p>
           </div>
-        </div>
-      );
+        );
+      } else {
+        return (
+          <div className="mt-6 bg-white rounded-xl shadow-sm p-6" data-testid="game-completed">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i className="fas fa-times text-2xl text-red-600"></i>
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Game Over</h3>
+              <p className="text-gray-600">You did not successfully complete your timeline!</p>
+            </div>
+          </div>
+        );
+      }
     }
     
     return (
