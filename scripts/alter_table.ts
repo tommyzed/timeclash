@@ -16,7 +16,7 @@ async function run() {
   try {
     console.log("Applying database alteration...");
     await client.query(
-      `ALTER TABLE "games" ADD COLUMN "categories" text[] NOT NULL DEFAULT '{"Politics", "Science", "History", "Culture"}'`
+      `ALTER TABLE "historical_events" ADD COLUMN "era" text[] NOT NULL DEFAULT '{"Modern"}'`
     );
     console.log("Database alteration applied successfully.");
   } catch (err) {
