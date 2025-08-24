@@ -12,7 +12,7 @@ def update_database():
         print("Error: DATABASE_URL environment variable not set.")
         return
 
-    events_file = '../server/events.json'
+    events_file = './server/events.json'
 
     try:
         print(f"Reading event data from {events_file}...")
@@ -33,10 +33,10 @@ def update_database():
         for event in events:
             cur.execute(
                 """
-                INSERT INTO historical_events (id, title, description, year, category)
-                VALUES (%s, %s, %s, %s, %s)
+                INSERT INTO historical_events (id, title, description, year, category, era)
+                VALUES (%s, %s, %s, %s, %s, %s)
                 """,
-                (event['id'], event['title'], event['description'], event['year'], event['category'])
+                (event['id'], event['title'], event['description'], event['year'], event['category'], event['era'])
             )
             print(f"Inserted {event['id']} into the database.")
 

@@ -16,7 +16,7 @@ async function run() {
   try {
     console.log("Applying database alteration...");
     await client.query(
-      `ALTER TABLE "historical_events" ADD COLUMN "era" text[] NOT NULL DEFAULT '{"Modern"}'`
+      `ALTER TABLE "historical_events" DROP COLUMN "era"`
     );
     console.log("Database alteration applied successfully.");
   } catch (err) {
