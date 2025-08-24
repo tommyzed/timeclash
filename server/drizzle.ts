@@ -85,6 +85,7 @@ export class DrizzleStorage implements IStorage {
   async getRandomHistoricalEvent(
     excludeIds?: string[],
     categories?: string[],
+    eras?: string[],
   ): Promise<schema.HistoricalEvent | undefined> {
     await this.ensureCacheIsFresh();
     let availableEvents = this.historicalEventsCache?.filter(
@@ -94,6 +95,12 @@ export class DrizzleStorage implements IStorage {
     if (categories && categories.length > 0) {
       availableEvents = availableEvents?.filter((event) =>
         categories.includes(event.category),
+      );
+    }
+
+    if (eras && eras.length > 0) {
+      availableEvents = availableEvents?.filter((event) =>
+        eras.includes(event.era),
       );
     }
 
@@ -121,10 +128,12 @@ export class DrizzleStorage implements IStorage {
       targetScore = 10,
       allowStealing = false,
       categories = ["Politics", "Science", "History", "Culture"],
+      eras = ["Ancient", "Classical", "Modern"],
     } = options;
     const randomStartingEvent = await this.getRandomHistoricalEvent(
       [],
       categories,
+      eras,
     );
     const startingEventId = randomStartingEvent?.id || "1";
 
@@ -138,6 +147,7 @@ export class DrizzleStorage implements IStorage {
       maxAttempts: gameMode === "hard" ? Math.floor(targetScore * 1.5) : null,
       allowStealing: allowStealing,
       categories: categories,
+      eras: eras,
     };
 
     const result = await db.insert(schema.games).values(newGame).returning();

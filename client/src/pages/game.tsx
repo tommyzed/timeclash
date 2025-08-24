@@ -408,7 +408,11 @@ export default function Game() {
         localStorage.getItem("categories") ||
           '["Politics", "Science", "History", "Culture"]',
       );
-      createGameMutation.mutate({ gameMode, targetScore, categories });
+      const eras = JSON.parse(
+        localStorage.getItem("eras") ||
+          '["Ancient", "Classical", "Modern"]',
+      );
+      createGameMutation.mutate({ gameMode, targetScore, categories, eras });
     }
   }, []);
 
@@ -518,11 +522,13 @@ export default function Game() {
     gameMode: "normal" | "hard";
     allowStealing: boolean;
     categories: string[];
+    eras: string[];
   }) => {
     if (gameId) {
       try {
         await apiRequest("PATCH", `/api/games/${gameId}/settings`, settings);
         localStorage.setItem("categories", JSON.stringify(settings.categories));
+        localStorage.setItem("eras", JSON.stringify(settings.eras));
         queryClient.invalidateQueries({ queryKey: ["/api/games", gameId] });
       } catch (error) {
         console.error("Failed to update settings:", error);
