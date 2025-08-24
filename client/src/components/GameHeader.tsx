@@ -333,7 +333,7 @@ export default function GameHeader({
         }}
         initialSettings={{
           targetScore: game.targetScore,
-          gameMode: game.gameMode,
+          gameMode: game.gameMode as "normal" | "hard",
           allowStealing: game.allowStealing,
           categories: game.categories,
           eras: game.eras,

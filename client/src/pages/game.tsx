@@ -65,6 +65,7 @@ export default function Game() {
       gameMode?: "normal" | "hard";
       targetScore?: number;
       categories?: string[];
+      eras?: string[];
     }) => {
       // Explicitly specify singlePlayer flag based on current context
       const isSinglePlayerGame = !playerId; // If no playerId, it's single player
@@ -508,7 +509,11 @@ export default function Game() {
         localStorage.getItem("categories") ||
           '["Politics", "Science", "History", "Culture"]',
       );
-      createGameMutation.mutate({ gameMode, targetScore, categories });
+      const eras = JSON.parse(
+        localStorage.getItem("eras") ||
+          '["Ancient", "Classical", "Modern"]',
+      );
+      createGameMutation.mutate({ gameMode, targetScore, categories, eras });
     }
   };
 
