@@ -40,7 +40,7 @@ export default function SettingsDialog({
   const [categories, setCategories] = useState<string[]>(
     initialSettings.categories,
   );
-  const [eras, setEras] = useState<string[]>(initialSettings.eras);
+  const [eras, setEras] = useState<string[]>(initialSettings.eras || []);
   const [isScrolled, setIsScrolled] = useState(false);
 
   // Reset internal state when the dialog is opened
@@ -50,7 +50,7 @@ export default function SettingsDialog({
       setGameMode(initialSettings.gameMode);
       setAllowStealing(initialSettings.allowStealing);
       setCategories(initialSettings.categories);
-      setEras(initialSettings.eras);
+      setEras(initialSettings.eras || []);
       setIsScrolled(false); // Reset scroll state
     }
   }, [isOpen, initialSettings]);
