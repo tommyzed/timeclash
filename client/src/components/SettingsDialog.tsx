@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { X, HelpCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -31,6 +31,8 @@ export default function SettingsDialog({
   onPlayerColorChange,
   onShowRules,
 }: SettingsDialogProps) {
+  const dialogRef = useRef<HTMLDivElement>(null);
+
   // Internal state for the dialog
   const [targetScore, setTargetScore] = useState(initialSettings.targetScore);
   const [gameMode, setGameMode] = useState(initialSettings.gameMode);
@@ -66,6 +68,26 @@ export default function SettingsDialog({
       document.body.style.overflow = "unset";
     };
   }, [isOpen]);
+
+  // Effect to handle clicks outside the dialog
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dialogRef.current &&
+        !dialogRef.current.contains(event.target as Node)
+      ) {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen, onClose]);
 
   const availableColors = [
     "blue",
@@ -127,7 +149,10 @@ export default function SettingsDialog({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-lg max-w-md w-full flex flex-col max-h-[90vh]">
+      <div
+        ref={dialogRef}
+        className="bg-white rounded-lg max-w-md w-full flex flex-col max-h-[90vh]"
+      >
         <div
           className={cn(
             "flex items-center justify-between p-4 border-b bg-blue-100 transition-shadow",
