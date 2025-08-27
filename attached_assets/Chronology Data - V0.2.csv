@@ -253,7 +253,7 @@ Event ID,Year,Event Description,Category,Era
 252,1854,"The Crimean War begins, pitting Russia against an alliance of Britain, France, and the Ottoman Empire.",Politics/War,Modern Era
 253,1855,The Bessemer process for mass-producing steel is patented by Henry Bessemer.,Science/Tech,Modern Era
 254,1856,"Parkesine, the first man-made plastic, is invented by Alexander Parkes.",Science/Tech,Modern Era
-255,1857,The Indian Rebellion of 1857 begins against British rule.,Politics/War,Modern Era
+255,1857,The Indian Rebellion begins against British rule.,Politics/War,Modern Era
 256,1859,Charles Darwin publishes On the Origin of Species.,Science/Tech,Modern Era
 257,1859,"The Suez Canal construction begins, connecting the Mediterranean and Red Seas.",Science/Tech,Modern Era
 258,1861,The American Civil War begins with the Confederate attack on Fort Sumter.,Politics/War,Modern Era
@@ -388,7 +388,7 @@ Event ID,Year,Event Description,Category,Era
 387,1928,"Alexander Fleming discovers penicillin, a key breakthrough in medicine.",Science/Tech,Modern Era
 388,1928,"The first Mickey Mouse cartoon, ""Steamboat Willie,"" is released by Walt Disney.",Culture,Modern Era
 389,1928,Bubble gum is invented by Walter Diemer.,Culture,Modern Era
-390,1929,"The Wall Street Crash of 1929 occurs on ""Black Tuesday,"" triggering the Great Depression.",History,Modern Era
+390,1929,"The Wall Street Crash occurs on ""Black Tuesday,"" triggering the Great Depression.",History,Modern Era
 391,1929,The first Academy Awards ceremony is held in Hollywood.,Culture,Modern Era
 392,1929,Edwin Hubble provides evidence that the universe is expanding.,Science/Tech,Modern Era
 393,1930,The planet Pluto is discovered by astronomer Clyde Tombaugh at the Lowell Observatory.,Science/Tech,Modern Era
@@ -409,7 +409,7 @@ Event ID,Year,Event Description,Category,Era
 408,1935,The board game Monopoly is first sold by Parker Brothers.,Culture,Modern Era
 409,1935,"Italy invades Ethiopia, demonstrating the ineffectiveness of the League of Nations.",Politics/War,Modern Era
 410,1936,"The Spanish Civil War begins, serving as a prelude to World War II.",Politics/War,Modern Era
-411,1936,"Jesse Owens wins four gold medals at the 1936 Summer Olympics in Berlin, Germany.",Culture,Modern Era
+411,1936,"Jesse Owens wins four gold medals at the Summer Olympics in Berlin, Germany.",Culture,Modern Era
 412,1936,The Hoover Dam is completed on the Colorado River.,Science/Tech,Modern Era
 413,1937,"The German airship Hindenburg explodes and burns while landing in Lakehurst, New Jersey.",Culture,Modern Era
 414,1937,The Golden Gate Bridge opens to traffic in San Francisco.,Science/Tech,Modern Era
@@ -503,12 +503,12 @@ Event ID,Year,Event Description,Category,Era
 502,1963,"U.S. President John F. Kennedy is assassinated in Dallas, Texas.",Politics/War,Modern Era
 503,1963,"The first woman in space, Valentina Tereshkova, orbits the Earth.",History,Modern Era
 504,1963,The audio cassette is invented by Philips.,Science/Tech,Modern Era
-505,1964,"The Civil Rights Act of 1964 is signed into law in the United States, outlawing major forms of discrimination.",History,Modern Era
+505,1964,"The Civil Rights Act is signed into law in the United States, outlawing major forms of discrimination.",History,Modern Era
 506,1964,"The Beatles make their first appearance on ""The Ed Sullivan Show,"" launching the ""British Invasion"" in music.",Culture,Modern Era
 507,1964,The Gulf of Tonkin Resolution authorizes U.S. President Lyndon B. Johnson to escalate military action in Vietnam.,Politics/War,Modern Era
 508,1964,"The Ford Mustang is introduced, creating the ""pony car"" class of automobiles.",Culture,Modern Era
 509,1965,The first American combat troops are deployed to South Vietnam.,Politics/War,Modern Era
-510,1965,"The Voting Rights Act of 1965 is signed into law, protecting the voting rights of African Americans.",History,Modern Era
+510,1965,"The Voting Rights Act is signed into law, protecting the voting rights of African Americans.",History,Modern Era
 511,1965,The first spacewalk is performed by Soviet cosmonaut Alexei Leonov.,History,Modern Era
 512,1966,The Cultural Revolution is initiated by Mao Zedong in China.,Politics/War,Modern Era
 513,1966,"The television series ""Star Trek"" premieres in the United States.",Culture,Modern Era
@@ -536,7 +536,7 @@ Event ID,Year,Event Description,Category,Era
 535,1972,"The first scientific hand-held calculator, the HP-35, is introduced.",Science/Tech,Modern Era
 536,1972,"The video game ""Pong"" is released by Atari, marking the beginning of the arcade video game industry.",Culture,Modern Era
 537,1973,The U.S. Supreme Court's Roe v. Wade decision affirms a woman's right to an abortion.,History,Modern Era
-538,1973,The Yom Kippur War leads to the 1973 oil crisis as OPEC issues an embargo.,Politics/War,Modern Era
+538,1973,The Yom Kippur War leads to an oil crisis as OPEC issues an embargo.,Politics/War,Modern Era
 539,1973,The Sydney Opera House is officially opened in Australia.,Culture,Modern Era
 540,1974,U.S. President Richard Nixon resigns from office due to the Watergate scandal.,Politics/War,Modern Era
 541,1974,Hank Aaron breaks Babe Ruth's career home run record in baseball.,Culture,Modern Era
@@ -603,7 +603,7 @@ Event ID,Year,Event Description,Category,Era
 602,1994,The first PlayStation console is released by Sony in Japan.,Culture,Modern Era
 603,1995,"A truck bomb destroys the Alfred P. Murrah Federal Building in Oklahoma City, killing 168 people.",Politics/War,Modern Era
 604,1995,The Global Positioning System (GPS) becomes fully operational for worldwide use.,Science/Tech,Modern Era
-605,1995,Microsoft releases the Windows 95 operating system.,Science/Tech,Modern Era
+605,1995,Microsoft releases the first of its Windows 9x family of consumer-oriented operating systems.,Science/Tech,Modern Era
 606,1995,"The first ""Toy Story"" film is released, the first feature-length computer-animated film.",Culture,Modern Era
 607,1996,"Dolly the sheep, the first mammal to be successfully cloned from an adult cell, is born in Scotland.",Science/Tech,Modern Era
 608,1996,"The Taliban seize control of Kabul, Afghanistan, and establish a strict Islamic regime.",Politics/War,Modern Era
@@ -618,82 +618,80 @@ Event ID,Year,Event Description,Category,Era
 617,1999,The Euro currency is introduced electronically in 11 European Union countries.,History,Modern Era
 618,1999,The world's population is estimated to have reached six billion people.,History,Modern Era
 619,1999,"The Columbine High School massacre occurs in Colorado, sparking a national debate on gun control.",History,Modern Era
-620,2000,The Y2K bug scare ends with minimal disruption as the new millennium begins.,Science/Tech,Modern Era
-621,2000,The first resident crew arrives at the International Space Station.,History,Modern Era
-622,2001,Terrorists attack the World Trade Center in New York and the Pentagon in Virginia on September 11.,Politics/War,Modern Era
-623,2001,The United States and its allies invade Afghanistan in response to the 9/11 attacks.,Politics/War,Modern Era
-624,2001,"Apple releases the iPod, a portable media player that revolutionizes the music industry.",Culture,Modern Era
-625,2001,"Wikipedia, a free, open-content online encyclopedia, is launched.",Science/Tech,Modern Era
-626,2002,The Euro replaces national currencies as physical coins and banknotes in 12 European countries.,History,Modern Era
-627,2002,The International Criminal Court (ICC) is established to prosecute international crimes.,Politics/War,Modern Era
-628,2003,"The Space Shuttle Columbia disintegrates during re-entry into Earth's atmosphere, killing all seven astronauts.",History,Modern Era
-629,2003,"A U.S.-led coalition invades Iraq, leading to the overthrow of Saddam Hussein.",Politics/War,Modern Era
-630,2003,"The Human Genome Project is completed, successfully sequencing all genes of a human being.",Science/Tech,Modern Era
-631,2004,"Facebook is launched by Mark Zuckerberg, initially for Harvard students.",Culture,Modern Era
-632,2004,"A massive earthquake and tsunami in the Indian Ocean kills over 230,000 people in 14 countries.",History,Modern Era
-633,2004,"The Mars rovers Spirit and Opportunity land on Mars, beginning years of exploration.",History,Modern Era
-634,2005,"Hurricane Katrina makes landfall on the U.S. Gulf Coast, causing catastrophic damage in New Orleans.",History,Modern Era
-635,2005,"YouTube, a video-sharing website, is launched to the public.",Culture,Modern Era
-636,2005,Angela Merkel becomes the first female Chancellor of Germany.,Politics/War,Modern Era
-637,2006,"Twitter, a microblogging and social networking service, is launched.",Culture,Modern Era
-638,2006,"The International Astronomical Union reclassifies Pluto as a ""dwarf planet.""",Science/Tech,Modern Era
-639,2006,North Korea conducts its first successful nuclear test.,Politics/War,Modern Era
-640,2006,"The Nintendo Wii is released, introducing motion-controlled gaming to a mass market.",Culture,Modern Era
-641,2007,"Apple releases the first iPhone, pioneering the modern smartphone.",Science/Tech,Modern Era
-642,2007,Nancy Pelosi becomes the first female Speaker of the U.S. House of Representatives.,Politics/War,Modern Era
-643,2008,"A global financial crisis begins, leading to the most severe economic recession since the Great Depression.",History,Modern Era
-644,2008,Barack Obama is elected as the first African-American President of the United States.,Politics/War,Modern Era
-645,2008,The Large Hadron Collider at CERN is first powered on.,Science/Tech,Modern Era
-646,2008,"The first Marvel Cinematic Universe (MCU) film, ""Iron Man,"" is released.",Culture,Modern Era
-647,2009,"Bitcoin is created, becoming the first decentralized cryptocurrency.",Science/Tech,Modern Era
-648,2009,"The ""Miracle on the Hudson"" occurs when US Airways Flight 1549 successfully ditches in the Hudson River.",History,Modern Era
-649,2010,"The Arab Spring, a series of pro-democracy uprisings, begins in Tunisia and spreads across the Middle East.",Politics/War,Modern Era
-650,2010,"The Deepwater Horizon oil rig explodes in the Gulf of Mexico, causing a massive environmental disaster.",History,Modern Era
-651,2010,"Apple releases the iPad, popularizing the tablet computer market.",Science/Tech,Modern Era
-652,2010,The photo-sharing social media service Instagram is launched.,Culture,Modern Era
-653,2011,U.S. Navy SEALs kill al-Qaeda leader Osama bin Laden in a raid in Pakistan.,Politics/War,Modern Era
-654,2011,"The final flight of the U.S. Space Shuttle program, STS-135, lands at Kennedy Space Center.",History,Modern Era
-655,2011,The world's population is estimated to have reached seven billion people.,History,Modern Era
-656,2012,"The Higgs boson, a fundamental particle, is discovered by scientists at CERN's Large Hadron Collider.",Science/Tech,Modern Era
-657,2012,The Curiosity rover successfully lands on Mars to begin its exploration mission.,History,Modern Era
-658,2012,Hurricane Sandy causes widespread destruction along the U.S. East Coast.,History,Modern Era
-659,2013,The Black Lives Matter movement is founded in the United States.,History,Modern Era
-660,2013,Edward Snowden leaks classified documents from the U.S. National Security Agency (NSA).,Politics/War,Modern Era
-661,2013,"Pope Benedict XVI resigns, becoming the first pope to do so in nearly 600 years.",History,Modern Era
-662,2014,"Russia annexes the Crimean Peninsula from Ukraine, sparking an international crisis.",Politics/War,Modern Era
-663,2014,The Islamic State of Iraq and Syria (ISIS) declares a caliphate in territory it controls.,Politics/War,Modern Era
-664,2014,The Rosetta spacecraft's Philae lander successfully lands on a comet.,History,Modern Era
-665,2015,The U.S. Supreme Court rules in Obergefell v. Hodges that same-sex marriage is a constitutional right.,History,Modern Era
-666,2015,The Paris Agreement on climate change is adopted by 196 countries.,Politics/War,Modern Era
-667,2015,NASA's New Horizons spacecraft performs the first-ever flyby of Pluto.,History,Modern Era
-668,2015,"The musical ""Hamilton"" premieres on Broadway, becoming a cultural phenomenon.",Culture,Modern Era
-669,2016,"The United Kingdom votes to leave the European Union in the ""Brexit"" referendum.",Politics/War,Modern Era
-670,2016,Donald Trump is elected the 45th President of the United States in a major political upset.,Politics/War,Modern Era
-671,2016,The augmented reality game Pokémon Go becomes a global phenomenon.,Culture,Modern Era
-672,2017,"The #MeToo movement goes viral on social media, raising awareness of sexual harassment and assault.",History,Modern Era
-673,2017,The first direct observation of a merger of two neutron stars is announced.,Science/Tech,Modern Era
-674,2018,A major trade war begins between the United States and China.,Politics/War,Modern Era
-675,2018,"The ""Yellow Vests"" protests begin in France against fuel tax increases and economic inequality.",Politics/War,Modern Era
-676,2019,The first-ever image of a black hole is captured by the Event Horizon Telescope project.,History,Modern Era
-677,2019,Massive pro-democracy protests erupt in Hong Kong against a proposed extradition bill.,Politics/War,Modern Era
-678,2019,A fire causes extensive damage to the Notre-Dame Cathedral in Paris.,History,Modern Era
-679,2020,The World Health Organization declares the COVID-19 outbreak a global pandemic.,History,Modern Era
-680,2020,The murder of George Floyd by a police officer sparks global protests against racial injustice.,History,Modern Era
-681,2020,SpaceX becomes the first private company to launch astronauts to the International Space Station.,History,Modern Era
-682,2020,Joe Biden is elected the 46th President of the United States.,Politics/War,Modern Era
-683,2021,A mob of protesters storms the U.S. Capitol building in an attempt to overturn the 2020 election results.,Politics/War,Modern Era
-684,2021,"The James Webb Space Telescope, the successor to Hubble, is successfully launched.",History,Modern Era
-685,2021,The Taliban retake control of Afghanistan following the withdrawal of U.S. troops.,Politics/War,Modern Era
-686,2021,The social media app TikTok surpasses Google as the most popular website of the year.,Culture,Modern Era
-687,2022,"Russia launches a full-scale invasion of Ukraine, starting the largest conventional war in Europe since WWII.",Politics/War,Modern Era
-688,2022,The global population officially reaches eight billion people.,History,Modern Era
-689,2022,"The AI chatbot ChatGPT is released to the public, sparking a massive boom in generative AI development.",Science/Tech,Modern Era
-690,2022,Queen Elizabeth II of the United Kingdom dies after a reign of 70 years.,Politics/War,Modern Era
-691,2023,India surpasses China to become the world's most populous nation.,History,Modern Era
-692,2023,"Hamas launches a major attack on Israel, leading to a declaration of war and a subsequent invasion of Gaza.",Politics/War,Modern Era
-693,2023,India's Chandrayaan-3 mission successfully lands a rover on the Moon's south pole.,History,Modern Era
-694,2023,"The film ""Barbie"" becomes the highest-grossing film of the year and a cultural phenomenon.",Culture,Modern Era
-695,2024,"The 2024 Summer Olympics are held in Paris, France.",Culture,Modern Era
-696,2024,The Francis Scott Key Bridge in Baltimore collapses after being struck by a cargo ship.,History,Modern Era
-697,2024,The first-ever direct elections for the European Parliament are held after the Brexit reforms.,Politics/War,Modern Era
-698,2025,NASA's Artemis II mission is scheduled to send astronauts on a flyby of the Moon.,History,Modern Era
+620,2000,The first resident crew arrives at the International Space Station.,History,Modern Era
+621,2001,Terrorists attack the World Trade Center in New York and the Pentagon in Virginia on September 11.,Politics/War,Modern Era
+622,2001,The United States and its allies invade Afghanistan in response to the 9/11 attacks.,Politics/War,Modern Era
+623,2001,"Apple releases the iPod, a portable media player that revolutionizes the music industry.",Culture,Modern Era
+624,2001,"Wikipedia, a free, open-content online encyclopedia, is launched.",Science/Tech,Modern Era
+625,2002,The Euro replaces national currencies as physical coins and banknotes in 12 European countries.,History,Modern Era
+626,2002,The International Criminal Court (ICC) is established to prosecute international crimes.,Politics/War,Modern Era
+627,2003,"The Space Shuttle Columbia disintegrates during re-entry into Earth's atmosphere, killing all seven astronauts.",History,Modern Era
+628,2003,"A U.S.-led coalition invades Iraq, leading to the overthrow of Saddam Hussein.",Politics/War,Modern Era
+629,2003,"The Human Genome Project is completed, successfully sequencing all genes of a human being.",Science/Tech,Modern Era
+630,2004,"Facebook is launched by Mark Zuckerberg, initially for Harvard students.",Culture,Modern Era
+631,2004,"A massive earthquake and tsunami in the Indian Ocean kills over 230,000 people in 14 countries.",History,Modern Era
+632,2004,"The Mars rovers Spirit and Opportunity land on Mars, beginning years of exploration.",History,Modern Era
+633,2005,"Hurricane Katrina makes landfall on the U.S. Gulf Coast, causing catastrophic damage in New Orleans.",History,Modern Era
+634,2005,"YouTube, a video-sharing website, is launched to the public.",Culture,Modern Era
+635,2005,Angela Merkel becomes the first female Chancellor of Germany.,Politics/War,Modern Era
+636,2006,"Twitter, a microblogging and social networking service, is launched.",Culture,Modern Era
+637,2006,"The International Astronomical Union reclassifies Pluto as a ""dwarf planet.""",Science/Tech,Modern Era
+638,2006,North Korea conducts its first successful nuclear test.,Politics/War,Modern Era
+639,2006,"The Nintendo Wii is released, introducing motion-controlled gaming to a mass market.",Culture,Modern Era
+640,2007,"Apple releases the first iPhone, pioneering the modern smartphone.",Science/Tech,Modern Era
+641,2007,Nancy Pelosi becomes the first female Speaker of the U.S. House of Representatives.,Politics/War,Modern Era
+642,2008,"A global financial crisis begins, leading to the most severe economic recession since the Great Depression.",History,Modern Era
+643,2008,Barack Obama is elected as the first African-American President of the United States.,Politics/War,Modern Era
+644,2008,The Large Hadron Collider at CERN is first powered on.,Science/Tech,Modern Era
+645,2008,"The first Marvel Cinematic Universe (MCU) film, ""Iron Man,"" is released.",Culture,Modern Era
+646,2009,"Bitcoin is created, becoming the first decentralized cryptocurrency.",Science/Tech,Modern Era
+647,2009,"The ""Miracle on the Hudson"" occurs when US Airways Flight 1549 successfully ditches in the Hudson River.",History,Modern Era
+648,2010,"The Arab Spring, a series of pro-democracy uprisings, begins in Tunisia and spreads across the Middle East.",Politics/War,Modern Era
+649,2010,"The Deepwater Horizon oil rig explodes in the Gulf of Mexico, causing a massive environmental disaster.",History,Modern Era
+650,2010,"Apple releases the iPad, popularizing the tablet computer market.",Science/Tech,Modern Era
+651,2010,The photo-sharing social media service Instagram is launched.,Culture,Modern Era
+652,2011,U.S. Navy SEALs kill al-Qaeda leader Osama bin Laden in a raid in Pakistan.,Politics/War,Modern Era
+653,2011,"The final flight of the U.S. Space Shuttle program, STS-135, lands at Kennedy Space Center.",History,Modern Era
+654,2011,The world's population is estimated to have reached seven billion people.,History,Modern Era
+655,2012,"The Higgs boson, a fundamental particle, is discovered by scientists at CERN's Large Hadron Collider.",Science/Tech,Modern Era
+656,2012,The Curiosity rover successfully lands on Mars to begin its exploration mission.,History,Modern Era
+657,2012,Hurricane Sandy causes widespread destruction along the U.S. East Coast.,History,Modern Era
+658,2013,The Black Lives Matter movement is founded in the United States.,History,Modern Era
+659,2013,Edward Snowden leaks classified documents from the U.S. National Security Agency (NSA).,Politics/War,Modern Era
+660,2013,"Pope Benedict XVI resigns, becoming the first pope to do so in nearly 600 years.",History,Modern Era
+661,2014,"Russia annexes the Crimean Peninsula from Ukraine, sparking an international crisis.",Politics/War,Modern Era
+662,2014,The Islamic State of Iraq and Syria (ISIS) declares a caliphate in territory it controls.,Politics/War,Modern Era
+663,2014,The Rosetta spacecraft's Philae lander successfully lands on a comet.,History,Modern Era
+664,2015,The U.S. Supreme Court rules in Obergefell v. Hodges that same-sex marriage is a constitutional right.,History,Modern Era
+665,2015,The Paris Agreement on climate change is adopted by 196 countries.,Politics/War,Modern Era
+666,2015,NASA's New Horizons spacecraft performs the first-ever flyby of Pluto.,History,Modern Era
+667,2015,"The musical ""Hamilton"" premieres on Broadway, becoming a cultural phenomenon.",Culture,Modern Era
+668,2016,"The United Kingdom votes to leave the European Union in the ""Brexit"" referendum.",Politics/War,Modern Era
+669,2016,Donald Trump is elected the 45th President of the United States in a major political upset.,Politics/War,Modern Era
+670,2016,The augmented reality game Pokémon Go becomes a global phenomenon.,Culture,Modern Era
+671,2017,"The #MeToo movement goes viral on social media, raising awareness of sexual harassment and assault.",History,Modern Era
+672,2017,The first direct observation of a merger of two neutron stars is announced.,Science/Tech,Modern Era
+673,2018,A major trade war begins between the United States and China.,Politics/War,Modern Era
+674,2018,"The ""Yellow Vests"" protests begin in France against fuel tax increases and economic inequality.",Politics/War,Modern Era
+675,2019,The first-ever image of a black hole is captured by the Event Horizon Telescope project.,History,Modern Era
+676,2019,Massive pro-democracy protests erupt in Hong Kong against a proposed extradition bill.,Politics/War,Modern Era
+677,2019,A fire causes extensive damage to the Notre-Dame Cathedral in Paris.,History,Modern Era
+678,2020,The World Health Organization declares the COVID-19 outbreak a global pandemic.,History,Modern Era
+679,2020,The murder of George Floyd by a police officer sparks global protests against racial injustice.,History,Modern Era
+680,2020,SpaceX becomes the first private company to launch astronauts to the International Space Station.,History,Modern Era
+681,2020,Joe Biden is elected the 46th President of the United States.,Politics/War,Modern Era
+682,2021,A mob of protesters storms the U.S. Capitol building in an attempt to overturn the Biden's election win.,Politics/War,Modern Era
+683,2021,"The James Webb Space Telescope, the successor to Hubble, is successfully launched.",History,Modern Era
+684,2021,The Taliban retake control of Afghanistan following the withdrawal of U.S. troops.,Politics/War,Modern Era
+685,2021,The social media app TikTok surpasses Google as the most popular website of the year.,Culture,Modern Era
+686,2022,"Russia launches a full-scale invasion of Ukraine, starting the largest conventional war in Europe since WWII.",Politics/War,Modern Era
+687,2022,The global population officially reaches eight billion people.,History,Modern Era
+688,2022,"The AI chatbot ChatGPT is released to the public, sparking a massive boom in generative AI development.",Science/Tech,Modern Era
+689,2022,Queen Elizabeth II of the United Kingdom dies after a reign of 70 years.,Politics/War,Modern Era
+690,2023,India surpasses China to become the world's most populous nation.,History,Modern Era
+691,2023,"Hamas launches a major attack on Israel, leading to a declaration of war and a subsequent invasion of Gaza.",Politics/War,Modern Era
+692,2023,India's Chandrayaan-3 mission successfully lands a rover on the Moon's south pole.,History,Modern Era
+693,2023,"The film ""Barbie"" becomes the highest-grossing film of the year and a cultural phenomenon.",Culture,Modern Era
+694,2024,The Francis Scott Key Bridge in Baltimore collapses after being struck by a cargo ship.,History,Modern Era
+695,2024,The first-ever direct elections for the European Parliament are held after the Brexit reforms.,Politics/War,Modern Era
+696,2025,NASA's Artemis II mission is scheduled to send astronauts on a flyby of the Moon.,History,Modern Era

@@ -2033,8 +2033,8 @@
   },
   {
     "id": "255",
-    "title": "The Indian Rebellion of 1857 begins against British rule.",
-    "description": "The Indian Rebellion of 1857 begins against British rule.",
+    "title": "The Indian Rebellion begins against British rule.",
+    "description": "The Indian Rebellion begins against British rule.",
     "year": 1857,
     "category": "Politics",
     "era": "Modern"
@@ -3113,8 +3113,8 @@
   },
   {
     "id": "390",
-    "title": "The Wall Street Crash of 1929 occurs on \"Black Tuesday,\" triggering the Great Depression.",
-    "description": "The Wall Street Crash of 1929 occurs on \"Black Tuesday,\" triggering the Great Depression.",
+    "title": "The Wall Street Crash occurs on \"Black Tuesday,\" triggering the Great Depression.",
+    "description": "The Wall Street Crash occurs on \"Black Tuesday,\" triggering the Great Depression.",
     "year": 1929,
     "category": "History",
     "era": "Modern"
@@ -3281,8 +3281,8 @@
   },
   {
     "id": "411",
-    "title": "Jesse Owens wins four gold medals at the 1936 Summer Olympics in Berlin, Germany.",
-    "description": "Jesse Owens wins four gold medals at the 1936 Summer Olympics in Berlin, Germany.",
+    "title": "Jesse Owens wins four gold medals at the Summer Olympics in Berlin, Germany.",
+    "description": "Jesse Owens wins four gold medals at the Summer Olympics in Berlin, Germany.",
     "year": 1936,
     "category": "Culture",
     "era": "Modern"
@@ -4033,8 +4033,8 @@
   },
   {
     "id": "505",
-    "title": "The Civil Rights Act of 1964 is signed into law in the United States, outlawing major forms of discrimination.",
-    "description": "The Civil Rights Act of 1964 is signed into law in the United States, outlawing major forms of discrimination.",
+    "title": "The Civil Rights Act is signed into law in the United States, outlawing major forms of discrimination.",
+    "description": "The Civil Rights Act is signed into law in the United States, outlawing major forms of discrimination.",
     "year": 1964,
     "category": "History",
     "era": "Modern"
@@ -4073,8 +4073,8 @@
   },
   {
     "id": "510",
-    "title": "The Voting Rights Act of 1965 is signed into law, protecting the voting rights of African Americans.",
-    "description": "The Voting Rights Act of 1965 is signed into law, protecting the voting rights of African Americans.",
+    "title": "The Voting Rights Act is signed into law, protecting the voting rights of African Americans.",
+    "description": "The Voting Rights Act is signed into law, protecting the voting rights of African Americans.",
     "year": 1965,
     "category": "History",
     "era": "Modern"
@@ -4297,8 +4297,8 @@
   },
   {
     "id": "538",
-    "title": "The Yom Kippur War leads to the 1973 oil crisis as OPEC issues an embargo.",
-    "description": "The Yom Kippur War leads to the 1973 oil crisis as OPEC issues an embargo.",
+    "title": "The Yom Kippur War leads to an oil crisis as OPEC issues an embargo.",
+    "description": "The Yom Kippur War leads to an oil crisis as OPEC issues an embargo.",
     "year": 1973,
     "category": "Politics",
     "era": "Modern"
@@ -4833,8 +4833,8 @@
   },
   {
     "id": "605",
-    "title": "Microsoft releases the Windows 95 operating system.",
-    "description": "Microsoft releases the Windows 95 operating system.",
+    "title": "Microsoft releases the first of its Windows 9x family of consumer-oriented operating systems.",
+    "description": "Microsoft releases the first of its Windows 9x family of consumer-oriented operating systems.",
     "year": 1995,
     "category": "Science",
     "era": "Modern"
@@ -4953,14 +4953,6 @@
   },
   {
     "id": "620",
-    "title": "The Y2K bug scare ends with minimal disruption as the new millennium begins.",
-    "description": "The Y2K bug scare ends with minimal disruption as the new millennium begins.",
-    "year": 2000,
-    "category": "Science",
-    "era": "Modern"
-  },
-  {
-    "id": "621",
     "title": "The first resident crew arrives at the International Space Station.",
     "description": "The first resident crew arrives at the International Space Station.",
     "year": 2000,
@@ -4968,7 +4960,7 @@
     "era": "Modern"
   },
   {
-    "id": "622",
+    "id": "621",
     "title": "Terrorists attack the World Trade Center in New York and the Pentagon in Virginia on September 11.",
     "description": "Terrorists attack the World Trade Center in New York and the Pentagon in Virginia on September 11.",
     "year": 2001,
@@ -4976,7 +4968,7 @@
     "era": "Modern"
   },
   {
-    "id": "623",
+    "id": "622",
     "title": "The United States and its allies invade Afghanistan in response to the 9/11 attacks.",
     "description": "The United States and its allies invade Afghanistan in response to the 9/11 attacks.",
     "year": 2001,
@@ -4984,7 +4976,7 @@
     "era": "Modern"
   },
   {
-    "id": "624",
+    "id": "623",
     "title": "Apple releases the iPod, a portable media player that revolutionizes the music industry.",
     "description": "Apple releases the iPod, a portable media player that revolutionizes the music industry.",
     "year": 2001,
@@ -4992,7 +4984,7 @@
     "era": "Modern"
   },
   {
-    "id": "625",
+    "id": "624",
     "title": "Wikipedia, a free, open-content online encyclopedia, is launched.",
     "description": "Wikipedia, a free, open-content online encyclopedia, is launched.",
     "year": 2001,
@@ -5000,7 +4992,7 @@
     "era": "Modern"
   },
   {
-    "id": "626",
+    "id": "625",
     "title": "The Euro replaces national currencies as physical coins and banknotes in 12 European countries.",
     "description": "The Euro replaces national currencies as physical coins and banknotes in 12 European countries.",
     "year": 2002,
@@ -5008,7 +5000,7 @@
     "era": "Modern"
   },
   {
-    "id": "627",
+    "id": "626",
     "title": "The International Criminal Court (ICC) is established to prosecute international crimes.",
     "description": "The International Criminal Court (ICC) is established to prosecute international crimes.",
     "year": 2002,
@@ -5016,7 +5008,7 @@
     "era": "Modern"
   },
   {
-    "id": "628",
+    "id": "627",
     "title": "The Space Shuttle Columbia disintegrates during re-entry into Earth's atmosphere, killing all seven astronauts.",
     "description": "The Space Shuttle Columbia disintegrates during re-entry into Earth's atmosphere, killing all seven astronauts.",
     "year": 2003,
@@ -5024,7 +5016,7 @@
     "era": "Modern"
   },
   {
-    "id": "629",
+    "id": "628",
     "title": "A U.S.-led coalition invades Iraq, leading to the overthrow of Saddam Hussein.",
     "description": "A U.S.-led coalition invades Iraq, leading to the overthrow of Saddam Hussein.",
     "year": 2003,
@@ -5032,7 +5024,7 @@
     "era": "Modern"
   },
   {
-    "id": "630",
+    "id": "629",
     "title": "The Human Genome Project is completed, successfully sequencing all genes of a human being.",
     "description": "The Human Genome Project is completed, successfully sequencing all genes of a human being.",
     "year": 2003,
@@ -5040,7 +5032,7 @@
     "era": "Modern"
   },
   {
-    "id": "631",
+    "id": "630",
     "title": "Facebook is launched by Mark Zuckerberg, initially for Harvard students.",
     "description": "Facebook is launched by Mark Zuckerberg, initially for Harvard students.",
     "year": 2004,
@@ -5048,7 +5040,7 @@
     "era": "Modern"
   },
   {
-    "id": "632",
+    "id": "631",
     "title": "A massive earthquake and tsunami in the Indian Ocean kills over 230,000 people in 14 countries.",
     "description": "A massive earthquake and tsunami in the Indian Ocean kills over 230,000 people in 14 countries.",
     "year": 2004,
@@ -5056,7 +5048,7 @@
     "era": "Modern"
   },
   {
-    "id": "633",
+    "id": "632",
     "title": "The Mars rovers Spirit and Opportunity land on Mars, beginning years of exploration.",
     "description": "The Mars rovers Spirit and Opportunity land on Mars, beginning years of exploration.",
     "year": 2004,
@@ -5064,7 +5056,7 @@
     "era": "Modern"
   },
   {
-    "id": "634",
+    "id": "633",
     "title": "Hurricane Katrina makes landfall on the U.S. Gulf Coast, causing catastrophic damage in New Orleans.",
     "description": "Hurricane Katrina makes landfall on the U.S. Gulf Coast, causing catastrophic damage in New Orleans.",
     "year": 2005,
@@ -5072,7 +5064,7 @@
     "era": "Modern"
   },
   {
-    "id": "635",
+    "id": "634",
     "title": "YouTube, a video-sharing website, is launched to the public.",
     "description": "YouTube, a video-sharing website, is launched to the public.",
     "year": 2005,
@@ -5080,7 +5072,7 @@
     "era": "Modern"
   },
   {
-    "id": "636",
+    "id": "635",
     "title": "Angela Merkel becomes the first female Chancellor of Germany.",
     "description": "Angela Merkel becomes the first female Chancellor of Germany.",
     "year": 2005,
@@ -5088,7 +5080,7 @@
     "era": "Modern"
   },
   {
-    "id": "637",
+    "id": "636",
     "title": "Twitter, a microblogging and social networking service, is launched.",
     "description": "Twitter, a microblogging and social networking service, is launched.",
     "year": 2006,
@@ -5096,7 +5088,7 @@
     "era": "Modern"
   },
   {
-    "id": "638",
+    "id": "637",
     "title": "The International Astronomical Union reclassifies Pluto as a \"dwarf planet.\"",
     "description": "The International Astronomical Union reclassifies Pluto as a \"dwarf planet.\"",
     "year": 2006,
@@ -5104,7 +5096,7 @@
     "era": "Modern"
   },
   {
-    "id": "639",
+    "id": "638",
     "title": "North Korea conducts its first successful nuclear test.",
     "description": "North Korea conducts its first successful nuclear test.",
     "year": 2006,
@@ -5112,7 +5104,7 @@
     "era": "Modern"
   },
   {
-    "id": "640",
+    "id": "639",
     "title": "The Nintendo Wii is released, introducing motion-controlled gaming to a mass market.",
     "description": "The Nintendo Wii is released, introducing motion-controlled gaming to a mass market.",
     "year": 2006,
@@ -5120,7 +5112,7 @@
     "era": "Modern"
   },
   {
-    "id": "641",
+    "id": "640",
     "title": "Apple releases the first iPhone, pioneering the modern smartphone.",
     "description": "Apple releases the first iPhone, pioneering the modern smartphone.",
     "year": 2007,
@@ -5128,7 +5120,7 @@
     "era": "Modern"
   },
   {
-    "id": "642",
+    "id": "641",
     "title": "Nancy Pelosi becomes the first female Speaker of the U.S. House of Representatives.",
     "description": "Nancy Pelosi becomes the first female Speaker of the U.S. House of Representatives.",
     "year": 2007,
@@ -5136,7 +5128,7 @@
     "era": "Modern"
   },
   {
-    "id": "643",
+    "id": "642",
     "title": "A global financial crisis begins, leading to the most severe economic recession since the Great Depression.",
     "description": "A global financial crisis begins, leading to the most severe economic recession since the Great Depression.",
     "year": 2008,
@@ -5144,7 +5136,7 @@
     "era": "Modern"
   },
   {
-    "id": "644",
+    "id": "643",
     "title": "Barack Obama is elected as the first African-American President of the United States.",
     "description": "Barack Obama is elected as the first African-American President of the United States.",
     "year": 2008,
@@ -5152,7 +5144,7 @@
     "era": "Modern"
   },
   {
-    "id": "645",
+    "id": "644",
     "title": "The Large Hadron Collider at CERN is first powered on.",
     "description": "The Large Hadron Collider at CERN is first powered on.",
     "year": 2008,
@@ -5160,7 +5152,7 @@
     "era": "Modern"
   },
   {
-    "id": "646",
+    "id": "645",
     "title": "The first Marvel Cinematic Universe (MCU) film, \"Iron Man,\" is released.",
     "description": "The first Marvel Cinematic Universe (MCU) film, \"Iron Man,\" is released.",
     "year": 2008,
@@ -5168,7 +5160,7 @@
     "era": "Modern"
   },
   {
-    "id": "647",
+    "id": "646",
     "title": "Bitcoin is created, becoming the first decentralized cryptocurrency.",
     "description": "Bitcoin is created, becoming the first decentralized cryptocurrency.",
     "year": 2009,
@@ -5176,7 +5168,7 @@
     "era": "Modern"
   },
   {
-    "id": "648",
+    "id": "647",
     "title": "The \"Miracle on the Hudson\" occurs when US Airways Flight 1549 successfully ditches in the Hudson River.",
     "description": "The \"Miracle on the Hudson\" occurs when US Airways Flight 1549 successfully ditches in the Hudson River.",
     "year": 2009,
@@ -5184,7 +5176,7 @@
     "era": "Modern"
   },
   {
-    "id": "649",
+    "id": "648",
     "title": "The Arab Spring, a series of pro-democracy uprisings, begins in Tunisia and spreads across the Middle East.",
     "description": "The Arab Spring, a series of pro-democracy uprisings, begins in Tunisia and spreads across the Middle East.",
     "year": 2010,
@@ -5192,7 +5184,7 @@
     "era": "Modern"
   },
   {
-    "id": "650",
+    "id": "649",
     "title": "The Deepwater Horizon oil rig explodes in the Gulf of Mexico, causing a massive environmental disaster.",
     "description": "The Deepwater Horizon oil rig explodes in the Gulf of Mexico, causing a massive environmental disaster.",
     "year": 2010,
@@ -5200,7 +5192,7 @@
     "era": "Modern"
   },
   {
-    "id": "651",
+    "id": "650",
     "title": "Apple releases the iPad, popularizing the tablet computer market.",
     "description": "Apple releases the iPad, popularizing the tablet computer market.",
     "year": 2010,
@@ -5208,7 +5200,7 @@
     "era": "Modern"
   },
   {
-    "id": "652",
+    "id": "651",
     "title": "The photo-sharing social media service Instagram is launched.",
     "description": "The photo-sharing social media service Instagram is launched.",
     "year": 2010,
@@ -5216,7 +5208,7 @@
     "era": "Modern"
   },
   {
-    "id": "653",
+    "id": "652",
     "title": "U.S. Navy SEALs kill al-Qaeda leader Osama bin Laden in a raid in Pakistan.",
     "description": "U.S. Navy SEALs kill al-Qaeda leader Osama bin Laden in a raid in Pakistan.",
     "year": 2011,
@@ -5224,7 +5216,7 @@
     "era": "Modern"
   },
   {
-    "id": "654",
+    "id": "653",
     "title": "The final flight of the U.S. Space Shuttle program, STS-135, lands at Kennedy Space Center.",
     "description": "The final flight of the U.S. Space Shuttle program, STS-135, lands at Kennedy Space Center.",
     "year": 2011,
@@ -5232,7 +5224,7 @@
     "era": "Modern"
   },
   {
-    "id": "655",
+    "id": "654",
     "title": "The world's population is estimated to have reached seven billion people.",
     "description": "The world's population is estimated to have reached seven billion people.",
     "year": 2011,
@@ -5240,7 +5232,7 @@
     "era": "Modern"
   },
   {
-    "id": "656",
+    "id": "655",
     "title": "The Higgs boson, a fundamental particle, is discovered by scientists at CERN's Large Hadron Collider.",
     "description": "The Higgs boson, a fundamental particle, is discovered by scientists at CERN's Large Hadron Collider.",
     "year": 2012,
@@ -5248,7 +5240,7 @@
     "era": "Modern"
   },
   {
-    "id": "657",
+    "id": "656",
     "title": "The Curiosity rover successfully lands on Mars to begin its exploration mission.",
     "description": "The Curiosity rover successfully lands on Mars to begin its exploration mission.",
     "year": 2012,
@@ -5256,7 +5248,7 @@
     "era": "Modern"
   },
   {
-    "id": "658",
+    "id": "657",
     "title": "Hurricane Sandy causes widespread destruction along the U.S. East Coast.",
     "description": "Hurricane Sandy causes widespread destruction along the U.S. East Coast.",
     "year": 2012,
@@ -5264,7 +5256,7 @@
     "era": "Modern"
   },
   {
-    "id": "659",
+    "id": "658",
     "title": "The Black Lives Matter movement is founded in the United States.",
     "description": "The Black Lives Matter movement is founded in the United States.",
     "year": 2013,
@@ -5272,7 +5264,7 @@
     "era": "Modern"
   },
   {
-    "id": "660",
+    "id": "659",
     "title": "Edward Snowden leaks classified documents from the U.S. National Security Agency (NSA).",
     "description": "Edward Snowden leaks classified documents from the U.S. National Security Agency (NSA).",
     "year": 2013,
@@ -5280,7 +5272,7 @@
     "era": "Modern"
   },
   {
-    "id": "661",
+    "id": "660",
     "title": "Pope Benedict XVI resigns, becoming the first pope to do so in nearly 600 years.",
     "description": "Pope Benedict XVI resigns, becoming the first pope to do so in nearly 600 years.",
     "year": 2013,
@@ -5288,7 +5280,7 @@
     "era": "Modern"
   },
   {
-    "id": "662",
+    "id": "661",
     "title": "Russia annexes the Crimean Peninsula from Ukraine, sparking an international crisis.",
     "description": "Russia annexes the Crimean Peninsula from Ukraine, sparking an international crisis.",
     "year": 2014,
@@ -5296,7 +5288,7 @@
     "era": "Modern"
   },
   {
-    "id": "663",
+    "id": "662",
     "title": "The Islamic State of Iraq and Syria (ISIS) declares a caliphate in territory it controls.",
     "description": "The Islamic State of Iraq and Syria (ISIS) declares a caliphate in territory it controls.",
     "year": 2014,
@@ -5304,7 +5296,7 @@
     "era": "Modern"
   },
   {
-    "id": "664",
+    "id": "663",
     "title": "The Rosetta spacecraft's Philae lander successfully lands on a comet.",
     "description": "The Rosetta spacecraft's Philae lander successfully lands on a comet.",
     "year": 2014,
@@ -5312,7 +5304,7 @@
     "era": "Modern"
   },
   {
-    "id": "665",
+    "id": "664",
     "title": "The U.S. Supreme Court rules in Obergefell v. Hodges that same-sex marriage is a constitutional right.",
     "description": "The U.S. Supreme Court rules in Obergefell v. Hodges that same-sex marriage is a constitutional right.",
     "year": 2015,
@@ -5320,7 +5312,7 @@
     "era": "Modern"
   },
   {
-    "id": "666",
+    "id": "665",
     "title": "The Paris Agreement on climate change is adopted by 196 countries.",
     "description": "The Paris Agreement on climate change is adopted by 196 countries.",
     "year": 2015,
@@ -5328,7 +5320,7 @@
     "era": "Modern"
   },
   {
-    "id": "667",
+    "id": "666",
     "title": "NASA's New Horizons spacecraft performs the first-ever flyby of Pluto.",
     "description": "NASA's New Horizons spacecraft performs the first-ever flyby of Pluto.",
     "year": 2015,
@@ -5336,7 +5328,7 @@
     "era": "Modern"
   },
   {
-    "id": "668",
+    "id": "667",
     "title": "The musical \"Hamilton\" premieres on Broadway, becoming a cultural phenomenon.",
     "description": "The musical \"Hamilton\" premieres on Broadway, becoming a cultural phenomenon.",
     "year": 2015,
@@ -5344,7 +5336,7 @@
     "era": "Modern"
   },
   {
-    "id": "669",
+    "id": "668",
     "title": "The United Kingdom votes to leave the European Union in the \"Brexit\" referendum.",
     "description": "The United Kingdom votes to leave the European Union in the \"Brexit\" referendum.",
     "year": 2016,
@@ -5352,7 +5344,7 @@
     "era": "Modern"
   },
   {
-    "id": "670",
+    "id": "669",
     "title": "Donald Trump is elected the 45th President of the United States in a major political upset.",
     "description": "Donald Trump is elected the 45th President of the United States in a major political upset.",
     "year": 2016,
@@ -5360,7 +5352,7 @@
     "era": "Modern"
   },
   {
-    "id": "671",
+    "id": "670",
     "title": "The augmented reality game Pok\u00e9mon Go becomes a global phenomenon.",
     "description": "The augmented reality game Pok\u00e9mon Go becomes a global phenomenon.",
     "year": 2016,
@@ -5368,7 +5360,7 @@
     "era": "Modern"
   },
   {
-    "id": "672",
+    "id": "671",
     "title": "The #MeToo movement goes viral on social media, raising awareness of sexual harassment and assault.",
     "description": "The #MeToo movement goes viral on social media, raising awareness of sexual harassment and assault.",
     "year": 2017,
@@ -5376,7 +5368,7 @@
     "era": "Modern"
   },
   {
-    "id": "673",
+    "id": "672",
     "title": "The first direct observation of a merger of two neutron stars is announced.",
     "description": "The first direct observation of a merger of two neutron stars is announced.",
     "year": 2017,
@@ -5384,7 +5376,7 @@
     "era": "Modern"
   },
   {
-    "id": "674",
+    "id": "673",
     "title": "A major trade war begins between the United States and China.",
     "description": "A major trade war begins between the United States and China.",
     "year": 2018,
@@ -5392,7 +5384,7 @@
     "era": "Modern"
   },
   {
-    "id": "675",
+    "id": "674",
     "title": "The \"Yellow Vests\" protests begin in France against fuel tax increases and economic inequality.",
     "description": "The \"Yellow Vests\" protests begin in France against fuel tax increases and economic inequality.",
     "year": 2018,
@@ -5400,7 +5392,7 @@
     "era": "Modern"
   },
   {
-    "id": "676",
+    "id": "675",
     "title": "The first-ever image of a black hole is captured by the Event Horizon Telescope project.",
     "description": "The first-ever image of a black hole is captured by the Event Horizon Telescope project.",
     "year": 2019,
@@ -5408,7 +5400,7 @@
     "era": "Modern"
   },
   {
-    "id": "677",
+    "id": "676",
     "title": "Massive pro-democracy protests erupt in Hong Kong against a proposed extradition bill.",
     "description": "Massive pro-democracy protests erupt in Hong Kong against a proposed extradition bill.",
     "year": 2019,
@@ -5416,7 +5408,7 @@
     "era": "Modern"
   },
   {
-    "id": "678",
+    "id": "677",
     "title": "A fire causes extensive damage to the Notre-Dame Cathedral in Paris.",
     "description": "A fire causes extensive damage to the Notre-Dame Cathedral in Paris.",
     "year": 2019,
@@ -5424,7 +5416,7 @@
     "era": "Modern"
   },
   {
-    "id": "679",
+    "id": "678",
     "title": "The World Health Organization declares the COVID-19 outbreak a global pandemic.",
     "description": "The World Health Organization declares the COVID-19 outbreak a global pandemic.",
     "year": 2020,
@@ -5432,7 +5424,7 @@
     "era": "Modern"
   },
   {
-    "id": "680",
+    "id": "679",
     "title": "The murder of George Floyd by a police officer sparks global protests against racial injustice.",
     "description": "The murder of George Floyd by a police officer sparks global protests against racial injustice.",
     "year": 2020,
@@ -5440,7 +5432,7 @@
     "era": "Modern"
   },
   {
-    "id": "681",
+    "id": "680",
     "title": "SpaceX becomes the first private company to launch astronauts to the International Space Station.",
     "description": "SpaceX becomes the first private company to launch astronauts to the International Space Station.",
     "year": 2020,
@@ -5448,7 +5440,7 @@
     "era": "Modern"
   },
   {
-    "id": "682",
+    "id": "681",
     "title": "Joe Biden is elected the 46th President of the United States.",
     "description": "Joe Biden is elected the 46th President of the United States.",
     "year": 2020,
@@ -5456,15 +5448,15 @@
     "era": "Modern"
   },
   {
-    "id": "683",
-    "title": "A mob of protesters storms the U.S. Capitol building in an attempt to overturn the 2020 election results.",
-    "description": "A mob of protesters storms the U.S. Capitol building in an attempt to overturn the 2020 election results.",
+    "id": "682",
+    "title": "A mob of protesters storms the U.S. Capitol building in an attempt to overturn the Biden's election win.",
+    "description": "A mob of protesters storms the U.S. Capitol building in an attempt to overturn the Biden's election win.",
     "year": 2021,
     "category": "Politics",
     "era": "Modern"
   },
   {
-    "id": "684",
+    "id": "683",
     "title": "The James Webb Space Telescope, the successor to Hubble, is successfully launched.",
     "description": "The James Webb Space Telescope, the successor to Hubble, is successfully launched.",
     "year": 2021,
@@ -5472,7 +5464,7 @@
     "era": "Modern"
   },
   {
-    "id": "685",
+    "id": "684",
     "title": "The Taliban retake control of Afghanistan following the withdrawal of U.S. troops.",
     "description": "The Taliban retake control of Afghanistan following the withdrawal of U.S. troops.",
     "year": 2021,
@@ -5480,7 +5472,7 @@
     "era": "Modern"
   },
   {
-    "id": "686",
+    "id": "685",
     "title": "The social media app TikTok surpasses Google as the most popular website of the year.",
     "description": "The social media app TikTok surpasses Google as the most popular website of the year.",
     "year": 2021,
@@ -5488,7 +5480,7 @@
     "era": "Modern"
   },
   {
-    "id": "687",
+    "id": "686",
     "title": "Russia launches a full-scale invasion of Ukraine, starting the largest conventional war in Europe since WWII.",
     "description": "Russia launches a full-scale invasion of Ukraine, starting the largest conventional war in Europe since WWII.",
     "year": 2022,
@@ -5496,7 +5488,7 @@
     "era": "Modern"
   },
   {
-    "id": "688",
+    "id": "687",
     "title": "The global population officially reaches eight billion people.",
     "description": "The global population officially reaches eight billion people.",
     "year": 2022,
@@ -5504,7 +5496,7 @@
     "era": "Modern"
   },
   {
-    "id": "689",
+    "id": "688",
     "title": "The AI chatbot ChatGPT is released to the public, sparking a massive boom in generative AI development.",
     "description": "The AI chatbot ChatGPT is released to the public, sparking a massive boom in generative AI development.",
     "year": 2022,
@@ -5512,7 +5504,7 @@
     "era": "Modern"
   },
   {
-    "id": "690",
+    "id": "689",
     "title": "Queen Elizabeth II of the United Kingdom dies after a reign of 70 years.",
     "description": "Queen Elizabeth II of the United Kingdom dies after a reign of 70 years.",
     "year": 2022,
@@ -5520,7 +5512,7 @@
     "era": "Modern"
   },
   {
-    "id": "691",
+    "id": "690",
     "title": "India surpasses China to become the world's most populous nation.",
     "description": "India surpasses China to become the world's most populous nation.",
     "year": 2023,
@@ -5528,7 +5520,7 @@
     "era": "Modern"
   },
   {
-    "id": "692",
+    "id": "691",
     "title": "Hamas launches a major attack on Israel, leading to a declaration of war and a subsequent invasion of Gaza.",
     "description": "Hamas launches a major attack on Israel, leading to a declaration of war and a subsequent invasion of Gaza.",
     "year": 2023,
@@ -5536,7 +5528,7 @@
     "era": "Modern"
   },
   {
-    "id": "693",
+    "id": "692",
     "title": "India's Chandrayaan-3 mission successfully lands a rover on the Moon's south pole.",
     "description": "India's Chandrayaan-3 mission successfully lands a rover on the Moon's south pole.",
     "year": 2023,
@@ -5544,7 +5536,7 @@
     "era": "Modern"
   },
   {
-    "id": "694",
+    "id": "693",
     "title": "The film \"Barbie\" becomes the highest-grossing film of the year and a cultural phenomenon.",
     "description": "The film \"Barbie\" becomes the highest-grossing film of the year and a cultural phenomenon.",
     "year": 2023,
@@ -5552,15 +5544,7 @@
     "era": "Modern"
   },
   {
-    "id": "695",
-    "title": "The 2024 Summer Olympics are held in Paris, France.",
-    "description": "The 2024 Summer Olympics are held in Paris, France.",
-    "year": 2024,
-    "category": "Culture",
-    "era": "Modern"
-  },
-  {
-    "id": "696",
+    "id": "694",
     "title": "The Francis Scott Key Bridge in Baltimore collapses after being struck by a cargo ship.",
     "description": "The Francis Scott Key Bridge in Baltimore collapses after being struck by a cargo ship.",
     "year": 2024,
@@ -5568,7 +5552,7 @@
     "era": "Modern"
   },
   {
-    "id": "697",
+    "id": "695",
     "title": "The first-ever direct elections for the European Parliament are held after the Brexit reforms.",
     "description": "The first-ever direct elections for the European Parliament are held after the Brexit reforms.",
     "year": 2024,
@@ -5576,7 +5560,7 @@
     "era": "Modern"
   },
   {
-    "id": "698",
+    "id": "696",
     "title": "NASA's Artemis II mission is scheduled to send astronauts on a flyby of the Moon.",
     "description": "NASA's Artemis II mission is scheduled to send astronauts on a flyby of the Moon.",
     "year": 2025,
