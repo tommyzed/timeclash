@@ -362,6 +362,9 @@ export default function Game() {
 
         const changeDescriptions = message.data.changes
           .map((change) => {
+            if (change.setting === "Target Score") {
+              return `Target Score changed to ${change.to}`;
+            }
             if (change.setting === "Allow Stealing") {
               return `Allow Stealing was turned ${change.to ? "on" : "off"}`;
             }
