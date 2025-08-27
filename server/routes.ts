@@ -668,10 +668,55 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
       }
 
       if (Object.keys(updateData).length > 0) {
+        const oldSettings = {
+          targetScore: game.targetScore,
+          allowStealing: game.allowStealing,
+          categories: game.categories,
+          eras: game.eras,
+        };
+
         await storage.updateGame(gameId, updateData);
+        const newSettings = { ...oldSettings, ...updateData };
+
+        const changes: { setting: string; from: any; to: any }[] = [];
+        if (oldSettings.targetScore !== newSettings.targetScore) {
+          changes.push({
+            setting: "Target Score",
+            from: oldSettings.targetScore,
+            to: newSettings.targetScore,
+          });
+        }
+        if (oldSettings.allowStealing !== newSettings.allowStealing) {
+          changes.push({
+            setting: "Allow Stealing",
+            from: oldSettings.allowStealing,
+            to: newSettings.allowStealing,
+          });
+        }
+        if (
+          JSON.stringify(oldSettings.categories.sort()) !==
+          JSON.stringify(newSettings.categories.sort())
+        ) {
+          changes.push({
+            setting: "Categories",
+            from: oldSettings.categories,
+            to: newSettings.categories,
+          });
+        }
+        if (
+          JSON.stringify(oldSettings.eras.sort()) !==
+          JSON.stringify(newSettings.eras.sort())
+        ) {
+          changes.push({
+            setting: "Eras",
+            from: oldSettings.eras,
+            to: newSettings.eras,
+          });
+        }
+
         broadcastToGame(gameId, {
           type: "settings_changed",
-          data: updateData,
+          data: { changes, updaterPlayerId: req.body.playerId },
         });
       }
       res.json({ message: "Settings updated successfully" });
