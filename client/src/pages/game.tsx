@@ -359,11 +359,41 @@ export default function Game() {
 
       if (message.type === "settings_changed") {
         queryClient.invalidateQueries({ queryKey: ["/api/games", gameId] });
+
+        const changeDescriptions = message.data.changes
+          .map((change) => {
+            if (change.setting === "Target Score") {
+              return `Target Score changed to ${change.to}.`;
+            }
+            if (change.setting === "Allow Stealing") {
+              return `Allow Stealing was turned ${change.to ? "on" : "off"}.`;
+            }
+            if (
+              change.setting === "Categories" ||
+              change.setting === "Eras"
+            ) {
+              return `${change.setting} were updated.`;
+            }
+            return `${change.setting} changed from ${change.from} to ${change.to}`;
+          })
+          .join("\n");
+
+        const updaterId = message.data.updaterPlayerId;
+        const updaterName =
+          updaterId === playerId
+            ? nickname || "You"
+            : opponentNickname || "Opponent";
+
         toast({
-          title: "Game settings updated",
-          description: "A Player has changed the game settings.",
-         variant: "warning",
-         emoji: "🛠",
+          title: (
+            <>
+              <strong className="text-blue-800">{updaterName}</strong>
+              {" "}updated the Settings. 
+            </>
+          ),
+          description: changeDescriptions,
+          variant: "warning",
+          emoji: "🛠",
         });
       }
     },
@@ -543,7 +573,10 @@ export default function Game() {
   }) => {
     if (gameId) {
       try {
-        await apiRequest("PATCH", `/api/games/${gameId}/settings`, settings);
+        await apiRequest("PATCH", `/api/games/${gameId}/settings`, {
+          ...settings,
+          playerId,
+        });
         localStorage.setItem("categories", JSON.stringify(settings.categories));
         localStorage.setItem("eras", JSON.stringify(settings.eras));
         queryClient.invalidateQueries({ queryKey: ["/api/games", gameId] });
