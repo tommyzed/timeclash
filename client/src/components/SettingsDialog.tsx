@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { X, HelpCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Switch } from "@/components/ui/switch";
 
 interface Settings {
   targetScore: number;
@@ -17,7 +18,9 @@ interface SettingsDialogProps {
   initialSettings: Settings;
   isMultiplayer: boolean;
   playerColor: string | null;
+  soundsEnabled: boolean;
   onPlayerColorChange: (color: string) => void;
+  onSoundsEnabledChange: (enabled: boolean) => void;
   onShowRules: () => void;
 }
 
@@ -28,7 +31,9 @@ export default function SettingsDialog({
   initialSettings,
   isMultiplayer,
   playerColor,
+  soundsEnabled,
   onPlayerColorChange,
+  onSoundsEnabledChange,
   onShowRules,
 }: SettingsDialogProps) {
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -43,6 +48,7 @@ export default function SettingsDialog({
     initialSettings.categories,
   );
   const [eras, setEras] = useState<string[]>(initialSettings.eras || ["Ancient", "Classical", "Modern"]);
+  const [internalSoundsEnabled, setInternalSoundsEnabled] = useState(soundsEnabled);
   const [isScrolled, setIsScrolled] = useState(false);
 
   // Reset internal state when the dialog is opened
@@ -53,6 +59,7 @@ export default function SettingsDialog({
       setAllowStealing(initialSettings.allowStealing);
       setCategories(initialSettings.categories);
       setEras(initialSettings.eras || ["Ancient", "Classical", "Modern"]);
+      setInternalSoundsEnabled(soundsEnabled);
       setIsScrolled(false); // Reset scroll state
     }
   }, [isOpen, initialSettings]);
@@ -133,6 +140,7 @@ export default function SettingsDialog({
       categories,
       eras,
     });
+    onSoundsEnabledChange(internalSoundsEnabled);
     onClose();
   };
 
@@ -355,6 +363,25 @@ export default function SettingsDialog({
                     aria-label={`Select ${color} color`}
                   />
                 ))}
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Sound Effects
+              </label>
+              <div className="flex items-center justify-between">
+                <p className="text-sm text-gray-500">
+                  Enable or disable game sounds.
+                </p>
+                <Switch
+                  checked={internalSoundsEnabled}
+                  onCheckedChange={(checked) => {
+                    setInternalSoundsEnabled(checked);
+                    localStorage.setItem("soundsEnabled", checked.toString());
+                  }}
+                  data-testid="sounds-enabled-switch"
+                />
               </div>
             </div>
           </div>

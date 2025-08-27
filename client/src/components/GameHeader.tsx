@@ -44,6 +44,8 @@ interface GameHeaderProps {
   onNewGame?: () => void;
   playerColor?: string | null;
   setPlayerColor?: (color: string) => void;
+  soundsEnabled: boolean;
+  onSoundsEnabledChange: (enabled: boolean) => void;
 }
 
 export default function GameHeader({
@@ -56,6 +58,8 @@ export default function GameHeader({
   onNewGame,
   playerColor,
   setPlayerColor,
+  soundsEnabled,
+  onSoundsEnabledChange,
 }: GameHeaderProps) {
   const { game } = gameState;
   const [copied, setCopied] = useState(false);
@@ -341,6 +345,8 @@ export default function GameHeader({
         isMultiplayer={isMultiplayer ?? false}
         playerColor={playerColor ?? null}
         onPlayerColorChange={handleColorChange}
+        soundsEnabled={soundsEnabled}
+        onSoundsEnabledChange={onSoundsEnabledChange}
         onShowRules={() => setShowRulesModal(true)}
       />
 
