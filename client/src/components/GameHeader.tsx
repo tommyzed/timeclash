@@ -44,6 +44,7 @@ interface GameHeaderProps {
   }) => void;
   onNewGame?: () => void;
   playerColor?: string | null;
+  opponentPlayerColor?: string | null;
   setPlayerColor?: (color: string) => void;
   soundsEnabled: boolean;
   onSoundsEnabledChange: (enabled: boolean) => void;
@@ -58,6 +59,7 @@ export default function GameHeader({
   onSettingsChange,
   onNewGame,
   playerColor,
+  opponentPlayerColor,
   setPlayerColor,
   soundsEnabled,
   onSoundsEnabledChange,
@@ -192,10 +194,20 @@ export default function GameHeader({
         ? opponentNickname || "Player 2"
         : nickname || "Player 2";
 
+      const player1Color = isCurrentPlayerPlayer1
+        ? playerColor
+        : opponentPlayerColor;
+      const player2Color = isCurrentPlayerPlayer1
+        ? opponentPlayerColor
+        : playerColor;
+
       return (
         <div className="flex items-center space-x-4">
           <div className="text-center" data-testid="score-display">
-            <div className="text-lg font-bold text-blue-600">
+            <div
+              className="text-lg font-bold"
+              style={{ color: player1Color || "blue" }}
+            >
               {player1Score}
             </div>
             <div className="text-xs text-gray-500 uppercase">
@@ -203,7 +215,10 @@ export default function GameHeader({
             </div>
           </div>
           <div className="text-center">
-            <div className="text-lg font-bold text-orange-600">
+            <div
+              className="text-lg font-bold"
+              style={{ color: player2Color || "orange" }}
+            >
               {player2Score}
             </div>
             <div className="text-xs text-gray-500 uppercase">

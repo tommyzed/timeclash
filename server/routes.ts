@@ -201,6 +201,16 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
         return res.status(404).json({ message: "Player not found" });
       }
 
+      // Find the game this player is in
+      const game = await storage.getGameByPlayerId(playerId);
+      if (game) {
+        // Broadcast the color change to the game room
+        broadcastToGame(game.id, {
+          type: "player_color_changed",
+          data: { playerId, color },
+        });
+      }
+
       res.json(updatedPlayer);
     } catch (error) {
       console.error("Update player color error:", error);

@@ -41,6 +41,7 @@ export default function Game() {
   const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
   const [opponentNickname, setOpponentNickname] = useState<string>("");
   const [playerColor, setPlayerColor] = useState<string | null>(null);
+  const [opponentPlayerColor, setOpponentPlayerColor] = useState<string | null>(null);
   const [notifiedPlayerIds, setNotifiedPlayerIds] = useState<Set<string>>(
     new Set(),
   );
@@ -138,6 +139,7 @@ export default function Game() {
             .then((response) => response.json())
             .then((player) => {
               setOpponentNickname(player.nickname || "Opponent");
+              setOpponentPlayerColor(player.color || "orange");
             })
             .catch(() => {
               setOpponentNickname("Opponent");
@@ -391,6 +393,13 @@ export default function Game() {
           variant: "warning",
           emoji: "🛠",
         });
+      }
+
+      if (
+        message.type === "player_color_changed" &&
+        message.data.playerId !== playerId
+      ) {
+        setOpponentPlayerColor(message.data.color);
       }
     },
   });
@@ -660,6 +669,7 @@ export default function Game() {
         onSettingsChange={handleSettingsChange}
         onNewGame={handleNewGame}
         playerColor={playerColor}
+        opponentPlayerColor={opponentPlayerColor}
         setPlayerColor={setPlayerColor}
         soundsEnabled={soundsEnabled}
         onSoundsEnabledChange={handleSoundsEnabledChange}
