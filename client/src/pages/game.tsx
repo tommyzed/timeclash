@@ -15,6 +15,16 @@ import RecentActivity from "@/components/RecentActivity";
 
 import FeedbackModal from "@/components/FeedbackModal";
 
+const colorToEmoji: { [key: string]: string } = {
+  blue: "🔵",
+  orange: "🟠",
+  green: "🟢",
+  pink: "🌸",
+  purple: "🟣",
+  red: "🔴",
+  yellow: "🟡",
+};
+
 export default function Game() {
   const [match, params] = useRoute("/game/:gameId?");
   const [, navigate] = useLocation();
@@ -41,6 +51,7 @@ export default function Game() {
   const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
   const [opponentNickname, setOpponentNickname] = useState<string>("");
   const [playerColor, setPlayerColor] = useState<string | null>(null);
+  const [opponentPlayerColor, setOpponentPlayerColor] = useState<string | null>(null);
   const [notifiedPlayerIds, setNotifiedPlayerIds] = useState<Set<string>>(
     new Set(),
   );
@@ -138,6 +149,7 @@ export default function Game() {
             .then((response) => response.json())
             .then((player) => {
               setOpponentNickname(player.nickname || "Opponent");
+              setOpponentPlayerColor(player.color || "orange");
             })
             .catch(() => {
               setOpponentNickname("Opponent");
@@ -391,6 +403,30 @@ export default function Game() {
           variant: "warning",
           emoji: "🛠",
         });
+      }
+
+      if (message.type === "player_color_changed") {
+        const { playerId: changedPlayerId, color } = message.data;
+        const emoji = colorToEmoji[color] || "🎨";
+
+        if (changedPlayerId === playerId) {
+          // Current player changed their own color
+          toast({
+            title: "Color Changed!",
+            description: `Your card color is now ${color}.`,
+            variant: "success",
+            emoji: emoji,
+          });
+        } else {
+          // Opponent changed their color
+          setOpponentPlayerColor(color);
+          toast({
+            title: "Opponent Changed Color!",
+            description: `${opponentNickname || "Opponent"}'s card color is now ${color}.`,
+            variant: "warning",
+            emoji: emoji,
+          });
+        }
       }
     },
   });
@@ -660,9 +696,12 @@ export default function Game() {
         onSettingsChange={handleSettingsChange}
         onNewGame={handleNewGame}
         playerColor={playerColor}
+        opponentPlayerColor={opponentPlayerColor}
         setPlayerColor={setPlayerColor}
         soundsEnabled={soundsEnabled}
         onSoundsEnabledChange={handleSoundsEnabledChange}
+        toast={toast}
+        colorToEmoji={colorToEmoji}
       />
 
       {/* Turn indicator for multiplayer */}
@@ -810,6 +849,7 @@ export default function Game() {
               selectedCardId={selectedCardId}
               currentPlayerId={playerId || undefined}
               playerColor={playerColor}
+              opponentPlayerColor={opponentPlayerColor}
             />
             <CurrentCard
               gameState={gameState}

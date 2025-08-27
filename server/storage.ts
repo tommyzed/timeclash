@@ -42,6 +42,7 @@ export interface IStorage {
   createPlayer(player: InsertPlayer): Promise<Player>;
   getPlayer(id: string): Promise<Player | undefined>;
   updatePlayerColor(id: string, color: string): Promise<Player | undefined>;
+  getGameByPlayerId(playerId: string): Promise<Game | undefined>;
 
   // Game Moves
   getGameMoves(gameId: string): Promise<GameMove[]>;
@@ -224,6 +225,12 @@ export class MemStorage implements IStorage {
     const updatedPlayer = { ...player, color };
     this.players.set(id, updatedPlayer);
     return updatedPlayer;
+  }
+
+  async getGameByPlayerId(playerId: string): Promise<Game | undefined> {
+    return Array.from(this.games.values()).find(
+      (game) => game.player1Id === playerId || game.player2Id === playerId,
+    );
   }
 
   async updateGame(

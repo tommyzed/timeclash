@@ -5,7 +5,7 @@ import { IStorage, type CreateGameOptions } from "./storage";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import { eq, sql } from "drizzle-orm";
+import { eq, or, sql } from "drizzle-orm";
 
 if (!process.env.DATABASE_URL) {
   throw new Error("DATABASE_URL is not set");
@@ -195,6 +195,19 @@ export class DrizzleStorage implements IStorage {
 
   async updatePlayerColor(id: string, color: string): Promise<schema.Player | undefined> {
     const result = await db.update(schema.players).set({ color }).where(eq(schema.players.id, id)).returning();
+    return result[0];
+  }
+
+  async getGameByPlayerId(playerId: string): Promise<schema.Game | undefined> {
+    const result = await db
+      .select()
+      .from(schema.games)
+      .where(
+        or(
+          eq(schema.games.player1Id, playerId),
+          eq(schema.games.player2Id, playerId),
+        ),
+      );
     return result[0];
   }
 

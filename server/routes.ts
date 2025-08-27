@@ -132,8 +132,13 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
         return res.status(404).json({ message: "Game not found" });
       }
 
+      // Determine player role and assign color
+      const isPlayer1 = !game.player1Id;
+      const playerColor = isPlayer1 ? "blue" : "orange";
+
       // Create player
       const player = await storage.createPlayer({ nickname });
+      await storage.updatePlayerColor(player.id, playerColor);
 
       // Join the game
       const updatedGame = await storage.joinGame(game.id, player.id);
@@ -199,6 +204,16 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
 
       if (!updatedPlayer) {
         return res.status(404).json({ message: "Player not found" });
+      }
+
+      // Find the game this player is in
+      const game = await storage.getGameByPlayerId(playerId);
+      if (game) {
+        // Broadcast the color change to the game room
+        broadcastToGame(game.id, {
+          type: "player_color_changed",
+          data: { playerId, color },
+        });
       }
 
       res.json(updatedPlayer);

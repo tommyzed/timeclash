@@ -11,6 +11,7 @@ interface TimelineCardProps {
   placedByPlayerId?: string;
   currentPlayerId?: string;
   playerColor?: string | null;
+  opponentPlayerColor?: string | null;
 }
 
 export default function TimelineCard({ 
@@ -23,7 +24,8 @@ export default function TimelineCard({
   placedByPlayerName,
   placedByPlayerId,
   currentPlayerId,
-  playerColor
+  playerColor,
+  opponentPlayerColor,
 }: TimelineCardProps) {
   const colorMap: { [key: string]: string } = {
     blue: "from-blue-500 to-blue-600",
@@ -42,11 +44,13 @@ export default function TimelineCard({
       if (placedByPlayerId === "single-player") {
         return playerColor ? colorMap[playerColor] : "from-blue-500 to-blue-600";
       }
-      // In multiplayer mode: current player gets their selected color, opponent gets orange
+      // In multiplayer mode: current player gets their selected color, opponent gets theirs
       if (currentPlayerId && placedByPlayerId === currentPlayerId) {
         return playerColor ? colorMap[playerColor] : "from-blue-500 to-blue-600";
       } else {
-        return "from-orange-500 to-orange-600";
+        return opponentPlayerColor
+          ? colorMap[opponentPlayerColor]
+          : "from-orange-500 to-orange-600";
       }
     }
     if (isPlaced) return "from-blue-500 to-blue-600";
