@@ -13,13 +13,13 @@ export function Toaster() {
 
   return (
     <ToastProvider>
-      {toasts.map(function ({ id, title, description, action, emoji, ...props }) {
+      {toasts.map(function ({ id, title, description, action, emoji, titleComponent, ...props }) {
         return (
           <Toast key={id} {...props}>
             <div className="flex items-center">
               {emoji && <div className="text-4xl mr-3">{emoji}</div>}
               <div className="grid gap-1">
-                {title && <ToastTitle>{title}</ToastTitle>}
+                {title && <ToastTitle>{titleComponent}{title}</ToastTitle>}
                 {description && (
                   <ToastDescription>{description}</ToastDescription>
                 )}

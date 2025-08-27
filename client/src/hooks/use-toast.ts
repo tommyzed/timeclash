@@ -14,6 +14,7 @@ type ToasterToast = ToastProps & {
   description?: React.ReactNode
   action?: ToastActionElement
   emoji?: React.ReactNode
+  titleComponent?: React.ReactNode
 }
 
 const actionTypes = {
