@@ -132,8 +132,13 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
         return res.status(404).json({ message: "Game not found" });
       }
 
+      // Determine player role and assign color
+      const isPlayer1 = !game.player1Id;
+      const playerColor = isPlayer1 ? "blue" : "orange";
+
       // Create player
       const player = await storage.createPlayer({ nickname });
+      await storage.updatePlayerColor(player.id, playerColor);
 
       // Join the game
       const updatedGame = await storage.joinGame(game.id, player.id);
