@@ -363,16 +363,16 @@ export default function Game() {
         const changeDescriptions = message.data.changes
           .map((change) => {
             if (change.setting === "Target Score") {
-              return `Target Score changed to ${change.to}`;
+              return `Target Score changed to ${change.to}.`;
             }
             if (change.setting === "Allow Stealing") {
-              return `Allow Stealing was turned ${change.to ? "on" : "off"}`;
+              return `Allow Stealing was turned ${change.to ? "on" : "off"}.`;
             }
             if (
               change.setting === "Categories" ||
               change.setting === "Eras"
             ) {
-              return `${change.setting} were updated`;
+              return `${change.setting} were updated.`;
             }
             return `${change.setting} changed from ${change.from} to ${change.to}`;
           })
@@ -387,8 +387,8 @@ export default function Game() {
         toast({
           title: (
             <>
-              Settings updated by{" "}
               <strong className="text-blue-800">{updaterName}</strong>
+              {" "}updated the Settings. 
             </>
           ),
           description: changeDescriptions,
