@@ -388,7 +388,7 @@ export default function Game() {
           title: (
             <>
               <strong className="text-blue-800">{updaterName}</strong>
-              {" "}updated the Settings. 
+              {" "}updated the Settings.
             </>
           ),
           description: changeDescriptions,
