@@ -15,6 +15,16 @@ import RecentActivity from "@/components/RecentActivity";
 
 import FeedbackModal from "@/components/FeedbackModal";
 
+const colorToEmoji: { [key: string]: string } = {
+  blue: "🔵",
+  orange: "🟠",
+  green: "🟢",
+  pink: "🌸",
+  purple: "🟣",
+  red: "🔴",
+  yellow: "🟡",
+};
+
 export default function Game() {
   const [match, params] = useRoute("/game/:gameId?");
   const [, navigate] = useLocation();
@@ -395,11 +405,28 @@ export default function Game() {
         });
       }
 
-      if (
-        message.type === "player_color_changed" &&
-        message.data.playerId !== playerId
-      ) {
-        setOpponentPlayerColor(message.data.color);
+      if (message.type === "player_color_changed") {
+        const { playerId: changedPlayerId, color } = message.data;
+        const emoji = colorToEmoji[color] || "🎨";
+
+        if (changedPlayerId === playerId) {
+          // Current player changed their own color
+          toast({
+            title: "Color Changed!",
+            description: `Your card color is now ${color}.`,
+            variant: "success",
+            emoji: emoji,
+          });
+        } else {
+          // Opponent changed their color
+          setOpponentPlayerColor(color);
+          toast({
+            title: "Opponent Changed Color!",
+            description: `${opponentNickname || "Opponent"}'s card color is now ${color}.`,
+            variant: "info",
+            emoji: emoji,
+          });
+        }
       }
     },
   });
@@ -673,6 +700,8 @@ export default function Game() {
         setPlayerColor={setPlayerColor}
         soundsEnabled={soundsEnabled}
         onSoundsEnabledChange={handleSoundsEnabledChange}
+        toast={toast}
+        colorToEmoji={colorToEmoji}
       />
 
       {/* Turn indicator for multiplayer */}
