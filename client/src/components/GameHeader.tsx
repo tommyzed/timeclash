@@ -15,6 +15,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import logoImage from "@assets/It's About Time Logo -sm_1754907859214.png";
 import burglarIcon from "@/assets/burglar.png";
 import muscleIcon from "@/assets/weights.png";
+import volumeIcon from "@/assets/volume.png";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -122,6 +123,13 @@ export default function GameHeader({
                 className="w-4 h-4"
               />
             )}
+            {soundsEnabled && (
+              <img
+                src={volumeIcon}
+                alt="Sound is enabled"
+                className="w-4 h-4"
+              />
+            )}
           </span>
           <button
             onClick={handleCopyRoomCode}
@@ -153,6 +161,13 @@ export default function GameHeader({
           <img
             src={muscleIcon}
             alt="Hard mode is enabled"
+            className="w-4 h-4"
+          />
+        )}
+        {soundsEnabled && (
+          <img
+            src={volumeIcon}
+            alt="Sound is enabled"
             className="w-4 h-4"
           />
         )}
