@@ -357,10 +357,7 @@ export default function Game() {
         });
       }
 
-      if (
-        message.type === "settings_changed" &&
-        message.data.updaterPlayerId !== playerId
-      ) {
+      if (message.type === "settings_changed") {
         queryClient.invalidateQueries({ queryKey: ["/api/games", gameId] });
 
         const changeDescriptions = message.data.changes
