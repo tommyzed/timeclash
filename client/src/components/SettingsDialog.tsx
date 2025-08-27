@@ -342,7 +342,7 @@ export default function SettingsDialog({
               </div>
             </div>
 
-            <Separator className="my-6" />
+            <Separator className="my-6 bg-gray-300" />
 
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
