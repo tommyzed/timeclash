@@ -6,6 +6,7 @@ import { apiRequest } from "@/lib/queryClient";
 import { type GameState, type WebSocketMessage } from "@shared/schema";
 import { useWebSocket } from "@/hooks/useWebSocket";
 import { useToast } from "@/hooks/use-toast";
+import { useSounds } from "@/hooks/useSounds";
 import GameHeader from "@/components/GameHeader";
 import Timeline from "@/components/Timeline";
 import CurrentCard from "@/components/CurrentCard";
@@ -22,6 +23,7 @@ export default function Game() {
     urlParams.get("playerId") || localStorage.getItem("playerId");
   const nickname = localStorage.getItem("nickname");
   const { toast, dismiss } = useToast();
+  const { playSound } = useSounds();
 
   const [gameId, setGameId] = useState<string | null>(params?.gameId || null);
   const [isMultiplayer, setIsMultiplayer] = useState<boolean>(
@@ -57,6 +59,10 @@ export default function Game() {
     isVisible: false,
     requestingPlayerId: "",
     requestingPlayerName: "",
+  });
+  const [soundsEnabled, setSoundsEnabled] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return localStorage.getItem("soundsEnabled") === "true";
   });
 
   // Create a new game on component mount
@@ -387,6 +393,12 @@ export default function Game() {
         message: result.message,
       });
 
+      if (result.isCorrect) {
+        playSound("correct");
+      } else {
+        playSound("incorrect");
+      }
+
       // Note: WebSocket message is now sent by the server automatically
 
       // Refetch game state
@@ -541,15 +553,22 @@ export default function Game() {
     }
   };
 
+  const handleSoundsEnabledChange = (enabled: boolean) => {
+    setSoundsEnabled(enabled);
+    localStorage.setItem("soundsEnabled", enabled.toString());
+  };
+
   // Check for game completion and show victory modal
   useEffect(() => {
     if (gameState?.game && gameState.game.gameStatus === "completed") {
       if (gameState.game.winnerPlayerId === "computer") {
         setShowLossModal(true);
+        playSound("lose");
       } else if (!isMultiplayer && justWon) {
         // For single-player games, check if we just won
         setShowVictoryModal(true);
         setJustWon(false);
+        playSound("win");
 
         // Trigger confetti for single-player wins
         setTimeout(() => {
@@ -577,6 +596,11 @@ export default function Game() {
         }, 500);
       }
       // For multiplayer games, the confetti is handled by WebSocket 'game_completed' message
+      else if (isMultiplayer && gameState.game.winnerPlayerId === playerId) {
+        playSound("win");
+      } else if (isMultiplayer && gameState.game.winnerPlayerId !== playerId) {
+        playSound("lose");
+      }
     }
   }, [gameState?.game, justWon, isMultiplayer]);
 
@@ -608,6 +632,8 @@ export default function Game() {
         onNewGame={handleNewGame}
         playerColor={playerColor}
         setPlayerColor={setPlayerColor}
+        soundsEnabled={soundsEnabled}
+        onSoundsEnabledChange={handleSoundsEnabledChange}
       />
 
       {/* Turn indicator for multiplayer */}
