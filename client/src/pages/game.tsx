@@ -385,12 +385,8 @@ export default function Game() {
             : opponentNickname || "Opponent";
 
         toast({
-          title: (
-            <>
-              <strong className="text-blue-800">{updaterName}</strong>
-              {" "}updated the Settings.
-            </>
-          ),
+          title: " updated the Settings.",
+          titleComponent: <strong className="text-blue-800">{updaterName}</strong>,
           description: changeDescriptions,
           variant: "warning",
           emoji: "🛠",
