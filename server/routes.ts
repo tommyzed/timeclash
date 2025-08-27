@@ -714,10 +714,12 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
           });
         }
 
-        broadcastToGame(gameId, {
-          type: "settings_changed",
-          data: { changes, updaterPlayerId: req.body.playerId },
-        });
+        if (changes.length > 0) {
+          broadcastToGame(gameId, {
+            type: "settings_changed",
+            data: { changes, updaterPlayerId: req.body.playerId },
+          });
+        }
       }
       res.json({ message: "Settings updated successfully" });
     } catch (error) {
