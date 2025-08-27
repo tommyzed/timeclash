@@ -49,6 +49,7 @@ export default function SettingsDialog({
     initialSettings.categories,
   );
   const [eras, setEras] = useState<string[]>(initialSettings.eras || ["Ancient", "Classical", "Modern"]);
+  const [internalPlayerColor, setInternalPlayerColor] = useState(playerColor);
   const [internalSoundsEnabled, setInternalSoundsEnabled] = useState(soundsEnabled);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -60,6 +61,7 @@ export default function SettingsDialog({
       setAllowStealing(initialSettings.allowStealing);
       setCategories(initialSettings.categories);
       setEras(initialSettings.eras || ["Ancient", "Classical", "Modern"]);
+      setInternalPlayerColor(playerColor);
       setInternalSoundsEnabled(soundsEnabled);
       setIsScrolled(false); // Reset scroll state
     }
@@ -141,6 +143,9 @@ export default function SettingsDialog({
       categories,
       eras,
     });
+    if (internalPlayerColor) {
+      onPlayerColorChange(internalPlayerColor);
+    }
     onSoundsEnabledChange(internalSoundsEnabled);
     onClose();
   };
@@ -355,9 +360,9 @@ export default function SettingsDialog({
                 {availableColors.map((color) => (
                   <button
                     key={color}
-                    onClick={() => onPlayerColorChange(color)}
+                    onClick={() => setInternalPlayerColor(color)}
                     className={`w-10 h-10 rounded-full border-2 transition-transform transform hover:scale-110 ${
-                      playerColor === color
+                      internalPlayerColor === color
                         ? "border-blue-600 ring-2 ring-blue-600"
                         : "border-gray-200"
                     }`}
