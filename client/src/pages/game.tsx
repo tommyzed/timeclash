@@ -820,6 +820,7 @@ export default function Game() {
               selectedCardId={selectedCardId}
               currentPlayerId={playerId || undefined}
               playerColor={playerColor}
+              opponentPlayerColor={opponentPlayerColor}
             />
             <CurrentCard
               gameState={gameState}
