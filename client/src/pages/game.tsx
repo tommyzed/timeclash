@@ -62,7 +62,7 @@ export default function Game() {
   });
   const [soundsEnabled, setSoundsEnabled] = useState(() => {
     if (typeof window === "undefined") return false;
-    return localStorage.getItem("soundsEnabled") === "true";
+    return localStorage.getItem("soundsEnabled") !== "false";
   });
 
   // Create a new game on component mount
