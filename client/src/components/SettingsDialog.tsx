@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { X, HelpCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Switch } from "@/components/ui/switch";
+import { Separator } from "@/components/ui/separator";
 
 interface Settings {
   targetScore: number;
@@ -340,6 +341,8 @@ export default function SettingsDialog({
                 )}
               </div>
             </div>
+
+            <Separator className="my-6" />
 
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
