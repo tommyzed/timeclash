@@ -378,8 +378,14 @@ export default function Game() {
           })
           .join("\n");
 
+        const updaterId = message.data.updaterPlayerId;
+        const updaterName =
+          updaterId === playerId
+            ? nickname || "You"
+            : opponentNickname || "Opponent";
+
         toast({
-          title: "Game settings updated",
+          title: `Settings updated by ${updaterName}`,
           description: changeDescriptions,
           variant: "warning",
           emoji: "🛠",
