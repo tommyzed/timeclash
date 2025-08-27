@@ -423,7 +423,7 @@ export default function Game() {
           toast({
             title: "Opponent Changed Color!",
             description: `${opponentNickname || "Opponent"}'s card color is now ${color}.`,
-            variant: "info",
+            variant: "warning",
             emoji: emoji,
           });
         }
