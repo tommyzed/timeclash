@@ -28,6 +28,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import SettingsDialog from "./SettingsDialog";
+import { toast } from "@/hooks/use-toast";
 
 interface GameHeaderProps {
   gameState: GameState;
@@ -48,13 +49,7 @@ interface GameHeaderProps {
   setPlayerColor?: (color: string) => void;
   soundsEnabled: boolean;
   onSoundsEnabledChange: (enabled: boolean) => void;
-  toast: (options: {
-    title: string;
-    description: string;
-    variant: "success" | "destructive" | "info" | "warning" | "default";
-    emoji: string;
-    titleComponent?: React.ReactNode;
-  }) => void;
+  toast: typeof toast;
   colorToEmoji: { [key: string]: string };
 }
 
@@ -395,6 +390,7 @@ export default function GameHeader({
         soundsEnabled={soundsEnabled}
         onSoundsEnabledChange={onSoundsEnabledChange}
         onShowRules={() => setShowRulesModal(true)}
+        toast={toast}
       />
 
       {/* Rules Modal */}
