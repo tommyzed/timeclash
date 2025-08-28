@@ -155,8 +155,8 @@ export default function Lobby() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <div className="mb-4">
+        <div className="text-center mb-2">
+          <div className="mb-2">
             <img 
               src={logoImage} 
               alt="It's About Time!!" 
@@ -170,7 +170,7 @@ export default function Lobby() {
         </div>
 
         <Card>
-          <CardHeader className="flex flex-col space-y-1.5 p-6 text-[#0c8557]">
+          <CardHeader className="flex flex-col space-y-0.5 p-4 text-[#0c8557]">
             <CardTitle>Game Lobby</CardTitle>
             <CardDescription>Choose your game mode</CardDescription>
           </CardHeader>
