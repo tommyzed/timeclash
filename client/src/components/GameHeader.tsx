@@ -172,7 +172,7 @@ export default function GameHeader({
     return (
       <span
         className={`text-white px-3 py-1 rounded-full text-sm font-medium flex items-center space-x-1 ${
-          isHardMode ? "bg-red-600" : "bg-blue-600"
+          isHardMode ? "bg-red-600" : "bg-blue-500"
         }`}
       >
         <span>Single</span>
