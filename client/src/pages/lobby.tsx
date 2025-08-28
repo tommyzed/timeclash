@@ -13,7 +13,7 @@ import { useLocation, useParams } from "wouter";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import logoImage from "@assets/It's About Time Logo -sm_1754907859214.png";
+import logoImage from "@assets/TimeClash.png";
 
 export default function Lobby() {
   const [nickname, setNickname] = useState("");
@@ -160,7 +160,7 @@ export default function Lobby() {
             <img 
               src={logoImage} 
               alt="It's About Time!!" 
-              className="mx-auto h-32 w-auto"
+              className="mx-auto h-48 w-auto"
               data-testid="game-logo"
             />
           </div>
