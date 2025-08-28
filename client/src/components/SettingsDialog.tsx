@@ -12,6 +12,8 @@ interface Settings {
   eras: string[];
 }
 
+import { toast } from "@/hooks/use-toast";
+
 interface SettingsDialogProps {
   isOpen: boolean;
   onClose: () => void;
@@ -20,9 +22,10 @@ interface SettingsDialogProps {
   isMultiplayer: boolean;
   playerColor: string | null;
   soundsEnabled: boolean;
-  onPlayerColorChange: (color: string) => void;
+  onPlayerColorChange: (color:string) => void;
   onSoundsEnabledChange: (enabled: boolean) => void;
   onShowRules: () => void;
+  toast: typeof toast;
 }
 
 export default function SettingsDialog({
@@ -36,6 +39,7 @@ export default function SettingsDialog({
   onPlayerColorChange,
   onSoundsEnabledChange,
   onShowRules,
+  toast,
 }: SettingsDialogProps) {
   const dialogRef = useRef<HTMLDivElement>(null);
 
@@ -148,6 +152,14 @@ export default function SettingsDialog({
     }
     onSoundsEnabledChange(internalSoundsEnabled);
     onClose();
+    if (!isMultiplayer) {
+      toast({
+        title: "Settings Saved",
+        description: "Your new settings have been applied.",
+        variant: "success",
+        emoji: "👍",
+      });
+    }
   };
 
   const handleCancel = () => {
