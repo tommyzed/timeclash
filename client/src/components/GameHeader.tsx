@@ -12,7 +12,7 @@ import { type GameState } from "@shared/schema";
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { useIsMobile } from "@/hooks/use-mobile";
-import logoImage from "@assets/It's About Time Logo -sm_1754907859214.png";
+import logoImage from "@assets/TimeClash.png";
 import burglarIcon from "@/assets/burglar.png";
 import muscleIcon from "@/assets/weights.png";
 import volumeIcon from "@/assets/volume.png";
@@ -337,7 +337,7 @@ export default function GameHeader({
                 <img
                   src={logoImage}
                   alt="It's About Time!!"
-                  className="h-8 w-auto cursor-pointer"
+                  className="h-12 w-auto cursor-pointer"
                   data-testid="game-header-logo"
                 />
               </AlertDialogTrigger>
