@@ -229,10 +229,10 @@ export default function Lobby() {
                       Host a New Game
                     </h3>
                   </div>
-                  <div>
+                  <div className="flex items-center">
                     <label
                       htmlFor="create-nickname"
-                      className="block text-sm font-medium text-gray-700 mb-2"
+                      className="block text-sm font-medium text-gray-700 mr-2"
                     >
                       Your Nickname
                     </label>
@@ -275,10 +275,10 @@ export default function Lobby() {
                       Join Friend's Game
                     </h3>
                   </div>
-                  <div>
+                  <div className="flex items-center">
                     <label
                       htmlFor="join-nickname"
-                      className="block text-sm font-medium text-gray-700 mb-2"
+                      className="block text-sm font-medium text-gray-700 mr-2"
                     >
                       Your Nickname
                     </label>
@@ -291,10 +291,10 @@ export default function Lobby() {
                       className="border-purple-200 focus:border-purple-500"
                     />
                   </div>
-                  <div>
+                  <div className="flex items-center">
                     <label
                       htmlFor="roomCode"
-                      className="block text-sm font-medium text-gray-700 mb-2"
+                      className="block text-sm font-medium text-gray-700 mr-2"
                     >
                       Room Code
                     </label>
