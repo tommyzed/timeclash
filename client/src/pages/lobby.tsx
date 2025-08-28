@@ -155,8 +155,8 @@ export default function Lobby() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <div className="mb-4">
+        <div className="text-center mb-2">
+          <div className="mb-2">
             <img 
               src={logoImage} 
               alt="It's About Time!!" 
@@ -170,7 +170,7 @@ export default function Lobby() {
         </div>
 
         <Card>
-          <CardHeader className="flex flex-col space-y-1.5 p-6 text-[#0c8557]">
+          <CardHeader className="flex flex-col space-y-0.5 p-4 text-[#0c8557]">
             <CardTitle>Game Lobby</CardTitle>
             <CardDescription>Choose your game mode</CardDescription>
           </CardHeader>
@@ -229,10 +229,10 @@ export default function Lobby() {
                       Host a New Game
                     </h3>
                   </div>
-                  <div>
+                  <div className="flex items-center">
                     <label
                       htmlFor="create-nickname"
-                      className="block text-sm font-medium text-gray-700 mb-2"
+                      className="block text-sm font-medium text-gray-700 mr-2"
                     >
                       Your Nickname
                     </label>
@@ -275,10 +275,10 @@ export default function Lobby() {
                       Join Friend's Game
                     </h3>
                   </div>
-                  <div>
+                  <div className="flex items-center">
                     <label
                       htmlFor="join-nickname"
-                      className="block text-sm font-medium text-gray-700 mb-2"
+                      className="block text-sm font-medium text-gray-700 mr-2"
                     >
                       Your Nickname
                     </label>
@@ -291,10 +291,10 @@ export default function Lobby() {
                       className="border-purple-200 focus:border-purple-500"
                     />
                   </div>
-                  <div>
+                  <div className="flex items-center">
                     <label
                       htmlFor="roomCode"
-                      className="block text-sm font-medium text-gray-700 mb-2"
+                      className="block text-sm font-medium text-gray-700 mr-2"
                     >
                       Room Code
                     </label>
