@@ -14,6 +14,7 @@ import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import logoImage from "@assets/TimeClash.png";
+import { CoffeeIcon } from "@/components/ui/CoffeeIcon";
 
 export default function Lobby() {
   const [nickname, setNickname] = useState("");
@@ -170,9 +171,22 @@ export default function Lobby() {
         </div>
 
         <Card>
-          <CardHeader className="flex flex-col space-y-0.5 p-4 text-[#0c8557]">
-            <CardTitle>Game Lobby</CardTitle>
-            <CardDescription>Choose your game mode</CardDescription>
+          <CardHeader className="flex flex-row items-center justify-between p-4 text-[#0c8557]">
+            <div className="flex flex-col space-y-0.5">
+              <CardTitle>Game Lobby</CardTitle>
+              <CardDescription>Choose your game mode</CardDescription>
+            </div>
+            <a
+              href="https://ko-fi.com/egodevnull"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border hover:text-accent-foreground h-8 rounded-md px-3 text-xs bg-yellow-400 hover:bg-yellow-500 text-black dark:text-black border-yellow-400 shadow-md shadow-yellow-300/50"
+              data-testid="buy-me-a-coffee-link"
+            >
+              <CoffeeIcon className="mr-2 sm:mr-1 md:mr-2" />
+              <span className="hidden md:block font-semibold">Buy me a coffee</span>
+              <span className="block md:hidden font-semibold">Coffee</span>
+            </a>
           </CardHeader>
           <CardContent>
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
@@ -326,6 +340,7 @@ export default function Lobby() {
             </Tabs>
           </CardContent>
         </Card>
+
       </div>
     </div>
   );
