@@ -14,6 +14,7 @@ import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import logoImage from "@assets/TimeClash.png";
+import coffeeImage from "@assets/coffee.svg";
 
 export default function Lobby() {
   const [nickname, setNickname] = useState("");
@@ -326,6 +327,18 @@ export default function Lobby() {
             </Tabs>
           </CardContent>
         </Card>
+
+        <div className="mt-4 text-center">
+          <a
+            href="https://ko-fi.com/egodevnull"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-yellow-500 rounded-md hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
+          >
+            <img src={coffeeImage} alt="Coffee" className="w-5 h-5 mr-2" />
+            Buy me a coffee
+          </a>
+        </div>
       </div>
     </div>
   );
