@@ -127,12 +127,15 @@ export function useWebSocket({ gameId, playerId, onMessage, onConnect, onDisconn
 
   // Establish connection on mount, clean up on unmount (do not close on id changes)
   useEffect(() => {
-    connect();
+    // Only connect if we have the necessary identifiers for a multiplayer game
+    if (gameId && playerId) {
+      connect();
+    }
     return () => {
       disconnect();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [gameId, playerId]);
 
   // When identifiers change and we're connected, send a fresh join to switch rooms server-side
   useEffect(() => {
