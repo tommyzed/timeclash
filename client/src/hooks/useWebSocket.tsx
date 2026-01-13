@@ -40,7 +40,7 @@ export function useWebSocket({ gameId, playerId, onMessage, onConnect, onDisconn
         ? "ws://localhost:5000/ws"
         : `${protocol}//${window.location.host}/ws`;
       
-      console.log('Connecting to WebSocket:', wsUrl);
+      console.log('TOMOLICK: Connecting to WebSocket:', wsUrl);
       wsRef.current = new WebSocket(wsUrl);
 
       wsRef.current.onopen = () => {

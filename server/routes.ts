@@ -808,6 +808,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
   const httpServer = createServer(app);
 
   // Set up WebSocket server for real-time multiplayer
+  console.log('TOMOLICK: Connecting to WebSocket:', { server: httpServer, path: "/ws" });
   const wss = new WebSocketServer({ server: httpServer, path: "/ws" });
 
   wss.on("connection", (ws: WebSocket, req) => {
