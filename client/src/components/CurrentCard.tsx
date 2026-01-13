@@ -14,12 +14,12 @@ interface CurrentCardProps {
 
 export default function CurrentCard({ gameState, onPlaceEvent, isPlacing, selectedCardId, onSelectCard, onDeselectCard, isMultiplayer, currentPlayerId }: CurrentCardProps) {
   const { currentEvent, game } = gameState;
-  
+
   // Determine if it's the current player's turn in multiplayer
   const isMyTurn = !isMultiplayer || (() => {
     const isPlayer1 = currentPlayerId === game.player1Id;
-    return (isPlayer1 && game.currentTurn === "player1") || 
-           (!isPlayer1 && game.currentTurn === "player2");
+    return (isPlayer1 && game.currentTurn === "player1") ||
+      (!isPlayer1 && game.currentTurn === "player2");
   })();
 
   if (!currentEvent) {
@@ -54,7 +54,7 @@ export default function CurrentCard({ gameState, onPlaceEvent, isPlacing, select
         );
       }
     }
-    
+
     return (
       <div className="mt-6 bg-white rounded-xl shadow-sm p-6" data-testid="loading-card">
         <div className="text-center">
@@ -80,31 +80,28 @@ export default function CurrentCard({ gameState, onPlaceEvent, isPlacing, select
     <div className="mt-6 bg-white rounded-xl shadow-sm p-6" data-testid="current-card-section">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-lg font-semibold text-gray-900">Current Card</h3>
-        <div className={`px-3 py-1 rounded-full text-sm font-medium ${
-          isPlacing 
-            ? 'bg-blue-100 text-blue-800' 
-            : isMyTurn 
-              ? 'bg-green-100 text-green-800' 
-              : 'bg-orange-100 text-orange-800'
-        }`}>
-          {isPlacing 
-            ? 'Placing...' 
-            : isMyTurn 
-              ? 'Your Turn' 
+        <div className={`px-3 py-1 rounded-full text-sm font-medium ${isPlacing
+          ? 'bg-blue-100 text-blue-800'
+          : isMyTurn
+            ? 'bg-green-100 text-green-800'
+            : 'bg-orange-100 text-orange-800'
+          }`}>
+          {isPlacing
+            ? 'Placing...'
+            : isMyTurn
+              ? 'Your Turn'
               : "Opponent's Turn"}
         </div>
       </div>
-      
+
       <div className="flex justify-center">
-        <div 
+        <div
           onClick={isMyTurn ? handleCardClick : undefined}
-          className={`transition-transform ${
-            isMyTurn 
-              ? 'cursor-pointer hover:scale-105' 
-              : 'cursor-not-allowed opacity-50'
-          } ${
-            selectedCardId === currentEvent.id ? 'ring-4 ring-purple-300' : ''
-          }`}
+          className={`transition-transform ${isMyTurn
+            ? 'cursor-pointer hover:scale-105'
+            : 'cursor-not-allowed opacity-50'
+            } ${selectedCardId === currentEvent.id ? 'ring-4 ring-purple-300' : ''
+            }`}
         >
           <TimelineCard
             event={currentEvent}
@@ -113,13 +110,13 @@ export default function CurrentCard({ gameState, onPlaceEvent, isPlacing, select
           />
         </div>
       </div>
-      
+
       <div className="text-center mt-4">
         <p className="text-sm text-gray-600">
-          {!isMyTurn 
-            ? "Wait for the other player to make their move" 
-            : selectedCardId === currentEvent.id 
-              ? "Card selected! Now click a drop zone in the timeline above" 
+          {!isMyTurn
+            ? "Wait for the other player to make their move"
+            : selectedCardId === currentEvent.id
+              ? "Card selected! Now click a drop zone in the timeline above"
               : "Click this card to select it"}
         </p>
       </div>

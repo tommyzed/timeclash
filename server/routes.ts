@@ -332,7 +332,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
         const event = await storage.getHistoricalEvent(move.eventId);
         if (event) {
           let playerName = undefined;
-          
+
           // Get player name if it's not single-player
           if (move.playerId !== "single-player") {
             try {
@@ -342,7 +342,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
               console.error("Error fetching player for recent move:", error);
             }
           }
-          
+
           recentMoves.push({ ...move, event, playerName });
         }
       }
@@ -357,7 +357,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
         const player2IncorrectCount = moves.filter(
           move => move.playerId === game.player2Id && !move.isCorrect
         ).length;
-        
+
         playerStats = {
           player1IncorrectCount,
           player2IncorrectCount,
@@ -367,7 +367,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
         const player1IncorrectCount = moves.filter(
           move => !move.isCorrect
         ).length;
-        
+
         playerStats = {
           player1IncorrectCount,
           player2IncorrectCount: 0,
@@ -876,7 +876,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
 
           case "new_game_request":
             const { gameId: requestGameId, requestingPlayerId, requestingPlayerName } = message.data;
-            
+
             // Get the current game to find the opponent
             const currentGame = await storage.getGame(requestGameId);
             if (!currentGame) {
@@ -889,8 +889,8 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
             }
 
             // Find the opponent player ID
-            const opponentPlayerId = currentGame.player1Id === requestingPlayerId 
-              ? currentGame.player2Id 
+            const opponentPlayerId = currentGame.player1Id === requestingPlayerId
+              ? currentGame.player2Id
               : currentGame.player1Id;
 
             if (!opponentPlayerId) {
@@ -915,7 +915,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
                   sentToOpponent = true;
                 }
               });
-              
+
               if (!sentToOpponent) {
                 ws.send(JSON.stringify({
                   type: "error",
@@ -932,7 +932,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
 
           case "new_game_response":
             const { gameId: responseGameId, respondingPlayerId, accepted } = message.data;
-            
+
             // Get the current game to find the requester
             const responseGame = await storage.getGame(responseGameId);
             if (!responseGame) {
@@ -944,8 +944,8 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
             }
 
             // Find the requester player ID
-            const requesterPlayerId = responseGame.player1Id === respondingPlayerId 
-              ? responseGame.player2Id 
+            const requesterPlayerId = responseGame.player1Id === respondingPlayerId
+              ? responseGame.player2Id
               : responseGame.player1Id;
 
             if (!requesterPlayerId) {
@@ -968,7 +968,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
                   categories: responseGame.categories,
                   eras: responseGame.eras,
                 });
-                
+
                 // Set the initial turn and get a random event for the first turn
                 const currentEvent = await storage.getRandomHistoricalEvent(
                   newGame.placedEventIds,
