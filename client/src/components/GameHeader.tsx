@@ -8,9 +8,11 @@ import {
   Home,
   HelpCircle,
 } from "lucide-react";
+import { GoogleLogin } from "@react-oauth/google";
 import { type GameState } from "@shared/schema";
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
+import { useUser } from "@/context/UserContext";
 import { useIsMobile } from "@/hooks/use-mobile";
 import logoImage from "@assets/TimeClash.png";
 import burglarIcon from "@/assets/burglar.png";
@@ -27,6 +29,13 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import SettingsDialog from "./SettingsDialog";
 import { toast } from "@/hooks/use-toast";
 
@@ -73,6 +82,7 @@ export default function GameHeader({
   const [copied, setCopied] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showRulesModal, setShowRulesModal] = useState(false);
+  const { user, setUser } = useUser();
   const [, setLocation] = useLocation();
   const isMobile = useIsMobile();
 
@@ -319,6 +329,51 @@ export default function GameHeader({
       >
         <Settings className="h-5 w-5 text-gray-600" />
       </button>
+      <div className="ml-4">
+        {user ? (
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Avatar>
+                <AvatarImage src={user.picture ?? undefined} />
+                <AvatarFallback>
+                  {user.name?.charAt(0).toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem
+                onClick={async () => {
+                  await fetch("/api/auth/logout", { method: "POST" });
+                  setUser(null);
+                }}
+              >
+                Logout
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        ) : (
+          <GoogleLogin
+            onSuccess={async (credentialResponse) => {
+              try {
+                const response = await fetch("/api/auth/google", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ token: credentialResponse.credential }),
+                });
+                if (response.ok) {
+                  const data = await response.json();
+                  setUser(data);
+                }
+              } catch (error) {
+                console.error("Login failed:", error);
+              }
+            }}
+            onError={() => {
+              console.log("Login Failed");
+            }}
+          />
+        )}
+      </div>
     </div>
   );
 

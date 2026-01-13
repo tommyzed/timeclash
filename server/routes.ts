@@ -2,6 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { WebSocketServer, WebSocket } from "ws";
 import { IStorage } from "./storage";
+import { OAuth2Client } from "google-auth-library";
 import {
   insertGameMoveSchema,
   insertPlayerSchema,
@@ -27,6 +28,56 @@ function broadcastToGame(gameId: string, message: WebSocketMessage) {
 }
 
 export async function registerRoutes(app: Express, storage: IStorage): Promise<Server> {
+  const googleClient = new OAuth2Client();
+
+  app.post("/api/auth/google", async (req, res) => {
+    try {
+      const { token } = req.body;
+      const ticket = await googleClient.verifyIdToken({
+        idToken: token,
+        audience: process.env.GOOGLE_CLIENT_ID,
+      });
+      const payload = ticket.getPayload();
+      if (!payload) {
+        return res.status(400).json({ message: "Invalid token" });
+      }
+
+      let user = await storage.getUserByGoogleId(payload.sub);
+      if (!user) {
+        user = await storage.createUser({
+          googleId: payload.sub,
+          email: payload.email!,
+          name: payload.name!,
+          picture: payload.picture,
+        });
+      }
+
+      (req.session as any).userId = user.id;
+      res.json(user);
+    } catch (error) {
+      console.error("Google auth error:", error);
+      res.status(500).json({ message: "Failed to authenticate with Google" });
+    }
+  });
+
+  app.get("/api/auth/session", async (req, res) => {
+    if ((req.session as any).userId) {
+      const user = await storage.getUser((req.session as any).userId);
+      res.json(user);
+    } else {
+      res.status(401).json({ message: "Not authenticated" });
+    }
+  });
+
+  app.post("/api/auth/logout", (req, res) => {
+    req.session.destroy((err) => {
+      if (err) {
+        return res.status(500).json({ message: "Failed to log out" });
+      }
+      res.json({ message: "Logged out" });
+    });
+  });
+
   // Get all historical events
   app.get("/api/events", async (req, res) => {
     try {

@@ -219,4 +219,19 @@ export class DrizzleStorage implements IStorage {
     const result = await db.insert(schema.gameMoves).values(move).returning();
     return result[0];
   }
+
+  async getUser(id: string): Promise<schema.User | undefined> {
+    const result = await db.select().from(schema.users).where(eq(schema.users.id, id));
+    return result[0];
+  }
+
+  async getUserByGoogleId(googleId: string): Promise<schema.User | undefined> {
+    const result = await db.select().from(schema.users).where(eq(schema.users.googleId, googleId));
+    return result[0];
+  }
+
+  async createUser(user: schema.InsertUser): Promise<schema.User> {
+    const result = await db.insert(schema.users).values(user).returning();
+    return result[0];
+  }
 }

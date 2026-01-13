@@ -1,4 +1,7 @@
 import express, { type Request, Response, NextFunction } from "express";
+import session from "express-session";
+import connectPgSimple from "connect-pg-simple";
+import pg from "pg";
 import { initStorage } from "./storage";
 import { registerRoutes } from "./routes";
 import { log } from "./log";
@@ -7,6 +10,28 @@ import { serveStatic } from "./static";
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+const PGStore = connectPgSimple(session);
+const pool = new pg.Pool({
+  connectionString: process.env.DATABASE_URL,
+});
+
+app.use(
+  session({
+    store: new PGStore({
+      pool: pool,
+      tableName: "user_sessions",
+    }),
+    secret: process.env.SESSION_SECRET || "your-secret-key",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: process.env.NODE_ENV === "production",
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 7, // 1 week
+    },
+  }),
+);
 
 app.use((req, res, next) => {
   const start = Date.now();
