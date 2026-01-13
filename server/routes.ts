@@ -573,6 +573,17 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
               },
             },
           });
+        } else if (!game.roomCode) {
+          // Broadcast game state update for single-player
+          broadcastToGame(gameId, {
+            type: "move_made",
+            data: {
+              playerId: "single-player",
+              eventId,
+              position,
+              isCorrect,
+            },
+          });
         }
       } else {
         // Wrong answer - switch turns in multiplayer
