@@ -15,6 +15,7 @@ import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import logoImage from "@assets/TimeClash.png";
 import { CoffeeIcon } from "@/components/ui/CoffeeIcon";
+import Auth from "@/components/Auth";
 
 export default function Lobby() {
   const [nickname, setNickname] = useState("");
@@ -187,6 +188,7 @@ export default function Lobby() {
               <span className="hidden md:block font-semibold">Buy me a coffee</span>
               <span className="block md:hidden font-semibold">Coffee</span>
             </a>
+            <Auth />
           </CardHeader>
           <CardContent>
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">

@@ -36,9 +36,11 @@ export function useWebSocket({ gameId, playerId, onMessage, onConnect, onDisconn
 
     try {
       const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-      const wsUrl = `${protocol}//${window.location.host}/ws`;
+      const wsUrl = import.meta.env.DEV
+        ? "ws://localhost:8081/ws"
+        : `${protocol}//${window.location.host}/ws`;
       
-      console.log('Connecting to WebSocket:', wsUrl);
+      console.log('TOMOLICK: Connecting to WebSocket:', wsUrl);
       wsRef.current = new WebSocket(wsUrl);
 
       wsRef.current.onopen = () => {

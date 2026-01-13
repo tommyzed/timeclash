@@ -1,34 +1,41 @@
-import { Switch, Route } from "wouter";
-import { queryClient } from "./lib/queryClient";
-import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { Route, Switch, useLocation } from "wouter";
 import Game from "@/pages/game";
 import Lobby from "@/pages/lobby";
 import NotFound from "@/pages/not-found";
+import { AnimatePresence } from "framer-motion";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import { queryClient } from "@/lib/queryClient";
 
-function Router() {
+export default function App() {
+  const location = useLocation();
+  const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+
+  if (!googleClientId) {
+    throw new Error("VITE_GOOGLE_CLIENT_ID is not defined");
+  }
+
   return (
-    <Switch>
-      <Route path="/" component={Lobby} />
-      <Route path="/lobby" component={Lobby} />
-      <Route path="/room/:roomCode" component={Lobby} />
-      <Route path="/game" component={Game} />
-      <Route path="/game/:gameId" component={Game} />
-      <Route component={NotFound} />
-    </Switch>
+    <TooltipProvider>
+      <GoogleOAuthProvider clientId={googleClientId}>
+        <QueryClientProvider client={queryClient}>
+          <AnimatePresence mode="wait">
+            <Switch location={location[0]} key={location[0]}>
+              <Route path="/" component={Lobby} />
+              <Route path="/lobby" component={Lobby} />
+              <Route path="/room/:roomCode" component={Lobby} />
+              <Route path="/game" component={Game} />
+              <Route path="/game/:gameId" component={Game} />
+              <Route>
+                <NotFound />
+              </Route>
+            </Switch>
+          </AnimatePresence>
+        </QueryClientProvider>
+      </GoogleOAuthProvider>
+      <Toaster />
+    </TooltipProvider>
   );
 }
-
-function App() {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Router />
-      </TooltipProvider>
-    </QueryClientProvider>
-  );
-}
-
-export default App;

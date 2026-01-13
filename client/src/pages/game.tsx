@@ -127,6 +127,10 @@ export default function Game() {
   // Get game state
   const { data: gameState, isLoading } = useQuery({
     queryKey: ["/api/games", gameId],
+    queryFn: async () => {
+      const response = await apiRequest("GET", `/api/games/${gameId}`);
+      return await response.json();
+    },
     enabled: !!gameId,
   }) as { data: GameState | undefined; isLoading: boolean };
 
@@ -350,7 +354,7 @@ export default function Game() {
         // Navigate to the new game
         navigate(`/game/${message.data.newGameId}?playerId=${playerId}`);
         setGameId(message.data.newGameId);
-        
+
         toast({
           title: "New Game Started!",
           description: "Both players have accepted the new game.",
@@ -481,11 +485,11 @@ export default function Game() {
       const targetScore = Number(localStorage.getItem("targetScore")) || 10;
       const categories = JSON.parse(
         localStorage.getItem("categories") ||
-          '["Politics", "Science", "History", "Culture"]',
+        '["Politics", "Science", "History", "Culture"]',
       );
       const eras = JSON.parse(
         localStorage.getItem("eras") ||
-          '["Ancient", "Classical", "Modern"]',
+        '["Ancient", "Classical", "Modern"]',
       );
       createGameMutation.mutate({ gameMode, targetScore, categories, eras });
     }
@@ -563,7 +567,7 @@ export default function Game() {
           requestingPlayerName: nickname,
         },
       });
-      
+
       toast({
         title: "New Game Request Sent",
         description: "Waiting for your opponent to accept...",
@@ -581,11 +585,11 @@ export default function Game() {
       const targetScore = Number(localStorage.getItem("targetScore")) || 10;
       const categories = JSON.parse(
         localStorage.getItem("categories") ||
-          '["Politics", "Science", "History", "Culture"]',
+        '["Politics", "Science", "History", "Culture"]',
       );
       const eras = JSON.parse(
         localStorage.getItem("eras") ||
-          '["Ancient", "Classical", "Modern"]',
+        '["Ancient", "Classical", "Modern"]',
       );
       createGameMutation.mutate({ gameMode, targetScore, categories, eras });
     }

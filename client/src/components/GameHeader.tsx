@@ -16,6 +16,7 @@ import logoImage from "@assets/TimeClash.png";
 import burglarIcon from "@/assets/burglar.png";
 import muscleIcon from "@/assets/weights.png";
 import volumeIcon from "@/assets/volume.png";
+import Auth from "@/components/Auth";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -319,6 +320,7 @@ export default function GameHeader({
       >
         <Settings className="h-5 w-5 text-gray-600" />
       </button>
+      <Auth />
     </div>
   );
 

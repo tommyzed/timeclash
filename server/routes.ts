@@ -2,6 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { WebSocketServer, WebSocket } from "ws";
 import { IStorage } from "./storage";
+import { OAuth2Client } from "google-auth-library";
 import {
   insertGameMoveSchema,
   insertPlayerSchema,
@@ -27,6 +28,56 @@ function broadcastToGame(gameId: string, message: WebSocketMessage) {
 }
 
 export async function registerRoutes(app: Express, storage: IStorage): Promise<Server> {
+  const googleClient = new OAuth2Client();
+
+  app.post("/api/auth/google", async (req, res) => {
+    try {
+      const { token } = req.body;
+      const ticket = await googleClient.verifyIdToken({
+        idToken: token,
+        audience: process.env.GOOGLE_CLIENT_ID,
+      });
+      const payload = ticket.getPayload();
+      if (!payload) {
+        return res.status(400).json({ message: "Invalid token" });
+      }
+
+      let user = await storage.getUserByGoogleId(payload.sub);
+      if (!user) {
+        user = await storage.createUser({
+          googleId: payload.sub,
+          email: payload.email!,
+          name: payload.name!,
+          picture: payload.picture,
+        });
+      }
+
+      (req.session as any).userId = user.id;
+      res.json(user);
+    } catch (error) {
+      console.error("Google auth error:", error);
+      res.status(500).json({ message: "Failed to authenticate with Google" });
+    }
+  });
+
+  app.get("/api/auth/session", async (req, res) => {
+    if ((req.session as any).userId) {
+      const user = await storage.getUser((req.session as any).userId);
+      res.json(user);
+    } else {
+      res.status(401).json({ message: "Not authenticated" });
+    }
+  });
+
+  app.post("/api/auth/logout", (req, res) => {
+    req.session.destroy((err) => {
+      if (err) {
+        return res.status(500).json({ message: "Failed to log out" });
+      }
+      res.json({ message: "Logged out" });
+    });
+  });
+
   // Get all historical events
   app.get("/api/events", async (req, res) => {
     try {
@@ -281,7 +332,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
         const event = await storage.getHistoricalEvent(move.eventId);
         if (event) {
           let playerName = undefined;
-          
+
           // Get player name if it's not single-player
           if (move.playerId !== "single-player") {
             try {
@@ -291,7 +342,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
               console.error("Error fetching player for recent move:", error);
             }
           }
-          
+
           recentMoves.push({ ...move, event, playerName });
         }
       }
@@ -306,7 +357,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
         const player2IncorrectCount = moves.filter(
           move => move.playerId === game.player2Id && !move.isCorrect
         ).length;
-        
+
         playerStats = {
           player1IncorrectCount,
           player2IncorrectCount,
@@ -316,7 +367,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
         const player1IncorrectCount = moves.filter(
           move => !move.isCorrect
         ).length;
-        
+
         playerStats = {
           player1IncorrectCount,
           player2IncorrectCount: 0,
@@ -520,6 +571,17 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
                     ? game.player2Score + 1
                     : game.player2Score,
               },
+            },
+          });
+        } else if (!game.roomCode) {
+          // Broadcast game state update for single-player
+          broadcastToGame(gameId, {
+            type: "move_made",
+            data: {
+              playerId: "single-player",
+              eventId,
+              position,
+              isCorrect,
             },
           });
         }
@@ -746,6 +808,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
   const httpServer = createServer(app);
 
   // Set up WebSocket server for real-time multiplayer
+  console.log('TOMOLICK: Connecting to WebSocket:', { server: httpServer, path: "/ws" });
   const wss = new WebSocketServer({ server: httpServer, path: "/ws" });
 
   wss.on("connection", (ws: WebSocket, req) => {
@@ -813,7 +876,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
 
           case "new_game_request":
             const { gameId: requestGameId, requestingPlayerId, requestingPlayerName } = message.data;
-            
+
             // Get the current game to find the opponent
             const currentGame = await storage.getGame(requestGameId);
             if (!currentGame) {
@@ -826,8 +889,8 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
             }
 
             // Find the opponent player ID
-            const opponentPlayerId = currentGame.player1Id === requestingPlayerId 
-              ? currentGame.player2Id 
+            const opponentPlayerId = currentGame.player1Id === requestingPlayerId
+              ? currentGame.player2Id
               : currentGame.player1Id;
 
             if (!opponentPlayerId) {
@@ -852,7 +915,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
                   sentToOpponent = true;
                 }
               });
-              
+
               if (!sentToOpponent) {
                 ws.send(JSON.stringify({
                   type: "error",
@@ -869,7 +932,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
 
           case "new_game_response":
             const { gameId: responseGameId, respondingPlayerId, accepted } = message.data;
-            
+
             // Get the current game to find the requester
             const responseGame = await storage.getGame(responseGameId);
             if (!responseGame) {
@@ -881,8 +944,8 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
             }
 
             // Find the requester player ID
-            const requesterPlayerId = responseGame.player1Id === respondingPlayerId 
-              ? responseGame.player2Id 
+            const requesterPlayerId = responseGame.player1Id === respondingPlayerId
+              ? responseGame.player2Id
               : responseGame.player1Id;
 
             if (!requesterPlayerId) {
@@ -905,7 +968,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
                   categories: responseGame.categories,
                   eras: responseGame.eras,
                 });
-                
+
                 // Set the initial turn and get a random event for the first turn
                 const currentEvent = await storage.getRandomHistoricalEvent(
                   newGame.placedEventIds,

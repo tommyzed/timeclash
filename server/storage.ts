@@ -7,6 +7,8 @@ import {
   type InsertGameMove,
   type Player,
   type InsertPlayer,
+  type User,
+  type InsertUser,
 } from "@shared/schema";
 import { randomUUID, webcrypto } from "crypto";
 import fs from "fs";
@@ -47,6 +49,11 @@ export interface IStorage {
   // Game Moves
   getGameMoves(gameId: string): Promise<GameMove[]>;
   createGameMove(move: InsertGameMove): Promise<GameMove>;
+
+  // Users
+  getUser(id: string): Promise<User | undefined>;
+  getUserByGoogleId(googleId: string): Promise<User | undefined>;
+  createUser(user: InsertUser): Promise<User>;
 }
 
 export class MemStorage implements IStorage {
@@ -54,12 +61,14 @@ export class MemStorage implements IStorage {
   private games: Map<string, Game>;
   private gameMoves: Map<string, GameMove>;
   private players: Map<string, Player>;
+  private users: Map<string, User>;
 
   constructor() {
     this.historicalEvents = new Map();
     this.games = new Map();
     this.gameMoves = new Map();
     this.players = new Map();
+    this.users = new Map();
 
     // Initialize with curated historical events
     this.initializeHistoricalEvents();
@@ -261,6 +270,26 @@ export class MemStorage implements IStorage {
 
     this.gameMoves.set(id, move);
     return move;
+  }
+
+  async getUser(id: string): Promise<User | undefined> {
+    return this.users.get(id);
+  }
+
+  async getUserByGoogleId(googleId: string): Promise<User | undefined> {
+    return Array.from(this.users.values()).find(
+      (user) => user.googleId === googleId,
+    );
+  }
+
+  async createUser(user: InsertUser): Promise<User> {
+    const newUser: User = {
+      id: randomUUID(),
+      ...user,
+      createdAt: new Date(),
+    };
+    this.users.set(newUser.id, newUser);
+    return newUser;
   }
 }
 
