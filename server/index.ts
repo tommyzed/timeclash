@@ -1,6 +1,8 @@
 import express, { type Request, Response, NextFunction } from "express";
 import session from "express-session";
 import connectPgSimple from "connect-pg-simple";
+import dotenv from "dotenv";
+dotenv.config();
 import pg from "pg";
 import { initStorage } from "./storage";
 import { registerRoutes } from "./routes";
