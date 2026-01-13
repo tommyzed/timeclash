@@ -127,6 +127,10 @@ export default function Game() {
   // Get game state
   const { data: gameState, isLoading } = useQuery({
     queryKey: ["/api/games", gameId],
+    queryFn: async () => {
+      const response = await apiRequest("GET", `/api/games/${gameId}`);
+      return await response.json();
+    },
     enabled: !!gameId,
   }) as { data: GameState | undefined; isLoading: boolean };
 
