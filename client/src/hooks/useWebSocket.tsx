@@ -35,16 +35,13 @@ export function useWebSocket({ gameId, playerId, onMessage, onConnect, onDisconn
     }
 
     try {
-      let wsUrl;
-      if (import.meta.env.DEV) {
-        wsUrl = "ws://localhost:5000/ws";
-      } else {
-        const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-        wsUrl = `${protocol}//${window.location.host}/ws`;
-      }
+      const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+      const wsUrl = import.meta.env.DEV
+        ? "ws://localhost:5000/ws"
+        : `${protocol}//${window.location.host}/ws`;
       
       console.log('Connecting to WebSocket:', wsUrl);
-      wsRef.current = new WebSocket(wsUrl!);
+      wsRef.current = new WebSocket(wsUrl);
 
       wsRef.current.onopen = () => {
         console.log('WebSocket connected');
