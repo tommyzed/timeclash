@@ -437,8 +437,6 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
           event.year >= prevEvent.year && event.year <= nextEvent.year;
       }
 
-      let gameCompleted = false;
-
       // Create the move record (playerId is optional for single player)
       const { playerId } = req.body;
 
@@ -555,26 +553,14 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
           updateData.currentEventId = null;
         }
 
-        await storage.updateGame(gameId, updateData);
+        const updatedGame = await storage.updateGame(gameId, updateData);
 
         // If game is completed in multiplayer, broadcast game completion
-        if (updateData.gameStatus === "completed" && game.roomCode) {
-          gameCompleted = true;
-          broadcastToGame(gameId, {
-            type: "game_completed",
-            data: {
-              winnerPlayerId: updateData.winnerPlayerId,
-              finalScores: {
-                player1:
-                  playerId === game.player1Id
-                    ? game.player1Score + 1
-                    : game.player1Score,
-                player2:
-                  playerId === game.player2Id
-                    ? game.player2Score + 1
-                    : game.player2Score,
-              },
-            },
+        if (updatedGame && updatedGame.gameStatus === "completed" && updatedGame.roomCode) {
+            const finalGameState = await storage.getGame(gameId);
+            broadcastToGame(gameId, {
+            type: "game_updated",
+            data: finalGameState,
           });
         } else if (!game.roomCode) {
           // Broadcast game state update for single-player
@@ -645,7 +631,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
       }
 
       // Broadcast move to other players in multiplayer games
-      if (game.roomCode && playerId && !gameCompleted) {
+      if (game.roomCode && playerId) {
         console.log("Broadcasting move_made message:", {
           playerId,
           eventId,

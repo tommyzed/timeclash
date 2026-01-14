@@ -241,37 +241,8 @@ export default function Game() {
         }
       }
 
-      // Handle game completion
-      if (message.type === "game_completed") {
-        setShowVictoryModal(true);
-
-        // Trigger confetti for any game completion (winner or loser)
-        setTimeout(() => {
-          const duration = 3000;
-          const end = Date.now() + duration;
-
-          (function frame() {
-            // Create confetti
-            if (typeof window !== "undefined" && (window as any).confetti) {
-              (window as any).confetti({
-                particleCount: Math.floor(Math.random() * 50) + 50,
-                angle: Math.random() * 360,
-                spread: Math.random() * 50 + 50,
-                origin: {
-                  x: Math.random(),
-                  y: Math.random() - 0.2,
-                },
-              });
-            }
-
-            if (Date.now() < end) {
-              requestAnimationFrame(frame);
-            }
-          })();
-        }, 500);
-
-        // Refresh game state to show final scores
-        queryClient.invalidateQueries({ queryKey: ["/api/games", gameId] });
+      if (message.type === "game_updated") {
+        queryClient.setQueryData(["/api/games", gameId], message.data);
       }
 
       // Handle real-time updates here
@@ -664,11 +635,39 @@ export default function Game() {
           })();
         }, 500);
       }
-      // For multiplayer games, the confetti is handled by WebSocket 'game_completed' message
-      else if (isMultiplayer && gameState.game.winnerPlayerId === playerId) {
-        playSound("win");
-      } else if (isMultiplayer && gameState.game.winnerPlayerId !== playerId) {
-        playSound("lose");
+      // For multiplayer games, show victory modal and confetti
+      else if (isMultiplayer) {
+        setShowVictoryModal(true);
+        if (gameState.game.winnerPlayerId === playerId) {
+          playSound("win");
+        } else if (gameState.game.winnerPlayerId !== playerId) {
+          playSound("lose");
+        }
+
+        // Trigger confetti for multiplayer game completion
+        setTimeout(() => {
+          const duration = 3000;
+          const end = Date.now() + duration;
+
+          (function frame() {
+            // Create confetti
+            if (typeof window !== "undefined" && (window as any).confetti) {
+              (window as any).confetti({
+                particleCount: Math.floor(Math.random() * 50) + 50,
+                angle: Math.random() * 360,
+                spread: Math.random() * 50 + 50,
+                origin: {
+                  x: Math.random(),
+                  y: Math.random() - 0.2,
+                },
+              });
+            }
+
+            if (Date.now() < end) {
+              requestAnimationFrame(frame);
+            }
+          })();
+        }, 500);
       }
     }
   }, [gameState?.game, justWon, isMultiplayer]);
