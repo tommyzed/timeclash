@@ -496,6 +496,17 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
           // Turn goes back to the other player
           updateData.currentTurn =
             game.currentTurn === "player1" ? "player2" : "player1";
+
+          // Check for winner after a steal
+          if (
+            (updateData.player1Score &&
+              updateData.player1Score >= game.targetScore) ||
+            (updateData.player2Score &&
+              updateData.player2Score >= game.targetScore)
+          ) {
+            updateData.gameStatus = "completed";
+            updateData.winnerPlayerId = playerId;
+          }
         } else if (game.roomCode && playerId) {
           // Multiplayer game - update specific player score
           if (playerId === game.player1Id) {
@@ -509,11 +520,12 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
             game.currentTurn === "player1" ? "player2" : "player1";
 
           // Check for winner
-          const newScore =
-            playerId === game.player1Id
-              ? game.player1Score + 1
-              : game.player2Score + 1;
-          if (newScore >= game.targetScore) {
+          if (
+            (updateData.player1Score &&
+              updateData.player1Score >= game.targetScore) ||
+            (updateData.player2Score &&
+              updateData.player2Score >= game.targetScore)
+          ) {
             updateData.gameStatus = "completed";
             updateData.winnerPlayerId = playerId;
           }
