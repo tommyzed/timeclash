@@ -78,6 +78,7 @@ export default function GameHeader({
   const isMobile = useIsMobile();
 
   const handleColorChange = async (color: string) => {
+    if (playerColor === color) return;
     if (setPlayerColor) {
       if (isMultiplayer) {
         if (currentPlayerId) {
