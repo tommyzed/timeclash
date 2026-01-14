@@ -437,6 +437,8 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
           event.year >= prevEvent.year && event.year <= nextEvent.year;
       }
 
+      let gameCompleted = false;
+
       // Create the move record (playerId is optional for single player)
       const { playerId } = req.body;
 
@@ -557,6 +559,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
 
         // If game is completed in multiplayer, broadcast game completion
         if (updateData.gameStatus === "completed" && game.roomCode) {
+          gameCompleted = true;
           broadcastToGame(gameId, {
             type: "game_completed",
             data: {
@@ -642,7 +645,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
       }
 
       // Broadcast move to other players in multiplayer games
-      if (game.roomCode && playerId) {
+      if (game.roomCode && playerId && !gameCompleted) {
         console.log("Broadcasting move_made message:", {
           playerId,
           eventId,
