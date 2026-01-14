@@ -27,6 +27,79 @@ function broadcastToGame(gameId: string, message: WebSocketMessage) {
   }
 }
 
+async function getGameState(storage: IStorage, gameId: string) {
+  const game = await storage.getGame(gameId);
+  if (!game) {
+    return null;
+  }
+  const allMoves = await storage.getGameMoves(gameId);
+  const placedEvents = [];
+  for (const eventId of game.placedEventIds) {
+    const event = await storage.getHistoricalEvent(eventId);
+    if (!event) continue;
+    const placementMove = allMoves.find(
+      (move) => move.eventId === eventId && move.isCorrect,
+    );
+    let placedByPlayerName;
+    if (placementMove && placementMove.playerId !== "single-player") {
+      try {
+        const player = await storage.getPlayer(placementMove.playerId);
+        placedByPlayerName = player?.nickname;
+      } catch (error) {
+        console.error("Error fetching player for placed event:", error);
+      }
+    }
+    placedEvents.push({
+      event,
+      position: game.placedEventIds.indexOf(eventId),
+      placedByPlayerId: placementMove?.playerId,
+      placedByPlayerName,
+    });
+  }
+  placedEvents.sort((a, b) => a.event.year - b.event.year);
+  const currentEvent = game.currentEventId
+    ? await storage.getHistoricalEvent(game.currentEventId)
+    : null;
+  const recentMoves = [];
+  for (const move of allMoves.slice(0, 5)) {
+    const event = await storage.getHistoricalEvent(move.eventId);
+    if (event) {
+      let playerName;
+      if (move.playerId !== "single-player") {
+        try {
+          const player = await storage.getPlayer(move.playerId);
+          playerName = player?.nickname;
+        } catch (error) {
+          console.error("Error fetching player for recent move:", error);
+        }
+      }
+      recentMoves.push({ ...move, event, playerName });
+    }
+  }
+  let playerStats;
+  if (game.roomCode) {
+    const player1IncorrectCount = allMoves.filter(
+      (move) => move.playerId === game.player1Id && !move.isCorrect,
+    ).length;
+    const player2IncorrectCount = allMoves.filter(
+      (move) => move.playerId === game.player2Id && !move.isCorrect,
+    ).length;
+    playerStats = { player1IncorrectCount, player2IncorrectCount };
+  } else {
+    const player1IncorrectCount = allMoves.filter(
+      (move) => !move.isCorrect,
+    ).length;
+    playerStats = { player1IncorrectCount, player2IncorrectCount: 0 };
+  }
+  return {
+    game,
+    placedEvents,
+    currentEvent,
+    recentMoves,
+    playerStats,
+  };
+}
+
 export async function registerRoutes(app: Express, storage: IStorage): Promise<Server> {
   const googleClient = new OAuth2Client();
 
@@ -278,110 +351,10 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
   app.get("/api/games/:gameId", async (req, res) => {
     try {
       const { gameId } = req.params;
-      const game = await storage.getGame(gameId);
-
-      if (!game) {
+      const gameState = await getGameState(storage, gameId);
+      if (!gameState) {
         return res.status(404).json({ message: "Game not found" });
       }
-
-      // Fetch moves once and reuse to avoid N+1 queries
-      const allMoves = await storage.getGameMoves(gameId);
-      const placedEvents = [] as Array<{
-        event: any;
-        position: number;
-        placedByPlayerId?: string;
-        placedByPlayerName?: string;
-      }>;
-      for (let i = 0; i < game.placedEventIds.length; i++) {
-        const eventId = game.placedEventIds[i];
-        const event = await storage.getHistoricalEvent(eventId);
-        if (!event) continue;
-        const placementMove = allMoves.find(
-          (move) => move.eventId === eventId && move.isCorrect,
-        );
-        let placedByPlayerName = undefined as string | undefined;
-        if (placementMove && placementMove.playerId !== "single-player") {
-          try {
-            const player = await storage.getPlayer(placementMove.playerId);
-            placedByPlayerName = player?.nickname;
-          } catch (error) {
-            console.error("Error fetching player for placed event:", error);
-          }
-        }
-        placedEvents.push({
-          event,
-          position: i,
-          placedByPlayerId: placementMove?.playerId,
-          placedByPlayerName,
-        });
-      }
-
-      // Sort placed events by year for proper timeline order
-      placedEvents.sort((a, b) => a.event.year - b.event.year);
-
-      // Get current event
-      const currentEvent = game.currentEventId
-        ? await storage.getHistoricalEvent(game.currentEventId)
-        : null;
-
-      // Get recent moves with event data and player names
-      const moves = allMoves;
-      const recentMoves = [];
-      for (const move of moves.slice(0, 5)) {
-        // Get last 5 moves
-        const event = await storage.getHistoricalEvent(move.eventId);
-        if (event) {
-          let playerName = undefined;
-
-          // Get player name if it's not single-player
-          if (move.playerId !== "single-player") {
-            try {
-              const player = await storage.getPlayer(move.playerId);
-              playerName = player?.nickname;
-            } catch (error) {
-              console.error("Error fetching player for recent move:", error);
-            }
-          }
-
-          recentMoves.push({ ...move, event, playerName });
-        }
-      }
-
-      // Calculate total incorrect moves for each player
-      let playerStats;
-      if (game.roomCode) {
-        // Multiplayer game - calculate for both players
-        const player1IncorrectCount = moves.filter(
-          move => move.playerId === game.player1Id && !move.isCorrect
-        ).length;
-        const player2IncorrectCount = moves.filter(
-          move => move.playerId === game.player2Id && !move.isCorrect
-        ).length;
-
-        playerStats = {
-          player1IncorrectCount,
-          player2IncorrectCount,
-        };
-      } else {
-        // Single player game
-        const player1IncorrectCount = moves.filter(
-          move => !move.isCorrect
-        ).length;
-
-        playerStats = {
-          player1IncorrectCount,
-          player2IncorrectCount: 0,
-        };
-      }
-
-      const gameState = {
-        game,
-        placedEvents,
-        currentEvent,
-        recentMoves,
-        playerStats,
-      };
-
       res.json(gameState);
     } catch (error) {
       console.error("Fetch game state error:", error);
@@ -421,6 +394,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
 
       // Check if placement is correct
       let isCorrect = false;
+      let gameCompleted = false;
 
       if (position === 0) {
         // Placing at the beginning
@@ -496,17 +470,6 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
           // Turn goes back to the other player
           updateData.currentTurn =
             game.currentTurn === "player1" ? "player2" : "player1";
-
-          // Check for winner after a steal
-          if (
-            (updateData.player1Score &&
-              updateData.player1Score >= game.targetScore) ||
-            (updateData.player2Score &&
-              updateData.player2Score >= game.targetScore)
-          ) {
-            updateData.gameStatus = "completed";
-            updateData.winnerPlayerId = playerId;
-          }
         } else if (game.roomCode && playerId) {
           // Multiplayer game - update specific player score
           if (playerId === game.player1Id) {
@@ -520,12 +483,11 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
             game.currentTurn === "player1" ? "player2" : "player1";
 
           // Check for winner
-          if (
-            (updateData.player1Score &&
-              updateData.player1Score >= game.targetScore) ||
-            (updateData.player2Score &&
-              updateData.player2Score >= game.targetScore)
-          ) {
+          const newScore =
+            playerId === game.player1Id
+              ? game.player1Score + 1
+              : game.player2Score + 1;
+          if (newScore >= game.targetScore) {
             updateData.gameStatus = "completed";
             updateData.winnerPlayerId = playerId;
           }
@@ -565,12 +527,15 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
           updateData.currentEventId = null;
         }
 
-        const updatedGame = await storage.updateGame(gameId, updateData);
+        await storage.updateGame(gameId, updateData);
+
+        await storage.updateGame(gameId, updateData);
 
         // If game is completed in multiplayer, broadcast game completion
-        if (updatedGame && updatedGame.gameStatus === "completed" && updatedGame.roomCode) {
-            const finalGameState = await storage.getGame(gameId);
-            broadcastToGame(gameId, {
+        if (updateData.gameStatus === "completed" && game.roomCode) {
+          gameCompleted = true;
+          const finalGameState = await getGameState(storage, gameId);
+          broadcastToGame(gameId, {
             type: "game_updated",
             data: finalGameState,
           });
@@ -643,7 +608,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
       }
 
       // Broadcast move to other players in multiplayer games
-      if (game.roomCode && playerId) {
+      if (game.roomCode && playerId && !gameCompleted) {
         console.log("Broadcasting move_made message:", {
           playerId,
           eventId,

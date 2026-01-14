@@ -61,7 +61,7 @@ export default function Game() {
   });
   const [showVictoryModal, setShowVictoryModal] = useState(false);
   const [showLossModal, setShowLossModal] = useState(false);
-  const [justWon, setJustWon] = useState(false);
+  const [hasShownCompletionModal, setHasShownCompletionModal] = useState(false);
   const [newGameRequest, setNewGameRequest] = useState<{
     isVisible: boolean;
     requestingPlayerId: string;
@@ -242,6 +242,7 @@ export default function Game() {
       }
 
       if (message.type === "game_updated") {
+        // Directly update the query cache with the new game state
         queryClient.setQueryData(["/api/games", gameId], message.data);
       }
 
@@ -440,11 +441,6 @@ export default function Game() {
 
       // Refetch game state
       queryClient.invalidateQueries({ queryKey: ["/api/games", gameId] });
-
-      // Check for victory after correct placement
-      if (result.isCorrect) {
-        setJustWon(true);
-      }
     },
   });
 
@@ -598,79 +594,47 @@ export default function Game() {
     localStorage.setItem("soundsEnabled", enabled.toString());
   };
 
-  // Check for game completion and show victory modal
+  // Check for game completion and show victory/loss modal
   useEffect(() => {
-    if (gameState?.game && gameState.game.gameStatus === "completed") {
-      if (gameState.game.winnerPlayerId === "computer") {
+    if (
+      gameState?.game?.gameStatus === "completed" &&
+      !hasShownCompletionModal
+    ) {
+      setHasShownCompletionModal(true);
+
+      const isWinner = isMultiplayer
+        ? gameState.game.winnerPlayerId === playerId
+        : gameState.game.winnerPlayerId !== "computer";
+
+      if (isWinner) {
+        setShowVictoryModal(true);
+        playSound("win");
+      } else {
         setShowLossModal(true);
         playSound("lose");
-      } else if (!isMultiplayer && justWon) {
-        // For single-player games, check if we just won
-        setShowVictoryModal(true);
-        setJustWon(false);
-        playSound("win");
-
-        // Trigger confetti for single-player wins
-        setTimeout(() => {
-          const duration = 3000;
-          const end = Date.now() + duration;
-
-          (function frame() {
-            // Create confetti
-            if (typeof window !== "undefined" && (window as any).confetti) {
-              (window as any).confetti({
-                particleCount: Math.floor(Math.random() * 50) + 50,
-                angle: Math.random() * 360,
-                spread: Math.random() * 50 + 50,
-                origin: {
-                  x: Math.random(),
-                  y: Math.random() - 0.2,
-                },
-              });
-            }
-
-            if (Date.now() < end) {
-              requestAnimationFrame(frame);
-            }
-          })();
-        }, 500);
       }
-      // For multiplayer games, show victory modal and confetti
-      else if (isMultiplayer) {
-        setShowVictoryModal(true);
-        if (gameState.game.winnerPlayerId === playerId) {
-          playSound("win");
-        } else if (gameState.game.winnerPlayerId !== playerId) {
-          playSound("lose");
-        }
 
-        // Trigger confetti for multiplayer game completion
-        setTimeout(() => {
-          const duration = 3000;
-          const end = Date.now() + duration;
+      // Trigger confetti for any game completion
+      setTimeout(() => {
+        const duration = 3000;
+        const end = Date.now() + duration;
 
-          (function frame() {
-            // Create confetti
-            if (typeof window !== "undefined" && (window as any).confetti) {
-              (window as any).confetti({
-                particleCount: Math.floor(Math.random() * 50) + 50,
-                angle: Math.random() * 360,
-                spread: Math.random() * 50 + 50,
-                origin: {
-                  x: Math.random(),
-                  y: Math.random() - 0.2,
-                },
-              });
-            }
-
-            if (Date.now() < end) {
-              requestAnimationFrame(frame);
-            }
-          })();
-        }, 500);
-      }
+        (function frame() {
+          if (typeof window !== "undefined" && (window as any).confetti) {
+            (window as any).confetti({
+              particleCount: Math.floor(Math.random() * 50) + 50,
+              angle: Math.random() * 360,
+              spread: Math.random() * 50 + 50,
+              origin: { x: Math.random(), y: Math.random() - 0.2 },
+            });
+          }
+          if (Date.now() < end) {
+            requestAnimationFrame(frame);
+          }
+        })();
+      }, 500);
     }
-  }, [gameState?.game, justWon, isMultiplayer]);
+  }, [gameState, hasShownCompletionModal, isMultiplayer, playSound, playerId]);
 
   const handleDeselectCard = () => {
     console.log("Game: Card deselected");
