@@ -95,7 +95,7 @@ export type GameState = {
 };
 
 // WebSocket message types for real-time communication
-export type WebSocketMessage = 
+export type WebSocketMessage =
   | { type: 'game_updated'; data: GameState }
   | { type: 'player_joined'; data: { playerId: string; roomCode: string } }
   | { type: 'move_made'; data: { playerId: string; eventId: string; position: number; isCorrect: boolean } }
@@ -104,12 +104,13 @@ export type WebSocketMessage =
   | { type: 'new_game_accepted'; data: { newGameId: string; roomCode: string } }
   | { type: 'new_game_rejected'; data: { rejectingPlayerId: string } }
   | {
-      type: "settings_changed";
-      data: {
-        changes: { setting: string; from: any; to: any }[];
-        updaterPlayerId?: string;
-      };
-    }
+    type: "settings_changed";
+    data: {
+      changes: { setting: string; from: any; to: any }[];
+      updaterPlayerId?: string;
+    };
+  }
+  | { type: 'player_color_changed'; data: { playerId: string; color: string } }
   | { type: 'error'; data: { message: string } };
 
 // Player management
