@@ -58,7 +58,7 @@ async function getGameState(storage: IStorage, gameId: string) {
   }
   placedEvents.sort((a, b) => a.event.year - b.event.year);
   const currentEvent = game.currentEventId
-    ? await storage.getHistoricalEvent(game.currentEventId)
+    ? (await storage.getHistoricalEvent(game.currentEventId)) ?? null
     : null;
   const recentMoves = [];
   for (const move of allMoves.slice(0, 5)) {
@@ -461,10 +461,19 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
           updateData.stealingPlayerId = null; // Clear stealing mode
 
           // Award point to the stealer
+          let newScore = 0;
           if (playerId === game.player1Id) {
-            updateData.player1Score = game.player1Score + 1;
+            newScore = game.player1Score + 1;
+            updateData.player1Score = newScore;
           } else if (playerId === game.player2Id) {
-            updateData.player2Score = game.player2Score + 1;
+            newScore = game.player2Score + 1;
+            updateData.player2Score = newScore;
+          }
+
+          // Check for winner
+          if (newScore >= game.targetScore) {
+            updateData.gameStatus = "completed";
+            updateData.winnerPlayerId = playerId;
           }
 
           // Turn goes back to the other player
@@ -482,16 +491,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
           updateData.currentTurn =
             game.currentTurn === "player1" ? "player2" : "player1";
 
-
           // Check for winner
-          console.log("TOMOLICK: Player 1 Score: " + game.player1Score);
-          console.log("TOMOLICK: Player 2 Score: " + game.player2Score);
-          console.log("TOMOLICK: Target Score: " + game.targetScore);
-
-          console.log("TOMOLICK: Player 1 ID: " + game.player1Id);
-          console.log("TOMOLICK: Player 2 ID: " + game.player2Id);
-          console.log("TOMOLICK: Player ID: " + playerId);
-
           const newScore =
             playerId === game.player1Id
               ? game.player1Score + 1
@@ -521,8 +521,6 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
           }
         }
 
-        console.log("TOMOLICK: GameStatus === completed: " + updateData.gameStatus === "completed");
-
         // Add current event to attempted events list to prevent reuse
         const newAttemptedEventIds = [...(game.attemptedEventIds || []), eventId];
         updateData.attemptedEventIds = newAttemptedEventIds;
@@ -542,15 +540,15 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
         await storage.updateGame(gameId, updateData);
 
         // If game is completed in multiplayer, broadcast game completion
-        // BUG: game.roomCode is acting as a standin for isMultiplayer. Fix this.
         if (updateData.gameStatus === "completed" && game.roomCode) {
           gameCompleted = true;
           const finalGameState = await getGameState(storage, gameId);
-          console.log("TOMOLICK: Broadcasting game completion");
-          broadcastToGame(gameId, {
-            type: "game_updated",
-            data: finalGameState,
-          });
+          if (finalGameState) {
+            broadcastToGame(gameId, {
+              type: "game_updated",
+              data: finalGameState,
+            });
+          }
         } else if (!game.roomCode) {
           // Broadcast game state update for single-player
           broadcastToGame(gameId, {
@@ -562,8 +560,6 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
               isCorrect,
             },
           });
-        } else {
-          console.error("TOMOLICK: Unexpected game state");
         }
       } else {
         // Wrong answer - switch turns in multiplayer
@@ -788,7 +784,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
   const httpServer = createServer(app);
 
   // Set up WebSocket server for real-time multiplayer
-  console.log('TOMOLICK: Connecting to WebSocket:', { server: httpServer, path: "/ws" });
+
   const wss = new WebSocketServer({ server: httpServer, path: "/ws" });
 
   wss.on("connection", (ws: WebSocket, req) => {
