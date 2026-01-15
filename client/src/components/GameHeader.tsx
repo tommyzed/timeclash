@@ -163,14 +163,13 @@ export default function GameHeader({
         </div>
       );
     }
-    
+
 
     const isHardMode = game.gameMode === "hard";
     return (
       <span
-        className={`text-white px-3 py-1 rounded-full text-sm font-medium flex items-center space-x-1 ${
-          isHardMode ? "bg-red-600" : "bg-blue-500"
-        }`}
+        className={`text-white px-3 py-1 rounded-full text-sm font-medium flex items-center space-x-1 ${isHardMode ? "bg-red-600" : "bg-blue-500"
+          }`}
       >
         <span>Single</span>
         {isHardMode && (
@@ -345,7 +344,7 @@ export default function GameHeader({
                     🤔 Return to the Game Lobby?
                   </AlertDialogTitle>
                   <AlertDialogDescription>
-                    ❗ Your game will immediately end and cannot be recovered! ❗
+                    🚩 Your game is saved and can be accessed via the Dashboard. 🚩
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
