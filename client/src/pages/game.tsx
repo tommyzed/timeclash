@@ -964,15 +964,39 @@ export default function Game() {
                   />
                 </svg>
               </div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">
-                Game Over
-              </h2>
-              <p className="text-lg text-gray-600 mb-2">
-                You ran out of attempts!
-              </p>
-              <p className="text-sm text-gray-500">
-                Better luck next time!
-              </p>
+              {isMultiplayer && gameState?.game ? (
+                <>
+                  <h2 className="text-3xl font-bold text-gray-900 mb-2">
+                    You lost!
+                  </h2>
+                  <p className="text-lg text-gray-600 mb-2">
+                    {opponentNickname || "Your opponent"} won this round!
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    Final Score: {opponentNickname || "Opponent"}{" "}
+                    {gameState.game.player1Id === playerId
+                      ? gameState.game.player2Score
+                      : gameState.game.player1Score}{" "}
+                    -{" "}
+                    {gameState.game.player1Id === playerId
+                      ? gameState.game.player1Score
+                      : gameState.game.player2Score}{" "}
+                    You
+                  </p>
+                </>
+              ) : (
+                <>
+                  <h2 className="text-3xl font-bold text-gray-900 mb-2">
+                    Game Over
+                  </h2>
+                  <p className="text-lg text-gray-600 mb-2">
+                    You ran out of attempts!
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    Better luck next time!
+                  </p>
+                </>
+              )}
             </div>
 
             <div className="space-y-3">
