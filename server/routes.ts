@@ -848,7 +848,7 @@ async function createNewMultiplayerGame(
 
     broadcastToGame(oldGameId, {
       type: "new_game_accepted",
-      data: { newGameId: newGame.id, roomCode: newGame.roomCode },
+      data: { newGameId: newGame.id, roomCode: newGame.roomCode! },
     });
   } catch (error) {
     console.error("Error creating new game:", error);
