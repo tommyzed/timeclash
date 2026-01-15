@@ -124,7 +124,7 @@ export class DrizzleStorage implements IStorage {
   async createGame(options: CreateGameOptions): Promise<schema.Game> {
     const {
       roomCode,
-      userId,
+      player1UserId,
       gameMode = "normal",
       targetScore = 10,
       allowStealing = false,
@@ -140,7 +140,7 @@ export class DrizzleStorage implements IStorage {
 
     const newGame: schema.InsertGame = {
       roomCode: roomCode,
-      userId: userId ?? null,
+      player1UserId: player1UserId ?? null,
       placedEventIds: [startingEventId],
       attemptedEventIds: [startingEventId],
       gameMode: gameMode,
@@ -161,30 +161,26 @@ export class DrizzleStorage implements IStorage {
     return result[0];
   }
 
-  async joinGame(gameId: string, playerId: string): Promise<schema.Game | undefined> {
+  async joinGame(gameId: string, playerId: string, userId?: string): Promise<schema.Game | undefined> {
     const game = await this.getGame(gameId);
     if (!game) return undefined;
 
-    let updatedGame;
+    let updates: Partial<schema.Game> = {};
     if (!game.player1Id) {
-      // When player 1 joins, set them as the current turn
-      updatedGame = await this.updateGame(gameId, {
-        player1Id: playerId,
-        currentTurn: "player1",
-      });
+      updates = { player1Id: playerId, currentTurn: "player1" };
     } else if (!game.player2Id) {
-      // When player 2 joins, randomly decide who goes first
-      const firstTurn = Math.random() < 0.5 ? "player1" : "player2";
-      updatedGame = await this.updateGame(gameId, {
+      updates = {
         player2Id: playerId,
         gameStatus: "playing",
-        currentTurn: firstTurn,
-      });
+        player2UserId: userId ?? null
+      };
     } else {
-      return undefined; // Game is full
+      return undefined;
     }
-    return updatedGame;
+
+    return this.updateGame(gameId, updates);
   }
+
   async createPlayer(player: schema.InsertPlayer): Promise<schema.Player> {
     const result = await db.insert(schema.players).values(player).returning();
     return result[0];
@@ -196,22 +192,15 @@ export class DrizzleStorage implements IStorage {
   }
 
   async updatePlayerColor(id: string, color: string): Promise<schema.Player | undefined> {
-    const result = await db.update(schema.players).set({ color }).where(eq(schema.players.id, id)).returning();
+    const result = await db
+      .update(schema.players)
+      .set({ color })
+      .where(eq(schema.players.id, id))
+      .returning();
     return result[0];
   }
 
-  async getGameByPlayerId(playerId: string): Promise<schema.Game | undefined> {
-    const result = await db
-      .select()
-      .from(schema.games)
-      .where(
-        or(
-          eq(schema.games.player1Id, playerId),
-          eq(schema.games.player2Id, playerId),
-        ),
-      );
-    return result[0];
-  }
+
 
   async getGameMoves(gameId: string): Promise<schema.GameMove[]> {
     return db.select().from(schema.gameMoves).where(eq(schema.gameMoves.gameId, gameId)).orderBy(sql`${schema.gameMoves.createdAt} desc`);
@@ -237,6 +226,19 @@ export class DrizzleStorage implements IStorage {
     return result[0];
   }
 
+  async getGameByPlayerId(playerId: string): Promise<schema.Game | undefined> {
+    const result = await db
+      .select()
+      .from(schema.games)
+      .where(
+        or(
+          eq(schema.games.player1Id, playerId),
+          eq(schema.games.player2Id, playerId),
+        ),
+      );
+    return result[0];
+  }
+
   async getGamesByPlayerId(playerId: string): Promise<schema.Game[]> {
     return db
       .select()
@@ -250,15 +252,16 @@ export class DrizzleStorage implements IStorage {
   }
 
   async getGamesByUserId(userId: string, status?: string): Promise<schema.Game[]> {
-    const conditions = [eq(schema.games.userId, userId)];
-    if (status) {
-      conditions.push(eq(schema.games.gameStatus, status));
-    }
+    const statusCondition = status
+      ? sql` AND ${schema.games.gameStatus} = ${status}`
+      : sql``;
 
     return db
       .select()
       .from(schema.games)
-      .where(sql`${schema.games.userId} = ${userId}${status ? sql` AND ${schema.games.gameStatus} = ${status}` : sql``}`)
+      .where(
+        sql`(${schema.games.player1UserId} = ${userId} OR ${schema.games.player2UserId} = ${userId})${statusCondition}`
+      )
       .orderBy(sql`${schema.games.createdAt} desc`);
   }
 
@@ -271,7 +274,8 @@ export class DrizzleStorage implements IStorage {
       .select()
       .from(schema.games)
       .where(
-        sql`${schema.games.userId} = ${userId} AND ${schema.games.gameStatus} = 'completed'`,
+        sql`(${schema.games.player1UserId} = ${userId} OR ${schema.games.player2UserId} = ${userId}) 
+             AND (${schema.games.gameStatus} = 'completed' OR ${schema.games.gameStatus} = 'abandoned')`,
       )
       .orderBy(sql`${schema.games.createdAt} desc`)
       .limit(limit)

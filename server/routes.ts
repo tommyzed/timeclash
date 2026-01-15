@@ -134,7 +134,7 @@ export async function registerRoutes(
         targetScore,
         categories,
         eras,
-        userId, // Link game to user if logged in
+        player1UserId: userId, // Link game to user (Player 1) if logged in
       };
 
       // Create game based on mode
@@ -191,8 +191,11 @@ export async function registerRoutes(
       const player = await storage.createPlayer({ nickname });
       await storage.updatePlayerColor(player.id, playerColor);
 
-      // Join the game
-      const updatedGame = await storage.joinGame(game.id, player.id);
+      // Get userId from session if user is logged in (Player 2)
+      const userId = (req.session as any).userId;
+
+      // Join the game, passing userId if available
+      const updatedGame = await storage.joinGame(game.id, player.id, userId);
       if (!updatedGame) {
         return res.status(400).json({ message: "Game is full or unavailable" });
       }
@@ -300,14 +303,22 @@ export async function registerRoutes(
       const completedGames = allGames.filter(g => g.gameStatus === "completed");
 
       // Calculate wins (games where user won)
+      // Calculate wins (games where user won)
       const wins = completedGames.filter(game => {
         // For single player games, check if game was completed successfully
         if (!game.roomCode) {
           return game.gameStatus === "completed" && !game.winnerPlayerId;
         }
         // For multiplayer, check if user's player won
-        return game.winnerPlayerId &&
-          (game.player1Id === game.winnerPlayerId || game.player2Id === game.winnerPlayerId);
+        if (!game.winnerPlayerId) return false;
+
+        const isPlayer1 = game.player1UserId === userId;
+        const isPlayer2 = game.player2UserId === userId;
+
+        if (isPlayer1) return game.winnerPlayerId === game.player1Id;
+        if (isPlayer2) return game.winnerPlayerId === game.player2Id;
+
+        return false;
       }).length;
 
       const losses = completedGames.length - wins;
@@ -341,8 +352,8 @@ export async function registerRoutes(
         return res.status(404).json({ message: "Game not found" });
       }
 
-      // Verify the user owns this game
-      if (game.userId !== userId) {
+      // Verify the user owns/is in this game
+      if (game.player1UserId !== userId && game.player2UserId !== userId) {
         return res.status(403).json({ message: "Not authorized to abandon this game" });
       }
 
