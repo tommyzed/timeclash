@@ -546,6 +546,7 @@ export default function Game() {
       setGameId(null);
       setSelectedCardId(null);
       setFeedbackData({ isVisible: false, isCorrect: false, message: "" });
+      setHasShownCompletionModal(false);
       const gameMode =
         (localStorage.getItem("gameMode") as "normal" | "hard") || "normal";
       const targetScore = Number(localStorage.getItem("targetScore")) || 10;
@@ -608,30 +609,30 @@ export default function Game() {
       if (isWinner) {
         setShowVictoryModal(true);
         playSound("win");
+
+        // Trigger confetti only for winner
+        setTimeout(() => {
+          const duration = 3000;
+          const end = Date.now() + duration;
+
+          (function frame() {
+            if (typeof window !== "undefined" && (window as any).confetti) {
+              (window as any).confetti({
+                particleCount: Math.floor(Math.random() * 50) + 50,
+                angle: Math.random() * 360,
+                spread: Math.random() * 50 + 50,
+                origin: { x: Math.random(), y: Math.random() - 0.2 },
+              });
+            }
+            if (Date.now() < end) {
+              requestAnimationFrame(frame);
+            }
+          })();
+        }, 500);
       } else {
         setShowLossModal(true);
         playSound("lose");
       }
-
-      // Trigger confetti for any game completion
-      setTimeout(() => {
-        const duration = 3000;
-        const end = Date.now() + duration;
-
-        (function frame() {
-          if (typeof window !== "undefined" && (window as any).confetti) {
-            (window as any).confetti({
-              particleCount: Math.floor(Math.random() * 50) + 50,
-              angle: Math.random() * 360,
-              spread: Math.random() * 50 + 50,
-              origin: { x: Math.random(), y: Math.random() - 0.2 },
-            });
-          }
-          if (Date.now() < end) {
-            requestAnimationFrame(frame);
-          }
-        })();
-      }, 500);
     }
   }, [gameState, hasShownCompletionModal, isMultiplayer, playSound, playerId]);
 

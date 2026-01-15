@@ -512,6 +512,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
 
           if (newScore >= game.targetScore) {
             updateData.gameStatus = "completed";
+            updateData.winnerPlayerId = playerId || "single-player";
           } else if (
             game.gameMode === "hard" &&
             (updateData.attempts || game.attempts) >= (game.maxAttempts || 0)
