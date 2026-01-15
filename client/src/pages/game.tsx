@@ -546,7 +546,6 @@ export default function Game() {
       setGameId(null);
       setSelectedCardId(null);
       setFeedbackData({ isVisible: false, isCorrect: false, message: "" });
-      setJustWon(false);
       const gameMode =
         (localStorage.getItem("gameMode") as "normal" | "hard") || "normal";
       const targetScore = Number(localStorage.getItem("targetScore")) || 10;
