@@ -140,7 +140,7 @@ export class DrizzleStorage implements IStorage {
 
     const newGame: schema.InsertGame = {
       roomCode: roomCode,
-      userId: userId,
+      userId: userId ?? null,
       placedEventIds: [startingEventId],
       attemptedEventIds: [startingEventId],
       gameMode: gameMode,

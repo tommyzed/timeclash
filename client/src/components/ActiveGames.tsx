@@ -52,8 +52,12 @@ export default function ActiveGames() {
     };
 
     const renderGameCard = (game: Game, isWaiting: boolean) => {
-        const statusColor = isWaiting ? "bg-yellow-500" : "bg-green-500";
-        const statusText = isWaiting ? "Waiting for opponent" : "In Progress";
+        const isSinglePlayer = !game.roomCode;
+        // If single player, show green "In Progress" even if technically "waiting" status in DB
+        const showWaiting = isWaiting && !isSinglePlayer;
+
+        const statusColor = showWaiting ? "bg-yellow-500" : "bg-green-500";
+        const statusText = showWaiting ? "Waiting for opponent" : "In Progress";
 
         return (
             <Card key={game.id} className="hover:shadow-lg transition-shadow">
