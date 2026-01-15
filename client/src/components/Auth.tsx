@@ -7,9 +7,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useUser } from "@/context/UserContext";
+import { useLocation } from "wouter";
 
 export default function Auth() {
   const { user, setUser } = useUser();
+  const [, setLocation] = useLocation();
 
   return (
     <div className="ml-4">
@@ -24,7 +26,7 @@ export default function Auth() {
             </Avatar>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem onClick={() => window.location.href = "/dashboard"}>
+            <DropdownMenuItem onClick={() => setLocation("/dashboard")}>
               Dashboard
             </DropdownMenuItem>
             <DropdownMenuItem

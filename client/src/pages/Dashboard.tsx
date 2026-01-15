@@ -32,7 +32,7 @@ export default function Dashboard() {
                     </div>
                     <Button onClick={() => setLocation("/")} size="lg" className="w-full md:w-auto">
                         <Gamepad2 className="w-4 h-4 mr-2" />
-                        Start New Game
+                        Return to Game Lobby
                     </Button>
                 </div>
 
