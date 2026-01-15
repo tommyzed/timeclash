@@ -546,7 +546,7 @@ export default function Game() {
       setGameId(null);
       setSelectedCardId(null);
       setFeedbackData({ isVisible: false, isCorrect: false, message: "" });
-      setJustWon(false);
+      setHasShownCompletionModal(false);
       const gameMode =
         (localStorage.getItem("gameMode") as "normal" | "hard") || "normal";
       const targetScore = Number(localStorage.getItem("targetScore")) || 10;
@@ -609,30 +609,30 @@ export default function Game() {
       if (isWinner) {
         setShowVictoryModal(true);
         playSound("win");
+
+        // Trigger confetti only for winner
+        setTimeout(() => {
+          const duration = 3000;
+          const end = Date.now() + duration;
+
+          (function frame() {
+            if (typeof window !== "undefined" && (window as any).confetti) {
+              (window as any).confetti({
+                particleCount: Math.floor(Math.random() * 50) + 50,
+                angle: Math.random() * 360,
+                spread: Math.random() * 50 + 50,
+                origin: { x: Math.random(), y: Math.random() - 0.2 },
+              });
+            }
+            if (Date.now() < end) {
+              requestAnimationFrame(frame);
+            }
+          })();
+        }, 500);
       } else {
         setShowLossModal(true);
         playSound("lose");
       }
-
-      // Trigger confetti for any game completion
-      setTimeout(() => {
-        const duration = 3000;
-        const end = Date.now() + duration;
-
-        (function frame() {
-          if (typeof window !== "undefined" && (window as any).confetti) {
-            (window as any).confetti({
-              particleCount: Math.floor(Math.random() * 50) + 50,
-              angle: Math.random() * 360,
-              spread: Math.random() * 50 + 50,
-              origin: { x: Math.random(), y: Math.random() - 0.2 },
-            });
-          }
-          if (Date.now() < end) {
-            requestAnimationFrame(frame);
-          }
-        })();
-      }, 500);
     }
   }, [gameState, hasShownCompletionModal, isMultiplayer, playSound, playerId]);
 
@@ -964,15 +964,39 @@ export default function Game() {
                   />
                 </svg>
               </div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">
-                Game Over
-              </h2>
-              <p className="text-lg text-gray-600 mb-2">
-                You ran out of attempts!
-              </p>
-              <p className="text-sm text-gray-500">
-                Better luck next time!
-              </p>
+              {isMultiplayer && gameState?.game ? (
+                <>
+                  <h2 className="text-3xl font-bold text-gray-900 mb-2">
+                    You lost!
+                  </h2>
+                  <p className="text-lg text-gray-600 mb-2">
+                    {opponentNickname || "Your opponent"} won this round!
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    Final Score: {opponentNickname || "Opponent"}{" "}
+                    {gameState.game.player1Id === playerId
+                      ? gameState.game.player2Score
+                      : gameState.game.player1Score}{" "}
+                    -{" "}
+                    {gameState.game.player1Id === playerId
+                      ? gameState.game.player1Score
+                      : gameState.game.player2Score}{" "}
+                    You
+                  </p>
+                </>
+              ) : (
+                <>
+                  <h2 className="text-3xl font-bold text-gray-900 mb-2">
+                    Game Over
+                  </h2>
+                  <p className="text-lg text-gray-600 mb-2">
+                    You ran out of attempts!
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    Better luck next time!
+                  </p>
+                </>
+              )}
             </div>
 
             <div className="space-y-3">
