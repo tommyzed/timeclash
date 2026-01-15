@@ -126,7 +126,16 @@ export async function registerRoutes(
       const { roomCode, singlePlayer, gameMode, targetScore, categories, eras } =
         req.body;
 
-      const gameConfig = { gameMode, targetScore, categories, eras };
+      // Get userId from session if user is logged in
+      const userId = (req.session as any).userId;
+
+      const gameConfig = {
+        gameMode,
+        targetScore,
+        categories,
+        eras,
+        player1UserId: userId, // Link game to user (Player 1) if logged in
+      };
 
       // Create game based on mode
       const game = singlePlayer
@@ -182,8 +191,11 @@ export async function registerRoutes(
       const player = await storage.createPlayer({ nickname });
       await storage.updatePlayerColor(player.id, playerColor);
 
-      // Join the game
-      const updatedGame = await storage.joinGame(game.id, player.id);
+      // Get userId from session if user is logged in (Player 2)
+      const userId = (req.session as any).userId;
+
+      // Join the game, passing userId if available
+      const updatedGame = await storage.joinGame(game.id, player.id, userId);
       if (!updatedGame) {
         return res.status(400).json({ message: "Game is full or unavailable" });
       }
@@ -214,6 +226,148 @@ export async function registerRoutes(
     } catch (error) {
       console.error("Fetch game state error:", error);
       res.status(500).json({ message: "Failed to fetch game state" });
+    }
+  });
+
+  // ========== USER GAME ROUTES ==========
+
+  // Get current user's active games
+  app.get("/api/users/me/games", async (req, res) => {
+    try {
+      const userId = (req.session as any).userId;
+      if (!userId) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+
+      const activeGames = await storage.getGamesByUserId(userId, "playing");
+      const waitingGames = await storage.getGamesByUserId(userId, "waiting");
+
+      res.json({
+        activeGames,
+        waitingGames,
+        total: activeGames.length + waitingGames.length
+      });
+    } catch (error) {
+      console.error("Fetch user games error:", error);
+      res.status(500).json({ message: "Failed to fetch user games" });
+    }
+  });
+
+  // Get current user's game history
+  app.get("/api/users/me/history", async (req, res) => {
+    try {
+      const userId = (req.session as any).userId;
+      if (!userId) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+
+      const limit = parseInt(req.query.limit as string) || 20;
+      const offset = parseInt(req.query.offset as string) || 0;
+
+      const history = await storage.getUserGameHistory(userId, limit, offset);
+
+      // Enrich history with player names
+      const enrichedHistory = await Promise.all(
+        history.map(async (game) => {
+          const player1 = game.player1Id ? await storage.getPlayer(game.player1Id) : null;
+          const player2 = game.player2Id ? await storage.getPlayer(game.player2Id) : null;
+
+          return {
+            ...game,
+            player1Name: player1?.nickname,
+            player2Name: player2?.nickname,
+          };
+        })
+      );
+
+      res.json({
+        games: enrichedHistory,
+        limit,
+        offset,
+      });
+    } catch (error) {
+      console.error("Fetch user history error:", error);
+      res.status(500).json({ message: "Failed to fetch user history" });
+    }
+  });
+
+  // Get current user's statistics
+  app.get("/api/users/me/stats", async (req, res) => {
+    try {
+      const userId = (req.session as any).userId;
+      if (!userId) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+
+      const allGames = await storage.getGamesByUserId(userId);
+      const completedGames = allGames.filter(g => g.gameStatus === "completed");
+
+      // Calculate wins (games where user won)
+      // Calculate wins (games where user won)
+      const wins = completedGames.filter(game => {
+        // For single player games, check if game was completed successfully
+        if (!game.roomCode) {
+          return game.gameStatus === "completed" && !game.winnerPlayerId;
+        }
+        // For multiplayer, check if user's player won
+        if (!game.winnerPlayerId) return false;
+
+        const isPlayer1 = game.player1UserId === userId;
+        const isPlayer2 = game.player2UserId === userId;
+
+        if (isPlayer1) return game.winnerPlayerId === game.player1Id;
+        if (isPlayer2) return game.winnerPlayerId === game.player2Id;
+
+        return false;
+      }).length;
+
+      const losses = completedGames.length - wins;
+
+      res.json({
+        totalGames: allGames.length,
+        completedGames: completedGames.length,
+        activeGames: allGames.filter(g => g.gameStatus === "playing").length,
+        wins,
+        losses,
+        winRate: completedGames.length > 0 ? (wins / completedGames.length) * 100 : 0,
+      });
+    } catch (error) {
+      console.error("Fetch user stats error:", error);
+      res.status(500).json({ message: "Failed to fetch user stats" });
+    }
+  });
+
+  // Abandon a game (mark as abandoned, don't delete)
+  app.post("/api/games/:gameId/abandon", async (req, res) => {
+    try {
+      const userId = (req.session as any).userId;
+      if (!userId) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+
+      const { gameId } = req.params;
+      const game = await storage.getGame(gameId);
+
+      if (!game) {
+        return res.status(404).json({ message: "Game not found" });
+      }
+
+      // Verify the user owns/is in this game
+      if (game.player1UserId !== userId && game.player2UserId !== userId) {
+        return res.status(403).json({ message: "Not authorized to abandon this game" });
+      }
+
+      // Only allow abandoning active/waiting games
+      if (game.gameStatus === "completed" || game.gameStatus === "abandoned") {
+        return res.status(400).json({ message: "Game is already finished" });
+      }
+
+      await storage.updateGame(gameId, { gameStatus: "abandoned" });
+
+      res.json({ message: "Game abandoned successfully" });
+    } catch (error) {
+      console.error("Abandon game error:", error);
+      res.status(500).json({ message: "Failed to abandon game" });
     }
   });
 

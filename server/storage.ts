@@ -16,6 +16,7 @@ import path from "path";
 
 export type CreateGameOptions = {
   roomCode?: string;
+  player1UserId?: string;
   gameMode?: "normal" | "hard";
   targetScore?: number;
   allowStealing?: boolean;
@@ -38,13 +39,14 @@ export interface IStorage {
   getGameByRoomCode(roomCode: string): Promise<Game | undefined>;
   createGame(options: CreateGameOptions): Promise<Game>;
   updateGame(id: string, updates: Partial<Game>): Promise<Game | undefined>;
-  joinGame(gameId: string, playerId: string): Promise<Game | undefined>;
+  joinGame(gameId: string, playerId: string, userId?: string): Promise<Game | undefined>;
 
   // Players
   createPlayer(player: InsertPlayer): Promise<Player>;
   getPlayer(id: string): Promise<Player | undefined>;
   updatePlayerColor(id: string, color: string): Promise<Player | undefined>;
   getGameByPlayerId(playerId: string): Promise<Game | undefined>;
+  getGamesByPlayerId(playerId: string): Promise<Game[]>;
 
   // Game Moves
   getGameMoves(gameId: string): Promise<GameMove[]>;
@@ -54,6 +56,8 @@ export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
   getUserByGoogleId(googleId: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
+  getGamesByUserId(userId: string, status?: string): Promise<Game[]>;
+  getUserGameHistory(userId: string, limit?: number, offset?: number): Promise<Game[]>;
 }
 
 export class MemStorage implements IStorage {
@@ -137,6 +141,7 @@ export class MemStorage implements IStorage {
   async createGame(options: CreateGameOptions): Promise<Game> {
     const {
       roomCode,
+      player1UserId,
       gameMode = "normal",
       targetScore = 10,
       allowStealing = false,
@@ -160,6 +165,8 @@ export class MemStorage implements IStorage {
     const game: Game = {
       id,
       roomCode: roomCode || null,
+      player1UserId: player1UserId || null,
+      player2UserId: null,
       player1Id: null,
       player2Id: null,
       currentTurn: null,
@@ -191,7 +198,7 @@ export class MemStorage implements IStorage {
     );
   }
 
-  async joinGame(gameId: string, playerId: string): Promise<Game | undefined> {
+  async joinGame(gameId: string, playerId: string, userId?: string): Promise<Game | undefined> {
     const game = this.games.get(gameId);
     if (!game) return undefined;
 
@@ -199,7 +206,12 @@ export class MemStorage implements IStorage {
     if (!game.player1Id) {
       updatedGame = { ...game, player1Id: playerId, currentTurn: "player1" };
     } else if (!game.player2Id) {
-      updatedGame = { ...game, player2Id: playerId, gameStatus: "playing" };
+      updatedGame = {
+        ...game,
+        player2Id: playerId,
+        gameStatus: "playing",
+        player2UserId: userId || null
+      };
     } else {
       return undefined; // Game is full
     }
@@ -292,6 +304,38 @@ export class MemStorage implements IStorage {
     this.users.set(newUser.id, newUser);
     return newUser;
   }
+
+  async getGamesByPlayerId(playerId: string): Promise<Game[]> {
+    return Array.from(this.games.values()).filter(
+      (game) => game.player1Id === playerId || game.player2Id === playerId,
+    );
+  }
+
+  async getGamesByUserId(userId: string, status?: string): Promise<Game[]> {
+    let games = Array.from(this.games.values()).filter(
+      (game) => game.player1UserId === userId || game.player2UserId === userId,
+    );
+
+    if (status) {
+      games = games.filter((game) => game.gameStatus === status);
+    }
+
+    return games.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+  }
+
+  async getUserGameHistory(
+    userId: string,
+    limit: number = 20,
+    offset: number = 0,
+  ): Promise<Game[]> {
+    const completedGames = Array.from(this.games.values())
+      .filter((game) => (game.player1UserId === userId || game.player2UserId === userId) &&
+        (game.gameStatus === "completed" || game.gameStatus === "abandoned"))
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+
+    return completedGames.slice(offset, offset + limit);
+  }
+
 }
 
 import { DrizzleStorage } from "./drizzle";

@@ -24,6 +24,9 @@ export default function Auth() {
             </Avatar>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
+            <DropdownMenuItem onClick={() => window.location.href = "/dashboard"}>
+              Dashboard
+            </DropdownMenuItem>
             <DropdownMenuItem
               onClick={async () => {
                 await fetch("/api/auth/logout", { method: "POST" });
