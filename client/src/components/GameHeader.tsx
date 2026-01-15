@@ -17,6 +17,7 @@ import burglarIcon from "@/assets/burglar.png";
 import muscleIcon from "@/assets/weights.png";
 import volumeIcon from "@/assets/volume.png";
 import Auth from "@/components/Auth";
+import { useUser } from "@/context/UserContext";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -76,6 +77,7 @@ export default function GameHeader({
   const [showRulesModal, setShowRulesModal] = useState(false);
   const [, setLocation] = useLocation();
   const isMobile = useIsMobile();
+  const { user } = useUser();
 
   const handleColorChange = async (color: string) => {
     if (playerColor === color) return;
@@ -344,7 +346,9 @@ export default function GameHeader({
                     🤔 Return to the Game Lobby?
                   </AlertDialogTitle>
                   <AlertDialogDescription>
-                    🚩 Your game is saved and can be accessed via the Dashboard. 🚩
+                    {user
+                      ? "🚩 Your game is saved and can be accessed via the Dashboard. 🚩"
+                      : "❗ Your game will immediately end and cannot be recovered! ❗"}
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
