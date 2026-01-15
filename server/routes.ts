@@ -482,7 +482,16 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
           updateData.currentTurn =
             game.currentTurn === "player1" ? "player2" : "player1";
 
+
           // Check for winner
+          console.log("TOMOLICK: Player 1 Score: " + game.player1Score);
+          console.log("TOMOLICK: Player 2 Score: " + game.player2Score);
+          console.log("TOMOLICK: Target Score: " + game.targetScore);
+
+          console.log("TOMOLICK: Player 1 ID: " + game.player1Id);
+          console.log("TOMOLICK: Player 2 ID: " + game.player2Id);
+          console.log("TOMOLICK: Player ID: " + playerId);
+
           const newScore =
             playerId === game.player1Id
               ? game.player1Score + 1
@@ -490,6 +499,7 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
           if (newScore >= game.targetScore) {
             updateData.gameStatus = "completed";
             updateData.winnerPlayerId = playerId;
+            console.log("Winner found:", { gameId, playerId });
           }
         } else {
           // Single player game
@@ -511,6 +521,8 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
           }
         }
 
+        console.log("TOMOLICK: GameStatus === completed: " + updateData.gameStatus === "completed");
+
         // Add current event to attempted events list to prevent reuse
         const newAttemptedEventIds = [...(game.attemptedEventIds || []), eventId];
         updateData.attemptedEventIds = newAttemptedEventIds;
@@ -529,12 +541,12 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
 
         await storage.updateGame(gameId, updateData);
 
-        await storage.updateGame(gameId, updateData);
-
         // If game is completed in multiplayer, broadcast game completion
+        // BUG: game.roomCode is acting as a standin for isMultiplayer. Fix this.
         if (updateData.gameStatus === "completed" && game.roomCode) {
           gameCompleted = true;
           const finalGameState = await getGameState(storage, gameId);
+          console.log("TOMOLICK: Broadcasting game completion");
           broadcastToGame(gameId, {
             type: "game_updated",
             data: finalGameState,
@@ -550,6 +562,8 @@ export async function registerRoutes(app: Express, storage: IStorage): Promise<S
               isCorrect,
             },
           });
+        } else {
+          console.error("TOMOLICK: Unexpected game state");
         }
       } else {
         // Wrong answer - switch turns in multiplayer
