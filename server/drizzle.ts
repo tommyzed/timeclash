@@ -72,7 +72,7 @@ export class DrizzleStorage implements IStorage {
     await db.insert(schema.historicalEvents).values(events);
   }
 
-  async getHistoricalEvent(id:string): Promise<schema.HistoricalEvent | undefined> {
+  async getHistoricalEvent(id: string): Promise<schema.HistoricalEvent | undefined> {
     await this.ensureCacheIsFresh();
     return this.historicalEventsCache?.find(event => event.id === id);
   }
@@ -124,6 +124,7 @@ export class DrizzleStorage implements IStorage {
   async createGame(options: CreateGameOptions): Promise<schema.Game> {
     const {
       roomCode,
+      userId,
       gameMode = "normal",
       targetScore = 10,
       allowStealing = false,
@@ -139,6 +140,7 @@ export class DrizzleStorage implements IStorage {
 
     const newGame: schema.InsertGame = {
       roomCode: roomCode,
+      userId: userId,
       placedEventIds: [startingEventId],
       attemptedEventIds: [startingEventId],
       gameMode: gameMode,
@@ -234,4 +236,46 @@ export class DrizzleStorage implements IStorage {
     const result = await db.insert(schema.users).values(user).returning();
     return result[0];
   }
+
+  async getGamesByPlayerId(playerId: string): Promise<schema.Game[]> {
+    return db
+      .select()
+      .from(schema.games)
+      .where(
+        or(
+          eq(schema.games.player1Id, playerId),
+          eq(schema.games.player2Id, playerId),
+        ),
+      );
+  }
+
+  async getGamesByUserId(userId: string, status?: string): Promise<schema.Game[]> {
+    const conditions = [eq(schema.games.userId, userId)];
+    if (status) {
+      conditions.push(eq(schema.games.gameStatus, status));
+    }
+
+    return db
+      .select()
+      .from(schema.games)
+      .where(sql`${schema.games.userId} = ${userId}${status ? sql` AND ${schema.games.gameStatus} = ${status}` : sql``}`)
+      .orderBy(sql`${schema.games.createdAt} desc`);
+  }
+
+  async getUserGameHistory(
+    userId: string,
+    limit: number = 20,
+    offset: number = 0,
+  ): Promise<schema.Game[]> {
+    return db
+      .select()
+      .from(schema.games)
+      .where(
+        sql`${schema.games.userId} = ${userId} AND ${schema.games.gameStatus} = 'completed'`,
+      )
+      .orderBy(sql`${schema.games.createdAt} desc`)
+      .limit(limit)
+      .offset(offset);
+  }
+
 }

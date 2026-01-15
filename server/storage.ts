@@ -16,6 +16,7 @@ import path from "path";
 
 export type CreateGameOptions = {
   roomCode?: string;
+  userId?: string;
   gameMode?: "normal" | "hard";
   targetScore?: number;
   allowStealing?: boolean;
@@ -45,6 +46,7 @@ export interface IStorage {
   getPlayer(id: string): Promise<Player | undefined>;
   updatePlayerColor(id: string, color: string): Promise<Player | undefined>;
   getGameByPlayerId(playerId: string): Promise<Game | undefined>;
+  getGamesByPlayerId(playerId: string): Promise<Game[]>;
 
   // Game Moves
   getGameMoves(gameId: string): Promise<GameMove[]>;
@@ -54,6 +56,8 @@ export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
   getUserByGoogleId(googleId: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
+  getGamesByUserId(userId: string, status?: string): Promise<Game[]>;
+  getUserGameHistory(userId: string, limit?: number, offset?: number): Promise<Game[]>;
 }
 
 export class MemStorage implements IStorage {
@@ -137,6 +141,7 @@ export class MemStorage implements IStorage {
   async createGame(options: CreateGameOptions): Promise<Game> {
     const {
       roomCode,
+      userId,
       gameMode = "normal",
       targetScore = 10,
       allowStealing = false,
@@ -160,6 +165,7 @@ export class MemStorage implements IStorage {
     const game: Game = {
       id,
       roomCode: roomCode || null,
+      userId: userId || null,
       player1Id: null,
       player2Id: null,
       currentTurn: null,
@@ -292,6 +298,37 @@ export class MemStorage implements IStorage {
     this.users.set(newUser.id, newUser);
     return newUser;
   }
+
+  async getGamesByPlayerId(playerId: string): Promise<Game[]> {
+    return Array.from(this.games.values()).filter(
+      (game) => game.player1Id === playerId || game.player2Id === playerId,
+    );
+  }
+
+  async getGamesByUserId(userId: string, status?: string): Promise<Game[]> {
+    let games = Array.from(this.games.values()).filter(
+      (game) => game.userId === userId,
+    );
+
+    if (status) {
+      games = games.filter((game) => game.gameStatus === status);
+    }
+
+    return games.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+  }
+
+  async getUserGameHistory(
+    userId: string,
+    limit: number = 20,
+    offset: number = 0,
+  ): Promise<Game[]> {
+    const completedGames = Array.from(this.games.values())
+      .filter((game) => game.userId === userId && game.gameStatus === "completed")
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+
+    return completedGames.slice(offset, offset + limit);
+  }
+
 }
 
 import { DrizzleStorage } from "./drizzle";

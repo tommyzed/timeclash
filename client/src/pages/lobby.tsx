@@ -16,8 +16,10 @@ import { useToast } from "@/hooks/use-toast";
 import logoImage from "@assets/TimeClash.png";
 import { CoffeeIcon } from "@/components/ui/CoffeeIcon";
 import Auth from "@/components/Auth";
+import { useUser } from "@/context/UserContext";
 
 export default function Lobby() {
+  const { user } = useUser();
   const [nickname, setNickname] = useState("");
   const [roomCode, setRoomCode] = useState("");
   const [activeTab, setActiveTab] = useState("single");
@@ -25,13 +27,19 @@ export default function Lobby() {
   const params = useParams();
   const { toast } = useToast();
 
+  useEffect(() => {
+    if (user?.name) {
+      setNickname(user.name);
+    }
+  }, [user]);
+
   // Handle shareable room links
   useEffect(() => {
     if (params.roomCode) {
       console.log("Shareable link detected, room code:", params.roomCode);
       setRoomCode(params.roomCode);
       setActiveTab("join");
-      
+
       toast({
         title: "Room Link Opened!",
         description: `Ready to join room ${params.roomCode}. Just enter your nickname and click Join Game.`,
@@ -159,9 +167,9 @@ export default function Lobby() {
       <div className="w-full max-w-md">
         <div className="text-center mb-2">
           <div className="mb-2">
-            <img 
-              src={logoImage} 
-              alt="It's About Time!!" 
+            <img
+              src={logoImage}
+              alt="It's About Time!!"
               className="mx-auto h-48 w-auto"
               data-testid="game-logo"
             />
@@ -191,6 +199,15 @@ export default function Lobby() {
             <Auth />
           </CardHeader>
           <CardContent>
+            {user && (
+              <Button
+                onClick={() => navigate("/dashboard")}
+                variant="outline"
+                className="w-full mb-6 border-dashed"
+              >
+                Go to Dashboard
+              </Button>
+            )}
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
               <TabsList className="grid w-full grid-cols-3 bg-muted p-1 rounded-lg">
                 <TabsTrigger

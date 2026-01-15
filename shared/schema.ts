@@ -15,6 +15,7 @@ export const historicalEvents = pgTable("historical_events", {
 export const games = pgTable("games", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   roomCode: varchar("room_code").unique(),
+  userId: varchar("user_id"), // Links to authenticated user for game history
   player1Id: varchar("player1_id"),
   player2Id: varchar("player2_id"),
   currentTurn: varchar("current_turn"), // player1 or player2
