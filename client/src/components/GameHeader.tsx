@@ -155,7 +155,8 @@ export default function GameHeader({
             data-testid="copy-room-code-button"
             title="Click to copy shareable link"
           >
-            <span>Share: {game.roomCode}</span>
+            <span className="hidden sm:inline">Share: </span>
+            <span>{game.roomCode}</span>
             {copied ? (
               <Check className="h-3 w-3 text-green-600" />
             ) : (
@@ -333,12 +334,18 @@ export default function GameHeader({
           <div className="flex items-center space-x-4">
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <img
-                  src={logoImage}
-                  alt="It's About Time!!"
-                  className="h-12 w-auto cursor-pointer"
-                  data-testid="game-header-logo"
-                />
+                {isMobile ? (
+                  <button className="p-2 -ml-2 rounded-lg hover:bg-gray-100 text-gray-600" title="Return to Lobby">
+                    <Home className="w-6 h-6" />
+                  </button>
+                ) : (
+                  <img
+                    src={logoImage}
+                    alt="It's About Time!!"
+                    className="h-12 w-auto cursor-pointer"
+                    data-testid="game-header-logo"
+                  />
+                )}
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
