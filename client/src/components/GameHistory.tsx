@@ -4,11 +4,13 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useUserHistory, type EnrichedGame } from "@/hooks/useUserGames";
 import { ChevronLeft, ChevronRight, Trophy, XCircle } from "lucide-react";
+import { useUser } from "@/context/UserContext";
 
 export default function GameHistory() {
     const [page, setPage] = useState(0);
     const pageSize = 10;
     const { history, loading, error } = useUserHistory(pageSize, page * pageSize);
+    const { user } = useUser();
 
     const formatDate = (date: Date | string) => {
         return new Date(date).toLocaleDateString("en-US", {
@@ -22,25 +24,46 @@ export default function GameHistory() {
 
     const getGameResult = (game: EnrichedGame) => {
         if (game.gameStatus === "abandoned") {
-            return { text: "Abandoned", color: "bg-gray-500", icon: XCircle };
+            return {
+                text: "Abandoned",
+                color: "bg-red-500",
+                icon: XCircle,
+                cardStyle: "bg-red-100 border-red-300 hover:bg-red-200"
+            };
         }
 
         // Single player - completed successfully
         if (!game.roomCode && game.gameStatus === "completed") {
-            return { text: "Completed", color: "bg-blue-500", icon: Trophy };
-        }
-
-        // Multiplayer - check winner
-        if (game.winnerPlayerId) {
-            const isWinner = game.player1Id === game.winnerPlayerId || game.player2Id === game.winnerPlayerId;
             return {
-                text: isWinner ? "Won" : "Lost",
-                color: isWinner ? "bg-green-500" : "bg-red-500",
-                icon: isWinner ? Trophy : XCircle,
+                text: "Completed",
+                color: "bg-blue-500",
+                icon: Trophy,
+                cardStyle: "bg-blue-100 border-blue-300 hover:bg-blue-200"
             };
         }
 
-        return { text: "Completed", color: "bg-gray-500", icon: Trophy };
+        // Multiplayer - check winner
+        if (game.winnerPlayerId && user) {
+            // Determine which player ID belongs to the current user
+            const myPlayerId = game.player1UserId === user.id ? game.player1Id : game.player2Id;
+            const isWinner = myPlayerId === game.winnerPlayerId;
+
+            return {
+                text: isWinner ? "Won" : "Lost",
+                color: isWinner ? "bg-green-500" : "bg-yellow-500",
+                icon: isWinner ? Trophy : XCircle,
+                cardStyle: isWinner
+                    ? "bg-green-100 border-green-300 hover:bg-green-200"
+                    : "bg-yellow-100 border-yellow-300 hover:bg-yellow-200"
+            };
+        }
+
+        return {
+            text: "Completed",
+            color: "bg-gray-500",
+            icon: Trophy,
+            cardStyle: "bg-gray-100 border-gray-300 hover:bg-gray-200"
+        };
     };
 
     const renderGameCard = (game: EnrichedGame) => {
@@ -48,7 +71,7 @@ export default function GameHistory() {
         const Icon = result.icon;
 
         return (
-            <Card key={game.id} className="hover:shadow-md transition-shadow">
+            <Card key={game.id} className={`hover:shadow-md transition-shadow ${result.cardStyle}`}>
                 <CardHeader>
                     <div className="flex items-center justify-between">
                         <div className="flex-1">

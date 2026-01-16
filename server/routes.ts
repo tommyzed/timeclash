@@ -345,7 +345,7 @@ export async function registerRoutes(
       res.json({
         totalGames: allGames.length,
         completedGames: completedGames.length,
-        activeGames: allGames.filter(g => g.gameStatus === "playing").length,
+        activeGames: allGames.filter(g => g.gameStatus === "playing" || g.gameStatus === "waiting").length,
         wins,
         losses,
         winRate: completedGames.length > 0 ? (wins / completedGames.length) * 100 : 0,
