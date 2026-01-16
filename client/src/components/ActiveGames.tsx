@@ -13,11 +13,12 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { useUserGames, abandonGame } from "@/hooks/useUserGames";
+import { useUserGames, abandonGame, type EnrichedGame } from "@/hooks/useUserGames";
+import { useUser } from "@/context/UserContext";
 import { useToast } from "@/hooks/use-toast";
-import type { Game } from "@shared/schema";
 
 export default function ActiveGames() {
+    const { user } = useUser();
     const { activeGames, loading, error, refetch } = useUserGames();
     const [, setLocation] = useLocation();
     const { toast } = useToast();
@@ -51,7 +52,32 @@ export default function ActiveGames() {
         }
     };
 
-    const renderGameCard = (game: Game, isWaiting: boolean) => {
+    const formatDate = (date: Date | string) => {
+        const d = new Date(date);
+        return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+    };
+
+    const getOpponentName = (game: EnrichedGame): string | null => {
+        if (!game.roomCode) return null; // Single player has no opponent
+
+        const isPlayer1 = game.player1UserId === user?.id;
+        if (isPlayer1) {
+            return game.player2Name || null;
+        } else {
+            return game.player1Name || null;
+        }
+    };
+
+    const isMyTurn = (game: EnrichedGame): boolean | null => {
+        if (!game.roomCode || !game.currentTurn) return null; // Single player or no turn set
+
+        const isPlayer1 = game.player1UserId === user?.id;
+        const currentTurnIsPlayer1 = game.currentTurn === "player1";
+
+        return isPlayer1 === currentTurnIsPlayer1;
+    };
+
+    const renderGameCard = (game: EnrichedGame, isWaiting: boolean) => {
         const isSinglePlayer = !game.roomCode;
         // If single player, show green "In Progress" even if technically "waiting" status in DB
         const showWaiting = isWaiting && !isSinglePlayer;
@@ -59,28 +85,46 @@ export default function ActiveGames() {
         const statusColor = showWaiting ? "bg-yellow-500" : "bg-green-500";
         const statusText = showWaiting ? "Waiting for opponent" : "In Progress";
 
+        const opponentName = getOpponentName(game);
+        const myTurn = isMyTurn(game);
+
         return (
             <Card key={game.id} className="hover:shadow-lg transition-shadow">
                 <CardHeader>
-                    <div className="flex items-center justify-between">
-                        <div className="flex-1">
-                            <CardTitle className="text-lg">
-                                {game.roomCode ? `Room: ${game.roomCode}` : "Single Player"}
+                    <div className="flex items-center justify-between gap-2">
+                        <div className="flex-1 min-w-0">
+                            <CardTitle className="text-lg truncate">
+                                {isSinglePlayer
+                                    ? "Single Player"
+                                    : opponentName
+                                        ? `vs ${opponentName}`
+                                        : "Waiting for opponent..."
+                                }
                             </CardTitle>
                             <CardDescription className="mt-1">
                                 {game.gameMode === "hard" ? "Hard Mode" : "Normal Mode"} • Target: {game.targetScore}
                             </CardDescription>
                         </div>
-                        <Badge className={statusColor}>{statusText}</Badge>
+                        <div className="flex flex-col items-end gap-1">
+                            <Badge className={statusColor}>{statusText}</Badge>
+                            {!isSinglePlayer && !showWaiting && myTurn !== null && (
+                                <Badge variant={myTurn ? "default" : "outline"} className={myTurn ? "bg-blue-500" : ""}>
+                                    {myTurn ? "Your Turn" : "Their Turn"}
+                                </Badge>
+                            )}
+                        </div>
                     </div>
                 </CardHeader>
                 <CardContent>
                     <div className="space-y-3">
-                        {game.roomCode && (
-                            <div className="text-sm text-muted-foreground">
-                                Score: {game.player1Score} - {game.player2Score}
-                            </div>
-                        )}
+                        <div className="flex justify-between text-sm text-muted-foreground">
+                            {game.roomCode && (
+                                <span>Score: {game.player1Score} - {game.player2Score}</span>
+                            )}
+                            <span className={game.roomCode ? "" : "ml-auto"}>
+                                Created: {formatDate(game.createdAt)}
+                            </span>
+                        </div>
                         <div className="flex gap-2">
                             <Button onClick={() => handleResumeGame(game.id)} className="flex-1">
                                 Resume Game
