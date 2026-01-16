@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useRoute, useLocation } from "wouter";
 import { queryClient } from "@/lib/queryClient";
@@ -7,6 +7,7 @@ import { type GameState, type WebSocketMessage } from "@shared/schema";
 import { useWebSocket } from "@/hooks/useWebSocket";
 import { useToast } from "@/hooks/use-toast";
 import { useSounds } from "@/hooks/useSounds";
+import { useUser } from "@/context/UserContext";
 import GameHeader from "@/components/GameHeader";
 import Timeline from "@/components/Timeline";
 import CurrentCard from "@/components/CurrentCard";
@@ -14,6 +15,7 @@ import GameStats from "@/components/GameStats";
 import RecentActivity from "@/components/RecentActivity";
 
 import FeedbackModal from "@/components/FeedbackModal";
+
 
 const colorToEmoji: { [key: string]: string } = {
   blue: "🔵",
@@ -29,16 +31,46 @@ export default function Game() {
   const [match, params] = useRoute("/game/:gameId?");
   const [, navigate] = useLocation();
   const urlParams = new URLSearchParams(window.location.search);
-  const playerId =
-    urlParams.get("playerId") || localStorage.getItem("playerId");
+  const { user } = useUser();
   const nickname = localStorage.getItem("nickname");
   const { toast, dismiss } = useToast();
   const { playSound } = useSounds();
 
+  // Get raw IDs from URL/storage
+  const urlPlayerId = urlParams.get("playerId");
+  const storedPlayerId = localStorage.getItem("playerId");
+
   const [gameId, setGameId] = useState<string | null>(params?.gameId || null);
+
+  // Get game state
+  const { data: gameState, isLoading } = useQuery({
+    queryKey: ["/api/games", gameId],
+    queryFn: async () => {
+      const response = await apiRequest("GET", `/api/games/${gameId}`);
+      return await response.json();
+    },
+    enabled: !!gameId,
+  }) as { data: GameState | undefined; isLoading: boolean };
+
+  // Calculate effective playerId based on authenticated user or fallback
+  const playerId = useMemo(() => {
+    // 1. If we have a authenticated user match in the game, prefer that
+    if (user && gameState?.game) {
+      if (gameState.game.player1UserId === user.id) return gameState.game.player1Id;
+      if (gameState.game.player2UserId === user.id) return gameState.game.player2Id;
+    }
+
+    // 2. Fallback to URL param (highest priority for non-auth/linking)
+    if (urlPlayerId) return urlPlayerId;
+
+    // 3. Fallback to storage (last resort)
+    return storedPlayerId;
+  }, [user, gameState?.game, urlPlayerId, storedPlayerId]);
+
   const [isMultiplayer, setIsMultiplayer] = useState<boolean>(
     !!params?.gameId && !!playerId,
   );
+
   const [feedbackData, setFeedbackData] = useState<{
     isVisible: boolean;
     isCorrect: boolean;
@@ -124,17 +156,7 @@ export default function Game() {
     },
   });
 
-  // Get game state
-  const { data: gameState, isLoading } = useQuery({
-    queryKey: ["/api/games", gameId],
-    queryFn: async () => {
-      const response = await apiRequest("GET", `/api/games/${gameId}`);
-      return await response.json();
-    },
-    enabled: !!gameId,
-  }) as { data: GameState | undefined; isLoading: boolean };
 
-  // Update multiplayer status when game state loads
   useEffect(() => {
     if (gameState?.game) {
       const hasRoomCode = !!gameState.game.roomCode;
@@ -467,18 +489,29 @@ export default function Game() {
 
     // For multiplayer: check if it's the player's turn
     if (isMultiplayer && gameState?.game) {
-      const isPlayer1 = playerId === gameState.game.player1Id;
-      const isPlayer2 = playerId === gameState.game.player2Id;
-      const expectedTurn = isPlayer1 ? "player1" : "player2";
+      // In stealing mode, only the stealing player can move
+      if (gameState.game.stealingPlayerId) {
+        if (playerId !== gameState.game.stealingPlayerId) {
+          setFeedbackData({
+            isVisible: true,
+            isCorrect: false,
+            message: "Opponent is attempting to steal the card!",
+          });
+          return;
+        }
+      } else {
+        const isPlayer1 = playerId === gameState.game.player1Id;
+        const expectedTurn = isPlayer1 ? "player1" : "player2";
 
-      if (gameState.game.currentTurn !== expectedTurn) {
-        setFeedbackData({
-          isVisible: true,
-          isCorrect: false,
-          message:
-            "It's not your turn! Wait for the other player to make their move.",
-        });
-        return;
+        if (gameState.game.currentTurn !== expectedTurn) {
+          setFeedbackData({
+            isVisible: true,
+            isCorrect: false,
+            message:
+              "It's not your turn! Wait for the other player to make their move.",
+          });
+          return;
+        }
       }
     }
 

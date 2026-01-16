@@ -24,6 +24,17 @@ export function validateMultiplayerTurn(
         };
     }
 
+    // In stealing mode, only the stealing player can make a move
+    if (game.stealingPlayerId) {
+        if (playerId === game.stealingPlayerId) {
+            return { valid: true };
+        }
+        return {
+            valid: false,
+            error: "Opponent is attempting to steal the card",
+        };
+    }
+
     const expectedTurn = isPlayer1 ? "player1" : "player2";
     if (game.currentTurn !== expectedTurn) {
         return {
