@@ -17,8 +17,6 @@ export default function GameHistory() {
             month: "short",
             day: "numeric",
             year: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
         });
     };
 
@@ -105,7 +103,7 @@ export default function GameHistory() {
                             <span>Score: {game.player1Score} - {game.player2Score}</span>
                         )}
                         <span className={game.roomCode ? "" : "ml-auto"}>
-                            {formatDate(game.createdAt)}
+                            Created: {formatDate(game.createdAt)}
                         </span>
                     </div>
                 </CardContent>
