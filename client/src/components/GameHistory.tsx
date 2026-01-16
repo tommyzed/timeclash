@@ -70,24 +70,27 @@ export default function GameHistory() {
         const result = getGameResult(game);
         const Icon = result.icon;
 
+        const isSinglePlayer = !game.roomCode;
+        let opponentName = "";
+
+        if (user && !isSinglePlayer) {
+            if (game.player1UserId === user.id) {
+                opponentName = game.player2Name || "Player 2";
+            } else {
+                opponentName = game.player1Name || "Player 1";
+            }
+        }
+
         return (
             <Card key={game.id} className={`hover:shadow-md transition-shadow ${result.cardStyle}`}>
                 <CardHeader>
-                    <div className="flex items-center justify-between">
-                        <div className="flex-1">
-                            <CardTitle className="text-lg flex items-center gap-2">
-                                {game.roomCode ? (
-                                    <>
-                                        <span>{game.player1Name || "Player 1"}</span>
-                                        <span className="text-muted-foreground">vs</span>
-                                        <span>{game.player2Name || "Player 2"}</span>
-                                    </>
-                                ) : (
-                                    "Single Player"
-                                )}
+                    <div className="flex items-center justify-between gap-2">
+                        <div className="flex-1 min-w-0">
+                            <CardTitle className="text-lg truncate">
+                                {isSinglePlayer ? "Single Player" : `vs ${opponentName}`}
                             </CardTitle>
                             <CardDescription className="mt-1">
-                                {formatDate(game.createdAt)}
+                                {game.gameMode === "hard" ? "Hard Mode" : "Normal Mode"} • Target: {game.targetScore}
                             </CardDescription>
                         </div>
                         <Badge className={result.color}>
@@ -97,29 +100,13 @@ export default function GameHistory() {
                     </div>
                 </CardHeader>
                 <CardContent>
-                    <div className="grid grid-cols-2 gap-4 text-sm">
-                        <div>
-                            <div className="text-muted-foreground">Mode</div>
-                            <div className="font-medium">
-                                {game.gameMode === "hard" ? "Hard" : "Normal"}
-                            </div>
-                        </div>
-                        <div>
-                            <div className="text-muted-foreground">Final Score</div>
-                            <div className="font-medium">
-                                {game.roomCode ? `${game.player1Score} - ${game.player2Score}` : game.player1Score}
-                            </div>
-                        </div>
-                        <div>
-                            <div className="text-muted-foreground">Target</div>
-                            <div className="font-medium">{game.targetScore}</div>
-                        </div>
-                        {game.allowStealing && (
-                            <div>
-                                <div className="text-muted-foreground">Stealing</div>
-                                <div className="font-medium">Enabled</div>
-                            </div>
+                    <div className="flex justify-between text-sm text-muted-foreground">
+                        {game.roomCode && (
+                            <span>Score: {game.player1Score} - {game.player2Score}</span>
                         )}
+                        <span className={game.roomCode ? "" : "ml-auto"}>
+                            {formatDate(game.createdAt)}
+                        </span>
                     </div>
                 </CardContent>
             </Card>
@@ -158,7 +145,7 @@ export default function GameHistory() {
 
     return (
         <div className="space-y-4">
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {history.games.map(renderGameCard)}
             </div>
 
