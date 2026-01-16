@@ -39,8 +39,8 @@ export function useWebSocket({ gameId, playerId, onMessage, onConnect, onDisconn
       const wsUrl = import.meta.env.DEV
         ? "ws://localhost:8081/ws"
         : `${protocol}//${window.location.host}/ws`;
-      
-      console.log('TOMOLICK: Connecting to WebSocket:', wsUrl);
+
+      console.log('Connecting to WebSocket:', wsUrl);
       wsRef.current = new WebSocket(wsUrl);
 
       wsRef.current.onopen = () => {
@@ -48,14 +48,14 @@ export function useWebSocket({ gameId, playerId, onMessage, onConnect, onDisconn
         setIsConnected(true);
         setConnectionError(null);
         reconnectAttempts.current = 0;
-        
+
         // Join the current game room if identifiers are available
         if (latestGameIdRef.current && latestPlayerIdRef.current) {
           const joinData = { gameId: latestGameIdRef.current, playerId: latestPlayerIdRef.current };
           sendMessage({ type: 'join_game', data: joinData });
           lastJoinedGameIdRef.current = latestGameIdRef.current;
         }
-        
+
         onConnect?.();
       };
 
@@ -73,14 +73,14 @@ export function useWebSocket({ gameId, playerId, onMessage, onConnect, onDisconn
         console.log('WebSocket disconnected:', event.code, event.reason);
         setIsConnected(false);
         wsRef.current = null;
-        
+
         onDisconnect?.();
 
         // Attempt to reconnect if it wasn't a manual close
         if (event.code !== 1000 && reconnectAttempts.current < maxReconnectAttempts) {
           const delay = Math.min(1000 * Math.pow(2, reconnectAttempts.current), 30000);
           console.log(`Attempting to reconnect in ${delay}ms (attempt ${reconnectAttempts.current + 1})`);
-          
+
           reconnectTimeoutRef.current = setTimeout(() => {
             reconnectAttempts.current++;
             connect();
@@ -104,12 +104,12 @@ export function useWebSocket({ gameId, playerId, onMessage, onConnect, onDisconn
       clearTimeout(reconnectTimeoutRef.current);
       reconnectTimeoutRef.current = null;
     }
-    
+
     if (wsRef.current) {
       wsRef.current.close(1000, 'Manual disconnect');
       wsRef.current = null;
     }
-    
+
     setIsConnected(false);
   };
 
