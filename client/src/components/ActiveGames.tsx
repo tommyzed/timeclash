@@ -16,6 +16,7 @@ import {
 import { useUserGames, abandonGame, type EnrichedGame } from "@/hooks/useUserGames";
 import { useUser } from "@/context/UserContext";
 import { useToast } from "@/hooks/use-toast";
+import { Trash2 } from "lucide-react";
 
 export default function ActiveGames() {
     const { user } = useUser();
@@ -82,14 +83,34 @@ export default function ActiveGames() {
         // If single player, show green "In Progress" even if technically "waiting" status in DB
         const showWaiting = isWaiting && !isSinglePlayer;
 
-        const statusColor = showWaiting ? "bg-yellow-500" : "bg-green-500";
-        const statusText = showWaiting ? "Waiting for opponent" : "In Progress";
-
         const opponentName = getOpponentName(game);
         const myTurn = isMyTurn(game);
 
+        const getCardStyle = () => {
+            if (isSinglePlayer) return "bg-blue-50/70 border-blue-200 hover:bg-blue-50";
+            if (showWaiting) return "bg-purple-50/70 border-purple-200 hover:bg-purple-50";
+            if (myTurn) return "bg-green-50/70 border-green-200 hover:bg-green-50";
+            return "bg-orange-50/70 border-orange-200 hover:bg-orange-50";
+        };
+
         return (
-            <Card key={game.id} className="hover:shadow-lg transition-shadow">
+            <Card
+                key={game.id}
+                className={`hover:shadow-lg transition-all cursor-pointer relative group ${getCardStyle()}`}
+                onClick={() => handleResumeGame(game.id)}
+            >
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    className="absolute top-2 right-2 h-6 w-6 text-muted-foreground hover:text-destructive hover:bg-transparent transition-colors z-10"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        setGameToAbandon(game.id);
+                    }}
+                    title="Abandon Game"
+                >
+                    <Trash2 className="h-3 w-3" />
+                </Button>
                 <CardHeader>
                     <div className="flex items-center justify-between gap-2">
                         <div className="flex-1 min-w-0">
@@ -106,10 +127,12 @@ export default function ActiveGames() {
                             </CardDescription>
                         </div>
                         <div className="flex flex-col items-end gap-1">
-                            <Badge className={statusColor}>{statusText}</Badge>
+                            {showWaiting && (
+                                <Badge className="bg-yellow-500">Waiting for opponent</Badge>
+                            )}
                             {!isSinglePlayer && !showWaiting && myTurn !== null && (
-                                <Badge variant={myTurn ? "default" : "outline"} className={myTurn ? "bg-blue-500" : ""}>
-                                    {myTurn ? "Your Turn" : "Their Turn"}
+                                <Badge className={myTurn ? "bg-green-500" : "bg-yellow-500"}>
+                                    {myTurn ? "My Turn" : "Their Turn"}
                                 </Badge>
                             )}
                         </div>
@@ -124,18 +147,6 @@ export default function ActiveGames() {
                             <span className={game.roomCode ? "" : "ml-auto"}>
                                 Created: {formatDate(game.createdAt)}
                             </span>
-                        </div>
-                        <div className="flex gap-2">
-                            <Button onClick={() => handleResumeGame(game.id)} className="flex-1">
-                                Resume Game
-                            </Button>
-                            <Button
-                                variant="outline"
-                                onClick={() => setGameToAbandon(game.id)}
-                                className="flex-1"
-                            >
-                                Abandon
-                            </Button>
                         </div>
                     </div>
                 </CardContent>
@@ -193,7 +204,7 @@ export default function ActiveGames() {
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                         <AlertDialogCancel disabled={abandoning}>Cancel</AlertDialogCancel>
-                        <AlertDialogAction onClick={handleAbandonGame} disabled={abandoning}>
+                        <AlertDialogAction onClick={handleAbandonGame} disabled={abandoning} className="bg-destructive hover:bg-destructive/90">
                             {abandoning ? "Abandoning..." : "Abandon Game"}
                         </AlertDialogAction>
                     </AlertDialogFooter>
@@ -202,3 +213,4 @@ export default function ActiveGames() {
         </>
     );
 }
+
