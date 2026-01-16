@@ -7,8 +7,8 @@ export type EnrichedGame = Game & {
 };
 
 export type UserGamesData = {
-    activeGames: Game[];
-    waitingGames: Game[];
+    activeGames: EnrichedGame[];
+    waitingGames: EnrichedGame[];
     total: number;
 };
 

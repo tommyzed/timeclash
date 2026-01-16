@@ -242,9 +242,28 @@ export async function registerRoutes(
       const activeGames = await storage.getGamesByUserId(userId, "playing");
       const waitingGames = await storage.getGamesByUserId(userId, "waiting");
 
+      // Enrich games with player names
+      const enrichGames = async (games: Game[]) => {
+        return Promise.all(
+          games.map(async (game) => {
+            const player1 = game.player1Id ? await storage.getPlayer(game.player1Id) : null;
+            const player2 = game.player2Id ? await storage.getPlayer(game.player2Id) : null;
+
+            return {
+              ...game,
+              player1Name: player1?.nickname,
+              player2Name: player2?.nickname,
+            };
+          })
+        );
+      };
+
+      const enrichedActiveGames = await enrichGames(activeGames);
+      const enrichedWaitingGames = await enrichGames(waitingGames);
+
       res.json({
-        activeGames,
-        waitingGames,
+        activeGames: enrichedActiveGames,
+        waitingGames: enrichedWaitingGames,
         total: activeGames.length + waitingGames.length
       });
     } catch (error) {
