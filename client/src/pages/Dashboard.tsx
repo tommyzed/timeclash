@@ -37,68 +37,68 @@ export default function Dashboard() {
                 </div>
 
                 {/* Stats Overview */}
-                <div className="grid gap-4 md:grid-cols-4">
-                    <Card className="bg-white border-blue-200 shadow-sm overflow-hidden">
-                        <div className="p-4 flex items-center space-x-4">
-                            <div className="p-3 bg-blue-100 rounded-full">
-                                <Gamepad2 className="h-6 w-6 text-blue-600" />
+                <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
+                    <Card className="bg-white border-green-200 shadow-sm overflow-hidden">
+                        <div className="p-3 md:p-4 flex items-center space-x-3 md:space-x-4">
+                            <div className="p-2 md:p-3 bg-green-100 rounded-full">
+                                <RotateCcw className="h-4 w-4 md:h-6 md:w-6 text-green-600" />
                             </div>
                             <div>
-                                <p className="text-sm font-medium text-muted-foreground">Total Games</p>
+                                <p className="text-xs md:text-sm font-medium text-muted-foreground">Active Games</p>
                                 {statsLoading ? (
-                                    <Skeleton className="h-7 w-12 mt-1" />
+                                    <Skeleton className="h-6 w-10 md:h-7 md:w-12 mt-1" />
                                 ) : (
-                                    <h3 className="text-2xl font-bold text-blue-900">{stats?.totalGames || 0}</h3>
+                                    <h3 className="text-lg md:text-2xl font-bold text-green-900">{stats?.activeGames || 0}</h3>
+                                )}
+                            </div>
+                        </div>
+                    </Card>
+
+                    <Card className="bg-white border-blue-200 shadow-sm overflow-hidden">
+                        <div className="p-3 md:p-4 flex items-center space-x-3 md:space-x-4">
+                            <div className="p-2 md:p-3 bg-blue-100 rounded-full">
+                                <Gamepad2 className="h-4 w-4 md:h-6 md:w-6 text-blue-600" />
+                            </div>
+                            <div>
+                                <p className="text-xs md:text-sm font-medium text-muted-foreground">Total Games</p>
+                                {statsLoading ? (
+                                    <Skeleton className="h-6 w-10 md:h-7 md:w-12 mt-1" />
+                                ) : (
+                                    <h3 className="text-lg md:text-2xl font-bold text-blue-900">{stats?.totalGames || 0}</h3>
                                 )}
                             </div>
                         </div>
                     </Card>
 
                     <Card className="bg-white border-amber-200 shadow-sm overflow-hidden">
-                        <div className="p-4 flex items-center space-x-4">
-                            <div className="p-3 bg-amber-100 rounded-full">
-                                <Trophy className="h-6 w-6 text-amber-600" />
+                        <div className="p-3 md:p-4 flex items-center space-x-3 md:space-x-4">
+                            <div className="p-2 md:p-3 bg-amber-100 rounded-full">
+                                <Trophy className="h-4 w-4 md:h-6 md:w-6 text-amber-600" />
                             </div>
                             <div>
-                                <p className="text-sm font-medium text-muted-foreground">Wins</p>
+                                <p className="text-xs md:text-sm font-medium text-muted-foreground">Wins</p>
                                 {statsLoading ? (
-                                    <Skeleton className="h-7 w-12 mt-1" />
+                                    <Skeleton className="h-6 w-10 md:h-7 md:w-12 mt-1" />
                                 ) : (
-                                    <h3 className="text-2xl font-bold text-amber-900">{stats?.wins || 0}</h3>
+                                    <h3 className="text-lg md:text-2xl font-bold text-amber-900">{stats?.wins || 0}</h3>
                                 )}
                             </div>
                         </div>
                     </Card>
 
                     <Card className="bg-white border-purple-200 shadow-sm overflow-hidden">
-                        <div className="p-4 flex items-center space-x-4">
-                            <div className="p-3 bg-purple-100 rounded-full">
-                                <History className="h-6 w-6 text-purple-600" />
+                        <div className="p-3 md:p-4 flex items-center space-x-3 md:space-x-4">
+                            <div className="p-2 md:p-3 bg-purple-100 rounded-full">
+                                <History className="h-4 w-4 md:h-6 md:w-6 text-purple-600" />
                             </div>
                             <div>
-                                <p className="text-sm font-medium text-muted-foreground">Win Rate</p>
+                                <p className="text-xs md:text-sm font-medium text-muted-foreground">Win Rate</p>
                                 {statsLoading ? (
-                                    <Skeleton className="h-7 w-12 mt-1" />
+                                    <Skeleton className="h-6 w-10 md:h-7 md:w-12 mt-1" />
                                 ) : (
-                                    <h3 className="text-2xl font-bold text-purple-900">
+                                    <h3 className="text-lg md:text-2xl font-bold text-purple-900">
                                         {stats?.winRate ? `${Math.round(stats.winRate)}%` : "0%"}
                                     </h3>
-                                )}
-                            </div>
-                        </div>
-                    </Card>
-
-                    <Card className="bg-white border-green-200 shadow-sm overflow-hidden">
-                        <div className="p-4 flex items-center space-x-4">
-                            <div className="p-3 bg-green-100 rounded-full">
-                                <RotateCcw className="h-6 w-6 text-green-600" />
-                            </div>
-                            <div>
-                                <p className="text-sm font-medium text-muted-foreground">Active Games</p>
-                                {statsLoading ? (
-                                    <Skeleton className="h-7 w-12 mt-1" />
-                                ) : (
-                                    <h3 className="text-2xl font-bold text-green-900">{stats?.activeGames || 0}</h3>
                                 )}
                             </div>
                         </div>
