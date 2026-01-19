@@ -8,10 +8,12 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useUser } from "@/context/UserContext";
 import { useLocation } from "wouter";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Auth() {
   const { user, setUser } = useUser();
   const [, setLocation] = useLocation();
+  const { toast } = useToast();
 
   return (
     <div className="ml-4">
@@ -33,6 +35,12 @@ export default function Auth() {
               onClick={async () => {
                 await fetch("/api/auth/logout", { method: "POST" });
                 setUser(null);
+                setLocation("/");
+                toast({
+                  title: "Logged out",
+                  description: "You are now logged out of your Time Clash account.",
+                  variant: "warning",
+                });
               }}
             >
               Logout

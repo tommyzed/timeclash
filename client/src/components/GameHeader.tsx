@@ -4,7 +4,7 @@ import {
   Copy,
   Check,
   X,
-  RotateCcw,
+  Sparkles,
   Home,
   HelpCircle,
 } from "lucide-react";
@@ -292,7 +292,7 @@ export default function GameHeader({
             data-testid="new-game-button"
             title="Start a new game"
           >
-            <RotateCcw className="h-5 w-5 text-gray-600" />
+            <Sparkles className="h-5 w-5 text-gray-600" />
           </button>
         </AlertDialogTrigger>
         <AlertDialogContent>
@@ -332,40 +332,61 @@ export default function GameHeader({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 relative">
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-4">
-            <AlertDialog>
-              <AlertDialogTrigger asChild>
-                {isMobile ? (
-                  <button className="p-2 -ml-2 rounded-lg hover:bg-gray-100 text-gray-600" title="Return to Lobby">
-                    <Home className="w-6 h-6" />
-                  </button>
-                ) : (
-                  <img
-                    src={logoImage}
-                    alt="It's About Time!!"
-                    className="h-12 w-auto cursor-pointer"
-                    data-testid="game-header-logo"
-                  />
-                )}
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>
-                    🤔 Return to the Game Lobby?
-                  </AlertDialogTitle>
-                  <AlertDialogDescription>
-                    {user
-                      ? "🚩 Your game is saved and can be accessed via the Dashboard. 🚩"
-                      : "❗ Your game will immediately end and cannot be recovered! ❗"}
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction onClick={() => setLocation("/")}>
-                    Return to Lobby
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
+            {user ? (
+              isMobile ? (
+                <button
+                  className="p-2 -ml-2 rounded-lg hover:bg-gray-100 text-gray-600"
+                  title="Return to Lobby"
+                  onClick={() => setLocation("/")}
+                >
+                  <Home className="w-6 h-6" />
+                </button>
+              ) : (
+                <img
+                  src={logoImage}
+                  alt="It's About Time!!"
+                  className="h-12 w-auto cursor-pointer"
+                  data-testid="game-header-logo"
+                  onClick={() => setLocation("/")}
+                />
+              )
+            ) : (
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  {isMobile ? (
+                    <button
+                      className="p-2 -ml-2 rounded-lg hover:bg-gray-100 text-gray-600"
+                      title="Return to Lobby"
+                    >
+                      <Home className="w-6 h-6" />
+                    </button>
+                  ) : (
+                    <img
+                      src={logoImage}
+                      alt="It's About Time!!"
+                      className="h-12 w-auto cursor-pointer"
+                      data-testid="game-header-logo"
+                    />
+                  )}
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      🤔 Return to the Game Lobby?
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>
+                      ❗ Your game will immediately end and cannot be recovered! ❗
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={() => setLocation("/")}>
+                      Return to Lobby
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            )}
             {getGameModeDisplay()}
           </div>
           {!isMobile ? (
