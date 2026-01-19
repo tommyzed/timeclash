@@ -85,6 +85,31 @@ export async function registerRoutes(
     }
   });
 
+  app.patch("/api/users/me", async (req, res) => {
+    if (!(req.session as any).userId) {
+      return res.status(401).json({ message: "Not authenticated" });
+    }
+
+    try {
+      const userId = (req.session as any).userId;
+      const { name } = req.body;
+
+      if (!name || typeof name !== "string" || name.trim().length === 0) {
+        return res.status(400).json({ message: "Name is required" });
+      }
+
+      const updatedUser = await storage.updateUser(userId, { name });
+      if (!updatedUser) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      res.json(updatedUser);
+    } catch (error) {
+      console.error("Update user error:", error);
+      res.status(500).json({ message: "Failed to update user" });
+    }
+  });
+
   app.post("/api/auth/logout", (req, res) => {
     req.session.destroy((err) => {
       if (err) {

@@ -56,6 +56,7 @@ export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
   getUserByGoogleId(googleId: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
+  updateUser(id: string, user: Partial<User>): Promise<User | undefined>;
   getGamesByUserId(userId: string, status?: string): Promise<Game[]>;
   getUserGameHistory(userId: string, limit?: number, offset?: number): Promise<Game[]>;
 }
@@ -304,6 +305,15 @@ export class MemStorage implements IStorage {
     this.users.set(newUser.id, newUser);
     return newUser;
   }
+
+  async updateUser(id: string, user: Partial<User>): Promise<User | undefined> {
+    const existingUser = this.users.get(id);
+    if (!existingUser) return undefined;
+    const updatedUser = { ...existingUser, ...user };
+    this.users.set(id, updatedUser);
+    return updatedUser;
+  }
+
 
   async getGamesByPlayerId(playerId: string): Promise<Game[]> {
     return Array.from(this.games.values()).filter(

@@ -4,15 +4,63 @@ import { useUserStats } from "@/hooks/useUserGames";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Trophy, Gamepad2, History, RotateCcw } from "lucide-react";
+import { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Pencil, Check, X, Trophy, Gamepad2, History, RotateCcw } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { apiRequest, queryClient } from "@/lib/queryClient";
 import ActiveGames from "@/components/ActiveGames";
 import GameHistory from "@/components/GameHistory";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Dashboard() {
-    const { user, isLoading } = useUser();
+    const { user, setUser, isLoading } = useUser();
     const [, setLocation] = useLocation();
     const { stats, loading: statsLoading } = useUserStats();
+    const { toast } = useToast();
+
+    const [isEditing, setIsEditing] = useState(false);
+    const [editName, setEditName] = useState("");
+
+    const handleStartEdit = () => {
+        setEditName(user?.name || "");
+        setIsEditing(true);
+    };
+
+    const handleCancelEdit = () => {
+        setIsEditing(false);
+        setEditName("");
+    };
+
+    const handleSaveName = async () => {
+        if (!editName.trim()) {
+            toast({
+                title: "Error",
+                description: "Name cannot be empty",
+                variant: "destructive",
+            });
+            return;
+        }
+
+        try {
+            const response = await apiRequest("PATCH", "/api/users/me", { name: editName });
+            const updatedUser = await response.json();
+            // Update the local user context immediately
+            setUser(updatedUser);
+
+            toast({
+                title: "Success",
+                description: "Name updated successfully",
+            });
+            setIsEditing(false);
+        } catch (error) {
+            toast({
+                title: "Error",
+                description: "Failed to update name",
+                variant: "destructive",
+            });
+        }
+    };
 
     if (isLoading) {
         return (
@@ -33,7 +81,40 @@ export default function Dashboard() {
                 {/* Header Section */}
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div>
-                        <h1 className="text-3xl font-bold tracking-tight">Welcome, {user.name}</h1>
+                        <div className="flex items-center gap-3">
+                            {isEditing ? (
+                                <div className="flex items-center gap-2">
+                                    <Input
+                                        value={editName}
+                                        onChange={(e) => setEditName(e.target.value)}
+                                        className="h-10 text-lg font-bold w-full md:w-64"
+                                        autoFocus
+                                        onKeyDown={(e) => {
+                                            if (e.key === "Enter") handleSaveName();
+                                            if (e.key === "Escape") handleCancelEdit();
+                                        }}
+                                    />
+                                    <Button size="icon" variant="ghost" onClick={handleSaveName} className="h-8 w-8 text-green-600 hover:text-green-700 hover:bg-green-50">
+                                        <Check className="h-5 w-5" />
+                                    </Button>
+                                    <Button size="icon" variant="ghost" onClick={handleCancelEdit} className="h-8 w-8 text-red-600 hover:text-red-700 hover:bg-red-50">
+                                        <X className="h-5 w-5" />
+                                    </Button>
+                                </div>
+                            ) : (
+                                <div className="flex items-center gap-2 group">
+                                    <h1 className="text-3xl font-bold tracking-tight">Welcome, {user.name}</h1>
+                                    <Button
+                                        size="icon"
+                                        variant="ghost"
+                                        onClick={handleStartEdit}
+                                        className="h-8 w-8 text-muted-foreground hover:text-primary"
+                                    >
+                                        <Pencil className="h-4 w-4" />
+                                    </Button>
+                                </div>
+                            )}
+                        </div>
                         <p className="text-muted-foreground mt-1">
                             Manage your games and view your history
                         </p>
