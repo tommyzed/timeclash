@@ -10,9 +10,17 @@ import GameHistory from "@/components/GameHistory";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Dashboard() {
-    const { user } = useUser();
+    const { user, isLoading } = useUser();
     const [, setLocation] = useLocation();
     const { stats, loading: statsLoading } = useUserStats();
+
+    if (isLoading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-slate-50">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+            </div>
+        );
+    }
 
     if (!user) {
         setLocation("/");
