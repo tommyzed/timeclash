@@ -9,6 +9,8 @@ import ActiveGames from "@/components/ActiveGames";
 import GameHistory from "@/components/GameHistory";
 import { Skeleton } from "@/components/ui/skeleton";
 
+import Auth from "@/components/Auth";
+
 export default function Dashboard() {
     const { user, isLoading } = useUser();
     const [, setLocation] = useLocation();
@@ -38,10 +40,13 @@ export default function Dashboard() {
                             Manage your games and view your history
                         </p>
                     </div>
-                    <Button onClick={() => setLocation("/")} size="lg" className="w-full md:w-auto">
-                        <Gamepad2 className="w-4 h-4 mr-2" />
-                        Return to Game Lobby
-                    </Button>
+                    <div className="flex items-center space-x-4 w-full md:w-auto">
+                        <Button onClick={() => setLocation("/")} size="lg" className="flex-1 md:flex-none">
+                            <Gamepad2 className="w-4 h-4 mr-2" />
+                            Return to Game Lobby
+                        </Button>
+                        <Auth />
+                    </div>
                 </div>
 
                 {/* Stats Overview */}
