@@ -6,12 +6,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
-import { Pencil, Check, X, Trophy, Gamepad2, History, RotateCcw } from "lucide-react";
+import { Pencil, Check, X, Trophy, Gamepad2, History, RotateCcw, Home } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import ActiveGames from "@/components/ActiveGames";
 import GameHistory from "@/components/GameHistory";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useIsMobile } from "@/hooks/use-mobile";
+import logoImage from "@assets/TimeClash.png";
 
 import Auth from "@/components/Auth";
 
@@ -20,6 +22,7 @@ export default function Dashboard() {
     const [, setLocation] = useLocation();
     const { stats, loading: statsLoading } = useUserStats();
     const { toast } = useToast();
+    const isMobile = useIsMobile();
 
     const [isEditing, setIsEditing] = useState(false);
     const [editName, setEditName] = useState("");
@@ -59,7 +62,6 @@ export default function Dashboard() {
             toast({
                 title: "Error",
                 description: "Failed to update name",
-                variant: "destructive",
             });
         }
     };
@@ -78,54 +80,68 @@ export default function Dashboard() {
     }
 
     return (
-        <div className="min-h-screen bg-slate-50 p-6">
-            <div className="max-w-6xl mx-auto space-y-8">
+        <div className="min-h-screen bg-slate-50 p-4 md:p-6">
+            <div className="max-w-6xl mx-auto space-y-6 md:space-y-8">
                 {/* Header Section */}
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                    <div>
-                        <div className="flex items-center gap-3">
-                            {isEditing ? (
-                                <div className="flex items-center gap-2">
-                                    <Input
-                                        value={editName}
-                                        onChange={(e) => setEditName(e.target.value)}
-                                        className="h-10 text-lg font-bold w-full md:w-64"
-                                        autoFocus
-                                        onKeyDown={(e) => {
-                                            if (e.key === "Enter") handleSaveName();
-                                            if (e.key === "Escape") handleCancelEdit();
-                                        }}
-                                    />
-                                    <Button size="icon" variant="ghost" onClick={handleSaveName} className="h-8 w-8 text-green-600 hover:text-green-700 hover:bg-green-50">
-                                        <Check className="h-5 w-5" />
-                                    </Button>
-                                    <Button size="icon" variant="ghost" onClick={handleCancelEdit} className="h-8 w-8 text-red-600 hover:text-red-700 hover:bg-red-50">
-                                        <X className="h-5 w-5" />
-                                    </Button>
-                                </div>
+                <div className="flex items-start justify-between gap-4">
+                    <div className="flex items-start gap-3 md:gap-6 flex-1 min-w-0">
+                        {/* Navigation - Logo or Home Icon */}
+                        <div
+                            className={`shrink-0 cursor-pointer transition-opacity hover:opacity-80 ${isMobile ? "mt-1.5" : ""}`}
+                            onClick={() => setLocation("/")}
+                            title="Return to Game Lobby"
+                        >
+                            {isMobile ? (
+                                <Home className="w-6 h-6 text-slate-700" />
                             ) : (
-                                <div className="flex items-center gap-2 group">
-                                    <h1 className="text-3xl font-bold tracking-tight">Welcome, {user.name}</h1>
-                                    <Button
-                                        size="icon"
-                                        variant="ghost"
-                                        onClick={handleStartEdit}
-                                        className="h-8 w-8 text-muted-foreground hover:text-primary"
-                                    >
-                                        <Pencil className="h-4 w-4" />
-                                    </Button>
-                                </div>
+                                <img src={logoImage} alt="TimeClash Logo" className="h-16 w-auto" />
                             )}
                         </div>
-                        <p className="text-muted-foreground mt-1">
-                            Manage your games and view your history
-                        </p>
+
+                        {/* Welcome Text Section */}
+                        <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2">
+                                {isEditing ? (
+                                    <div className="flex items-center gap-2 flex-1">
+                                        <Input
+                                            value={editName}
+                                            onChange={(e) => setEditName(e.target.value)}
+                                            className="h-9 text-lg font-bold w-full max-w-[200px] md:max-w-[300px]"
+                                            autoFocus
+                                            onKeyDown={(e) => {
+                                                if (e.key === "Enter") handleSaveName();
+                                                if (e.key === "Escape") handleCancelEdit();
+                                            }}
+                                        />
+                                        <Button size="icon" variant="ghost" onClick={handleSaveName} className="h-8 w-8 text-green-600 hover:text-green-700 hover:bg-green-50 shrink-0">
+                                            <Check className="h-5 w-5" />
+                                        </Button>
+                                        <Button size="icon" variant="ghost" onClick={handleCancelEdit} className="h-8 w-8 text-red-600 hover:text-red-700 hover:bg-red-50 shrink-0">
+                                            <X className="h-5 w-5" />
+                                        </Button>
+                                    </div>
+                                ) : (
+                                    <div className="flex items-center gap-2 group min-w-0">
+                                        <h1 className="text-2xl md:text-3xl font-bold tracking-tight truncate">Welcome, {user.name}</h1>
+                                        <Button
+                                            size="icon"
+                                            variant="ghost"
+                                            onClick={handleStartEdit}
+                                            className="h-7 w-7 md:h-8 md:w-8 text-muted-foreground hover:text-primary shrink-0"
+                                        >
+                                            <Pencil className="h-4 w-4" />
+                                        </Button>
+                                    </div>
+                                )}
+                            </div>
+                            <p className="text-sm md:text-base text-muted-foreground mt-0.5 md:mt-1 truncate">
+                                Manage your games and view your history
+                            </p>
+                        </div>
                     </div>
-                    <div className="flex items-center space-x-4 w-full md:w-auto">
-                        <Button onClick={() => setLocation("/")} size="lg" className="flex-1 md:flex-none">
-                            <Gamepad2 className="w-4 h-4 mr-2" />
-                            Return to Game Lobby
-                        </Button>
+
+                    {/* Auth - stays on right */}
+                    <div className="shrink-0 pt-0.5">
                         <Auth />
                     </div>
                 </div>
