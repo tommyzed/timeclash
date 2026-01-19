@@ -1018,9 +1018,20 @@ async function createNewMultiplayerGame(
   respondingPlayerId: string
 ) {
   try {
+    // Map user IDs from old game to new game based on player IDs
+    // The requester becomes player1, the responder becomes player2
+    const requesterIsOldPlayer1 = oldGame.player1Id === requesterPlayerId;
+    const newPlayer1UserId = requesterIsOldPlayer1
+      ? oldGame.player1UserId
+      : oldGame.player2UserId;
+    const newPlayer2UserId = requesterIsOldPlayer1
+      ? oldGame.player2UserId
+      : oldGame.player1UserId;
+
     const newRoomCode = Math.random().toString(36).substring(2, 8).toUpperCase();
     const newGame = await storage.createGame({
       roomCode: newRoomCode,
+      player1UserId: newPlayer1UserId ?? undefined,
       gameMode: oldGame.gameMode as "normal" | "hard",
       targetScore: oldGame.targetScore,
       allowStealing: oldGame.allowStealing,
@@ -1039,6 +1050,7 @@ async function createNewMultiplayerGame(
     await storage.updateGame(newGame.id, {
       player1Id: requesterPlayerId,
       player2Id: respondingPlayerId,
+      player2UserId: newPlayer2UserId,
       currentTurn: firstTurn,
       currentEventId: currentEvent?.id,
       gameStatus: "playing",
