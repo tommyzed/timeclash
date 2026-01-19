@@ -32,7 +32,7 @@ export default function Game() {
   const [, navigate] = useLocation();
   const urlParams = new URLSearchParams(window.location.search);
   const { user } = useUser();
-  const nickname = localStorage.getItem("nickname");
+  const nickname = user?.name || localStorage.getItem("nickname");
   const { toast, dismiss } = useToast();
   const { playSound } = useSounds();
 
