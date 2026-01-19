@@ -226,6 +226,12 @@ export class DrizzleStorage implements IStorage {
     return result[0];
   }
 
+  async updateUser(id: string, user: Partial<schema.User>): Promise<schema.User | undefined> {
+    const result = await db.update(schema.users).set(user).where(eq(schema.users.id, id)).returning();
+    return result[0];
+  }
+
+
   async getGameByPlayerId(playerId: string): Promise<schema.Game | undefined> {
     const result = await db
       .select()
