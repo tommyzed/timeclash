@@ -299,7 +299,7 @@ export default function GameHeader({
           <AlertDialogHeader>
             <AlertDialogTitle>🤔 Start a New Game?</AlertDialogTitle>
             <AlertDialogDescription>
-              ❗ This will end your current game and start a fresh one. ❗
+              ❗ This will pause your current game and start a fresh one. ❗
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
