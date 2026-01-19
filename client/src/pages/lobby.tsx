@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -17,6 +17,8 @@ import logoImage from "@assets/TimeClash.png";
 import { CoffeeIcon } from "@/components/ui/CoffeeIcon";
 import Auth from "@/components/Auth";
 import { useUser } from "@/context/UserContext";
+import { useUserGames, type EnrichedGame } from "@/hooks/useUserGames";
+import { Bell, Sparkles, ArrowRight } from "lucide-react";
 
 export default function Lobby() {
   const { user } = useUser();
@@ -26,6 +28,30 @@ export default function Lobby() {
   const [, navigate] = useLocation();
   const params = useParams();
   const { toast } = useToast();
+
+  // Fetch user's games to check for games awaiting their turn
+  const { activeGames } = useUserGames();
+
+  // Calculate games where it's the user's turn
+  const gamesAwaitingTurn = useMemo(() => {
+    if (!user || !activeGames) return [];
+
+    const allGames = [
+      ...(activeGames.activeGames || []),
+    ];
+
+    return allGames.filter((game: EnrichedGame) => {
+      // Only consider multiplayer games (with roomCode)
+      if (!game.roomCode || !game.currentTurn) return false;
+
+      // Determine if user is player1 or player2
+      const isPlayer1 = game.player1UserId === user.id;
+      const currentTurnIsPlayer1 = game.currentTurn === "player1";
+
+      // Return true if it's the user's turn
+      return isPlayer1 === currentTurnIsPlayer1;
+    });
+  }, [user, activeGames]);
 
   useEffect(() => {
     if (user?.name) {
@@ -200,13 +226,44 @@ export default function Lobby() {
           </CardHeader>
           <CardContent>
             {user && (
-              <Button
-                onClick={() => navigate("/dashboard")}
-                variant="outline"
-                className="w-full mb-6 border-dashed"
-              >
-                Go to Dashboard
-              </Button>
+              <div className="mb-6">
+                {gamesAwaitingTurn.length > 0 ? (
+                  /* Alert-style notification widget with bouncing badge */
+                  <div
+                    onClick={() => navigate("/dashboard")}
+                    className="flex items-center gap-3 p-3 bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-lg cursor-pointer hover:from-amber-100 hover:to-orange-100 transition-all group shadow-md hover:shadow-lg"
+                  >
+                    <div className="relative">
+                      <div className="w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
+                        <Bell className="w-6 h-6 text-white animate-pulse" />
+                      </div>
+                      <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center shadow-sm animate-bounce">
+                        {gamesAwaitingTurn.length}
+                      </span>
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm font-semibold text-amber-900">
+                        {gamesAwaitingTurn.length === 1
+                          ? "1 game is waiting for your move!"
+                          : `${gamesAwaitingTurn.length} games are waiting for your move!`}
+                      </p>
+                      <p className="text-xs text-amber-700">Click to view in Dashboard</p>
+                    </div>
+                    <ArrowRight className="w-5 h-5 text-amber-600 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                ) : (
+                  /* Standard Dashboard button when no games awaiting */
+                  <Button
+                    onClick={() => navigate("/dashboard")}
+                    className="w-full h-12 bg-gradient-to-r from-purple-500 via-indigo-500 to-blue-500 hover:from-purple-600 hover:via-indigo-600 hover:to-blue-600 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] relative overflow-hidden group"
+                  >
+                    <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                    <Sparkles className="w-5 h-5 mr-2 animate-pulse" />
+                    <span className="text-base">View Your Dashboard</span>
+                    <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                )}
+              </div>
             )}
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
               <TabsList className="grid w-full grid-cols-3 bg-muted p-1 rounded-lg">
