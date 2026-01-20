@@ -7,7 +7,13 @@ import { nanoid } from "nanoid";
 export async function setupVite(app: Express, server: Server) {
   const { createServer: createViteServer, createLogger } = await import("vite");
   const viteLogger = createLogger();
-  const { default: viteConfig } = await import("../vite.config");
+  const { default: viteConfigFn } = await import("../vite.config");
+
+  // Handle both sync config object and async config function
+  const viteConfig = typeof viteConfigFn === 'function'
+    ? await viteConfigFn({ mode: 'development', command: 'serve' })
+    : viteConfigFn;
+
   const serverOptions = {
     middlewareMode: true,
     hmr: { server },
