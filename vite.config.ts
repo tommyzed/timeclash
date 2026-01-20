@@ -6,8 +6,13 @@ import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig(async ({ mode }) => {
-  const env = loadEnv(mode, process.cwd(), ''); // Load all env vars
-  console.log("TOMOLICK: ", env.VITE_GOOGLE_CLIENT_ID);
+  // Load from .env files (for local development)
+  const fileEnv = loadEnv(mode, process.cwd(), '');
+
+  // Use process.env (Railway) with fallback to .env file (local)
+  const googleClientId = process.env.VITE_GOOGLE_CLIENT_ID || fileEnv.VITE_GOOGLE_CLIENT_ID;
+
+  console.log("VITE_GOOGLE_CLIENT_ID:", googleClientId ? "***SET***" : "NOT SET");
 
   return {
     plugins: [
@@ -47,7 +52,7 @@ export default defineConfig(async ({ mode }) => {
     ],
     define: {
       // Expose VITE_GOOGLE_CLIENT_ID to client-side code
-      'import.meta.env.VITE_GOOGLE_CLIENT_ID': JSON.stringify(env.VITE_GOOGLE_CLIENT_ID),
+      'import.meta.env.VITE_GOOGLE_CLIENT_ID': JSON.stringify(googleClientId),
     },
     resolve: {
       alias: {
