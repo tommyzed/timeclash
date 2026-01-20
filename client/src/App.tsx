@@ -11,6 +11,9 @@ import { queryClient } from "@/lib/queryClient";
 
 import Dashboard from "@/pages/Dashboard";
 
+import GameClaimer from "@/components/GameClaimer";
+import { UserProvider } from "@/context/UserContext";
+
 export default function App() {
   const location = useLocation();
   const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
@@ -23,19 +26,22 @@ export default function App() {
     <TooltipProvider>
       <GoogleOAuthProvider clientId={googleClientId}>
         <QueryClientProvider client={queryClient}>
-          <AnimatePresence mode="wait">
-            <Switch location={location[0]} key={location[0]}>
-              <Route path="/" component={Lobby} />
-              <Route path="/lobby" component={Lobby} />
-              <Route path="/dashboard" component={Dashboard} />
-              <Route path="/room/:roomCode" component={Lobby} />
-              <Route path="/game" component={Game} />
-              <Route path="/game/:gameId" component={Game} />
-              <Route>
-                <NotFound />
-              </Route>
-            </Switch>
-          </AnimatePresence>
+          <UserProvider>
+            <GameClaimer />
+            <AnimatePresence mode="wait">
+              <Switch location={location[0]} key={location[0]}>
+                <Route path="/" component={Lobby} />
+                <Route path="/lobby" component={Lobby} />
+                <Route path="/dashboard" component={Dashboard} />
+                <Route path="/room/:roomCode" component={Lobby} />
+                <Route path="/game" component={Game} />
+                <Route path="/game/:gameId" component={Game} />
+                <Route>
+                  <NotFound />
+                </Route>
+              </Switch>
+            </AnimatePresence>
+          </UserProvider>
         </QueryClientProvider>
       </GoogleOAuthProvider>
       <Toaster />
