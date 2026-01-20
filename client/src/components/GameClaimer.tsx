@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useLocation } from "wouter";
 import { useUser } from "@/context/UserContext";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -6,20 +7,24 @@ import { useToast } from "@/hooks/use-toast";
 export default function GameClaimer() {
     const { user } = useUser();
     const { toast } = useToast();
+    const [location] = useLocation();
 
     useEffect(() => {
         const claimGame = async () => {
             // 1. Check if user is logged in
             if (!user) return;
 
-            // 2. Check for gameId in localStorage
+            // 2. Only run on game pages (not lobby, dashboard, etc.)
+            if (!location.startsWith("/game")) return;
+
+            // 3. Check for gameId in localStorage
             const gameId = localStorage.getItem("gameId");
             const playerId = localStorage.getItem("playerId");
 
             // We need at least a gameId to claim anything.
             if (!gameId) return;
 
-            // 3. Prevent repeated attempts (simple check)
+            // 4. Prevent repeated attempts (simple check)
             // We can use sessionStorage to mark that we've attempted for this session+game combo
             const claimKey = `claimed_game_${gameId}_${user.id}`;
             // If we've already claimed this specific game for this user, skip.
@@ -57,7 +62,7 @@ export default function GameClaimer() {
         };
 
         claimGame();
-    }, [user, toast]);
+    }, [user, toast, location]);
 
     return null; // This component renders nothing
 }
