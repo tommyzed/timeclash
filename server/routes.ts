@@ -650,6 +650,69 @@ export async function registerRoutes(
     }
   });
 
+  // ========== GAME CLAIMING ==========
+
+  app.post("/api/games/:gameId/claim", async (req, res) => {
+    try {
+      const { gameId } = req.params;
+      const { playerId } = req.body;
+      const userId = (req.session as any).userId;
+
+      if (!userId) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+
+      const game = await storage.getGame(gameId);
+      if (!game) {
+        return res.status(404).json({ message: "Game not found" });
+      }
+
+      let updateData: Partial<Game> = {};
+
+      if (!playerId) {
+        // Single player claim attempt
+        // In single player, player1Id is null.
+        if (game.player1Id === null) {
+          if (game.player1UserId && game.player1UserId !== userId) {
+            return res.status(409).json({ message: "Game already claimed by another user." });
+          }
+          updateData.player1UserId = userId;
+        } else {
+          // If playerId is not provided but game has player1Id, it's a multiplayer game/lobby
+          // and we can't blindly claim it without knowing WHICH player they are.
+          return res.status(400).json({ message: "Player ID required for multiplayer games." });
+        }
+      } else {
+        // Multiplayer claim attempt (or single player if we ever add IDs there)
+        if (game.player1Id === playerId) {
+          if (game.player1UserId && game.player1UserId !== userId) {
+            return res.status(409).json({ message: "Player 1 already claimed by another user." });
+          }
+          updateData.player1UserId = userId;
+        } else if (game.player2Id === playerId) {
+          if (game.player2UserId && game.player2UserId !== userId) {
+            return res.status(409).json({ message: "Player 2 already claimed by another user." });
+          }
+          updateData.player2UserId = userId;
+        } else {
+          return res.status(403).json({ message: "Player not found in this game" });
+        }
+      }
+
+      // Perform the update if there are changes
+      if (Object.keys(updateData).length > 0) {
+        await storage.updateGame(gameId, updateData);
+      }
+
+      const updatedGame = await storage.getGame(gameId);
+      res.json(updatedGame);
+
+    } catch (error) {
+      console.error("Claim game error:", error);
+      res.status(500).json({ message: "Failed to claim game" });
+    }
+  });
+
   // ========== WEBSOCKET SETUP ==========
 
   const httpServer = createServer(app);
