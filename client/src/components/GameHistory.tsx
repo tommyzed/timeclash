@@ -2,15 +2,22 @@ import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useUserHistory, type EnrichedGame } from "@/hooks/useUserGames";
 import { ChevronLeft, ChevronRight, Trophy, XCircle } from "lucide-react";
 import { useUser } from "@/context/UserContext";
 
 export default function GameHistory() {
     const [page, setPage] = useState(0);
+    const [hideAbandoned, setHideAbandoned] = useState(true);
     const pageSize = 10;
     const { history, loading, error } = useUserHistory(pageSize, page * pageSize);
     const { user } = useUser();
+
+    // Filter out abandoned games if hideAbandoned is enabled
+    const filteredGames = history?.games.filter(
+        (game) => !hideAbandoned || game.gameStatus !== "abandoned"
+    ) || [];
 
     const formatDate = (date: Date | string) => {
         return new Date(date).toLocaleDateString("en-US", {
@@ -143,8 +150,23 @@ export default function GameHistory() {
 
     return (
         <div className="space-y-4">
+            {/* Hide Abandoned Checkbox */}
+            <div className="flex items-center space-x-2">
+                <Checkbox
+                    id="hide-abandoned"
+                    checked={hideAbandoned}
+                    onCheckedChange={(checked) => setHideAbandoned(checked === true)}
+                />
+                <label
+                    htmlFor="hide-abandoned"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                >
+                    Hide Abandoned Games
+                </label>
+            </div>
+
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {history.games.map(renderGameCard)}
+                {filteredGames.map(renderGameCard)}
             </div>
 
             {/* Pagination */}
