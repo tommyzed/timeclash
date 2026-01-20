@@ -7,6 +7,7 @@ import { VitePWA } from "vite-plugin-pwa";
 
 export default defineConfig(async ({ mode }) => {
   const env = loadEnv(mode, process.cwd(), ''); // Load all env vars
+  console.log(env);
 
   return {
     plugins: [
