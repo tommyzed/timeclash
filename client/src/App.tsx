@@ -17,7 +17,6 @@ import { UserProvider } from "@/context/UserContext";
 export default function App() {
   const location = useLocation();
   const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
-  console.log("tomolick: VITE_GOOGLE_CLIENT_ID:", googleClientId);
 
   if (!googleClientId) {
     throw new Error("VITE_GOOGLE_CLIENT_ID is not defined");
