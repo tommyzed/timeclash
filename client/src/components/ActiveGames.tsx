@@ -17,6 +17,8 @@ import { useUserGames, abandonGame, type EnrichedGame } from "@/hooks/useUserGam
 import { useUser } from "@/context/UserContext";
 import { useToast } from "@/hooks/use-toast";
 import { Trash2 } from "lucide-react";
+import burglarImage from "@/assets/burglar.png";
+import weightsImage from "@/assets/weights.png";
 
 export default function ActiveGames() {
     const { user } = useUser();
@@ -86,12 +88,18 @@ export default function ActiveGames() {
         const opponentName = getOpponentName(game);
         const myTurn = isMyTurn(game);
 
+        const isPlayer1 = game.player1UserId === user?.id;
+        const myScore = isPlayer1 ? game.player1Score : game.player2Score;
+        const opponentScore = isPlayer1 ? game.player2Score : game.player1Score;
+
         const getCardStyle = () => {
             if (isSinglePlayer) return "bg-blue-50/70 border-blue-200 hover:bg-blue-50";
             if (showWaiting) return "bg-purple-50/70 border-purple-200 hover:bg-purple-50";
             if (myTurn) return "bg-green-50/70 border-green-200 hover:bg-green-50";
             return "bg-orange-50/70 border-orange-200 hover:bg-orange-50";
         };
+
+        const displayDate = game.lastMovedAt || game.createdAt;
 
         return (
             <Card
@@ -114,16 +122,28 @@ export default function ActiveGames() {
                 <CardHeader>
                     <div className="flex items-center justify-between gap-2">
                         <div className="flex-1 min-w-0">
-                            <CardTitle className="text-lg truncate">
-                                {isSinglePlayer
-                                    ? "Single Player"
-                                    : opponentName
-                                        ? `vs ${opponentName}`
-                                        : "Waiting for opponent..."
-                                }
+                            <CardTitle className="text-lg truncate flex items-center gap-2">
+                                <span>
+                                    {isSinglePlayer
+                                        ? "Single Player"
+                                        : opponentName
+                                            ? `vs ${opponentName}`
+                                            : "Waiting for opponent..."
+                                    }
+                                </span>
+                                {isSinglePlayer && game.gameMode === "hard" && (
+                                    <span title="Hard Mode" className="flex items-center">
+                                        <img src={weightsImage} alt="Hard Mode" className="h-5 w-5 object-contain" />
+                                    </span>
+                                )}
+                                {game.allowStealing && (
+                                    <span title="Stealing Enabled" className="flex items-center">
+                                        <img src={burglarImage} alt="Stealing Enabled" className="h-5 w-5 object-contain" />
+                                    </span>
+                                )}
                             </CardTitle>
                             <CardDescription className="mt-1">
-                                {game.gameMode === "hard" ? "Hard Mode" : "Normal Mode"} • Target: {game.targetScore}
+                                Target: {game.targetScore}
                             </CardDescription>
                         </div>
                         <div className="flex flex-col items-end gap-1">
@@ -141,11 +161,24 @@ export default function ActiveGames() {
                 <CardContent>
                     <div className="space-y-3">
                         <div className="flex justify-between text-sm text-muted-foreground">
-                            {game.roomCode && (
-                                <span>Score: {game.player1Score} - {game.player2Score}</span>
+                            {game.roomCode ? (
+                                <span className="font-medium">
+                                    You: {myScore} - Opponent: {opponentScore}
+                                </span>
+                            ) : (
+                                <div className="flex gap-3 text-sm font-medium">
+                                    <span>
+                                        Cards Placed: {myScore}
+                                        {game.gameMode === "hard" && (
+                                            <span className="text-red-500 ml-1">
+                                                ({(game.maxAttempts || 3) - (game.attempts || 0)} left)
+                                            </span>
+                                        )}
+                                    </span>
+                                </div>
                             )}
                             <span className={game.roomCode ? "" : "ml-auto"}>
-                                Created: {formatDate(game.createdAt)}
+                                Last Move: {formatDate(displayDate)}
                             </span>
                         </div>
                     </div>
@@ -186,11 +219,23 @@ export default function ActiveGames() {
         );
     }
 
+    const sortedWaitingGames = [...(activeGames?.waitingGames || [])].sort((a, b) => {
+        const dateA = new Date(a.lastMovedAt || a.createdAt).getTime();
+        const dateB = new Date(b.lastMovedAt || b.createdAt).getTime();
+        return dateB - dateA;
+    });
+
+    const sortedActiveGames = [...(activeGames?.activeGames || [])].sort((a, b) => {
+        const dateA = new Date(a.lastMovedAt || a.createdAt).getTime();
+        const dateB = new Date(b.lastMovedAt || b.createdAt).getTime();
+        return dateB - dateA;
+    });
+
     return (
         <>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {activeGames?.waitingGames.map((game) => renderGameCard(game, true))}
-                {activeGames?.activeGames.map((game) => renderGameCard(game, false))}
+                {sortedWaitingGames.map((game) => renderGameCard(game, true))}
+                {sortedActiveGames.map((game) => renderGameCard(game, false))}
             </div>
 
             <AlertDialog open={!!gameToAbandon} onOpenChange={() => setGameToAbandon(null)}>

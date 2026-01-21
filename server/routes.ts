@@ -473,6 +473,7 @@ export async function registerRoutes(
           eventId
         );
 
+        updateData.lastMovedAt = new Date();
         await storage.updateGame(gameId, updateData);
 
         // Broadcast if game completed in multiplayer
@@ -506,6 +507,7 @@ export async function registerRoutes(
           eventId
         );
 
+        updateData.lastMovedAt = new Date();
         await storage.updateGame(gameId, updateData);
       }
 
