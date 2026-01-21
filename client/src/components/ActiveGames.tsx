@@ -144,6 +144,24 @@ export default function ActiveGames() {
                             </CardTitle>
                             <CardDescription className="mt-1">
                                 Target: {game.targetScore}
+                                {!game.roomCode ? (
+                                    <div className="mt-1 flex gap-3 text-sm font-medium text-foreground">
+                                        <span>
+                                            Cards Placed: {myScore}
+                                            {game.gameMode === "hard" && (
+                                                <span className="text-red-500 ml-1">
+                                                    ({(game.maxAttempts || 3) - (game.attempts || 0)} left)
+                                                </span>
+                                            )}
+                                        </span>
+                                    </div>
+                                ) : (
+                                    <div className="mt-1 flex gap-3 text-sm font-medium text-foreground">
+                                        <span>
+                                            You: {myScore} - Opponent: {opponentScore}
+                                        </span>
+                                    </div>
+                                )}
                             </CardDescription>
                         </div>
                         <div className="flex flex-col items-end gap-1">
@@ -161,23 +179,7 @@ export default function ActiveGames() {
                 <CardContent>
                     <div className="space-y-3">
                         <div className="flex justify-between text-sm text-muted-foreground">
-                            {game.roomCode ? (
-                                <span className="font-medium">
-                                    You: {myScore} - Opponent: {opponentScore}
-                                </span>
-                            ) : (
-                                <div className="flex gap-3 text-sm font-medium">
-                                    <span>
-                                        Cards Placed: {myScore}
-                                        {game.gameMode === "hard" && (
-                                            <span className="text-red-500 ml-1">
-                                                ({(game.maxAttempts || 3) - (game.attempts || 0)} left)
-                                            </span>
-                                        )}
-                                    </span>
-                                </div>
-                            )}
-                            <span className={game.roomCode ? "" : "ml-auto"}>
+                            <span className="ml-auto">
                                 Last Move: {formatDate(displayDate)}
                             </span>
                         </div>
