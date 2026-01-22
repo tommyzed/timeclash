@@ -193,6 +193,78 @@ export async function registerRoutes(
     }
   });
 
+  app.post("/api/games/challenge", async (req, res) => {
+    try {
+      const { friendUserId } = req.body;
+      const userId = (req.session as any).userId;
+
+      if (!userId) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+
+      // Verify friendship
+      const friendships = await storage.getFriendships(userId);
+      const isFriend = friendships.some(f =>
+        (f.userId1 === userId && f.userId2 === friendUserId && f.status === 'accepted') ||
+        (f.userId1 === friendUserId && f.userId2 === userId && f.status === 'accepted')
+      );
+
+      if (!isFriend) {
+        return res.status(403).json({ message: "Not friends with this user" });
+      }
+
+      // Get Users
+      const myUser = await storage.getUser(userId);
+      const friendUser = await storage.getUser(friendUserId);
+
+      if (!myUser || !friendUser) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      // Create Game
+      const gameConfig = {
+        player1UserId: userId,
+        player2UserId: friendUserId, // Pre-set player 2 as well
+        roomCode: Math.random().toString(36).substring(2, 8).toUpperCase(),
+        gameMode: "normal",
+        targetScore: 10,
+        categories: ["Politics", "Science", "History", "Culture"],
+        eras: ["Ancient", "Classical", "Modern"],
+      };
+
+      const game = await storage.createGame(gameConfig);
+
+      // Create Players
+      const p1 = await storage.createPlayer({ nickname: myUser.name, color: "blue" });
+      const p2 = await storage.createPlayer({ nickname: friendUser.name, color: "orange" });
+
+      // Join Players
+      await storage.joinGame(game.id, p1.id, userId); // Join me
+      await storage.joinGame(game.id, p2.id, friendUserId); // Join friend
+
+      // Get initial event
+      const currentEvent = await storage.getRandomHistoricalEvent(
+        game.placedEventIds,
+        game.categories,
+        game.eras
+      );
+
+      if (currentEvent) {
+        await storage.updateGame(game.id, {
+          currentEventId: currentEvent.id,
+        });
+      }
+
+      // Notify friend if online (optional, via WebSocket if implemented)
+      // broadcastToUser(friendUserId, { type: 'new_game_started', data: { gameId: game.id } }); 
+
+      res.json(game);
+    } catch (error) {
+      console.error("Challenge game error:", error);
+      res.status(500).json({ message: "Failed to create challenge game" });
+    }
+  });
+
   app.post("/api/games/join", async (req, res) => {
     try {
       const { roomCode, nickname } = req.body;
