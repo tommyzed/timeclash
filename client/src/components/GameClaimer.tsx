@@ -38,19 +38,25 @@ export default function GameClaimer() {
                 });
 
                 if (response.ok) {
-                    console.log("Game successfully claimed!");
-                    toast({
-                        title: "Game Synced!",
-                        description: "Your current game has been saved to your account.",
-                        variant: "success",
-                        emoji: "🔗"
-                    });
-                    // Mark as claimed so we don't try again
+                    const data = await response.json();
+                    // Mark as processed so we don't try again
                     sessionStorage.setItem(claimKey, "true");
-                    // Refresh game state if we are currently viewing it
-                    queryClient.invalidateQueries({ queryKey: ["/api/games", gameId] });
-                    // Also refresh user games list
-                    queryClient.invalidateQueries({ queryKey: ["/api/users/me/games"] });
+
+                    // Only show toast if a claim actually occurred (not already claimed by same user)
+                    if (data.claimed) {
+                        console.log("Game successfully claimed!");
+                        toast({
+                            title: "Game Synced!",
+                            description: "Your current game has been saved to your account.",
+                            variant: "success",
+                            emoji: "🔗"
+                        });
+                        // Refresh game state and user games list
+                        queryClient.invalidateQueries({ queryKey: ["/api/games", gameId] });
+                        queryClient.invalidateQueries({ queryKey: ["/api/users/me/games"] });
+                    } else {
+                        console.log("Game already claimed by this user, no toast needed.");
+                    }
                 } else if (response.status === 409) {
                     console.log("Game already claimed by another user.");
                     // Also mark as processed to avoid spam
