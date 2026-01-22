@@ -732,6 +732,142 @@ export async function registerRoutes(
     }
   });
 
+  // ========== FRIENDSHIP ROUTES ==========
+
+  // List friends and pending requests
+  app.get("/api/friends", async (req, res) => {
+    try {
+      const userId = (req.session as any).userId;
+      if (!userId) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+
+      const requests = await storage.getFriendships(userId);
+
+      // Enrich with user data
+      const enrichedRequests = await Promise.all(
+        requests.map(async (f) => {
+          const otherUserId = f.userId1 === userId ? f.userId2 : f.userId1;
+          const otherUser = await storage.getUser(otherUserId);
+          return {
+            ...f,
+            otherUser: otherUser ? {
+              id: otherUser.id,
+              name: otherUser.name,
+              picture: otherUser.picture,
+              email: otherUser.email
+            } : null
+          };
+        })
+      );
+
+      res.json(enrichedRequests);
+    } catch (error) {
+      console.error("Fetch friends error:", error);
+      res.status(500).json({ message: "Failed to fetch friends" });
+    }
+  });
+
+  // Send friend request
+  app.post("/api/friends/request", async (req, res) => {
+    try {
+      const userId = (req.session as any).userId;
+      if (!userId) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+
+      const { targetUserId } = req.body;
+      if (!targetUserId) {
+        return res.status(400).json({ message: "Target user ID is required" });
+      }
+
+      if (userId === targetUserId) {
+        return res.status(400).json({ message: "Cannot send friend request to yourself" });
+      }
+
+      // Check existing friendship
+      const existing = await storage.getFriendship(userId, targetUserId);
+      if (existing) {
+        return res.status(409).json({ message: "Friendship request already exists", friendship: existing });
+      }
+
+      const friendship = await storage.createFriendship(userId, targetUserId); // userId1=sender, userId2=receiver
+
+      // Notify target user if they are online in a game
+      const activeGames = await storage.getGamesByUserId(userId, "playing");
+      const commonGame = activeGames.find(g =>
+        (g.player1UserId === targetUserId || g.player2UserId === targetUserId) && g.roomCode
+      );
+
+      if (commonGame) {
+        const sender = await storage.getUser(userId);
+        broadcastToGame(commonGame.id, {
+          type: "friend_request",
+          data: {
+            requesterId: userId,
+            requesterName: sender?.name || "A friend"
+          }
+        });
+      }
+
+      res.json(friendship);
+    } catch (error) {
+      console.error("Send friend request error:", error);
+      res.status(500).json({ message: "Failed to send friend request" });
+    }
+  });
+
+  // Respond to friend request (accept)
+  app.post("/api/friends/:friendshipId/accept", async (req, res) => {
+    try {
+      const userId = (req.session as any).userId;
+      if (!userId) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+
+      const { friendshipId } = req.params;
+      const friendship = (await storage.getFriendships(userId)).find(f => f.id === friendshipId);
+
+      if (!friendship) {
+        return res.status(404).json({ message: "Friendship request not found" });
+      }
+
+      if (friendship.userId2 !== userId) {
+        return res.status(403).json({ message: "You can only accept requests sent to you" });
+      }
+
+      const updated = await storage.updateFriendshipStatus(friendshipId, "accepted");
+      res.json(updated);
+    } catch (error) {
+      console.error("Accept friend request error:", error);
+      res.status(500).json({ message: "Failed to accept request" });
+    }
+  });
+
+  // Delete/Deny friend request
+  app.delete("/api/friends/:friendshipId", async (req, res) => {
+    try {
+      const userId = (req.session as any).userId;
+      if (!userId) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+
+      const { friendshipId } = req.params;
+      const friendship = (await storage.getFriendships(userId)).find(f => f.id === friendshipId);
+
+      if (!friendship) {
+        return res.status(404).json({ message: "Friendship not found" });
+      }
+
+      // Allow deletion if user is either sender or receiver
+      await storage.deleteFriendship(friendshipId);
+      res.json({ message: "Friendship/Request deleted" });
+    } catch (error) {
+      console.error("Delete friend error:", error);
+      res.status(500).json({ message: "Failed to delete friendship" });
+    }
+  });
+
   // ========== WEBSOCKET SETUP ==========
 
   const httpServer = createServer(app);

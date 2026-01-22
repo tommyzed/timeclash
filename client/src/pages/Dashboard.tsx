@@ -11,6 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import ActiveGames from "@/components/ActiveGames";
 import GameHistory from "@/components/GameHistory";
+import FriendList from "@/components/FriendList";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useIsMobile } from "@/hooks/use-mobile";
 import logoImage from "@assets/TimeClash.png";
@@ -215,21 +216,30 @@ export default function Dashboard() {
                     </Card>
                 </div>
 
-                {/* Main Content Areas */}
-                <Tabs defaultValue="active" className="space-y-4">
-                    <TabsList>
-                        <TabsTrigger value="active">Active Games</TabsTrigger>
-                        <TabsTrigger value="history">Game History</TabsTrigger>
-                    </TabsList>
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
+                    {/* Main Content Areas */}
+                    <div className="lg:col-span-2 space-y-4 order-2 lg:order-1">
+                        <Tabs defaultValue="active" className="space-y-4">
+                            <TabsList>
+                                <TabsTrigger value="active">Active Games</TabsTrigger>
+                                <TabsTrigger value="history">Game History</TabsTrigger>
+                            </TabsList>
 
-                    <TabsContent value="active" className="space-y-4">
-                        <ActiveGames />
-                    </TabsContent>
+                            <TabsContent value="active" className="space-y-4">
+                                <ActiveGames />
+                            </TabsContent>
 
-                    <TabsContent value="history" className="space-y-4">
-                        <GameHistory />
-                    </TabsContent>
-                </Tabs>
+                            <TabsContent value="history" className="space-y-4">
+                                <GameHistory />
+                            </TabsContent>
+                        </Tabs>
+                    </div>
+
+                    {/* Sidebar - Friend List */}
+                    <div className="space-y-6 order-1 lg:order-2">
+                        <FriendList />
+                    </div>
+                </div>
             </div>
         </div>
     );

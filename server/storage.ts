@@ -9,6 +9,7 @@ import {
   type InsertPlayer,
   type User,
   type InsertUser,
+  type Friendship,
 } from "@shared/schema";
 import { randomUUID, webcrypto } from "crypto";
 import fs from "fs";
@@ -59,6 +60,18 @@ export interface IStorage {
   updateUser(id: string, user: Partial<User>): Promise<User | undefined>;
   getGamesByUserId(userId: string, status?: string): Promise<Game[]>;
   getUserGameHistory(userId: string, limit?: number, offset?: number): Promise<Game[]>;
+
+  // Friendships
+  createFriendship(userId1: string, userId2: string): Promise<Friendship | undefined>; // allow undefined return if check fails, but Mem impl return Friendship. Let's align with others.
+  // Actually Mem impl returned Friendship without undefined. But I'll make it Promise<Friendship>
+  // Wait, I should match the implementation.
+  // Interface:
+  createFriendship(userId1: string, userId2: string): Promise<any>; // Using any to avoid import issues? No, I admitted `friendships` in schema.
+  // Let's import `Friendship` in storage.ts imports first.
+  getFriendship(userId1: string, userId2: string): Promise<Friendship | undefined>;
+  getFriendships(userId: string): Promise<Friendship[]>;
+  updateFriendshipStatus(id: string, status: string): Promise<Friendship | undefined>;
+  deleteFriendship(id: string): Promise<void>;
 }
 
 export class MemStorage implements IStorage {
@@ -67,6 +80,7 @@ export class MemStorage implements IStorage {
   private gameMoves: Map<string, GameMove>;
   private players: Map<string, Player>;
   private users: Map<string, User>;
+  private friendships: Map<string, Friendship>;
 
   constructor() {
     this.historicalEvents = new Map();
@@ -74,6 +88,7 @@ export class MemStorage implements IStorage {
     this.gameMoves = new Map();
     this.players = new Map();
     this.users = new Map();
+    this.friendships = new Map();
 
     // Initialize with curated historical events
     this.initializeHistoricalEvents();
@@ -180,6 +195,7 @@ export class MemStorage implements IStorage {
       gameStatus: "waiting",
       winnerPlayerId: null,
       createdAt: new Date(),
+      lastMovedAt: null,
       gameMode: gameMode,
       attempts: 0,
       maxAttempts: gameMode === "hard" ? Math.floor(targetScore * 1.5) : null,
@@ -283,6 +299,46 @@ export class MemStorage implements IStorage {
 
     this.gameMoves.set(id, move);
     return move;
+  }
+
+  // Friendships
+  async createFriendship(userId1: string, userId2: string): Promise<Friendship> {
+    const id = randomUUID();
+    const friendship: Friendship = {
+      id,
+      userId1,
+      userId2,
+      status: "pending",
+      createdAt: new Date(),
+    };
+    this.friendships.set(id, friendship);
+    return friendship;
+  }
+
+  async getFriendship(userId1: string, userId2: string): Promise<Friendship | undefined> {
+    return Array.from(this.friendships.values()).find(
+      (f) =>
+        (f.userId1 === userId1 && f.userId2 === userId2) ||
+        (f.userId1 === userId2 && f.userId2 === userId1)
+    );
+  }
+
+  async getFriendships(userId: string): Promise<Friendship[]> {
+    return Array.from(this.friendships.values()).filter(
+      (f) => f.userId1 === userId || f.userId2 === userId
+    );
+  }
+
+  async updateFriendshipStatus(id: string, status: string): Promise<Friendship | undefined> {
+    const friendship = this.friendships.get(id);
+    if (!friendship) return undefined;
+    const updated = { ...friendship, status };
+    this.friendships.set(id, updated);
+    return updated;
+  }
+
+  async deleteFriendship(id: string): Promise<void> {
+    this.friendships.delete(id);
   }
 
   async getUser(id: string): Promise<User | undefined> {

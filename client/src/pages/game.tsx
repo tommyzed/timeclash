@@ -426,6 +426,11 @@ export default function Game() {
           });
         }
       }
+
+      if (message.type === "friend_request") {
+        // Invalidate friends query so GameHeader updates and shows the dialog
+        queryClient.invalidateQueries({ queryKey: ["/api/friends"] });
+      }
     },
   });
 

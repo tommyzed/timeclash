@@ -114,6 +114,7 @@ export type WebSocketMessage =
     };
   }
   | { type: 'player_color_changed'; data: { playerId: string; color: string } }
+  | { type: 'friend_request'; data: { requesterId: string; requesterName: string } }
   | { type: 'error'; data: { message: string } };
 
 // Player management
@@ -156,3 +157,20 @@ export const userSessions = pgTable("user_sessions", {
   sess: json("sess").notNull(),
   expire: timestamp("expire", { precision: 6 }).notNull(),
 });
+
+// Friendships
+export const friendships = pgTable("friendships", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId1: varchar("user_id_1").notNull(), // Requester
+  userId2: varchar("user_id_2").notNull(), // Receiver
+  status: varchar("status").notNull().default("pending"), // pending, accepted
+  createdAt: timestamp("created_at").notNull().default(sql`now()`),
+});
+
+export const insertFriendshipSchema = createInsertSchema(friendships).omit({
+  id: true,
+  createdAt: true,
+});
+
+export type Friendship = typeof friendships.$inferSelect;
+export type InsertFriendship = z.infer<typeof insertFriendshipSchema>;
