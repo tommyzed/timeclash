@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { useQuery } from "@tanstack/react-query";
 import type { Game } from "@shared/schema";
 
 export type EnrichedGame = Game & {
@@ -28,35 +29,19 @@ export type UserStatsData = {
 };
 
 export function useUserGames() {
-    const [activeGames, setActiveGames] = useState<UserGamesData | null>(null);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+    const { data: activeGames, isLoading: loading, error, refetch } = useQuery<UserGamesData>({
+        queryKey: ["/api/users/me/games"],
+        refetchOnMount: true,
+        refetchOnWindowFocus: true,
+        refetchInterval: 5000,
+    });
 
-    const fetchActiveGames = useCallback(async () => {
-        setLoading(true);
-        setError(null);
-        try {
-            const response = await fetch("/api/users/me/games");
-            if (!response.ok) {
-                if (response.status === 401) {
-                    throw new Error("Not authenticated");
-                }
-                throw new Error("Failed to fetch active games");
-            }
-            const data = await response.json();
-            setActiveGames(data);
-        } catch (err) {
-            setError(err instanceof Error ? err.message : "An error occurred");
-        } finally {
-            setLoading(false);
-        }
-    }, []);
-
-    useEffect(() => {
-        fetchActiveGames();
-    }, [fetchActiveGames]);
-
-    return { activeGames, loading, error, refetch: fetchActiveGames };
+    return {
+        activeGames: activeGames || null,
+        loading,
+        error: error ? (error as Error).message : null,
+        refetch
+    };
 }
 
 export function useUserHistory(limit = 20, offset = 0) {
@@ -94,35 +79,19 @@ export function useUserHistory(limit = 20, offset = 0) {
 }
 
 export function useUserStats() {
-    const [stats, setStats] = useState<UserStatsData | null>(null);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+    const { data: stats, isLoading: loading, error, refetch } = useQuery<UserStatsData>({
+        queryKey: ["/api/users/me/stats"],
+        refetchOnMount: true,
+        refetchOnWindowFocus: true,
+        refetchInterval: 10000, // Poll stats slightly less frequently
+    });
 
-    const fetchStats = useCallback(async () => {
-        setLoading(true);
-        setError(null);
-        try {
-            const response = await fetch("/api/users/me/stats");
-            if (!response.ok) {
-                if (response.status === 401) {
-                    throw new Error("Not authenticated");
-                }
-                throw new Error("Failed to fetch stats");
-            }
-            const data = await response.json();
-            setStats(data);
-        } catch (err) {
-            setError(err instanceof Error ? err.message : "An error occurred");
-        } finally {
-            setLoading(false);
-        }
-    }, []);
-
-    useEffect(() => {
-        fetchStats();
-    }, [fetchStats]);
-
-    return { stats, loading, error, refetch: fetchStats };
+    return {
+        stats: stats || null,
+        loading,
+        error: error ? (error as Error).message : null,
+        refetch
+    };
 }
 
 export async function abandonGame(gameId: string): Promise<void> {

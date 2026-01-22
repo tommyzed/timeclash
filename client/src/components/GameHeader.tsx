@@ -339,6 +339,8 @@ export default function GameHeader({
   const { data: friends = [] } = useQuery<any[]>({
     queryKey: ["/api/friends"],
     enabled: !!user,
+    refetchInterval: 5000,
+    refetchOnWindowFocus: true,
   });
 
   const [showAddFriend, setShowAddFriend] = useState(false);
