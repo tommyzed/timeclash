@@ -670,6 +670,7 @@ export async function registerRoutes(
       }
 
       let updateData: Partial<Game> = {};
+      let alreadyClaimed = false;
 
       if (!playerId) {
         // Single player claim attempt
@@ -678,7 +679,12 @@ export async function registerRoutes(
           if (game.player1UserId && game.player1UserId !== userId) {
             return res.status(409).json({ message: "Game already claimed by another user." });
           }
-          updateData.player1UserId = userId;
+          // Check if already claimed by this same user
+          if (game.player1UserId === userId) {
+            alreadyClaimed = true;
+          } else {
+            updateData.player1UserId = userId;
+          }
         } else {
           // If playerId is not provided but game has player1Id, it's a multiplayer game/lobby
           // and we can't blindly claim it without knowing WHICH player they are.
@@ -690,24 +696,35 @@ export async function registerRoutes(
           if (game.player1UserId && game.player1UserId !== userId) {
             return res.status(409).json({ message: "Player 1 already claimed by another user." });
           }
-          updateData.player1UserId = userId;
+          // Check if already claimed by this same user
+          if (game.player1UserId === userId) {
+            alreadyClaimed = true;
+          } else {
+            updateData.player1UserId = userId;
+          }
         } else if (game.player2Id === playerId) {
           if (game.player2UserId && game.player2UserId !== userId) {
             return res.status(409).json({ message: "Player 2 already claimed by another user." });
           }
-          updateData.player2UserId = userId;
+          // Check if already claimed by this same user
+          if (game.player2UserId === userId) {
+            alreadyClaimed = true;
+          } else {
+            updateData.player2UserId = userId;
+          }
         } else {
           return res.status(403).json({ message: "Player not found in this game" });
         }
       }
 
-      // Perform the update if there are changes
+      // Perform the update only if there are actual changes
       if (Object.keys(updateData).length > 0) {
         await storage.updateGame(gameId, updateData);
       }
 
       const updatedGame = await storage.getGame(gameId);
-      res.json(updatedGame);
+      // Return whether a claim actually occurred (vs already claimed by same user)
+      res.json({ ...updatedGame, claimed: !alreadyClaimed && Object.keys(updateData).length > 0 });
 
     } catch (error) {
       console.error("Claim game error:", error);
