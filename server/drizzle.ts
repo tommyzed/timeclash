@@ -16,6 +16,11 @@ export const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 });
 
+// Add error listener to prevent server crash on idle client errors
+pool.on('error', (err) => {
+  console.error('Unexpected error on idle client', err);
+});
+
 const db = drizzle(pool, { schema });
 
 export class DrizzleStorage implements IStorage {
@@ -286,6 +291,54 @@ export class DrizzleStorage implements IStorage {
       .orderBy(sql`${schema.games.createdAt} desc`)
       .limit(limit)
       .offset(offset);
+  }
+
+  // Friendships
+  async createFriendship(userId1: string, userId2: string): Promise<schema.Friendship> {
+    const result = await db.insert(schema.friendships).values({
+      userId1,
+      userId2,
+      status: "pending",
+    }).returning();
+    return result[0];
+  }
+
+  async getFriendship(userId1: string, userId2: string): Promise<schema.Friendship | undefined> {
+    const result = await db
+      .select()
+      .from(schema.friendships)
+      .where(
+        or(
+          sql`(${schema.friendships.userId1} = ${userId1} AND ${schema.friendships.userId2} = ${userId2})`,
+          sql`(${schema.friendships.userId1} = ${userId2} AND ${schema.friendships.userId2} = ${userId1})`
+        )
+      );
+    return result[0];
+  }
+
+  async getFriendships(userId: string): Promise<schema.Friendship[]> {
+    return db
+      .select()
+      .from(schema.friendships)
+      .where(
+        or(
+          eq(schema.friendships.userId1, userId),
+          eq(schema.friendships.userId2, userId)
+        )
+      );
+  }
+
+  async updateFriendshipStatus(id: string, status: string): Promise<schema.Friendship | undefined> {
+    const result = await db
+      .update(schema.friendships)
+      .set({ status })
+      .where(eq(schema.friendships.id, id))
+      .returning();
+    return result[0];
+  }
+
+  async deleteFriendship(id: string): Promise<void> {
+    await db.delete(schema.friendships).where(eq(schema.friendships.id, id));
   }
 
 }

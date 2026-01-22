@@ -7,10 +7,18 @@ import {
   Sparkles,
   Home,
   HelpCircle,
+  UserPlus,
+  UserCheck,
+  Heart,
+  User,
 } from "lucide-react";
 import { type GameState } from "@shared/schema";
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
+import { useQuery } from "@tanstack/react-query";
+import { apiRequest, queryClient } from "@/lib/queryClient";
+import AddFriendDialog from "./AddFriendDialog";
+import FriendRequestDialog from "./FriendRequestDialog";
 import { useIsMobile } from "@/hooks/use-mobile";
 import logoImage from "@assets/TimeClash.png";
 import burglarIcon from "@/assets/burglar.png";
@@ -327,6 +335,147 @@ export default function GameHeader({
     </div>
   );
 
+  // Friend Logic
+  const { data: friends = [] } = useQuery<any[]>({
+    queryKey: ["/api/friends"],
+    enabled: !!user,
+  });
+
+  const [showAddFriend, setShowAddFriend] = useState(false);
+  const [showFriendRequest, setShowFriendRequest] = useState(false);
+
+  const opponentUserId = isMultiplayer
+    ? (user?.id === game.player1UserId ? game.player2UserId : game.player1UserId)
+    : null;
+
+  const friendship = friends.find(
+    (f) =>
+      (f.userId1 === opponentUserId) || (f.userId2 === opponentUserId)
+  );
+
+  const friendStatus = friendship
+    ? friendship.status === "accepted"
+      ? "friends"
+      : friendship.userId1 === user?.id
+        ? "sent"
+        : "received"
+    : "none";
+
+  const handleAddFriend = async () => {
+    try {
+      if (!opponentUserId) return;
+      await apiRequest("POST", "/api/friends/request", { targetUserId: opponentUserId });
+      await queryClient.invalidateQueries({ queryKey: ["/api/friends"] });
+      toast({
+        title: "Friend Request Sent!",
+        description: "Hope they say yes!",
+        emoji: "💌",
+        variant: "success",
+      });
+      setShowAddFriend(false);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to send request.",
+        variant: "destructive",
+      });
+    }
+  }
+
+  const handleAcceptFriend = async () => {
+    try {
+      if (!friendship) return;
+      await apiRequest("POST", `/api/friends/${friendship.id}/accept`);
+      await queryClient.invalidateQueries({ queryKey: ["/api/friends"] });
+      toast({
+        title: "Friend Accepted!",
+        variant: "success",
+        emoji: "🎉",
+      });
+      setShowFriendRequest(false);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to accept.",
+        variant: "destructive",
+      });
+    }
+  }
+
+  const handleDenyFriend = async () => {
+    try {
+      if (!friendship) return;
+      await apiRequest("DELETE", `/api/friends/${friendship.id}`);
+      await queryClient.invalidateQueries({ queryKey: ["/api/friends"] });
+      setShowFriendRequest(false);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to deny.",
+        variant: "destructive",
+      });
+    }
+  }
+
+  // Effect to show popup if request received while looking
+  useEffect(() => {
+    if (friendStatus === "received" && !showFriendRequest) {
+      // Logic to prevent showing it incessantly? 
+      // For now, let's show it. But maybe only if it's "new"?
+      // We can't easily track "new" without local state diff.
+      // But if we just loaded and it's received, showing it is fine.
+      setShowFriendRequest(true);
+    }
+  }, [friendStatus]);
+
+
+  const FriendAction = () => {
+    if (!opponentUserId || !user) return null;
+
+    if (friendStatus === "friends") {
+      return (
+        <div className="p-2 rounded-lg bg-green-50 text-green-600" title="You are friends!">
+          <div className="flex items-center space-x-1">
+            <Heart className="h-5 w-5 fill-current" />
+            <span className="text-xs font-bold hidden sm:inline">BFFs</span>
+          </div>
+        </div>
+      );
+    }
+
+    if (friendStatus === "sent") {
+      return (
+        <div className="p-2 rounded-lg bg-yellow-50 text-yellow-600" title="Request Pending">
+          <Clock className="h-5 w-5" />
+        </div>
+      );
+    }
+
+    if (friendStatus === "received") {
+      return (
+        <button
+          onClick={() => setShowFriendRequest(true)}
+          className="p-2 rounded-lg bg-yellow-100 text-yellow-700 hover:bg-yellow-200 animate-pulse"
+          title="Respond to Friend Request"
+        >
+          <UserCheck className="h-5 w-5" />
+        </button>
+      );
+    }
+
+    // Default: Add Friend
+    return (
+      <button
+        onClick={() => setShowAddFriend(true)}
+        className="p-2 rounded-lg hover:bg-gray-100 text-gray-600 hover:text-blue-600 transition-colors"
+        title="Add Friend"
+      >
+        <UserPlus className="h-5 w-5" />
+      </button>
+    );
+  };
+
+
   return (
     <header className="bg-white shadow-sm border-b" data-testid="game-header">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 relative">
@@ -392,10 +541,16 @@ export default function GameHeader({
           {!isMobile ? (
             <div className="flex items-center space-x-6">
               {getScoreDisplay()}
-              <GameActions />
+              <div className="flex items-center space-x-2">
+                <FriendAction />
+                <GameActions />
+              </div>
             </div>
           ) : (
-            <GameActions />
+            <div className="flex items-center space-x-1">
+              <FriendAction />
+              <GameActions />
+            </div>
           )}
         </div>
         {isMobile && (
@@ -425,6 +580,26 @@ export default function GameHeader({
         onSoundsEnabledChange={onSoundsEnabledChange}
         onShowRules={() => setShowRulesModal(true)}
         toast={toast}
+      />
+
+      <AddFriendDialog
+        isOpen={showAddFriend}
+        onClose={() => setShowAddFriend(false)}
+        onConfirm={handleAddFriend}
+        opponentName={opponentNickname || "Opponent"}
+      // Use logic from existing component: 
+      // const player1Nickname = isCurrentPlayerPlayer1 ? nickname || "Player 1" : opponentNickname || "Player 2";
+      // opponentNickname is passed as prop!
+      // So just use opponentNickname.
+      />
+
+      <FriendRequestDialog
+        isOpen={showFriendRequest}
+        onClose={() => setShowFriendRequest(false)} // "Decide Later"
+        onAccept={handleAcceptFriend}
+        onDeny={handleDenyFriend}
+        requesterName={opponentNickname || "Opponent"}
+        requesterPicture={null} // We don't have picture in GameHeader currently. Maybe in future.
       />
 
       {/* Rules Modal */}

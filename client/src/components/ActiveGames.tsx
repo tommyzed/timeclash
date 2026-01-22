@@ -145,7 +145,7 @@ export default function ActiveGames() {
                             <CardDescription className="mt-1">
                                 Target: {game.targetScore}
                                 {!game.roomCode ? (
-                                    <div className="mt-1 flex gap-3 text-sm font-medium text-foreground">
+                                    <span className="mt-1 flex gap-3 text-sm font-medium text-foreground block">
                                         <span>
                                             Cards Placed: {myScore}
                                             {game.gameMode === "hard" && (
@@ -154,13 +154,13 @@ export default function ActiveGames() {
                                                 </span>
                                             )}
                                         </span>
-                                    </div>
+                                    </span>
                                 ) : (
-                                    <div className="mt-1 flex gap-3 text-sm font-medium text-foreground">
+                                    <span className="mt-1 flex gap-3 text-sm font-medium text-foreground block">
                                         <span>
                                             You: {myScore} - Opponent: {opponentScore}
                                         </span>
-                                    </div>
+                                    </span>
                                 )}
                             </CardDescription>
                         </div>
@@ -235,7 +235,7 @@ export default function ActiveGames() {
 
     return (
         <>
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-2">
                 {sortedWaitingGames.map((game) => renderGameCard(game, true))}
                 {sortedActiveGames.map((game) => renderGameCard(game, false))}
             </div>
