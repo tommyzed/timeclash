@@ -267,7 +267,7 @@ export async function registerRoutes(
 
   app.post("/api/games/join", async (req, res) => {
     try {
-      const { roomCode, nickname } = req.body;
+      const { roomCode, nickname, ipAddress, location } = req.body;
 
       if (!roomCode || !nickname) {
         return res
@@ -285,7 +285,11 @@ export async function registerRoutes(
       const playerColor = isPlayer1 ? "blue" : "orange";
 
       // Create player
-      const player = await storage.createPlayer({ nickname });
+      const player = await storage.createPlayer({
+        nickname,
+        ipAddress: typeof ipAddress === 'string' ? ipAddress : undefined,
+        location: typeof location === 'string' ? location : undefined,
+      });
       await storage.updatePlayerColor(player.id, playerColor);
 
       // Get userId from session if user is logged in (Player 2)
