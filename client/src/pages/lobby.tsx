@@ -19,6 +19,7 @@ import Auth from "@/components/Auth";
 import { useUser } from "@/context/UserContext";
 import { useUserGames, type EnrichedGame } from "@/hooks/useUserGames";
 import { Bell, Sparkles, ArrowRight } from "lucide-react";
+import { getGeoInfo } from "@/lib/geo";
 
 export default function Lobby() {
   const { user } = useUser();
@@ -113,9 +114,11 @@ export default function Lobby() {
       const game = await gameResponse.json();
 
       // Join the game as player 1 (server creates the player)
+      const geoInfo = await getGeoInfo();
       const joinResponse = await apiRequest("POST", "/api/games/join", {
         roomCode: game.roomCode,
         nickname: nickname.trim(),
+        ...geoInfo,
       });
       const joinResult = await joinResponse.json();
 
@@ -155,9 +158,11 @@ export default function Lobby() {
         throw new Error("Please enter a room code");
       }
 
+      const geoInfo = await getGeoInfo();
       const response = await apiRequest("POST", "/api/games/join", {
         roomCode: roomCode.trim().toUpperCase(),
         nickname: nickname.trim(),
+        ...geoInfo,
       });
 
       const result = await response.json();

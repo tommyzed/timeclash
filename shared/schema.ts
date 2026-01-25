@@ -122,6 +122,8 @@ export const players = pgTable("players", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   nickname: varchar("nickname").notNull(),
   color: varchar("color"),
+  ipAddress: varchar("ip_address"),
+  location: text("location"),
   createdAt: timestamp("created_at").notNull().default(sql`now()`),
 });
 

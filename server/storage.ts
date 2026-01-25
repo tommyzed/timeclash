@@ -242,6 +242,8 @@ export class MemStorage implements IStorage {
       id: randomUUID(),
       nickname: player.nickname,
       color: null,
+      ipAddress: player.ipAddress ?? null,
+      location: player.location ?? null,
       createdAt: new Date(),
     };
 
