@@ -186,6 +186,23 @@ export default function GameHeader({
 
   const getRoomCodeDisplay = () => {
     if (isMultiplayer && game.roomCode) {
+      if (isMobile) {
+        return (
+          <button
+            onClick={handleCopyRoomCode}
+            className="bg-gray-100 hover:bg-gray-200 text-gray-700 p-2 rounded-full transition-colors"
+            data-testid="copy-room-code-button-mobile"
+            title={`Room Code: ${game.roomCode}`}
+          >
+            {copied ? (
+              <Check className="h-4 w-4 text-green-600" />
+            ) : (
+              <Copy className="h-4 w-4" />
+            )}
+          </button>
+        );
+      }
+
       return (
         <button
           onClick={handleCopyRoomCode}
@@ -427,10 +444,6 @@ export default function GameHeader({
   // Effect to show popup if request received while looking
   useEffect(() => {
     if (friendStatus === "received" && !showFriendRequest) {
-      // Logic to prevent showing it incessantly? 
-      // For now, let's show it. But maybe only if it's "new"?
-      // We can't easily track "new" without local state diff.
-      // But if we just loaded and it's received, showing it is fine.
       setShowFriendRequest(true);
     }
   }, [friendStatus]);
@@ -441,7 +454,7 @@ export default function GameHeader({
 
     if (friendStatus === "friends") {
       return (
-        <div className="p-2 rounded-lg bg-green-50 text-green-600" title="You are friends!">
+        <div className="p-2 rounded-lg bg-purple-50 text-purple-600" title="You are friends!">
           <div className="flex items-center space-x-1">
             <Heart className="h-5 w-5 fill-current" />
             <span className="text-xs font-bold hidden sm:inline">BFFs</span>
@@ -481,7 +494,6 @@ export default function GameHeader({
       </button>
     );
   };
-
 
   return (
     <header className="bg-white shadow-sm border-b" data-testid="game-header">
@@ -545,8 +557,8 @@ export default function GameHeader({
             )}
             {/* Always show badge */}
             {getGameBadge()}
-            {/* Only show Room Code in top row on DESKTOP */}
-            {!isMobile && getRoomCodeDisplay()}
+            {/* Always show Room Code (minimal on mobile) */}
+            {getRoomCodeDisplay()}
           </div>
           {!isMobile ? (
             <div className="flex items-center space-x-6">
@@ -564,9 +576,8 @@ export default function GameHeader({
           )}
         </div>
         {isMobile && (
-          <div className="mt-2 flex items-center justify-center space-x-4">
-            {/* Show Room Code first for visibility */}
-            {getRoomCodeDisplay()}
+          <div className="mt-2 flex justify-center">
+            {/* Only Score in second row */}
             {getScoreDisplay()}
           </div>
         )}
@@ -601,19 +612,15 @@ export default function GameHeader({
         onClose={() => setShowAddFriend(false)}
         onConfirm={handleAddFriend}
         opponentName={opponentNickname || "Opponent"}
-      // Use logic from existing component: 
-      // const player1Nickname = isCurrentPlayerPlayer1 ? nickname || "Player 1" : opponentNickname || "Player 2";
-      // opponentNickname is passed as prop!
-      // So just use opponentNickname.
       />
 
       <FriendRequestDialog
         isOpen={showFriendRequest}
-        onClose={() => setShowFriendRequest(false)} // "Decide Later"
+        onClose={() => setShowFriendRequest(false)}
         onAccept={handleAcceptFriend}
         onDeny={handleDenyFriend}
         requesterName={opponentNickname || "Opponent"}
-        requesterPicture={null} // We don't have picture in GameHeader currently. Maybe in future.
+        requesterPicture={null}
       />
 
       {/* Rules Modal */}
