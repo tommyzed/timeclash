@@ -220,9 +220,19 @@ export default function Dashboard() {
                     {/* Main Content Areas */}
                     <div className="lg:col-span-2 space-y-4 order-2 lg:order-1">
                         <Tabs defaultValue="active" className="space-y-4">
-                            <TabsList>
-                                <TabsTrigger value="active">Active Games</TabsTrigger>
-                                <TabsTrigger value="history">Game History</TabsTrigger>
+                            <TabsList className="bg-slate-200/60 p-1">
+                                <TabsTrigger
+                                    value="active"
+                                    className="data-[state=active]:bg-green-600 data-[state=active]:text-white data-[state=active]:shadow-md transition-all"
+                                >
+                                    Active Games
+                                </TabsTrigger>
+                                <TabsTrigger
+                                    value="history"
+                                    className="data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:shadow-md transition-all"
+                                >
+                                    Game History
+                                </TabsTrigger>
                             </TabsList>
 
                             <TabsContent value="active" className="space-y-4">

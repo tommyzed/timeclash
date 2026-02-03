@@ -118,12 +118,12 @@ export default function FriendList() {
 
     return (
         <>
-            <Card className="border-none shadow-sm bg-white/80">
-                <CardHeader className="py-3 px-4 flex flex-row items-center justify-between space-y-0">
-                    <CardTitle className="text-base font-semibold flex items-center gap-2">
-                        <Users className="w-4 h-4" />
+            <Card className="border-none shadow-sm bg-white/80 overflow-hidden">
+                <CardHeader className="py-3 px-4 flex flex-row items-center justify-between space-y-0 bg-gradient-to-r from-indigo-500 to-purple-600 text-white">
+                    <CardTitle className="text-base font-semibold flex items-center gap-2 text-white">
+                        <Users className="w-4 h-4 text-indigo-100" />
                         Friends
-                        <Badge variant="secondary" className="ml-1 text-xs">{friends.length}</Badge>
+                        <Badge variant="secondary" className="ml-1 text-xs bg-white/20 text-white hover:bg-white/30 border-transparent">{friends.length}</Badge>
                     </CardTitle>
                 </CardHeader>
                 <CardContent className="p-0">
