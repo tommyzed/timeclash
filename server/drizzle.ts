@@ -280,13 +280,18 @@ export class DrizzleStorage implements IStorage {
     userId: string,
     limit: number = 20,
     offset: number = 0,
+    excludeAbandoned: boolean = false,
   ): Promise<schema.Game[]> {
+    const statusCondition = excludeAbandoned
+      ? sql` AND ${schema.games.gameStatus} = 'completed'`
+      : sql` AND (${schema.games.gameStatus} = 'completed' OR ${schema.games.gameStatus} = 'abandoned')`;
+
     return db
       .select()
       .from(schema.games)
       .where(
         sql`(${schema.games.player1UserId} = ${userId} OR ${schema.games.player2UserId} = ${userId}) 
-             AND (${schema.games.gameStatus} = 'completed' OR ${schema.games.gameStatus} = 'abandoned')`,
+             ${statusCondition}`,
       )
       .orderBy(sql`${schema.games.createdAt} desc`)
       .limit(limit)

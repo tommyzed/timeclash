@@ -226,7 +226,7 @@ export async function registerRoutes(
         player1UserId: userId,
         player2UserId: friendUserId, // Pre-set player 2 as well
         roomCode: Math.random().toString(36).substring(2, 8).toUpperCase(),
-        gameMode: "normal",
+        gameMode: "normal" as "normal",
         targetScore: 10,
         categories: ["Politics", "Science", "History", "Culture"],
         eras: ["Ancient", "Classical", "Modern"],
@@ -383,8 +383,9 @@ export async function registerRoutes(
 
       const limit = parseInt(req.query.limit as string) || 20;
       const offset = parseInt(req.query.offset as string) || 0;
+      const excludeAbandoned = req.query.excludeAbandoned === 'true';
 
-      const history = await storage.getUserGameHistory(userId, limit, offset);
+      const history = await storage.getUserGameHistory(userId, limit, offset, excludeAbandoned);
 
       // Enrich history with player names
       const enrichedHistory = await Promise.all(
@@ -422,14 +423,14 @@ export async function registerRoutes(
       const allGames = await storage.getGamesByUserId(userId);
       const completedGames = allGames.filter(g => g.gameStatus === "completed");
 
-      // Calculate wins (games where user won)
-      // Calculate wins (games where user won)
-      const wins = completedGames.filter(game => {
-        // For single player games, check if game was completed successfully
-        if (!game.roomCode) {
-          return game.gameStatus === "completed" && !game.winnerPlayerId;
-        }
-        // For multiplayer, check if user's player won
+      // Filter for multiplayer completed games only for win/loss/winRate stats
+      const multiplayerCompletedGames = completedGames.filter(g => !!g.roomCode);
+
+      // Calculate wins (games where user won) - Multiplayer only
+      const wins = multiplayerCompletedGames.filter(game => {
+        // Double check it's multiplayer (already filtered above but good for safety if logic changes)
+        if (!game.roomCode) return false;
+
         if (!game.winnerPlayerId) return false;
 
         const isPlayer1 = game.player1UserId === userId;
@@ -441,7 +442,8 @@ export async function registerRoutes(
         return false;
       }).length;
 
-      const losses = completedGames.length - wins;
+      const losses = multiplayerCompletedGames.length - wins;
+      const winRate = multiplayerCompletedGames.length > 0 ? (wins / multiplayerCompletedGames.length) * 100 : 0;
 
       res.json({
         totalGames: allGames.length,
@@ -449,7 +451,7 @@ export async function registerRoutes(
         activeGames: allGames.filter(g => g.gameStatus === "playing" || g.gameStatus === "waiting").length,
         wins,
         losses,
-        winRate: completedGames.length > 0 ? (wins / completedGames.length) * 100 : 0,
+        winRate,
       });
     } catch (error) {
       console.error("Fetch user stats error:", error);

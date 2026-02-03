@@ -44,7 +44,7 @@ export function useUserGames() {
     };
 }
 
-export function useUserHistory(limit = 20, offset = 0) {
+export function useUserHistory(limit = 20, offset = 0, excludeAbandoned = false) {
     const [history, setHistory] = useState<UserHistoryData | null>(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -54,7 +54,7 @@ export function useUserHistory(limit = 20, offset = 0) {
         setError(null);
         try {
             const response = await fetch(
-                `/api/users/me/history?limit=${limit}&offset=${offset}`
+                `/api/users/me/history?limit=${limit}&offset=${offset}&excludeAbandoned=${excludeAbandoned}`
             );
             if (!response.ok) {
                 if (response.status === 401) {
@@ -69,7 +69,7 @@ export function useUserHistory(limit = 20, offset = 0) {
         } finally {
             setLoading(false);
         }
-    }, [limit, offset]);
+    }, [limit, offset, excludeAbandoned]);
 
     useEffect(() => {
         fetchHistory();

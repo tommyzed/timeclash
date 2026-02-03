@@ -136,45 +136,28 @@ export default function GameHeader({
     }
   };
 
-  const getGameModeDisplay = () => {
+  const getGameBadge = () => {
     if (isMultiplayer && game.roomCode) {
       return (
-        <div className="flex items-center space-x-2">
-          <span className="bg-green-600 text-white px-3 py-1 rounded-full text-sm font-medium flex items-center space-x-1">
-            <span>Multi</span>
-            {game.allowStealing && (
-              <img
-                src={burglarIcon}
-                alt="Stealing is enabled"
-                className="w-4 h-4"
-              />
-            )}
-            {soundsEnabled && (
-              <img
-                src={volumeIcon}
-                alt="Sound is enabled"
-                className="w-4 h-4"
-              />
-            )}
-          </span>
-          <button
-            onClick={handleCopyRoomCode}
-            className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm font-medium flex items-center space-x-1 transition-colors"
-            data-testid="copy-room-code-button"
-            title="Click to copy shareable link"
-          >
-            <span className="hidden sm:inline">Share: </span>
-            <span>{game.roomCode}</span>
-            {copied ? (
-              <Check className="h-3 w-3 text-green-600" />
-            ) : (
-              <Copy className="h-3 w-3" />
-            )}
-          </button>
-        </div>
+        <span className="bg-green-600 text-white px-3 py-1 rounded-full text-sm font-medium flex items-center space-x-1">
+          <span>Multi</span>
+          {game.allowStealing && (
+            <img
+              src={burglarIcon}
+              alt="Stealing is enabled"
+              className="w-4 h-4"
+            />
+          )}
+          {soundsEnabled && (
+            <img
+              src={volumeIcon}
+              alt="Sound is enabled"
+              className="w-4 h-4"
+            />
+          )}
+        </span>
       );
     }
-
 
     const isHardMode = game.gameMode === "hard";
     return (
@@ -199,6 +182,28 @@ export default function GameHeader({
         )}
       </span>
     );
+  };
+
+  const getRoomCodeDisplay = () => {
+    if (isMultiplayer && game.roomCode) {
+      return (
+        <button
+          onClick={handleCopyRoomCode}
+          className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm font-medium flex items-center space-x-1 transition-colors"
+          data-testid="copy-room-code-button"
+          title="Click to copy shareable link"
+        >
+          <span className="hidden sm:inline">Share: </span>
+          <span>{game.roomCode}</span>
+          {copied ? (
+            <Check className="h-3 w-3 text-green-600" />
+          ) : (
+            <Copy className="h-3 w-3" />
+          )}
+        </button>
+      );
+    }
+    return null;
   };
 
   const getScoreDisplay = () => {
@@ -538,7 +543,10 @@ export default function GameHeader({
                 </AlertDialogContent>
               </AlertDialog>
             )}
-            {getGameModeDisplay()}
+            {/* Always show badge */}
+            {getGameBadge()}
+            {/* Only show Room Code in top row on DESKTOP */}
+            {!isMobile && getRoomCodeDisplay()}
           </div>
           {!isMobile ? (
             <div className="flex items-center space-x-6">
@@ -556,7 +564,11 @@ export default function GameHeader({
           )}
         </div>
         {isMobile && (
-          <div className="mt-4 flex justify-center">{getScoreDisplay()}</div>
+          <div className="mt-2 flex items-center justify-center space-x-4">
+            {/* Show Room Code first for visibility */}
+            {getRoomCodeDisplay()}
+            {getScoreDisplay()}
+          </div>
         )}
       </div>
 

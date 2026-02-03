@@ -187,7 +187,7 @@ export default function Dashboard() {
                                 <Trophy className="h-4 w-4 md:h-6 md:w-6 text-amber-600" />
                             </div>
                             <div>
-                                <p className="text-xs md:text-sm font-medium text-muted-foreground">Wins</p>
+                                <p className="text-xs md:text-sm font-medium text-muted-foreground">Multiplayer Wins</p>
                                 {statsLoading ? (
                                     <Skeleton className="h-6 w-10 md:h-7 md:w-12 mt-1" />
                                 ) : (
@@ -203,7 +203,7 @@ export default function Dashboard() {
                                 <History className="h-4 w-4 md:h-6 md:w-6 text-purple-600" />
                             </div>
                             <div>
-                                <p className="text-xs md:text-sm font-medium text-muted-foreground">Win Rate</p>
+                                <p className="text-xs md:text-sm font-medium text-muted-foreground">Multiplayer Win Rate</p>
                                 {statsLoading ? (
                                     <Skeleton className="h-6 w-10 md:h-7 md:w-12 mt-1" />
                                 ) : (

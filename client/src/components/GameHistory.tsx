@@ -11,13 +11,11 @@ export default function GameHistory() {
     const [page, setPage] = useState(0);
     const [hideAbandoned, setHideAbandoned] = useState(true);
     const pageSize = 10;
-    const { history, loading, error } = useUserHistory(pageSize, page * pageSize);
+    const { history, loading, error } = useUserHistory(pageSize, page * pageSize, hideAbandoned);
     const { user } = useUser();
 
-    // Filter out abandoned games if hideAbandoned is enabled
-    const filteredGames = history?.games.filter(
-        (game) => !hideAbandoned || game.gameStatus !== "abandoned"
-    ) || [];
+    // Use games directly from history as they are already filtered by backend
+    const filteredGames = history?.games || [];
 
     const formatDate = (date: Date | string) => {
         return new Date(date).toLocaleDateString("en-US", {

@@ -14,6 +14,10 @@ import {
 import { randomUUID, webcrypto } from "crypto";
 import fs from "fs";
 import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export type CreateGameOptions = {
   roomCode?: string;
@@ -59,15 +63,10 @@ export interface IStorage {
   createUser(user: InsertUser): Promise<User>;
   updateUser(id: string, user: Partial<User>): Promise<User | undefined>;
   getGamesByUserId(userId: string, status?: string): Promise<Game[]>;
-  getUserGameHistory(userId: string, limit?: number, offset?: number): Promise<Game[]>;
+  getUserGameHistory(userId: string, limit?: number, offset?: number, excludeAbandoned?: boolean): Promise<Game[]>;
 
   // Friendships
-  createFriendship(userId1: string, userId2: string): Promise<Friendship | undefined>; // allow undefined return if check fails, but Mem impl return Friendship. Let's align with others.
-  // Actually Mem impl returned Friendship without undefined. But I'll make it Promise<Friendship>
-  // Wait, I should match the implementation.
-  // Interface:
-  createFriendship(userId1: string, userId2: string): Promise<any>; // Using any to avoid import issues? No, I admitted `friendships` in schema.
-  // Let's import `Friendship` in storage.ts imports first.
+  createFriendship(userId1: string, userId2: string): Promise<Friendship | undefined>;
   getFriendship(userId1: string, userId2: string): Promise<Friendship | undefined>;
   getFriendships(userId: string): Promise<Friendship[]>;
   updateFriendshipStatus(id: string, status: string): Promise<Friendship | undefined>;
@@ -395,10 +394,12 @@ export class MemStorage implements IStorage {
     userId: string,
     limit: number = 20,
     offset: number = 0,
+    excludeAbandoned: boolean = false
   ): Promise<Game[]> {
     const completedGames = Array.from(this.games.values())
       .filter((game) => (game.player1UserId === userId || game.player2UserId === userId) &&
-        (game.gameStatus === "completed" || game.gameStatus === "abandoned"))
+        (game.gameStatus === "completed" ||
+          (!excludeAbandoned && game.gameStatus === "abandoned")))
       .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
 
     return completedGames.slice(offset, offset + limit);
