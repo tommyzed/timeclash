@@ -167,12 +167,13 @@ export default function FriendList() {
                                         <div className="flex items-center gap-1">
                                             {isAccepted && (
                                                 <Button
-                                                    size="icon"
-                                                    className="h-8 w-8 bg-blue-50 text-blue-600 border border-blue-200 shadow-sm transition-all duration-300 hover:bg-gradient-to-br hover:from-blue-500 hover:to-indigo-600 hover:text-white hover:border-transparent hover:shadow-md hover:scale-110 group"
+                                                    size="sm"
+                                                    className="h-9 px-3 bg-gradient-to-r from-yellow-500 to-orange-600 text-white shadow-lg transition-all duration-300 hover:from-yellow-400 hover:to-orange-500 hover:shadow-xl hover:scale-105 hover:-translate-y-0.5 group border-0 ring-1 ring-white/20 gap-2 font-bold"
                                                     onClick={() => setFriendToChallenge(f)}
                                                     title="Challenge Friend to Game"
                                                 >
-                                                    <Swords className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" />
+                                                    <span>Challenge</span>
+                                                    <Swords className="w-4 h-4 fill-current group-hover:rotate-12 transition-transform duration-300" />
                                                 </Button>
                                             )}
 
