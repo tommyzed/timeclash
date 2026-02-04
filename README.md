@@ -21,9 +21,12 @@
     - Informative descriptions for every event.
 - **User Profile (with Google Login)**:
     - Track your progress and achievements.
-    - View your match history.
-    - View your friends list.
-    - View your statistics.
+    - View your match history with intuitive pagination.
+    - View your friends list with real-time status updates and a vibrant new interface.
+    - View your statistics (tracking Multiplayer Wins and Win Rate separately).
+- **Mobile Optimized**:
+    - Responsive design that adapts to any screen size.
+    - Compact 2-line header layout on mobile devices for maximum gameplay area.
 
 ## 🛠️ Technology Stack
 
