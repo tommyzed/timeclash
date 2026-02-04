@@ -50,6 +50,9 @@ export default function Game() {
       return await response.json();
     },
     enabled: !!gameId,
+    staleTime: 0,
+    refetchOnMount: true,
+    refetchOnWindowFocus: true,
   }) as { data: GameState | undefined; isLoading: boolean };
 
   // Calculate effective playerId based on authenticated user or fallback
