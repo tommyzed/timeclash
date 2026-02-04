@@ -34,6 +34,7 @@ export function useUserGames() {
         refetchOnMount: true,
         refetchOnWindowFocus: true,
         refetchInterval: 5000,
+        staleTime: 0, // Ensure data is considered stale immediately for refetching
     });
 
     return {
@@ -45,14 +46,10 @@ export function useUserGames() {
 }
 
 export function useUserHistory(limit = 20, offset = 0, excludeAbandoned = false) {
-    const [history, setHistory] = useState<UserHistoryData | null>(null);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
-
-    const fetchHistory = useCallback(async () => {
-        setLoading(true);
-        setError(null);
-        try {
+    // Unique query key including pagination params to ensure caching separates pages
+    const { data: history, isLoading: loading, error, refetch } = useQuery<UserHistoryData>({
+        queryKey: ["/api/users/me/history", limit, offset, excludeAbandoned],
+        queryFn: async () => {
             const response = await fetch(
                 `/api/users/me/history?limit=${limit}&offset=${offset}&excludeAbandoned=${excludeAbandoned}`
             );
@@ -62,20 +59,19 @@ export function useUserHistory(limit = 20, offset = 0, excludeAbandoned = false)
                 }
                 throw new Error("Failed to fetch game history");
             }
-            const data = await response.json();
-            setHistory(data);
-        } catch (err) {
-            setError(err instanceof Error ? err.message : "An error occurred");
-        } finally {
-            setLoading(false);
-        }
-    }, [limit, offset, excludeAbandoned]);
+            return response.json();
+        },
+        refetchOnMount: true,
+        refetchOnWindowFocus: true,
+        staleTime: 0,
+    });
 
-    useEffect(() => {
-        fetchHistory();
-    }, [fetchHistory]);
-
-    return { history, loading, error, refetch: fetchHistory };
+    return {
+        history: history || null,
+        loading,
+        error: error ? (error as Error).message : null,
+        refetch
+    };
 }
 
 export function useUserStats() {
@@ -83,7 +79,8 @@ export function useUserStats() {
         queryKey: ["/api/users/me/stats"],
         refetchOnMount: true,
         refetchOnWindowFocus: true,
-        refetchInterval: 10000, // Poll stats slightly less frequently
+        refetchInterval: 10000,
+        staleTime: 0,
     });
 
     return {
