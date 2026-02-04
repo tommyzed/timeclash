@@ -1,24 +1,36 @@
-# TimeClash
+# ⏳ TimeClash
+> **Race through history in the ultimate chronological battle!**
 
-**TimeClash** is an engaging historical timeline game where players race to correctly place historical events in chronological order. Test your knowledge of history in single-player mode or challenge friends in real-time multiplayer battles!
+![Typescript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Tailwind](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Nodejs](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
+![Postgres](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
 
-## 🎮 Features
+**TimeClash** is a competitive historical timeline game. Put your history knowledge to the test by placing events in their correct chronological order. Play solo to beat your high score, or challenge friends to real-time 1v1 battles where every year counts!
 
-- **Single Player Mode**: 
-    - Test your skills against the timeline.
-    - Enable "Hard Mode" for a more challenging experience.
-- **Multiplayer Mode**: 
-    - Real-time 1v1 gameplay.
-    - Room code system for easy matchmaking.
-    - "Steal" mechanic: If an opponent makes a mistake, you get a chance to place their card!
-    - Add an opponent as a friend to quickly create new games!
-- **Dynamic Gameplay**:
-    - Randomized events ensuring no two games are alike.
-    - Visual feedback for correct and incorrect moves.
-    - Smooth drag-and-drop or click-to-place interface.
-- **Historical Database**:
-    - Extensive collection of events ranging from ancient B.C. eras to modern times.
-    - Informative descriptions for every event.
+## � Gameplay Demo
+
+<!-- Replace the link below with your video URL or embed -->
+[![Watch the Demo](https://img.youtube.com/vi/PLACEHOLDER_VIDEO_ID/0.jpg)](https://www.youtube.com/watch?v=PLACEHOLDER_VIDEO_ID)
+
+> *Check out TimeClash in action!*
+
+## 🕹️ How to Play
+
+1.  **Get a Card**: You're presented with a historical event card (e.g., "Invention of the Lightbulb").
+2.  **Place It**: Drag or click to place it on your timeline relative to other events.
+    -   *Reference*: "Before the Pyramids" or "After the Moon Landing"?
+3.  **Score**: Correct placements earn points. Incorrect ones cost you a strike!
+4.  **Win**: Be the first to correctly place **10 cards** to win the game.
+
+## 🔥 Key Features
+
+- **⚔️ Competitive Multiplayer**: Real-time 1v1 battles with live updates.
+- **🃏 The "Steal" Mechanic**: If your opponent messes up, you get a chance to steal their turn and place the card yourself!
+- **📱 Mobile Optimized**: Play on the go with a sleek, responsive design and a compact 2-line header.
+- **🏆 Progressive Difficulty**: Events get obscure as your timeline grows.
+- **🌍 Extensive Database**: Thousands of events from ancient history to pop culture.
 - **User Profile (with Google Login)**:
     - Track your progress and achievements.
     - View your match history with intuitive pagination.
