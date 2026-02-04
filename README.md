@@ -12,7 +12,7 @@
 ## � Gameplay Demo
 
 <!-- Replace the link below with your video URL or embed -->
-[![Watch the Demo](https://img.youtube.com/vi/PLACEHOLDER_VIDEO_ID/0.jpg)](https://www.youtube.com/watch?v=PLACEHOLDER_VIDEO_ID)
+![LatestTCDemo-ezgif com-speed](https://github.com/user-attachments/assets/681a48d5-3e89-4c5b-8ac2-81120b2157d8)
 
 > *Check out TimeClash in action!*
 
