@@ -1,6 +1,6 @@
-import { useState, useEffect, useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
 import type { Game } from "@shared/schema";
+import { useUser } from "@/context/UserContext";
 
 export type EnrichedGame = Game & {
     player1Name?: string;
@@ -29,12 +29,14 @@ export type UserStatsData = {
 };
 
 export function useUserGames() {
+    const { user } = useUser();
     const { data: activeGames, isLoading: loading, error, refetch } = useQuery<UserGamesData>({
         queryKey: ["/api/users/me/games"],
         refetchOnMount: true,
         refetchOnWindowFocus: true,
         refetchInterval: 5000,
         staleTime: 0, // Ensure data is considered stale immediately for refetching
+        enabled: !!user, // Only fetch when user is logged in
     });
 
     return {
@@ -46,6 +48,7 @@ export function useUserGames() {
 }
 
 export function useUserHistory(limit = 20, offset = 0, excludeAbandoned = false) {
+    const { user } = useUser();
     // Unique query key including pagination params to ensure caching separates pages
     const { data: history, isLoading: loading, error, refetch } = useQuery<UserHistoryData>({
         queryKey: ["/api/users/me/history", limit, offset, excludeAbandoned],
@@ -64,6 +67,7 @@ export function useUserHistory(limit = 20, offset = 0, excludeAbandoned = false)
         refetchOnMount: true,
         refetchOnWindowFocus: true,
         staleTime: 0,
+        enabled: !!user, // Only fetch when user is logged in
     });
 
     return {
@@ -75,12 +79,14 @@ export function useUserHistory(limit = 20, offset = 0, excludeAbandoned = false)
 }
 
 export function useUserStats() {
+    const { user } = useUser();
     const { data: stats, isLoading: loading, error, refetch } = useQuery<UserStatsData>({
         queryKey: ["/api/users/me/stats"],
         refetchOnMount: true,
         refetchOnWindowFocus: true,
         refetchInterval: 10000,
         staleTime: 0,
+        enabled: !!user, // Only fetch when user is logged in
     });
 
     return {
