@@ -56,6 +56,7 @@ export default function Auth() {
         </DropdownMenu>
       ) : (
         <GoogleLogin
+          size="medium"
           text="signin_with"
           auto_select={false}
           onSuccess={async (credentialResponse) => {
