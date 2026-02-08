@@ -251,7 +251,7 @@ export default function Lobby() {
                   <span className="hidden md:block font-semibold">
                     Buy me a coffee
                   </span>
-                  <span className="block md:hidden font-semibold">Coffee</span>
+                  <span className="block md:hidden font-semibold">🙏</span>
                 </a>
                 <Auth />
               </div>
