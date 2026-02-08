@@ -450,6 +450,10 @@ export default function Lobby() {
           </CardContent>
         </Card>
 
+        <div className="mt-8 text-center text-xs text-gray-500 italic">
+          v1.5 - Copyright © 2026 Ego /dev/null
+        </div>
+
       </div>
     </div>
   );
