@@ -34,6 +34,12 @@ export default function Auth() {
             <DropdownMenuItem
               onClick={async () => {
                 await fetch("/api/auth/logout", { method: "POST" });
+
+                // Clear local storage on logout to prevent stale data
+                localStorage.removeItem("playerId");
+                localStorage.removeItem("nickname");
+                localStorage.removeItem("gameId");
+
                 setUser(null);
                 setLocation("/");
                 toast({
