@@ -16,7 +16,7 @@ export default function Auth() {
   const { toast } = useToast();
 
   return (
-    <div className="ml-4" style={{ minWidth: user ? undefined : "200px", minHeight: "40px" }}>
+    <div className="ml-4" style={{ minWidth: user ? undefined : "240px", minHeight: "44px" }}>
       {user ? (
         <DropdownMenu>
           <DropdownMenuTrigger>
@@ -56,7 +56,7 @@ export default function Auth() {
         </DropdownMenu>
       ) : (
         <GoogleLogin
-          size="medium"
+          size="large"
           text="signin_with"
           auto_select={false}
           onSuccess={async (credentialResponse) => {
