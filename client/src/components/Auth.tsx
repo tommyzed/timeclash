@@ -1,4 +1,4 @@
-import { GoogleLogin } from "@react-oauth/google";
+import { GoogleLogin, googleLogout } from "@react-oauth/google";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -33,6 +33,7 @@ export default function Auth() {
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={async () => {
+                googleLogout(); // Disable auto-select
                 await fetch("/api/auth/logout", { method: "POST" });
 
                 // Clear local storage on logout to prevent stale data
