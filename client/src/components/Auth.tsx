@@ -55,6 +55,8 @@ export default function Auth() {
         </DropdownMenu>
       ) : (
         <GoogleLogin
+          text="signin_with"
+          auto_select={false}
           onSuccess={async (credentialResponse) => {
             try {
               const response = await fetch("/api/auth/google", {
