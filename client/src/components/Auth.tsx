@@ -16,7 +16,7 @@ export default function Auth() {
   const { toast } = useToast();
 
   return (
-    <div className="ml-4">
+    <div className="ml-4" style={{ minWidth: user ? undefined : "200px", minHeight: "40px" }}>
       {user ? (
         <DropdownMenu>
           <DropdownMenuTrigger>
