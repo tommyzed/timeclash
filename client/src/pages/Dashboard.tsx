@@ -15,6 +15,7 @@ import FriendList from "@/components/FriendList";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useIsMobile } from "@/hooks/use-mobile";
 import logoImage from "@assets/TimeClash.png";
+import { CoffeeIcon } from "@/components/ui/CoffeeIcon";
 
 import Auth from "@/components/Auth";
 
@@ -141,8 +142,23 @@ export default function Dashboard() {
                         </div>
                     </div>
 
-                    {/* Auth - stays on right */}
-                    <div className="shrink-0 pt-0.5">
+                    {/* Actions - Buy me a coffee + Auth */}
+                    <div className="shrink-0 pt-0.5 flex items-center">
+                        <a
+                            href="https://ko-fi.com/egodevnull"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center justify-center whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border hover:text-accent-foreground h-8 rounded-md px-2.5 sm:px-3 text-xs bg-yellow-400 hover:bg-yellow-500 text-black dark:text-black border-yellow-400 shadow-md shadow-yellow-300/50"
+                            data-testid="buy-me-a-coffee-link"
+                        >
+                            <CoffeeIcon className="mr-1.5 md:mr-2 shrink-0" />
+                            <span className="hidden md:inline font-semibold">
+                                Buy me a coffee
+                            </span>
+                            <span className="inline md:hidden font-semibold">
+                                Coffee
+                            </span>
+                        </a>
                         <Auth />
                     </div>
                 </div>
