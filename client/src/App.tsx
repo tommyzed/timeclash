@@ -12,6 +12,7 @@ import { queryClient } from "@/lib/queryClient";
 import Dashboard from "@/pages/Dashboard";
 
 import GameClaimer from "@/components/GameClaimer";
+import DomainMigrationModal from "@/components/DomainMigrationModal";
 import { UserProvider } from "@/context/UserContext";
 
 export default function App() {
@@ -27,6 +28,7 @@ export default function App() {
       <GoogleOAuthProvider clientId={googleClientId}>
         <QueryClientProvider client={queryClient}>
           <UserProvider>
+            <DomainMigrationModal />
             <GameClaimer />
             <AnimatePresence mode="wait">
               <Switch location={location[0]} key={location[0]}>
