@@ -1,0 +1,697 @@
+Event ID,Year,Event Description,Category,Era
+1,-3300000,"The first stone tools are made in Kenya, marking the beginning of technology.",Science/Tech,Ancient World
+2,-2300000,Homo habilis achieves the first likely control of fire and cooking.,Science/Tech,Ancient World
+3,-350000,Early humans invent paint using ground ochre pigment in Zambia.,Culture,Ancient World
+4,-45000,Anatomically modern humans arrive in Europe.,History,Ancient World
+5,-31000,The first known representational paintings are created in the Chauvet Caves in France.,Culture,Ancient World
+6,-28000,The first ceramics and evidence of weaving are created in Moravia.,Science/Tech,Ancient World
+7,-23000,"The dog is domesticated in Siberia, becoming humanity's first animal companion.",History,Ancient World
+8,-22000,"The Venus of Willendorf, one of the earliest known sculptures, is carved.",Culture,Ancient World
+9,-18000,"The first pottery is created in China, used for cooking and storage.",Science/Tech,Ancient World
+10,-10000,Agriculture begins in the Fertile Crescent with the cultivation of wheat and barley.,History,Ancient World
+11,-9500,"Göbekli Tepe, the world's oldest known temple complex, is built in Turkey.",Culture,Ancient World
+12,-9000,Mudbricks and clay mortar are first used in Jericho.,Science/Tech,Ancient World
+13,-8000,Rice is first domesticated and cultivated along the Yangtze River in China.,History,Ancient World
+14,-7000,The first known alcohol fermentation (mead) occurs in China.,History,Ancient World
+15,-6500,"Evidence of lead smelting is found in Çatalhöyük, Turkey.",Science/Tech,Ancient World
+16,-6000,The first evidence of copper smelting is found in modern-day Serbia.,Science/Tech,Ancient World
+17,-5500,The first evidence of cheese-making is found in Poland.,History,Ancient World
+18,-5000,"The Sumerian civilization evolves in Mesopotamia, developing the first cities.",History,Ancient World
+19,-4000,"The wheel is invented in Eastern Europe, revolutionizing transport and machinery.",Science/Tech,Ancient World
+20,-4000,Paved roads are constructed in the Mesopotamian city of Ur.,Science/Tech,Ancient World
+21,-3630,The first silk garments are produced in China through sericulture.,History,Ancient World
+22,-3500,The horse is first domesticated on the Eurasian Steppes.,History,Ancient World
+23,-3400,The first system of writing (cuneiform) is developed by the Sumerians in Mesopotamia.,History,Ancient World
+24,-3200,"The first known wheeled vehicle, the Ljubljana Marshes Wheel, is made in Slovenia.",Science/Tech,Ancient World
+25,-3100,"The first dynasty of Egypt is established, unifying the Upper and Lower kingdoms.",Politics/War,Ancient World
+26,-3000,"Papyrus, an early form of paper, is developed in Egypt.",Science/Tech,Ancient World
+27,-2650,The first ruler or measuring rod is used in Sumer.,Science/Tech,Ancient World
+28,-2600,The Indus Valley Civilization flourishes with planned cities like Mohenjo-daro.,History,Ancient World
+29,-2560,The Great Pyramid of Giza is completed in Egypt under Pharaoh Khufu.,Culture,Ancient World
+30,-2400,The first known forks are used in Bronze Age China.,History,Ancient World
+31,-2300,The first known dictionary is created on clay tablets in Mesopotamia.,Culture,Ancient World
+32,-2000,"The chariot is invented in Russia and Kazakhstan, transforming warfare.",Science/Tech,Ancient World
+33,-1800,The first alphabetic writing system appears in the Sinai Peninsula.,History,Ancient World
+34,-1780,King Hammurabi of Babylon issues his comprehensive legal code.,History,Ancient World
+35,-1600,"The first known surgical treatise, the Edwin Smith Papyrus, appears in Egypt.",Science/Tech,Ancient World
+36,-1500,The sundial is invented in Ancient Egypt or Babylonia.,Science/Tech,Ancient World
+37,-1400,"The water clock is invented in Egypt, allowing timekeeping at night.",Science/Tech,Ancient World
+38,-1300,The lathe is invented in Ancient Egypt.,Science/Tech,Ancient World
+39,-1200,"The Iron Age begins in the Near East, replacing bronze with a stronger metal.",Science/Tech,Ancient World
+40,-1027,The Zhou dynasty begins its long rule in China.,Politics/War,Ancient World
+41,-850,Homer is believed to have composed the epic poems The Iliad and The Odyssey.,Culture,Ancient World
+42,-776,"The first Olympic Games are recorded in Olympia, Greece.",Culture,Ancient World
+43,-753,The city of Rome is traditionally founded by Romulus.,Politics/War,Ancient World
+44,-653,The Persian Empire begins its rise to prominence in the Middle East.,Politics/War,Ancient World
+45,-650,The crossbow is invented in China.,Science/Tech,Ancient World
+46,-600,Coins are first used as currency in Lydia (modern-day Turkey).,History,Ancient World
+47,-586,The First Temple in Jerusalem (Solomon's Temple) is destroyed by the Babylonians.,Politics/War,Ancient World
+48,-563,"Siddhartha Gautama, the Buddha, is born in Lumbini, Nepal.",Culture,Ancient World
+49,-551,The philosopher Confucius is born in China.,Culture,Ancient World
+50,-509,The Roman Republic is founded after the overthrow of the last Roman king.,Politics/War,Ancient World
+51,-508,"Democracy is introduced in Athens, Greece, under the reforms of Cleisthenes.",Politics/War,Ancient World
+52,-500,The philosopher Pythagoras studies mathematics and the movement of celestial bodies.,Science/Tech,Ancient World
+53,-490,The Athenians defeat the Persians at the Battle of Marathon.,Politics/War,Ancient World
+54,-485,"The catapult is invented by Ajatashatru in Magadha, India.",Science/Tech,Ancient World
+55,-469,"The philosopher Socrates is born in Athens, Greece.",Culture,Ancient World
+56,-447,Construction begins on the Parthenon temple on the Athenian Acropolis.,Culture,Ancient World
+57,-431,The Peloponnesian War begins between Athens and Sparta.,Politics/War,Ancient World
+58,-399,Socrates is tried and executed in Athens for corrupting the youth.,Politics/War,Ancient World
+59,-387,"Plato founds the Academy in Athens, one of the earliest institutions of higher learning.",Culture,Ancient World
+60,-336,"Alexander the Great becomes king of Macedon after the assassination of his father, Philip II.",Politics/War,Ancient World
+61,-323,"Alexander the Great dies in Babylon, ending his vast conquests.",Politics/War,Ancient World
+62,-300,"Euclid writes Elements, a foundational work of geometry.",Science/Tech,Ancient World
+63,-268,The Mauryan Empire under Ashoka the Great flourishes in India.,Politics/War,Ancient World
+64,-250,Glassblowing is invented by Syrian craftsmen in Babylonia.,Science/Tech,Ancient World
+65,-221,Qin Shi Huang unifies China and begins construction of the Great Wall.,Politics/War,Ancient World
+66,-218,Hannibal of Carthage crosses the Alps with elephants to invade Italy.,Politics/War,Ancient World
+67,-200,Paper is invented in China during the Han Dynasty.,Science/Tech,Ancient World
+68,-146,"Rome destroys Carthage, ending the Punic Wars and securing Mediterranean dominance.",Politics/War,Ancient World
+69,-100,Julius Caesar is born in Rome.,Politics/War,Ancient World
+70,-73,The slave rebellion led by Spartacus begins in the Roman Republic.,Politics/War,Ancient World
+71,-44,Julius Caesar is assassinated by a group of Roman senators.,Politics/War,Ancient World
+72,-27,"Octavian is granted the title Augustus, marking the end of the Roman Republic and the beginning of the Roman Empire.",Politics/War,Ancient World
+73,-4,Jesus Christ is born in Bethlehem (widely accepted date).,Culture,Ancient World
+74,1,"The aeolipile, a simple steam turbine, is described by Hero of Alexandria.",Science/Tech,Ancient World
+75,29,Jesus Christ is crucified in Jerusalem.,Culture,Ancient World
+76,64,"The Great Fire of Rome occurs, which Emperor Nero blames on Christians.",History,Ancient World
+77,70,Roman armies under Titus destroy the Second Temple in Jerusalem.,Politics/War,Ancient World
+78,79,"Mount Vesuvius erupts, destroying the Roman cities of Pompeii and Herculaneum.",History,Ancient World
+79,80,The Colosseum is completed in Rome.,Culture,Ancient World
+80,105,Cai Lun is credited with standardizing paper production in China.,Science/Tech,Ancient World
+81,122,Construction begins on Hadrian's Wall in Roman Britain.,Politics/War,Ancient World
+82,132,The seismometer is invented in Han Dynasty China by Zhang Heng.,Science/Tech,Ancient World
+83,220,"The Han Dynasty collapses, leading to the Three Kingdoms period in China.",Politics/War,Ancient World
+84,286,The Roman Empire is divided into Eastern and Western halves by Emperor Diocletian.,Politics/War,Ancient World
+85,313,"Emperor Constantine issues the Edict of Milan, granting religious tolerance to Christians in the Roman Empire.",Politics/War,Ancient World
+86,325,The First Council of Nicaea establishes the core tenets of Christian orthodoxy.,Culture,Ancient World
+87,330,Constantine the Great moves the capital of the Roman Empire to Constantinople.,Politics/War,Ancient World
+88,395,The Roman Empire is permanently split into the Eastern and Western Roman Empires.,Politics/War,Ancient World
+89,400,The rust-resistant Iron pillar of Delhi is constructed in India.,Science/Tech,Ancient World
+90,410,"The Visigoths, led by Alaric, sack the city of Rome.",Politics/War,Ancient World
+91,455,"The Vandals sack Rome, contributing to the Western Empire's decline.",Politics/War,Ancient World
+92,476,"The last Western Roman Emperor, Romulus Augustulus, is deposed, marking the fall of the Western Roman Empire.",Politics/War,Ancient World
+93,527,Justinian I becomes emperor of the Byzantine (Eastern Roman) Empire.,Politics/War,Post-Classical
+94,529,"The Academy in Athens, founded by Plato, is closed by Emperor Justinian.",Culture,Post-Classical
+95,537,The Hagia Sophia cathedral is completed in Constantinople under Justinian I.,Culture,Post-Classical
+96,570,"The Prophet Muhammad, founder of Islam, is born in Mecca.",Culture,Post-Classical
+97,589,Toilet paper is first mentioned in use in Sui Dynasty China.,Science/Tech,Post-Classical
+98,589,"The horse collar is developed in China, revolutionizing agriculture.",Science/Tech,Post-Classical
+99,618,"The Tang Dynasty is established in China, beginning a golden age of culture and innovation.",Politics/War,Post-Classical
+100,619,The toothbrush is invented in Tang Dynasty China.,Science/Tech,Post-Classical
+101,622,"The Prophet Muhammad migrates from Mecca to Medina (the Hijra), marking the beginning of the Islamic calendar.",Culture,Post-Classical
+102,632,"The Prophet Muhammad dies, leading to the establishment of the first Caliphate.",Politics/War,Post-Classical
+103,650,Porcelain is invented by Chinese artists during the Tang Dynasty.,Science/Tech,Post-Classical
+104,672,"Greek fire, an incendiary weapon, is invented in the Byzantine Empire.",Science/Tech,Post-Classical
+105,711,Muslim forces cross the Strait of Gibraltar and begin the conquest of the Iberian Peninsula.,Politics/War,Post-Classical
+106,732,"Charles Martel's Frankish army defeats Muslim invaders at the Battle of Tours, halting their advance into Europe.",Politics/War,Post-Classical
+107,793,"Vikings raid the monastery at Lindisfarne, marking the beginning of the Viking Age in Europe.",Politics/War,Post-Classical
+108,800,"Charlemagne is crowned Emperor of the Romans by Pope Leo III, founding the Carolingian Empire.",Politics/War,Post-Classical
+109,800,Gunpowder is invented by alchemists in Tang Dynasty China.,Science/Tech,Post-Classical
+110,820,The mathematician al-Khwarizmi writes a foundational book on algebra in Baghdad.,Science/Tech,Post-Classical
+111,868,"The Diamond Sutra is printed in China, the world's earliest dated, printed book.",Culture,Post-Classical
+112,960,"The Song Dynasty is established in China, known for its technological advancements.",Politics/War,Post-Classical
+113,974,The first fountain pen is invented in Arab Egypt.,Science/Tech,Post-Classical
+114,1000,"Leif Erikson, a Norse explorer, lands in North America, which he calls Vinland.",History,Post-Classical
+115,1025,Musical notes (solmization) are invented by Guido of Arezzo.,Culture,Post-Classical
+116,1054,The Great Schism formally divides the Christian church into the Roman Catholic and Eastern Orthodox branches.,Culture,Post-Classical
+117,1066,"William the Conqueror leads the Norman invasion of England, winning the Battle of Hastings.",Politics/War,Post-Classical
+118,1088,The first movable type printing system is invented by Bi Sheng in Song Dynasty China.,Science/Tech,Post-Classical
+119,1096,The First Crusade is launched by European Christians to reclaim the Holy Land.,Politics/War,Post-Classical
+120,1117,The University of Oxford is established in England.,History,Post-Classical
+121,1150,The University of Paris is established in France.,History,Post-Classical
+122,1187,Saladin recaptures Jerusalem from the Crusaders.,Politics/War,Post-Classical
+123,1199,Europeans first begin to use the magnetic compass for navigation.,Science/Tech,Post-Classical
+124,1206,"Genghis Khan is proclaimed ruler of all Mongols, beginning the expansion of the Mongol Empire.",Politics/War,Post-Classical
+125,1209,The University of Cambridge is established in England.,History,Post-Classical
+126,1215,"King John of England is forced to sign the Magna Carta, limiting royal power.",Politics/War,Post-Classical
+127,1250,"The first known musical round, ""Sumer is icumen in,"" is written in England.",Culture,Post-Classical
+128,1271,Marco Polo begins his famous journey to China along the Silk Road.,History,Post-Classical
+129,1286,The first eyeglasses are invented in Italy.,Science/Tech,Post-Classical
+130,1299,Osman I establishes the Ottoman Empire in Anatolia.,Politics/War,Post-Classical
+131,1306,"The artist Giotto completes the Scrovegni Chapel frescoes, a landmark of the early Renaissance.",Culture,Post-Classical
+132,1325,The Aztecs found the city of Tenochtitlan on Lake Texcoco.,History,Post-Classical
+133,1347,"The Black Death pandemic arrives in Europe, eventually killing a third of the population.",History,Post-Classical
+134,1368,"The Ming Dynasty is established in China, overthrowing Mongol rule.",Politics/War,Post-Classical
+135,1397,"The Medici Bank is established in Florence, fueling the Renaissance.",History,Post-Classical
+136,1405,Chinese admiral Zheng He begins his series of seven major naval expeditions.,History,Post-Classical
+137,1420,"The use of a single, consistent light source in painting is pioneered by Masaccio.",Culture,Post-Classical
+138,1429,Joan of Arc leads the French army to victory at the Siege of Orléans.,Politics/War,Post-Classical
+139,1434,"Jan van Eyck paints The Arnolfini Portrait, a masterpiece of the Northern Renaissance.",Culture,Post-Classical
+140,1436,Filippo Brunelleschi completes the dome of the Florence Cathedral.,Culture,Post-Classical
+141,1439,"Johannes Gutenberg invents the printing press with movable type in Mainz, Germany.",Science/Tech,Post-Classical
+142,1453,"The Ottoman Empire, under Sultan Mehmed II, conquers Constantinople, ending the Byzantine Empire.",Politics/War,Post-Classical
+143,1455,"The Gutenberg Bible is printed, the first major book printed using movable type.",Culture,Post-Classical
+144,1485,Leonardo da Vinci invents the sfumato painting technique.,Culture,Post-Classical
+145,1488,"Bartolomeu Dias of Portugal rounds the Cape of Good Hope, opening a sea route to the East.",History,Post-Classical
+146,1492,"Christopher Columbus, sailing for Spain, makes his first voyage to the Americas, landing in the Bahamas.",History,Post-Classical
+147,1494,The Treaty of Tordesillas divides the newly discovered lands outside Europe between Portugal and Spain.,Politics/War,Post-Classical
+148,1498,"Vasco da Gama of Portugal arrives in India, establishing a direct sea route from Europe.",History,Post-Classical
+149,1503,Leonardo da Vinci begins painting the Mona Lisa.,Culture,Post-Classical
+150,1508,Michelangelo begins painting the ceiling of the Sistine Chapel in Rome.,Culture,Post-Classical
+151,1513,"Niccolò Machiavelli writes The Prince, a foundational work of modern political science.",Culture,Post-Classical
+152,1517,"Martin Luther posts his Ninety-five Theses, beginning the Protestant Reformation.",Culture,Post-Classical
+153,1519,Hernán Cortés begins the Spanish conquest of the Aztec Empire.,Politics/War,Post-Classical
+154,1522,Ferdinand Magellan's expedition completes the first circumnavigation of the Earth.,History,Post-Classical
+155,1533,Francisco Pizarro completes the Spanish conquest of the Inca Empire.,Politics/War,Post-Classical
+156,1543,"Nicolaus Copernicus publishes On the Revolutions of the Heavenly Spheres, proposing a heliocentric model of the universe.",Science/Tech,Post-Classical
+157,1545,"The Council of Trent begins, marking the start of the Catholic Counter-Reformation.",Culture,Post-Classical
+158,1558,"Elizabeth I becomes Queen of England, beginning the Elizabethan era.",Politics/War,Post-Classical
+159,1564,"William Shakespeare is born in Stratford-upon-Avon, England.",Culture,Post-Classical
+160,1569,"Gerardus Mercator creates the Mercator projection map, revolutionizing navigation.",Science/Tech,Post-Classical
+161,1582,Pope Gregory XIII introduces the Gregorian calendar.,History,Post-Classical
+162,1588,"The English fleet defeats the Spanish Armada, preventing an invasion of England.",Politics/War,Post-Classical
+163,1597,Opera is invented by Jacopo Peri with his work Dafne.,Culture,Post-Classical
+164,1600,"The British East India Company is founded, becoming a major force in global trade and colonialism.",History,Post-Classical
+165,1602,"The Dutch East India Company is established, the first multinational corporation.",History,Post-Classical
+166,1603,"The Tokugawa shogunate is established in Japan, beginning a long period of isolationist rule.",Politics/War,Post-Classical
+167,1605,"The first newspaper, Relation, is published by Johann Carolus in Strassburg.",History,Post-Classical
+168,1607,"The first permanent English settlement in North America is established at Jamestown, Virginia.",History,Post-Classical
+169,1608,The telescope is invented in the Netherlands.,Science/Tech,Post-Classical
+170,1610,"Galileo Galilei observes the moons of Jupiter, supporting the heliocentric model.",Science/Tech,Post-Classical
+171,1618,The Thirty Years' War begins in Central Europe.,Politics/War,Post-Classical
+172,1620,"The Pilgrims land at Plymouth Rock, establishing a colony in Massachusetts.",History,Post-Classical
+173,1620,The first compound microscope appears in Europe.,Science/Tech,Post-Classical
+174,1632,The city of Boston is founded in the Massachusetts Bay Colony.,History,Post-Classical
+175,1636,"Harvard University is founded in Cambridge, Massachusetts, the oldest institution of higher learning in the U.S.",History,Post-Classical
+176,1642,The English Civil War begins between Parliamentarians and Royalists.,Politics/War,Post-Classical
+177,1642,The mechanical calculator (Pascaline) is built by Blaise Pascal.,Science/Tech,Post-Classical
+178,1643,The barometer is invented by Evangelista Torricelli.,Science/Tech,Post-Classical
+179,1644,The Ming Dynasty in China collapses and is replaced by the Qing Dynasty.,Politics/War,Post-Classical
+180,1649,"King Charles I of England is executed, and the Commonwealth of England is established.",Politics/War,Post-Classical
+181,1652,The Dutch East India Company founds Cape Town in South Africa.,History,Post-Classical
+182,1656,"The pendulum clock is invented by Christiaan Huygens, greatly improving timekeeping accuracy.",Science/Tech,Post-Classical
+183,1665,Robert Hooke discovers cells using a microscope.,Science/Tech,Post-Classical
+184,1666,The Great Fire of London destroys large parts of the city.,History,Post-Classical
+185,1682,"Peter the Great becomes Tsar of Russia, beginning a period of modernization.",Politics/War,Post-Classical
+186,1687,"Isaac Newton publishes Philosophiæ Naturalis Principia Mathematica, outlining the laws of motion and universal gravitation.",Science/Tech,Post-Classical
+187,1688,The Glorious Revolution in England establishes a constitutional monarchy.,Politics/War,Post-Classical
+188,1694,"The Bank of England is established, centralizing the nation's finances.",History,Post-Classical
+189,1698,Thomas Savery develops a steam-powered water pump for draining mines.,Science/Tech,Post-Classical
+190,1707,The Acts of Union unite the Kingdom of England and the Kingdom of Scotland to create Great Britain.,Politics/War,Post-Classical
+191,1709,Bartolomeo Cristofori crafts the first piano.,Culture,Post-Classical
+192,1712,Thomas Newcomen builds the first commercially successful steam engine.,Science/Tech,Post-Classical
+193,1733,"The flying shuttle is invented by John Kay, speeding up the weaving process.",Science/Tech,Post-Classical
+194,1751,"Denis Diderot's Encyclopédie is first published, a key text of the Enlightenment.",Culture,Post-Classical
+195,1752,"Benjamin Franklin conducts his kite experiment, proving that lightning is electricity.",Science/Tech,Post-Classical
+196,1756,"The Seven Years' War, a global conflict, begins between major European powers.",Politics/War,Post-Classical
+197,1760,The Industrial Revolution begins to accelerate in Great Britain.,Science/Tech,Post-Classical
+198,1764,"The spinning jenny is invented by James Hargreaves, revolutionizing textile production.",Science/Tech,Post-Classical
+199,1765,"James Watt invents the improved steam engine with a separate condenser, a key innovation of the Industrial Revolution.",Science/Tech,Post-Classical
+200,1769,Nicolas-Joseph Cugnot builds the first steam-powered automobile.,Science/Tech,Post-Classical
+201,1770,James Cook claims the east coast of Australia for Great Britain.,History,Post-Classical
+202,1773,The Boston Tea Party protests British taxation in the American colonies.,Politics/War,Post-Classical
+203,1776,The American colonies declare independence from Great Britain on July 4th.,Politics/War,Post-Classical
+204,1776,"Adam Smith publishes The Wealth of Nations, a foundational text of modern economics.",History,Post-Classical
+205,1781,The planet Uranus is discovered by William Herschel.,Science/Tech,Post-Classical
+206,1783,The Montgolfier brothers launch the first manned hot air balloon flight in Paris.,History,Post-Classical
+207,1783,"The Treaty of Paris is signed, officially ending the American Revolutionary War.",Politics/War,Post-Classical
+208,1787,The United States Constitution is written in Philadelphia.,Politics/War,Post-Classical
+209,1789,The French Revolution begins with the storming of the Bastille.,Politics/War,Post-Classical
+210,1790,The first sewing machine is invented by Thomas Saint.,Science/Tech,Post-Classical
+211,1791,The Bill of Rights is added to the U.S. Constitution.,Politics/War,Post-Classical
+212,1792,The modern semaphore telegraph is invented by Claude Chappe.,Science/Tech,Post-Classical
+213,1793,"Eli Whitney invents the cotton gin, revolutionizing the cotton industry and entrenching slavery in the American South.",Science/Tech,Post-Classical
+214,1796,"Edward Jenner develops the first successful vaccine, for smallpox.",Science/Tech,Post-Classical
+215,1799,"The Rosetta Stone is discovered in Egypt, providing the key to deciphering ancient hieroglyphs.",Science/Tech,Post-Classical
+216,1799,Napoleon Bonaparte comes to power in France in a coup d'état.,Politics/War,Post-Classical
+217,1800,"Alessandro Volta invents the voltaic pile, the first chemical battery.",Science/Tech,Modern Era
+218,1803,"The United States purchases the Louisiana Territory from France, doubling the size of the country.",Politics/War,Modern Era
+219,1804,Napoleon Bonaparte crowns himself Emperor of the French.,Politics/War,Modern Era
+220,1804,"Haiti declares independence from France, becoming the first black republic.",Politics/War,Modern Era
+221,1804,Richard Trevithick invents the first steam locomotive.,Science/Tech,Modern Era
+222,1805,Napoleon wins a decisive victory at the Battle of Austerlitz.,Politics/War,Modern Era
+223,1814,The first powered printing press is invented by Friedrich Koenig.,Science/Tech,Modern Era
+224,1815,"Napoleon is defeated at the Battle of Waterloo, ending his rule.",Politics/War,Modern Era
+225,1816,René Laennec invents the stethoscope.,Science/Tech,Modern Era
+226,1816,The first stethoscope is invented by René Laennec.,Science/Tech,Modern Era
+227,1820,Antarctica is first sighted by a Russian expedition.,History,Modern Era
+228,1821,The harmonica is invented by Christian Friedrich Ludwig Buschmann.,Culture,Modern Era
+229,1822,Jean-François Champollion deciphers the Rosetta Stone.,Science/Tech,Modern Era
+230,1823,"The Monroe Doctrine is declared, opposing European colonialism in the Americas.",Politics/War,Modern Era
+231,1825,The world's first public railway opens between Stockton and Darlington in England.,Science/Tech,Modern Era
+232,1826,The first photograph is taken by Nicéphore Niépce.,Science/Tech,Modern Era
+233,1829,Louis Braille invents the Braille reading system for the blind.,Science/Tech,Modern Era
+234,1830,The lawn mower is invented by Edwin Budding.,Science/Tech,Modern Era
+235,1831,"Michael Faraday discovers electromagnetic induction, the principle behind the electric generator.",Science/Tech,Modern Era
+236,1833,The Slavery Abolition Act bans slavery throughout the British Empire.,Politics/War,Modern Era
+237,1837,Samuel Morse invents Morse code for the telegraph.,Science/Tech,Modern Era
+238,1838,Charles Darwin develops his theory of evolution by natural selection.,Science/Tech,Modern Era
+239,1839,The First Opium War begins between Britain and China.,Politics/War,Modern Era
+240,1839,Vulcanized rubber is invented by Charles Goodyear.,Science/Tech,Modern Era
+241,1840,"The Treaty of Waitangi is signed, establishing New Zealand as a British colony.",Politics/War,Modern Era
+242,1842,Anesthesia is used for the first time in surgery.,Science/Tech,Modern Era
+243,1844,The first modern general anesthetic is created by Hanaoka Seishū.,Science/Tech,Modern Era
+244,1845,"The Irish Potato Famine begins, leading to mass starvation and emigration.",History,Modern Era
+245,1846,The Mexican-American War begins over territorial disputes.,Politics/War,Modern Era
+246,1848,Karl Marx and Friedrich Engels publish The Communist Manifesto.,Culture,Modern Era
+247,1848,"The California Gold Rush begins, sparking mass migration to the West Coast of the U.S.",History,Modern Era
+248,1849,The safety pin is invented by Walter Hunt.,Science/Tech,Modern Era
+249,1851,"The Great Exhibition is held in London's Crystal Palace, showcasing industrial technology.",History,Modern Era
+250,1852,"Harriet Beecher Stowe publishes Uncle Tom's Cabin, galvanizing anti-slavery sentiment.",Culture,Modern Era
+251,1852,The safety brake elevator is invented by Elisha Otis.,Science/Tech,Modern Era
+252,1854,"The Crimean War begins, pitting Russia against an alliance of Britain, France, and the Ottoman Empire.",Politics/War,Modern Era
+253,1855,The Bessemer process for mass-producing steel is patented by Henry Bessemer.,Science/Tech,Modern Era
+254,1856,"Parkesine, the first man-made plastic, is invented by Alexander Parkes.",Science/Tech,Modern Era
+255,1857,The Indian Rebellion begins against British rule.,Politics/War,Modern Era
+256,1859,Charles Darwin publishes On the Origin of Species.,Science/Tech,Modern Era
+257,1859,"The Suez Canal construction begins, connecting the Mediterranean and Red Seas.",Science/Tech,Modern Era
+258,1861,The American Civil War begins with the Confederate attack on Fort Sumter.,Politics/War,Modern Era
+259,1861,Serfdom is abolished in Russia by Tsar Alexander II.,Politics/War,Modern Era
+260,1862,The first paper money is issued in the United States.,History,Modern Era
+261,1863,President Abraham Lincoln issues the Emancipation Proclamation.,Politics/War,Modern Era
+262,1863,"The first London Underground line opens, the world's first subway system.",Science/Tech,Modern Era
+263,1864,Louis Pasteur invents the pasteurization process.,Science/Tech,Modern Era
+264,1865,Abraham Lincoln is assassinated by John Wilkes Booth.,Politics/War,Modern Era
+265,1867,The United States purchases Alaska from Russia.,Politics/War,Modern Era
+266,1867,Alfred Nobel invents dynamite.,Science/Tech,Modern Era
+267,1867,Barbed wire is invented by Lucien B. Smith.,Science/Tech,Modern Era
+268,1868,"The Meiji Restoration begins in Japan, leading to rapid modernization.",Politics/War,Modern Era
+269,1869,The First Transcontinental Railroad is completed in the United States.,Science/Tech,Modern Era
+270,1869,Dmitri Mendeleev creates the Periodic Table of Elements.,Science/Tech,Modern Era
+271,1870,"The Franco-Prussian War begins, leading to the unification of Germany.",Politics/War,Modern Era
+272,1871,The German Empire is proclaimed with Wilhelm I as Emperor and Otto von Bismarck as Chancellor.,Politics/War,Modern Era
+273,1872,Yellowstone National Park is established as the world's first national park.,History,Modern Era
+274,1873,"The first practical typewriter, the Sholes and Glidden typewriter, is produced.",Science/Tech,Modern Era
+275,1876,Alexander Graham Bell is granted a patent for the telephone.,Science/Tech,Modern Era
+276,1876,"The Battle of the Little Bighorn takes place, where Lakota, Cheyenne, and Arapaho warriors defeat the U.S. 7th Cavalry.",Politics/War,Modern Era
+277,1877,"Thomas Edison invents the phonograph, the first device to record and reproduce sound.",Science/Tech,Modern Era
+278,1879,Thomas Edison patents a practical incandescent light bulb.,Science/Tech,Modern Era
+279,1882,Robert Koch identifies the bacterium that causes tuberculosis.,Science/Tech,Modern Era
+280,1884,"The Prime Meridian is established at Greenwich, London, standardizing global time and longitude.",Science/Tech,Modern Era
+281,1884,The first practical machine gun is invented by Hiram Maxim.,Science/Tech,Modern Era
+282,1885,The first modern safety bicycle is invented by John Kemp Starley.,Science/Tech,Modern Era
+283,1886,"Karl Benz patents the Benz Patent-Motorwagen, the first gasoline-powered automobile.",Science/Tech,Modern Era
+284,1887,"Sir Arthur Conan Doyle publishes the first Sherlock Holmes story, A Study in Scarlet.",Culture,Modern Era
+285,1888,Heinrich Hertz demonstrates the existence of radio waves.,Science/Tech,Modern Era
+286,1888,The ballpoint pen is invented by John J. Loud.,Science/Tech,Modern Era
+287,1889,The Eiffel Tower is inaugurated in Paris for the World's Fair.,Culture,Modern Era
+288,1890,"The Wounded Knee Massacre occurs, the last major conflict of the American Indian Wars.",Politics/War,Modern Era
+289,1891,The first public old-age pension scheme is initiated in Germany.,History,Modern Era
+290,1891,The zipper is invented by Whitcomb Judson.,Science/Tech,Modern Era
+291,1892,Fingerprinting is officially adopted for criminal identification.,Science/Tech,Modern Era
+292,1893,New Zealand becomes the first country to grant women the right to vote.,Politics/War,Modern Era
+293,1895,Wilhelm Röntgen discovers X-rays.,Science/Tech,Modern Era
+294,1895,The Lumière brothers hold the first public screening of a motion picture.,Culture,Modern Era
+295,1896,"The modern Olympic Games are revived in Athens, Greece.",Culture,Modern Era
+296,1897,J.J. Thomson discovers the electron.,Science/Tech,Modern Era
+297,1898,"The Spanish-American War begins, leading to U.S. acquisition of Puerto Rico, Guam, and the Philippines.",Politics/War,Modern Era
+298,1898,Marie and Pierre Curie discover radium and polonium.,Science/Tech,Modern Era
+299,1900,"Max Planck proposes quantum theory, revolutionizing physics.",Science/Tech,Modern Era
+300,1900,"The Galveston hurricane, the deadliest in U.S. history, makes landfall in Texas.",History,Modern Era
+301,1900,"Sigmund Freud publishes ""The Interpretation of Dreams,"" founding psychoanalysis.",Culture,Modern Era
+302,1901,Guglielmo Marconi receives the first transatlantic radio signal.,Science/Tech,Modern Era
+303,1901,"President William McKinley is assassinated, and Theodore Roosevelt becomes president.",Politics/War,Modern Era
+304,1901,"The first Nobel Prizes are awarded in Stockholm, Sweden.",History,Modern Era
+305,1902,"The first Rose Bowl college football game is played in Pasadena, California.",Culture,Modern Era
+306,1902,Willis Carrier invents the first modern electrical air conditioning unit.,Science/Tech,Modern Era
+307,1902,The Second Boer War ends in British victory in South Africa.,Politics/War,Modern Era
+308,1903,The Wright brothers achieve the first successful powered airplane flight.,Science/Tech,Modern Era
+309,1903,The Ford Motor Company is incorporated by Henry Ford.,Science/Tech,Modern Era
+310,1903,The first World Series of baseball is held.,Culture,Modern Era
+311,1903,"The silent film ""The Great Train Robbery"" is released, pioneering new cinematic techniques.",Culture,Modern Era
+312,1904,"The New York City Subway, one of the world's oldest public transit systems, begins operation.",History,Modern Era
+313,1904,"The Roosevelt Corollary to the Monroe Doctrine is articulated, asserting U.S. police power in the Western Hemisphere.",Politics/War,Modern Era
+314,1904,"The first New Year's Eve celebration is held in Times Square, New York City.",Culture,Modern Era
+315,1905,Albert Einstein publishes his theory of special relativity.,Science/Tech,Modern Era
+316,1905,The Russo-Japanese War ends with a surprising Japanese victory.,Politics/War,Modern Era
+317,1905,The Industrial Workers of the World (IWW) is founded in Chicago.,History,Modern Era
+318,1906,A massive earthquake and subsequent fire devastate San Francisco.,History,Modern Era
+319,1906,"The U.S. Pure Food and Drug Act is passed, creating the Food and Drug Administration (FDA).",History,Modern Era
+320,1906,The launch of the British battleship HMS Dreadnought sparks a naval arms race.,Politics/War,Modern Era
+321,1907,Oklahoma is admitted as the 46th U.S. state.,Politics/War,Modern Era
+322,1907,"The first electric washing machine, the ""Thor,"" is introduced.",Science/Tech,Modern Era
+323,1907,The first taxicabs with meters begin operating in London.,History,Modern Era
+324,1908,"The Ford Model T, the first affordable automobile, enters the market.",Science/Tech,Modern Era
+325,1908,The Federal Bureau of Investigation (FBI) is established in the United States.,Politics/War,Modern Era
+326,1909,Robert Peary's expedition claims to be the first to reach the North Pole.,History,Modern Era
+327,1909,The National Association for the Advancement of Colored People (NAACP) is founded.,History,Modern Era
+328,1909,"Leo Baekeland announces the invention of Bakelite, the first synthetic plastic.",Science/Tech,Modern Era
+329,1910,The Boy Scouts of America is founded.,History,Modern Era
+330,1910,Halley's Comet makes its closest approach to Earth in its 75-year orbit.,History,Modern Era
+331,1910,"The first public radio broadcast is made, a live performance of the opera ""Cavalleria Rusticana"".",Culture,Modern Era
+332,1911,Roald Amundsen's Norwegian expedition is the first to reach the South Pole.,History,Modern Era
+333,1911,The U.S. Supreme Court orders the dissolution of the Standard Oil trust.,History,Modern Era
+334,1911,Hiram Bingham rediscovers the ancient Incan city of Machu Picchu in Peru.,History,Modern Era
+335,1911,"Irving Berlin's ""Alexander's Ragtime Band"" popularizes ragtime music.",Culture,Modern Era
+336,1912,The British passenger liner RMS Titanic sinks in the North Atlantic after hitting an iceberg.,Culture,Modern Era
+337,1912,"The Republic of China is established, ending millennia of imperial rule.",Politics/War,Modern Era
+338,1912,Alfred Wegener first proposes his theory of continental drift.,Science/Tech,Modern Era
+339,1912,"Arizona becomes the 48th state, completing the contiguous United States.",Politics/War,Modern Era
+340,1913,The Armory Show in New York City introduces modern art to the American public.,Culture,Modern Era
+341,1913,The Ford Motor Company introduces the first moving assembly line for mass production.,Science/Tech,Modern Era
+342,1913,The U.S. Federal Reserve System is created to act as the nation's central bank.,History,Modern Era
+343,1913,Niels Bohr presents his quantum model of the atom.,Science/Tech,Modern Era
+344,1914,World War I begins after the assassination of Archduke Franz Ferdinand of Austria.,Politics/War,Modern Era
+345,1914,"The Panama Canal opens, connecting the Atlantic and Pacific Oceans.",Science/Tech,Modern Era
+346,1914,"Charlie Chaplin debuts his iconic ""Little Tramp"" character in film.",Culture,Modern Era
+347,1915,Albert Einstein publishes his general theory of relativity.,Science/Tech,Modern Era
+348,1915,"A German U-boat sinks the British passenger liner RMS Lusitania, killing 1,198 people.",Politics/War,Modern Era
+349,1915,The first transcontinental telephone call is made in the United States.,Science/Tech,Modern Era
+350,1916,"The Battle of the Somme, one of the bloodiest battles in history, is fought during WWI.",Politics/War,Modern Era
+351,1916,Jeanette Rankin of Montana becomes the first woman elected to the U.S. Congress.,Politics/War,Modern Era
+352,1916,"The first self-service grocery store, Piggly Wiggly, opens in Memphis, Tennessee.",History,Modern Era
+353,1917,The United States declares war on Germany and officially enters World War I.,Politics/War,Modern Era
+354,1917,The Bolshevik Revolution led by Vladimir Lenin establishes a communist government in Russia.,Politics/War,Modern Era
+355,1918,"The Spanish Flu pandemic begins, ultimately killing an estimated 50 million people worldwide.",History,Modern Era
+356,1918,World War I ends with the signing of the Armistice on November 11.,Politics/War,Modern Era
+357,1919,"The Treaty of Versailles is signed, formally ending World War I and imposing heavy penalties on Germany.",Politics/War,Modern Era
+358,1919,"The 18th Amendment to the U.S. Constitution is ratified, establishing Prohibition.",History,Modern Era
+359,1919,Ernest Rutherford discovers the proton.,Science/Tech,Modern Era
+360,1920,"The 19th Amendment to the U.S. Constitution is ratified, granting women the right to vote.",History,Modern Era
+361,1920,"The first commercial radio station, KDKA in Pittsburgh, begins broadcasting.",Culture,Modern Era
+362,1920,The League of Nations is officially established to promote international cooperation.,Politics/War,Modern Era
+363,1920,The National Football League (NFL) is formed in the United States.,Culture,Modern Era
+364,1921,Bessie Coleman becomes the first African-American woman to earn a pilot's license.,History,Modern Era
+365,1921,The lie detector (polygraph) is invented by John Augustus Larson.,Science/Tech,Modern Era
+366,1921,The Irish Free State is established after a war for independence from Britain.,Politics/War,Modern Era
+367,1922,Howard Carter discovers the nearly intact tomb of the pharaoh Tutankhamun in Egypt.,History,Modern Era
+368,1922,The Union of Soviet Socialist Republics (USSR) is formally established.,Politics/War,Modern Era
+369,1922,"James Joyce's influential modernist novel ""Ulysses"" is published in Paris.",Culture,Modern Era
+370,1922,Insulin is first used to treat diabetes in a human patient.,Science/Tech,Modern Era
+371,1923,"The Charleston dance, originating from the Broadway show ""Runnin' Wild,"" becomes a national craze.",Culture,Modern Era
+372,1923,Time Magazine publishes its first issue.,Culture,Modern Era
+373,1923,The Teapot Dome scandal rocks the Harding administration in the United States.,Politics/War,Modern Era
+374,1923,"Yankee Stadium, ""The House That Ruth Built,"" opens in New York City.",Culture,Modern Era
+375,1924,"The first Winter Olympic Games are held in Chamonix, France.",Culture,Modern Era
+376,1924,"J. Edgar Hoover is appointed director of the Bureau of Investigation, the forerunner of the FBI.",Politics/War,Modern Era
+377,1925,"The Scopes ""Monkey"" Trial in Tennessee puts the teaching of evolution on trial.",History,Modern Era
+378,1925,"F. Scott Fitzgerald's novel ""The Great Gatsby"" is published.",Culture,Modern Era
+379,1925,The first successful television transmission is achieved by John Logie Baird.,Science/Tech,Modern Era
+380,1926,Robert Goddard launches the world's first successful liquid-fueled rocket.,Science/Tech,Modern Era
+381,1926,"U.S. Route 66, the ""Mother Road,"" is established, connecting Chicago to Los Angeles.",History,Modern Era
+382,1926,"A. A. Milne's book ""Winnie-the-Pooh"" is published.",Culture,Modern Era
+383,1926,The National Broadcasting Company (NBC) is founded as the first major broadcast network in the U.S.,Culture,Modern Era
+384,1927,"Charles Lindbergh completes the first solo, nonstop transatlantic flight.",History,Modern Era
+385,1927,"""The Jazz Singer"" is released, becoming the first feature-length motion picture with synchronized dialogue.",Culture,Modern Era
+386,1927,Babe Ruth hits a record 60 home runs in a single baseball season.,Culture,Modern Era
+387,1928,"Alexander Fleming discovers penicillin, a key breakthrough in medicine.",Science/Tech,Modern Era
+388,1928,"The first Mickey Mouse cartoon, ""Steamboat Willie,"" is released by Walt Disney.",Culture,Modern Era
+389,1928,Bubble gum is invented by Walter Diemer.,Culture,Modern Era
+390,1929,"The Wall Street Crash occurs on ""Black Tuesday,"" triggering the Great Depression.",History,Modern Era
+391,1929,The first Academy Awards ceremony is held in Hollywood.,Culture,Modern Era
+392,1929,Edwin Hubble provides evidence that the universe is expanding.,Science/Tech,Modern Era
+393,1930,The planet Pluto is discovered by astronomer Clyde Tombaugh at the Lowell Observatory.,Science/Tech,Modern Era
+394,1930,The first FIFA World Cup is held in Uruguay.,Culture,Modern Era
+395,1930,Sliced bread is first sold commercially by the Wonder Bread company.,Culture,Modern Era
+396,1931,"The Empire State Building is completed in New York City, becoming the world's tallest building.",History,Modern Era
+397,1931,"Japan invades Manchuria, an early act of aggression leading to WWII.",Politics/War,Modern Era
+398,1932,Amelia Earhart becomes the first woman to fly solo across the Atlantic Ocean.,History,Modern Era
+399,1932,The neutron is discovered by English physicist James Chadwick.,Science/Tech,Modern Era
+400,1932,"The ""Bonus Army"" of WWI veterans marches on Washington, D.C., to demand payment.",Politics/War,Modern Era
+401,1933,"Adolf Hitler is appointed Chancellor of Germany, leading to the rise of the Nazi Party.",Politics/War,Modern Era
+402,1933,"U.S. President Franklin D. Roosevelt launches the ""New Deal"" to combat the Great Depression.",Politics/War,Modern Era
+403,1933,Prohibition is repealed in the United States with the ratification of the 21st Amendment.,History,Modern Era
+404,1934,"The ""Dust Bowl"" environmental disaster begins to devastate the American Great Plains.",History,Modern Era
+405,1934,The first federal prisoners arrive at the Alcatraz island prison.,History,Modern Era
+406,1934,"The first Masters Tournament for golf is held in Augusta, Georgia.",Culture,Modern Era
+407,1935,"The Social Security Act is passed in the United States, creating a national social insurance program.",History,Modern Era
+408,1935,The board game Monopoly is first sold by Parker Brothers.,Culture,Modern Era
+409,1935,"Italy invades Ethiopia, demonstrating the ineffectiveness of the League of Nations.",Politics/War,Modern Era
+410,1936,"The Spanish Civil War begins, serving as a prelude to World War II.",Politics/War,Modern Era
+411,1936,"Jesse Owens wins four gold medals at the Summer Olympics in Berlin, Germany.",Culture,Modern Era
+412,1936,The Hoover Dam is completed on the Colorado River.,Science/Tech,Modern Era
+413,1937,"The German airship Hindenburg explodes and burns while landing in Lakehurst, New Jersey.",Culture,Modern Era
+414,1937,The Golden Gate Bridge opens to traffic in San Francisco.,Science/Tech,Modern Era
+415,1937,"J.R.R. Tolkien publishes his fantasy novel ""The Hobbit.""",Culture,Modern Era
+416,1938,The first Superman comic is published in Action Comics #1.,Culture,Modern Era
+417,1938,"Orson Welles' radio broadcast of ""The War of the Worlds"" causes a nationwide panic.",Culture,Modern Era
+418,1938,"""Kristallnacht"" (Night of Broken Glass) occurs, a major pogrom against Jews throughout Nazi Germany.",Politics/War,Modern Era
+419,1938,The first nylon-bristled toothbrush goes on sale.,Science/Tech,Modern Era
+420,1939,World War II begins in Europe with Germany's invasion of Poland.,Politics/War,Modern Era
+421,1939,"The classic film ""The Wizard of Oz"" is released in theaters.",Culture,Modern Era
+422,1939,"Nuclear fission is discovered by Lise Meitner and Otto Frisch, opening the way for atomic energy.",Science/Tech,Modern Era
+423,1939,"The New York World's Fair opens, showcasing ""The World of Tomorrow.""",Culture,Modern Era
+424,1940,Winston Churchill becomes Prime Minister of the United Kingdom during WWII.,Politics/War,Modern Era
+425,1940,"The Battle of Britain, a major air campaign, is fought between the Royal Air Force and the Luftwaffe.",Politics/War,Modern Era
+426,1940,The first McDonald's restaurant is opened by Richard and Maurice McDonald in California.,History,Modern Era
+427,1940,"Walt Disney's animated film ""Fantasia"" is released.",Culture,Modern Era
+428,1941,"Japan launches a surprise attack on the U.S. naval base at Pearl Harbor, drawing the U.S. into WWII.",Politics/War,Modern Era
+429,1941,"Orson Welles' film ""Citizen Kane"" is released, often cited as the greatest film ever made.",Culture,Modern Era
+430,1941,Mount Rushmore National Memorial is completed in South Dakota.,Culture,Modern Era
+431,1942,The Manhattan Project is secretly initiated to develop the first nuclear weapons.,Science/Tech,Modern Era
+432,1942,The Battle of Midway serves as a crucial turning point in the Pacific Theater of WWII.,Politics/War,Modern Era
+433,1942,"The film ""Casablanca"" premieres in New York City.",Culture,Modern Era
+434,1943,"The first programmable electronic computer, Colossus, is developed by the British to break German codes.",Science/Tech,Modern Era
+435,1943,"The Warsaw Ghetto Uprising occurs, the largest single revolt by Jews during WWII.",Politics/War,Modern Era
+436,1943,"The Jefferson Memorial is dedicated in Washington, D.C.",History,Modern Era
+437,1944,"Allied forces launch the D-Day invasion of Normandy, the largest seaborne invasion in history.",Politics/War,Modern Era
+438,1944,"The G.I. Bill is signed into law in the U.S., providing benefits for returning WWII veterans.",History,Modern Era
+439,1945,World War II ends in Europe on V-E Day (May 8).,Politics/War,Modern Era
+440,1945,"The United States drops atomic bombs on the Japanese cities of Hiroshima and Nagasaki, leading to Japan's surrender.",Politics/War,Modern Era
+441,1945,The United Nations is officially founded to promote international peace and cooperation.,Politics/War,Modern Era
+442,1945,The microwave oven is patented by Percy Spencer.,Science/Tech,Modern Era
+443,1946,"Winston Churchill delivers his ""Iron Curtain"" speech, signaling the start of the Cold War.",Politics/War,Modern Era
+444,1946,The first images of Earth are captured from space by a V-2 rocket.,History,Modern Era
+445,1946,The first Cannes Film Festival is held in France.,Culture,Modern Era
+446,1946,The first bikini is introduced in Paris.,Culture,Modern Era
+447,1947,Jackie Robinson breaks the color barrier in Major League Baseball.,Culture,Modern Era
+448,1947,U.S. Air Force pilot Chuck Yeager becomes the first person to officially break the sound barrier.,Science/Tech,Modern Era
+449,1947,"The transistor is invented at Bell Laboratories, a key component for modern electronics.",Science/Tech,Modern Era
+450,1947,"The ""Dead Sea Scrolls"" are discovered in caves near the Dead Sea.",History,Modern Era
+451,1948,The independent State of Israel is proclaimed.,Politics/War,Modern Era
+452,1948,The Berlin Airlift begins after the Soviet Union blockades West Berlin.,Politics/War,Modern Era
+453,1948,The World Health Organization (WHO) is established by the United Nations.,History,Modern Era
+454,1948,"The first Polaroid Land Camera, which can produce a finished print in 60 seconds, is sold.",Science/Tech,Modern Era
+455,1949,The North Atlantic Treaty Organization (NATO) is formed as a collective security alliance.,Politics/War,Modern Era
+456,1949,"George Orwell's dystopian novel ""Nineteen Eighty-Four"" is published.",Culture,Modern Era
+457,1949,The Soviet Union successfully tests its first atomic bomb.,Politics/War,Modern Era
+458,1950,The Korean War begins when North Korea invades South Korea.,Politics/War,Modern Era
+459,1950,"Senator Joseph McCarthy begins his anti-communist crusade, known as McCarthyism.",Politics/War,Modern Era
+460,1950,"The first credit card, the Diners Club Card, is introduced.",History,Modern Era
+461,1951,The first commercial color television broadcasts begin in the United States.,Culture,Modern Era
+462,1951,"J.D. Salinger's novel ""The Catcher in the Rye"" is published.",Culture,Modern Era
+463,1952,The United States successfully detonates the first hydrogen bomb.,Science/Tech,Modern Era
+464,1952,Queen Elizabeth II ascends to the throne of the United Kingdom.,Politics/War,Modern Era
+465,1953,The double helix structure of DNA is discovered by James Watson and Francis Crick.,Science/Tech,Modern Era
+466,1953,Sir Edmund Hillary and Tenzing Norgay become the first people to reach the summit of Mount Everest.,History,Modern Era
+467,1953,The Korean War ends with an armistice agreement.,Politics/War,Modern Era
+468,1954,The U.S. Supreme Court's Brown v. Board of Education decision rules that racial segregation in public schools is unconstitutional.,History,Modern Era
+469,1954,"The first nuclear-powered submarine, the USS Nautilus, is launched by the U.S. Navy.",Science/Tech,Modern Era
+470,1954,The first issue of Sports Illustrated is published.,Culture,Modern Era
+471,1955,The Warsaw Pact is formed as a military alliance of communist nations in Eastern Europe.,Politics/War,Modern Era
+472,1955,The Montgomery Bus Boycott begins in Alabama after Rosa Parks refuses to give up her seat.,History,Modern Era
+473,1955,Jonas Salk's polio vaccine is declared safe and effective for public use.,Science/Tech,Modern Era
+474,1955,"The first Disneyland theme park opens in Anaheim, California.",Culture,Modern Era
+475,1956,"Elvis Presley releases his first number-one hit single, ""Heartbreak Hotel.""",Culture,Modern Era
+476,1956,The Suez Crisis erupts after Egypt nationalizes the Suez Canal.,Politics/War,Modern Era
+477,1956,The Interstate Highway System is authorized in the United States.,History,Modern Era
+478,1957,"The Soviet Union launches Sputnik 1, the world's first artificial satellite, into orbit.",History,Modern Era
+479,1957,"The Treaty of Rome is signed, establishing the European Economic Community (EEC).",Politics/War,Modern Era
+480,1957,"The ""Little Rock Nine"" integrate Central High School in Arkansas under federal protection.",History,Modern Era
+481,1958,The National Aeronautics and Space Administration (NASA) is founded in the United States.,Science/Tech,Modern Era
+482,1958,The first stereo LP records are sold to the public.,Culture,Modern Era
+483,1958,"The first successful American satellite, Explorer 1, is launched.",History,Modern Era
+484,1958,The LEGO brick with the modern stud-and-tube coupling system is patented.,Culture,Modern Era
+485,1959,The Cuban Revolution concludes with Fidel Castro taking power.,Politics/War,Modern Era
+486,1959,Alaska and Hawaii are admitted as the 49th and 50th U.S. states.,Politics/War,Modern Era
+487,1959,The microchip (integrated circuit) is co-invented by Jack Kilby and Robert Noyce.,Science/Tech,Modern Era
+488,1959,The Barbie doll is introduced by Mattel at the American International Toy Fair.,Culture,Modern Era
+489,1960,"The first oral contraceptive, ""the pill,"" is approved for use in the United States.",History,Modern Era
+490,1960,The first televised U.S. presidential debate is held between John F. Kennedy and Richard Nixon.,Politics/War,Modern Era
+491,1960,The first working laser is demonstrated by Theodore Maiman.,Science/Tech,Modern Era
+492,1961,Soviet cosmonaut Yuri Gagarin becomes the first human to travel into space.,History,Modern Era
+493,1961,"The Berlin Wall is constructed, physically dividing East and West Berlin.",Politics/War,Modern Era
+494,1961,"The Bay of Pigs invasion, a CIA-sponsored attempt to overthrow Fidel Castro, fails in Cuba.",Politics/War,Modern Era
+495,1961,The Peace Corps is established by U.S. President John F. Kennedy.,History,Modern Era
+496,1962,The Cuban Missile Crisis brings the United States and the Soviet Union to the brink of nuclear war.,Politics/War,Modern Era
+497,1962,"Rachel Carson's book ""Silent Spring"" is published, galvanizing the modern environmental movement.",History,Modern Era
+498,1962,John Glenn becomes the first American to orbit the Earth.,History,Modern Era
+499,1962,"The first James Bond film, ""Dr. No,"" is released.",Culture,Modern Era
+500,1962,"The first Walmart store is opened by Sam Walton in Rogers, Arkansas.",History,Modern Era
+501,1963,"Martin Luther King Jr. delivers his famous ""I Have a Dream"" speech during the March on Washington.",History,Modern Era
+502,1963,"U.S. President John F. Kennedy is assassinated in Dallas, Texas.",Politics/War,Modern Era
+503,1963,"The first woman in space, Valentina Tereshkova, orbits the Earth.",History,Modern Era
+504,1963,The audio cassette is invented by Philips.,Science/Tech,Modern Era
+505,1964,"The Civil Rights Act is signed into law in the United States, outlawing major forms of discrimination.",History,Modern Era
+506,1964,"The Beatles make their first appearance on ""The Ed Sullivan Show,"" launching the ""British Invasion"" in music.",Culture,Modern Era
+507,1964,The Gulf of Tonkin Resolution authorizes U.S. President Lyndon B. Johnson to escalate military action in Vietnam.,Politics/War,Modern Era
+508,1964,"The Ford Mustang is introduced, creating the ""pony car"" class of automobiles.",Culture,Modern Era
+509,1965,The first American combat troops are deployed to South Vietnam.,Politics/War,Modern Era
+510,1965,"The Voting Rights Act is signed into law, protecting the voting rights of African Americans.",History,Modern Era
+511,1965,The first spacewalk is performed by Soviet cosmonaut Alexei Leonov.,History,Modern Era
+512,1966,The Cultural Revolution is initiated by Mao Zedong in China.,Politics/War,Modern Era
+513,1966,"The television series ""Star Trek"" premieres in the United States.",Culture,Modern Era
+514,1966,The National Organization for Women (NOW) is founded in the U.S.,History,Modern Era
+515,1967,The first successful human heart transplant is performed by Dr. Christiaan Barnard in South Africa.,Science/Tech,Modern Era
+516,1967,The Six-Day War takes place between Israel and a coalition of Arab states.,Politics/War,Modern Era
+517,1967,The first Super Bowl is played between the Green Bay Packers and the Kansas City Chiefs.,Culture,Modern Era
+518,1967,The first automated teller machine (ATM) is installed in London.,Science/Tech,Modern Era
+519,1968,"Civil rights leader Martin Luther King Jr. is assassinated in Memphis, Tennessee.",Politics/War,Modern Era
+520,1968,U.S. Senator and presidential candidate Robert F. Kennedy is assassinated in Los Angeles.,Politics/War,Modern Era
+521,1968,"The Tet Offensive is launched by North Vietnamese forces, shifting public opinion on the Vietnam War.",Politics/War,Modern Era
+522,1969,Neil Armstrong becomes the first human to walk on the Moon during the Apollo 11 mission.,History,Modern Era
+523,1969,"The Woodstock music festival is held in upstate New York, defining a generation.",Culture,Modern Era
+524,1969,"The first message is sent over ARPANET, the forerunner of the modern Internet.",Science/Tech,Modern Era
+525,1969,The Stonewall riots in New York City mark a major turning point for the gay rights movement.,History,Modern Era
+526,1970,"The first Earth Day is celebrated, marking the birth of the modern environmental movement.",History,Modern Era
+527,1970,Four students are killed by National Guardsmen during a protest at Kent State University.,Politics/War,Modern Era
+528,1970,The Beatles officially announce their breakup.,Culture,Modern Era
+529,1971,"The 26th Amendment to the U.S. Constitution is ratified, lowering the voting age to 18.",Politics/War,Modern Era
+530,1971,"Intel releases the world's first commercial microprocessor, the Intel 4004.",Science/Tech,Modern Era
+531,1971,"Greenpeace is founded in Vancouver, Canada.",History,Modern Era
+532,1971,"The first Starbucks coffee shop opens in Seattle, Washington.",Culture,Modern Era
+533,1972,"The Watergate break-in occurs at the Democratic National Committee headquarters in Washington, D.C.",Politics/War,Modern Era
+534,1972,"The film ""The Godfather"" is released, becoming a cinematic landmark.",Culture,Modern Era
+535,1972,"The first scientific hand-held calculator, the HP-35, is introduced.",Science/Tech,Modern Era
+536,1972,"The video game ""Pong"" is released by Atari, marking the beginning of the arcade video game industry.",Culture,Modern Era
+537,1973,The U.S. Supreme Court's Roe v. Wade decision affirms a woman's right to an abortion.,History,Modern Era
+538,1973,The Yom Kippur War leads to an oil crisis as OPEC issues an embargo.,Politics/War,Modern Era
+539,1973,The Sydney Opera House is officially opened in Australia.,Culture,Modern Era
+540,1974,U.S. President Richard Nixon resigns from office due to the Watergate scandal.,Politics/War,Modern Era
+541,1974,Hank Aaron breaks Babe Ruth's career home run record in baseball.,Culture,Modern Era
+542,1975,The Vietnam War ends with the fall of Saigon to North Vietnamese forces.,Politics/War,Modern Era
+543,1975,Microsoft is founded by Bill Gates and Paul Allen.,Science/Tech,Modern Era
+544,1975,"The movie ""Jaws"" is released, creating the summer blockbuster genre.",Culture,Modern Era
+545,1976,The Viking 1 spacecraft becomes the first to successfully land on Mars.,History,Modern Era
+546,1976,Apple Computer Company is founded by Steve Jobs and Steve Wozniak.,Science/Tech,Modern Era
+547,1977,"The movie ""Star Wars"" is released, revolutionizing the film industry with its special effects.",Culture,Modern Era
+548,1977,"The Apple II, one of the first successful personal computers, goes on sale.",Science/Tech,Modern Era
+549,1977,The Voyager 1 and 2 space probes are launched on a grand tour of the outer solar system.,History,Modern Era
+550,1978,"The first ""test-tube baby,"" Louise Brown, is born in England through in vitro fertilization.",Science/Tech,Modern Era
+551,1978,The Camp David Accords are signed between Israel and Egypt.,Politics/War,Modern Era
+552,1978,"The video game ""Space Invaders"" is released, popularizing the shoot 'em up genre.",Culture,Modern Era
+553,1979,A partial nuclear meltdown occurs at the Three Mile Island power plant in Pennsylvania.,Science/Tech,Modern Era
+554,1979,The Iran hostage crisis begins as militants seize the U.S. embassy in Tehran.,Politics/War,Modern Era
+555,1979,"The Sony Walkman is introduced, making personal, portable music widely available.",Culture,Modern Era
+556,1979,"ESPN, the first all-sports television network, is launched.",Culture,Modern Era
+557,1980,The Mount St. Helens volcano erupts in Washington state.,History,Modern Era
+558,1980,"CNN (Cable News Network), the first 24-hour television news channel, is launched.",Culture,Modern Era
+559,1980,The video game Pac-Man is released in Japan.,Culture,Modern Era
+560,1981,"The first Space Shuttle, Columbia, is launched by NASA.",History,Modern Era
+561,1981,"MTV (Music Television) is launched, revolutionizing the music industry with music videos.",Culture,Modern Era
+562,1981,Sandra Day O'Connor is appointed as the first female Justice of the U.S. Supreme Court.,History,Modern Era
+563,1981,The AIDS epidemic is first officially recognized by the CDC in the United States.,History,Modern Era
+564,1982,The Falklands War is fought between the United Kingdom and Argentina.,Politics/War,Modern Era
+565,1982,The first permanent artificial heart is successfully implanted in a human patient.,Science/Tech,Modern Era
+566,1982,"Michael Jackson releases the album ""Thriller,"" which becomes the best-selling album of all time.",Culture,Modern Era
+567,1982,"The first compact disc (CD) is sold in Japan, beginning the shift from analog to digital music.",Science/Tech,Modern Era
+568,1983,The Internet is officially created when ARPANET transitions to the TCP/IP protocol.,Science/Tech,Modern Era
+569,1983,Sally Ride becomes the first American woman to travel to space.,History,Modern Era
+570,1983,The Global Positioning System (GPS) is made available for civilian use by the U.S. government.,Science/Tech,Modern Era
+571,1984,"The Apple Macintosh computer is introduced, popularizing the graphical user interface.",Science/Tech,Modern Era
+572,1984,"A chemical leak at a Union Carbide plant in Bhopal, India, causes a major industrial disaster.",History,Modern Era
+573,1984,"The first TED (Technology, Entertainment, Design) conference is held.",Culture,Modern Era
+574,1985,"Mikhail Gorbachev becomes the leader of the Soviet Union, initiating reforms like Glasnost and Perestroika.",Politics/War,Modern Era
+575,1985,The Live Aid benefit concert is held simultaneously in London and Philadelphia to raise funds for famine relief.,Culture,Modern Era
+576,1985,The wreck of the RMS Titanic is discovered on the ocean floor.,History,Modern Era
+577,1985,"The Nintendo Entertainment System (NES) is released in North America, reviving the video game industry.",Culture,Modern Era
+578,1986,"The Space Shuttle Challenger explodes shortly after liftoff, killing all seven astronauts aboard.",History,Modern Era
+579,1986,"The Chernobyl nuclear power plant disaster occurs in the Ukrainian SSR, Soviet Union.",Science/Tech,Modern Era
+580,1986,"The Iran-Contra affair, a political scandal involving secret arms sales, is revealed in the U.S.",Politics/War,Modern Era
+581,1987,"The ""Black Monday"" stock market crash sees the Dow Jones Industrial Average fall by 22.6%.",History,Modern Era
+582,1988,"The first transatlantic fiber-optic cable, TAT-8, begins operation.",Science/Tech,Modern Era
+583,1989,"The Exxon Valdez oil tanker runs aground in Alaska, causing a massive environmental disaster.",History,Modern Era
+584,1989,"Student-led pro-democracy protests in Tiananmen Square, Beijing, are violently suppressed by the Chinese government.",Politics/War,Modern Era
+585,1989,"The Berlin Wall is opened, and citizens are allowed to cross freely, symbolizing the end of the Cold War.",Politics/War,Modern Era
+586,1989,The World Wide Web is invented by Tim Berners-Lee at CERN.,Science/Tech,Modern Era
+587,1990,The Hubble Space Telescope is launched into orbit aboard the Space Shuttle Discovery.,History,Modern Era
+588,1990,East and West Germany are officially reunified into a single German state.,Politics/War,Modern Era
+589,1990,"The Human Genome Project, an international effort to map all human genes, is formally launched.",Science/Tech,Modern Era
+590,1990,The World Wide Web is first tested by Tim Berners-Lee at CERN.,Science/Tech,Modern Era
+591,1991,"The Soviet Union is officially dissolved, ending the Cold War.",Politics/War,Modern Era
+592,1991,The first Gulf War begins as a U.S.-led coalition moves to liberate Kuwait from Iraqi occupation.,Politics/War,Modern Era
+593,1991,"The Linux kernel, an open-source operating system, is first released by Linus Torvalds.",Science/Tech,Modern Era
+594,1992,The first exoplanets (planets outside our solar system) are confirmed to exist.,Science/Tech,Modern Era
+595,1992,Riots erupt in Los Angeles following the acquittal of police officers in the Rodney King beating case.,History,Modern Era
+596,1993,The World Wide Web is made available to the public for the first time.,Science/Tech,Modern Era
+597,1993,The European Union (EU) is formally established by the Maastricht Treaty.,Politics/War,Modern Era
+598,1993,"The film ""Jurassic Park"" is released, setting a new standard for computer-generated imagery.",Culture,Modern Era
+599,1994,"Nelson Mandela is inaugurated as the first black president of South Africa, marking the end of apartheid.",Politics/War,Modern Era
+600,1994,"The North American Free Trade Agreement (NAFTA) between the U.S., Canada, and Mexico goes into effect.",History,Modern Era
+601,1994,"The Channel Tunnel (""Chunnel"") connecting the UK and France is officially opened.",Science/Tech,Modern Era
+602,1994,The first PlayStation console is released by Sony in Japan.,Culture,Modern Era
+603,1995,"A truck bomb destroys the Alfred P. Murrah Federal Building in Oklahoma City, killing 168 people.",Politics/War,Modern Era
+604,1995,The Global Positioning System (GPS) becomes fully operational for worldwide use.,Science/Tech,Modern Era
+605,1995,Microsoft releases the first of its Windows 9x family of consumer-oriented operating systems.,Science/Tech,Modern Era
+606,1995,"The first ""Toy Story"" film is released, the first feature-length computer-animated film.",Culture,Modern Era
+607,1996,"Dolly the sheep, the first mammal to be successfully cloned from an adult cell, is born in Scotland.",Science/Tech,Modern Era
+608,1996,"The Taliban seize control of Kabul, Afghanistan, and establish a strict Islamic regime.",Politics/War,Modern Era
+609,1997,NASA's Mars Pathfinder mission successfully lands the Sojourner rover on the surface of Mars.,History,Modern Era
+610,1997,The United Kingdom hands over sovereignty of Hong Kong to the People's Republic of China.,Politics/War,Modern Era
+611,1997,"The Kyoto Protocol is adopted, an international treaty aimed at reducing greenhouse gas emissions.",Politics/War,Modern Era
+612,1997,"The first book in the ""Harry Potter"" series by J.K. Rowling is published in the UK.",Culture,Modern Era
+613,1997,Netflix is founded as a DVD-by-mail rental service.,Culture,Modern Era
+614,1998,"The Good Friday Agreement is signed, bringing an end to most of the violence of ""The Troubles"" in Northern Ireland.",Politics/War,Modern Era
+615,1998,Construction of the International Space Station (ISS) begins in orbit with the launch of the Zarya module.,History,Modern Era
+616,1998,Google Inc. is founded by Larry Page and Sergey Brin.,Science/Tech,Modern Era
+617,1999,The Euro currency is introduced electronically in 11 European Union countries.,History,Modern Era
+618,1999,The world's population is estimated to have reached six billion people.,History,Modern Era
+619,1999,"The Columbine High School massacre occurs in Colorado, sparking a national debate on gun control.",History,Modern Era
+620,2000,The first resident crew arrives at the International Space Station.,History,Modern Era
+621,2001,Terrorists attack the World Trade Center in New York and the Pentagon in Virginia on September 11.,Politics/War,Modern Era
+622,2001,The United States and its allies invade Afghanistan in response to the 9/11 attacks.,Politics/War,Modern Era
+623,2001,"Apple releases the iPod, a portable media player that revolutionizes the music industry.",Culture,Modern Era
+624,2001,"Wikipedia, a free, open-content online encyclopedia, is launched.",Science/Tech,Modern Era
+625,2002,The Euro replaces national currencies as physical coins and banknotes in 12 European countries.,History,Modern Era
+626,2002,The International Criminal Court (ICC) is established to prosecute international crimes.,Politics/War,Modern Era
+627,2003,"The Space Shuttle Columbia disintegrates during re-entry into Earth's atmosphere, killing all seven astronauts.",History,Modern Era
+628,2003,"A U.S.-led coalition invades Iraq, leading to the overthrow of Saddam Hussein.",Politics/War,Modern Era
+629,2003,"The Human Genome Project is completed, successfully sequencing all genes of a human being.",Science/Tech,Modern Era
+630,2004,"Facebook is launched by Mark Zuckerberg, initially for Harvard students.",Culture,Modern Era
+631,2004,"A massive earthquake and tsunami in the Indian Ocean kills over 230,000 people in 14 countries.",History,Modern Era
+632,2004,"The Mars rovers Spirit and Opportunity land on Mars, beginning years of exploration.",History,Modern Era
+633,2005,"Hurricane Katrina makes landfall on the U.S. Gulf Coast, causing catastrophic damage in New Orleans.",History,Modern Era
+634,2005,"YouTube, a video-sharing website, is launched to the public.",Culture,Modern Era
+635,2005,Angela Merkel becomes the first female Chancellor of Germany.,Politics/War,Modern Era
+636,2006,"Twitter, a microblogging and social networking service, is launched.",Culture,Modern Era
+637,2006,"The International Astronomical Union reclassifies Pluto as a ""dwarf planet.""",Science/Tech,Modern Era
+638,2006,North Korea conducts its first successful nuclear test.,Politics/War,Modern Era
+639,2006,"The Nintendo Wii is released, introducing motion-controlled gaming to a mass market.",Culture,Modern Era
+640,2007,"Apple releases the first iPhone, pioneering the modern smartphone.",Science/Tech,Modern Era
+641,2007,Nancy Pelosi becomes the first female Speaker of the U.S. House of Representatives.,Politics/War,Modern Era
+642,2008,"A global financial crisis begins, leading to the most severe economic recession since the Great Depression.",History,Modern Era
+643,2008,Barack Obama is elected as the first African-American President of the United States.,Politics/War,Modern Era
+644,2008,The Large Hadron Collider at CERN is first powered on.,Science/Tech,Modern Era
+645,2008,"The first Marvel Cinematic Universe (MCU) film, ""Iron Man,"" is released.",Culture,Modern Era
+646,2009,"Bitcoin is created, becoming the first decentralized cryptocurrency.",Science/Tech,Modern Era
+647,2009,"The ""Miracle on the Hudson"" occurs when US Airways Flight 1549 successfully ditches in the Hudson River.",History,Modern Era
+648,2010,"The Arab Spring, a series of pro-democracy uprisings, begins in Tunisia and spreads across the Middle East.",Politics/War,Modern Era
+649,2010,"The Deepwater Horizon oil rig explodes in the Gulf of Mexico, causing a massive environmental disaster.",History,Modern Era
+650,2010,"Apple releases the iPad, popularizing the tablet computer market.",Science/Tech,Modern Era
+651,2010,The photo-sharing social media service Instagram is launched.,Culture,Modern Era
+652,2011,U.S. Navy SEALs kill al-Qaeda leader Osama bin Laden in a raid in Pakistan.,Politics/War,Modern Era
+653,2011,"The final flight of the U.S. Space Shuttle program, STS-135, lands at Kennedy Space Center.",History,Modern Era
+654,2011,The world's population is estimated to have reached seven billion people.,History,Modern Era
+655,2012,"The Higgs boson, a fundamental particle, is discovered by scientists at CERN's Large Hadron Collider.",Science/Tech,Modern Era
+656,2012,The Curiosity rover successfully lands on Mars to begin its exploration mission.,History,Modern Era
+657,2012,Hurricane Sandy causes widespread destruction along the U.S. East Coast.,History,Modern Era
+658,2013,The Black Lives Matter movement is founded in the United States.,History,Modern Era
+659,2013,Edward Snowden leaks classified documents from the U.S. National Security Agency (NSA).,Politics/War,Modern Era
+660,2013,"Pope Benedict XVI resigns, becoming the first pope to do so in nearly 600 years.",History,Modern Era
+661,2014,"Russia annexes the Crimean Peninsula from Ukraine, sparking an international crisis.",Politics/War,Modern Era
+662,2014,The Islamic State of Iraq and Syria (ISIS) declares a caliphate in territory it controls.,Politics/War,Modern Era
+663,2014,The Rosetta spacecraft's Philae lander successfully lands on a comet.,History,Modern Era
+664,2015,The U.S. Supreme Court rules in Obergefell v. Hodges that same-sex marriage is a constitutional right.,History,Modern Era
+665,2015,The Paris Agreement on climate change is adopted by 196 countries.,Politics/War,Modern Era
+666,2015,NASA's New Horizons spacecraft performs the first-ever flyby of Pluto.,History,Modern Era
+667,2015,"The musical ""Hamilton"" premieres on Broadway, becoming a cultural phenomenon.",Culture,Modern Era
+668,2016,"The United Kingdom votes to leave the European Union in the ""Brexit"" referendum.",Politics/War,Modern Era
+669,2016,Donald Trump is elected the 45th President of the United States in a major political upset.,Politics/War,Modern Era
+670,2016,The augmented reality game Pokémon Go becomes a global phenomenon.,Culture,Modern Era
+671,2017,"The #MeToo movement goes viral on social media, raising awareness of sexual harassment and assault.",History,Modern Era
+672,2017,The first direct observation of a merger of two neutron stars is announced.,Science/Tech,Modern Era
+673,2018,A major trade war begins between the United States and China.,Politics/War,Modern Era
+674,2018,"The ""Yellow Vests"" protests begin in France against fuel tax increases and economic inequality.",Politics/War,Modern Era
+675,2019,The first-ever image of a black hole is captured by the Event Horizon Telescope project.,History,Modern Era
+676,2019,Massive pro-democracy protests erupt in Hong Kong against a proposed extradition bill.,Politics/War,Modern Era
+677,2019,A fire causes extensive damage to the Notre-Dame Cathedral in Paris.,History,Modern Era
+678,2020,The World Health Organization declares the COVID-19 outbreak a global pandemic.,History,Modern Era
+679,2020,The murder of George Floyd by a police officer sparks global protests against racial injustice.,History,Modern Era
+680,2020,SpaceX becomes the first private company to launch astronauts to the International Space Station.,History,Modern Era
+681,2020,Joe Biden is elected the 46th President of the United States.,Politics/War,Modern Era
+682,2021,A mob of protesters storms the U.S. Capitol building in an attempt to overturn the Biden's election win.,Politics/War,Modern Era
+683,2021,"The James Webb Space Telescope, the successor to Hubble, is successfully launched.",History,Modern Era
+684,2021,The Taliban retake control of Afghanistan following the withdrawal of U.S. troops.,Politics/War,Modern Era
+685,2021,The social media app TikTok surpasses Google as the most popular website of the year.,Culture,Modern Era
+686,2022,"Russia launches a full-scale invasion of Ukraine, starting the largest conventional war in Europe since WWII.",Politics/War,Modern Era
+687,2022,The global population officially reaches eight billion people.,History,Modern Era
+688,2022,"The AI chatbot ChatGPT is released to the public, sparking a massive boom in generative AI development.",Science/Tech,Modern Era
+689,2022,Queen Elizabeth II of the United Kingdom dies after a reign of 70 years.,Politics/War,Modern Era
+690,2023,India surpasses China to become the world's most populous nation.,History,Modern Era
+691,2023,"Hamas launches a major attack on Israel, leading to a declaration of war and a subsequent invasion of Gaza.",Politics/War,Modern Era
+692,2023,India's Chandrayaan-3 mission successfully lands a rover on the Moon's south pole.,History,Modern Era
+693,2023,"The film ""Barbie"" becomes the highest-grossing film of the year and a cultural phenomenon.",Culture,Modern Era
+694,2024,The Francis Scott Key Bridge in Baltimore collapses after being struck by a cargo ship.,History,Modern Era
+695,2024,The first-ever direct elections for the European Parliament are held after the Brexit reforms.,Politics/War,Modern Era
+696,2025,NASA's Artemis II mission is scheduled to send astronauts on a flyby of the Moon.,History,Modern Era
