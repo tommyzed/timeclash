@@ -456,9 +456,9 @@ export default function Lobby() {
             href="https://egodevnull.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:underline hover:text-gray-700 transition-colors"
+            className="text-purple-600 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-300 underline underline-offset-2 font-medium transition-colors"
           >
-            Ego /dev/null
+            EGO /dev/null
           </a>
         </div>
 
