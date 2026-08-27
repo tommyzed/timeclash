@@ -1,18 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-    <meta name="theme-color" content="#ffffff" />
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-    <!-- Confetti library for victory celebrations -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <!-- This is a replit script which adds a banner on the top of the page when opened in development mode outside the replit environment -->
-    <script type="text/javascript" src="https://replit.com/public/js/replit-dev-banner.js"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <title>TimeClash - Historical Timeline Trivia Game | Like Chronology</title>
+
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="TimeClash - Historical Timeline Trivia Game | Like Chronology" />
+  <meta name="description"
+    content="Race through history in TimeClash! Put your history knowledge to the test by placing events in chronological order. Play solo or challenge friends in real-time 1v1 battles. The ultimate Chronological board game online." />
+  <meta name="keywords"
+    content="TimeClash, Chronology, like Chronology, Chronology board game, Chronology online, historical timeline game, history trivia game, history board game, timeline card game, chronological order game, history quiz, multiplayer history game, time clash, timeline battle, history game online, history card game" />
+  <meta name="author" content="TimeClash" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="theme-color" content="#ffffff" />
+
+  <!-- Mobile & PWA App Meta Tags -->
+  <meta name="application-name" content="TimeClash" />
+  <meta name="apple-mobile-web-app-title" content="TimeClash" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="mobile-web-app-capable" content="yes" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="TimeClash" />
+  <meta property="og:title" content="TimeClash - Historical Timeline Trivia Game (Like Chronology)" />
+  <meta property="og:description"
+    content="Race through history in TimeClash! Place historical events in chronological order, play solo or battle friends in real-time 1v1 timeline clashes." />
+  <meta property="og:image" content="/TimeClash.png" />
+  <meta property="og:image:alt" content="TimeClash - Race through history in the ultimate chronological battle" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="TimeClash - Historical Timeline Trivia Game (Like Chronology)" />
+  <meta name="twitter:description"
+    content="Race through history in TimeClash! Place historical events in chronological order, play solo or battle friends in real-time 1v1 timeline clashes." />
+  <meta name="twitter:image" content="/TimeClash.png" />
+  <meta name="twitter:image:alt" content="TimeClash - Historical Timeline Game" />
+
+  <!-- Favicon & Icons -->
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+  <!-- Structured Data (JSON-LD) for Search Engines -->
+  <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "TimeClash",
+        "alternateName": ["Time Clash", "TimeClash", "Like Chronology Online", "Historical Timeline Game", "Chronological Game", "Chronology Board Game Online", "Like Chronology Online", "History Board Game", "History Trivia Game", "Timeline Card Game", "Chronological Order Game", "History Quiz", "Multiplayer History Game", "Time Clash", "Timeline Battle", "History Game Online", "History Card Game"],
+        "description": "TimeClash is a competitive historical timeline game. Put your history knowledge to the test by placing events in their correct chronological order. Play solo to beat your high score, or challenge friends to real-time 1v1 battles.",
+        "applicationCategory": "GameApplication",
+        "genre": ["History", "Trivia", "Timeline", "Board Game", "Educational", "Card Game"],
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript. Requires HTML5.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    </script>
+  <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "VideoGame",
+        "name": "TimeClash",
+        "description": "A chronological history battle game where players place historical events in their correct order on a timeline. Features real-time multiplayer 1v1 duels, stealing mechanics, and single-player modes.",
+        "genre": ["Trivia", "History", "Strategy", "Card Game", "Educational"],
+        "gamePlatform": ["Web Browser", "Mobile Web"],
+        "numberOfPlayers": {
+          "@type": "QuantitativeValue",
+          "minValue": 1,
+          "maxValue": 2
+        },
+        "playMode": ["SinglePlayer", "MultiPlayer"]
+      }
+    </script>
+</head>
+
+<body>
+  <noscript>
+    <div
+      style="padding: 2rem; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 800px; margin: 0 auto; line-height: 1.6;">
+      <h1>TimeClash - The Ultimate Historical Timeline Game</h1>
+      <p>
+        <strong>TimeClash</strong> is a competitive historical timeline game inspired by <em>Chronology</em>.
+        Put your history knowledge to the test by placing events in their correct chronological order.
+        Play solo to beat your high score, or challenge friends to real-time 1v1 battles where every year counts!
+      </p>
+      <h2>How to Play</h2>
+      <ol>
+        <li><strong>Get a Card:</strong> You're presented with a historical event card.</li>
+        <li><strong>Place It:</strong> Drag or click to place it on your timeline relative to other events.</li>
+        <li><strong>Score:</strong> Correct placements earn points. Incorrect ones cost you a strike!</li>
+        <li><strong>Win:</strong> Be the first to correctly place 10 cards to win the game.</li>
+      </ol>
+      <h2>Key Features</h2>
+      <ul>
+        <li><strong>Competitive Multiplayer:</strong> Real-time 1v1 battles with live updates.</li>
+        <li><strong>The "Steal" Mechanic:</strong> If your opponent messes up, steal their turn and place the card
+          yourself!</li>
+        <li><strong>Extensive Database:</strong> Thousands of events from ancient history to modern pop culture.</li>
+      </ul>
+      <p>Please enable JavaScript to run TimeClash in your browser.</p>
+    </div>
+  </noscript>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+  <!-- Confetti library for victory celebrations -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <!-- This is a replit script which adds a banner on the top of the page when opened in development mode outside the replit environment -->
+  <script type="text/javascript" src="https://replit.com/public/js/replit-dev-banner.js"></script>
+</body>
+
 </html>

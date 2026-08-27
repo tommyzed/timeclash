@@ -21,10 +21,11 @@ export default defineConfig(async ({ mode }) => {
       VitePWA({
         registerType: "autoUpdate",
         manifest: {
-          name: "TimeClash",
+          name: "TimeClash - Historical Timeline Game",
           short_name: "TimeClash",
-          description: "It's About Time!",
+          description: "Race through history in the ultimate chronological battle! Historical timeline game inspired by Chronology.",
           theme_color: "#ffffff",
+          categories: ["games", "trivia", "education"],
           icons: [
             {
               src: "pwa-192x192.png",
