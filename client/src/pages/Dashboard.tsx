@@ -123,7 +123,7 @@ export default function Dashboard() {
                                     </div>
                                 ) : (
                                     <div className="flex items-center gap-2 group min-w-0">
-                                        <h1 className="text-2xl md:text-3xl font-bold tracking-tight truncate">Welcome, {user.name}</h1>
+                                        <h1 className="text-2xl md:text-3xl font-bold tracking-tight truncate">Hi, {user.name}</h1>
                                         <Button
                                             size="icon"
                                             variant="ghost"
