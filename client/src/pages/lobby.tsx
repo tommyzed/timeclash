@@ -451,7 +451,15 @@ export default function Lobby() {
         </Card>
 
         <div className="mt-8 text-center text-xs text-gray-500 italic">
-          v1.5 - Copyright © 2026 Ego /dev/null
+          v1.5 - Copyright © 2026{" "}
+          <a
+            href="https://egodevnull.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:underline hover:text-gray-700 transition-colors"
+          >
+            Ego /dev/null
+          </a>
         </div>
 
       </div>
